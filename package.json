@@ -1,0 +1,32 @@
+{
+  "name": "mono-studio",
+  "description": "",
+  "author": "Leivaa <adrianleiva212@gmail.com>",
+  "keywords": [],
+  "private": true,
+  "license": "MIT",
+
+  "workspaces": [
+    "packages/**",
+    "apps/**"
+  ],
+
+  "scripts": {
+    "api": "",
+    "front": "",
+    "auth": "",
+    "desing-system": ""
+  },
+  
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/leivaa21/mono-studio.git"
+  },
+  "bugs": {
+    "url": "https://github.com/leivaa21/mono-studio/issues"
+  },
+  "homepage": "https://github.com/leivaa21/mono-studio#readme",
+
+  "packageManager": "yarn@3.3.0"
+
+}
