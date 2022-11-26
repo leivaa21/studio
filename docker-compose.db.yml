@@ -1,0 +1,24 @@
+version: '3.8'
+
+services:
+  mongo:
+    image: mongo
+    container_name: studio-mongo
+    ports:
+      - 27017:27017
+    volumes: 
+      - .volumes/mongo/data:/data/db
+  rabbitmq:
+    image: rabbitmq:3-management-alpine
+    container_name: rabbitmq
+    ports:
+        - 5672:5672
+        - 15672:15672
+    volumes:
+        - .volumes/rabbitmq/data/:/var/lib/rabbitmq/
+    networks:
+        - rabbitmq_go_net
+
+networks:
+  rabbitmq_go_net:
+    driver: bridge

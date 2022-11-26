@@ -1,0 +1,17 @@
+version: '3.8'
+
+services:
+  core:
+    container_name: studio-api-core
+    build:
+      context: .
+      target: api-core
+    ports:
+      - 3000:3000
+  auth:
+    container_name: studio-api-auth
+    build:
+      context: .
+      target: api-auth
+    ports:
+      - 3001:3001
