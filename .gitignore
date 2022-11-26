@@ -8,3 +8,17 @@
 !.yarn/releases
 !.yarn/sdks
 !.yarn/versions
+
+.pnp.*
+
+## [ Builds ] ##
+
+**/dist
+
+## [ Enviromentals ] ##
+
+**/*.env
+
+## [ Docker Volumes ] ##
+
+.volumes

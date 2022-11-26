@@ -1,23 +1,22 @@
 {
-  "name": "mono-studio",
+  "name": "studio",
   "description": "",
   "author": "Leivaa <adrianleiva212@gmail.com>",
   "keywords": [],
   "private": true,
   "license": "MIT",
-
   "workspaces": [
     "packages/**",
-    "apps/**"
+    "apps/**",
+    "apis/**"
   ],
-
   "scripts": {
-    "api": "",
-    "front": "",
-    "auth": "",
-    "desing-system": ""
+    "p:api:auth": "yarn workspace @studio/api-auth prod",
+    "p:api:core": "yarn workspace @studio/core prod",
+    "d:api:auth": "yarn workspace @studio/api-auth dev",
+    "d:api:core": "yarn workspace @studio/core dev",
+    "m:dep:apiutils": "yarn workspace @studio/api-utils build"
   },
-  
   "repository": {
     "type": "git",
     "url": "git+https://github.com/leivaa21/mono-studio.git"
@@ -26,7 +25,5 @@
     "url": "https://github.com/leivaa21/mono-studio/issues"
   },
   "homepage": "https://github.com/leivaa21/mono-studio#readme",
-
   "packageManager": "yarn@3.3.0"
-
 }
