@@ -4,7 +4,7 @@ import { info } from '@studio/api-utils/loggers/console';
 import { EarlyMiddlewares, LateMiddlewares } from './middlewares';
 import { Controllers } from './controllers';
 
-const port = 3000;
+const port = 3001;
 
 const { NODE_ENV } = process.env;
 

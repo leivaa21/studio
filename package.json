@@ -12,9 +12,11 @@
   ],
   "scripts": {
     "p:api:auth": "yarn workspace @studio/api-auth prod",
-    "p:api:core": "yarn workspace @studio/core prod",
+    "p:api:profiles": "yarn workspace @studio/profiles prod",
+    "p:api:courses": "yarn workspace @studio/courses prod",
     "d:api:auth": "yarn workspace @studio/api-auth dev",
-    "d:api:core": "yarn workspace @studio/core dev",
+    "d:api:profiles": "yarn workspace @studio/profiles dev",
+    "d:api:courses": "yarn workspace @studio/courses dev",
     "m:dep:apiutils": "yarn workspace @studio/api-utils build"
   },
   "repository": {

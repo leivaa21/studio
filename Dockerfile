@@ -14,29 +14,6 @@ COPY packages packages
 
 RUN yarn install
 
-
-######################
-##   CoreAPI-dev    ##
-######################
-FROM base as api-core-dev
-
-COPY apis/core apis/core
-
-RUN yarn install
-
-CMD yarn d:api:core
-
-######################
-##     CoreAPI      ##
-######################
-FROM base as api-core
-
-COPY apis/core apis/core
-
-RUN yarn install
-
-CMD yarn p:api:core
-
 ######################
 ##   AuthAPI-dev    ##
 ######################
@@ -58,3 +35,47 @@ COPY apis/auth apis/auth
 RUN yarn install
 
 CMD yarn p:api:auth
+
+######################
+## ProfilesAPI-dev  ##
+######################
+FROM base as api-profiles-dev
+
+COPY apis/profiles apis/profiles
+
+RUN yarn install
+
+CMD yarn d:api:profiles
+
+######################
+##    ProfilesAPI   ##
+######################
+FROM base as api-profiles
+
+COPY apis/profiles apis/profiles
+
+RUN yarn install
+
+CMD yarn p:api:profiles
+
+######################
+## CoursesAPI-dev  ##
+######################
+FROM base as api-courses-dev
+
+COPY apis/courses apis/courses
+
+RUN yarn install
+
+CMD yarn d:api:courses
+
+######################
+##    CoursesAPI   ##
+######################
+FROM base as api-courses
+
+COPY apis/courses apis/courses
+
+RUN yarn install
+
+CMD yarn p:api:courses
