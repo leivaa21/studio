@@ -15,10 +15,12 @@
     "p:api:profiles": "yarn workspace @studio/profiles prod",
     "p:api:courses": "yarn workspace @studio/courses prod",
     "p:apps:web": "yarn workspace @studio/web prod",
+    "p:apps:sb": "yarn workspace @studio/storybook prod",
     "d:api:auth": "yarn workspace @studio/api-auth dev",
     "d:api:profiles": "yarn workspace @studio/profiles dev",
     "d:api:courses": "yarn workspace @studio/courses dev",
     "d:apps:web": "yarn workspace @studio/web dev",
+    "d:apps:sb": "yarn workspace @studio/storybook dev",
     "m:dep:apiutils": "yarn workspace @studio/api-utils build"
   },
   "repository": {
