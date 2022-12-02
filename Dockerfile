@@ -79,3 +79,26 @@ COPY apis/courses apis/courses
 RUN yarn install
 
 CMD yarn p:api:courses
+
+######################
+##      WEB-dev     ##
+######################
+FROM base as app-web-dev
+
+COPY apps/courses apps/courses
+
+RUN yarn install
+
+CMD yarn d:apps:web
+
+######################
+##        WEB       ##
+######################
+FROM base as app-web
+
+COPY apps/web apps/web
+
+RUN yarn install
+
+CMD yarn p:apps:web
+

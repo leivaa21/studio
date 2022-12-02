@@ -24,3 +24,10 @@ services:
       target: api-courses
     ports:
       - 5002:5002
+  web:
+    container_name: studio-app-web
+    build:
+      context: .
+      target: app-web
+    ports:
+      - 3000:3000

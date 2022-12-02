@@ -29,3 +29,12 @@ services:
       - 5002:5002
     volumes:
       - .:/usr/src/app
+  web:
+    container_name: studio-app-web-dev
+    build:
+      context: .
+      target: app-web-dev
+    ports:
+      - 3000:3000
+    volumes:
+      - .:/usr/src/app
