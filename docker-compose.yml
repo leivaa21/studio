@@ -7,7 +7,7 @@ services:
       context: .
       target: api-auth
     ports:
-      - 3000:3000
+      - 5000:5000
 
   profiles:
     container_name: studio-api-profiles
@@ -15,7 +15,7 @@ services:
       context: .
       target: api-profiles
     ports:
-      - 3001:3001
+      - 5001:5001
 
   courses:
     container_name: studio-api-courses
@@ -23,4 +23,4 @@ services:
       context: .
       target: api-courses
     ports:
-      - 3002:3002
+      - 5002:5002
