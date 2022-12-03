@@ -1,0 +1,58 @@
+@import '../../../../config/colors';
+
+.base {
+  border: 0;
+  border-radius: 0;
+  text-transform: uppercase;
+  font-weight: 700;
+  padding: .5em 2em;
+  transition: all .25s ease-out;
+
+  &.type-Primary {
+    background-color: $primary;
+    color: $bright-text-primary;
+  }
+  &.type-Secondary {
+    background-color: $secondary;
+    color: $bright-text-primary
+  }
+  &.type-Tertiary {
+    background-color: $tertiary;
+    color: $bright-text-primary
+  }
+  &.type-Cancel {
+    background-color: $cancel;
+    color: $bright-text-primary
+  }
+
+  &.size-Small {
+    font-size: 1rem;
+  }
+
+  &.size-Medium {
+    font-size: 1.5rem;
+  }
+
+  &.size-Large {
+    font-size: 2rem;
+  }
+
+}
+
+
+.base:hover {
+  cursor: pointer;
+
+  &.type-Primary {
+    background-color: $primary-active;
+  }
+  &.type-Secondary {
+    background-color: $secondary-active;
+  }
+  &.type-Tertiary {
+    background-color: $tertiary-active;
+  }
+  &.type-Cancel {
+    background-color: $cancel-active;
+  }
+}
