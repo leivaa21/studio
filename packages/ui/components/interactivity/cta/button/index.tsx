@@ -13,7 +13,7 @@ interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
 const Button = ({
   Type = "Primary",
   Size = "Medium",
-  Label = "Lorem Ipsum",
+  Label,
   ...defaultProps
 }: ButtonProps ) => {    
   
