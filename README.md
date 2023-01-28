@@ -9,11 +9,11 @@
     <img src="https://img.shields.io/badge/built%20for%20<%20developers%20/>-E662B6?style=for-the-badge"
       alt="Built for developers" />
   </a>
-  <a href="https://github.com/leivaa21/mono-studio/blob/master/LICENSE">
+  <a href="https://github.com/leivaa21/studio/blob/master/LICENSE">
     <img src="https://img.shields.io/badge/MIT%20licensed-DADADA?style=for-the-badge"
       alt="MIT Licensed project" />
   </a>
-  <a href="https://npmjs.org/package/@leivaa/simple-cqrs">
+  <a href="https://github.com/leivaa21/studio">
     <img src="https://img.shields.io/badge/TypeScript-1ED0E9?style=for-the-badge&logo=typescript&logoColor=white"
       alt="Using typescript" />
   </a>
@@ -33,4 +33,4 @@
 ## License
 
 This project is under a MIT license, so its open source and open for contributions :).
-[More info about the license here](https://github.com/leivaa21/mono-studio/blob/master/LICENSE)
+[More info about the license here](https://github.com/leivaa21/studio/blob/master/LICENSE)
