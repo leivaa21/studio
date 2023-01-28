@@ -1,1 +1,1 @@
-# @studio/core
+# @studio/profiles
