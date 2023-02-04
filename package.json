@@ -21,7 +21,17 @@
     "d:api:courses": "yarn workspace @studio/courses dev",
     "d:apps:web": "yarn workspace @studio/web dev",
     "d:apps:sb": "yarn workspace @studio/storybook dev",
-    "m:dep:apiutils": "yarn workspace @studio/api-utils build"
+    "m:dep:apiutils": "yarn workspace @studio/api-utils build",
+    "build:api:auth": "yarn workspace @studio/api-auth build",
+    "build:api:profiles": "yarn workspace @studio/api-auth build",
+    "build:api:courses": "yarn workspace @studio/api-auth build",
+    "build:apps:web": "yarn workspace @studio/api-auth build",
+    "build:apps:sb": "yarn workspace @studio/api-auth build",
+    "lint:api:auth": "yarn workspace @studio/api-auth lint",
+    "lint:api:profiles": "yarn workspace @studio/api-auth lint",
+    "lint:api:courses": "yarn workspace @studio/api-auth lint",
+    "lint:apps:web": "yarn workspace @studio/api-auth lint",
+    "lint:apps:sb": "yarn workspace @studio/api-auth lint"
   },
   "repository": {
     "type": "git",

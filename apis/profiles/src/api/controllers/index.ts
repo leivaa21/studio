@@ -1,5 +1,5 @@
-import { HealthController } from "./_health";
+import { HealthController } from './_health';
 
-const Controllers = [HealthController]
+const Controllers = [HealthController];
 
 export { Controllers };

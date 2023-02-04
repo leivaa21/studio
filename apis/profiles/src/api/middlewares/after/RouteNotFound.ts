@@ -6,8 +6,7 @@ import { Middleware, ExpressMiddlewareInterface } from 'routing-controllers';
 export class RouteNotFoundMiddleware implements ExpressMiddlewareInterface {
   use(request: Request, response: Response) {
     if (!response.writableFinished) {
-      throw new RouteNotFound(request.method, request.path);    
+      throw new RouteNotFound(request.method, request.path);
     }
-
   }
-} 
+}
