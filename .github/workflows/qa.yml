@@ -1,0 +1,33 @@
+name: Quality Assurance
+on:
+  pull_request:
+    types: [ labeled ]
+
+jobs:
+  AuthQA:
+    if: ${{ github.event.label.name == 'Auth' }}
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Set Node.js 18.x
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18.x
+      - name: Update Yarn
+        run: |
+          corepack enable
+          corepack prepare yarn@stable --activate
+          yarn plugin import workspace-tools
+          yarn --version
+      - name: Install & Make dependencies
+        run: |
+          yarn workspaces focus @studio/api-utils
+          yarn m:dep:apiutils
+          yarn workspaces focus @studio/auth
+
+      - name: Build auth
+        run: yarn build:api:auth
+      - name: Check linter auth
+        run: yarn lint:api:auth
