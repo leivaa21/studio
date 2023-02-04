@@ -5,6 +5,14 @@ on:
   push:
 
 jobs:
+
+  printGithubEvent:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: print
+        run: echo ${github.event}
+
   AuthQA:
     if: ${{ github.event.label.name == 'Auth' }}
     runs-on: ubuntu-latest
