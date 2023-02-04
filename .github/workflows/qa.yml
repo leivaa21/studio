@@ -1,7 +1,5 @@
 name: Quality Assurance
-on:
-  pull_request:
-    types: [ labeled, edited ]
+on: pull_request
 
 jobs:
 
