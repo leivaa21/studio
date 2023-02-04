@@ -12,11 +12,8 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: 18.x
-      - name: see yarn version
-        uses: borales/actions-yarn@v4
-        with:
-          cmd: --version
-      - name: install dependencies
-        uses: borales/actions-yarn@v4
-        with:
-          cmd: install
+      - name: Update Yarn
+        run: |
+          corepack enable
+          corepack prepare yarn@stable --activate
+          yarn --version
