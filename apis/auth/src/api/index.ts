@@ -14,5 +14,5 @@ createExpressServer({
   interceptors: [],
   defaultErrorHandler: false,
 }).listen(port, () => {
-  info(`Hey modified again, running on http://localhost:${port} on env: ${NODE_ENV}`);
+  info(`Hey, running on http://localhost:${port} on env: ${NODE_ENV}`);
 });
