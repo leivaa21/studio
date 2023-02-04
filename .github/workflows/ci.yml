@@ -1,0 +1,22 @@
+name: Build
+on: [push, pull_request]
+jobs:
+  install:
+    name: "Install dependencies"
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Set Node.js 18.x
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18.x
+      - name: see yarn version
+        uses: borales/actions-yarn@v4
+        with:
+          cmd: --version
+      - name: install dependencies
+        uses: borales/actions-yarn@v4
+        with:
+          cmd: install
