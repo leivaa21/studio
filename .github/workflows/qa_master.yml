@@ -5,8 +5,7 @@ on:
       - "master"
 
 jobs:
-
-  AuthQA:
+  QAMaster:
     runs-on: ubuntu-latest
 
     steps:
@@ -26,105 +25,27 @@ jobs:
         run: |
           yarn workspaces focus @studio/api-utils
           yarn m:dep:apiutils
-          yarn workspaces focus @studio/api-auth
+          yarn install
 
       - name: Build auth
         run: yarn build:api:auth
       - name: Check linter auth
         run: yarn lint:api:auth
-  CoursesQA:
-    runs-on: ubuntu-latest
-
-    steps:
-      - uses: actions/checkout@v3
-
-      - name: Set Node.js 18.x
-        uses: actions/setup-node@v3
-        with:
-          node-version: 18.x
-      - name: Update Yarn
-        run: |
-          corepack enable
-          corepack prepare yarn@stable --activate
-          yarn plugin import workspace-tools
-          yarn --version
-      - name: Install & Make dependencies
-        run: |
-          yarn workspaces focus @studio/api-utils
-          yarn m:dep:apiutils
-          yarn workspaces focus @studio/courses
 
       - name: Build courses
         run: yarn build:api:courses
       - name: Check linter courses
         run: yarn lint:api:courses
-  ProfilesQA:
-    runs-on: ubuntu-latest
-
-    steps:
-      - uses: actions/checkout@v3
-
-      - name: Set Node.js 18.x
-        uses: actions/setup-node@v3
-        with:
-          node-version: 18.x
-      - name: Update Yarn
-        run: |
-          corepack enable
-          corepack prepare yarn@stable --activate
-          yarn plugin import workspace-tools
-          yarn --version
-      - name: Install & Make dependencies
-        run: |
-          yarn workspaces focus @studio/api-utils
-          yarn m:dep:apiutils
-          yarn workspaces focus @studio/profiles
 
       - name: Build profiles
         run: yarn build:api:profiles
       - name: Check linter profiles
         run: yarn lint:api:profiles
-  WebQA:
-    runs-on: ubuntu-latest
-
-    steps:
-      - uses: actions/checkout@v3
-
-      - name: Set Node.js 18.x
-        uses: actions/setup-node@v3
-        with:
-          node-version: 18.x
-      - name: Update Yarn
-        run: |
-          corepack enable
-          corepack prepare yarn@stable --activate
-          yarn plugin import workspace-tools
-          yarn --version
-      - name: Install & Make dependencies
-        run: yarn workspaces focus @studio/web
 
       - name: Build web
         run: yarn build:app:web
       - name: Check linter web
         run: yarn lint:app:web
-  StorybookQA:
-    runs-on: ubuntu-latest
-
-    steps:
-      - uses: actions/checkout@v3
-
-      - name: Set Node.js 18.x
-        uses: actions/setup-node@v3
-        with:
-          node-version: 18.x
-      - name: Update Yarn
-        run: |
-          corepack enable
-          corepack prepare yarn@stable --activate
-          yarn plugin import workspace-tools
-          yarn --version
-      - name: Install & Make dependencies
-        run: yarn workspaces focus @studio/storybook
 
       - name: Build storybook
         run: yarn build:app:sb
