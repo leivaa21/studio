@@ -16,4 +16,11 @@ jobs:
         run: |
           corepack enable
           corepack prepare yarn@stable --activate
+          yarn plugin import workspace-tools
           yarn --version
+      - name: Install & Make dependencies for /packages first
+        run: |
+          yarn workspaces focus @studio/api-utils
+          yarn m:dep:apiutils
+      - name: Install all dependencies
+        run: yarn install
