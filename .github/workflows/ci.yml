@@ -24,11 +24,16 @@ jobs:
           yarn m:dep:apiutils
       - name: Install all dependencies
         run: yarn install
-  build:
-    name: "Build monorepo"
-    runs-on: ubuntu-latest
-    needs: ["install"]
-    steps: 
-      - uses: actions/checkout@v3
-      - name: Build Auth
+
+      - name: Build auth
         run: yarn build:api:auth
+      - name: Build courses
+        run: yarn build:api:courses
+      - name: Build profiles
+        run: yarn build:api:profiles
+      - name: Build web
+        run: yarn build:app:web
+      - name: Build storybook
+        run: yarn build:app:sb
+        
+      
