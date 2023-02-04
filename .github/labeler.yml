@@ -1,0 +1,25 @@
+Auth:
+  - apis/auth/**/*
+  - apis/auth/*
+  - packages/api-utils/**/*
+  - packages/api-utils/*
+Courses:
+  - apis/courses/**/*
+  - apis/coursesauth/*
+  - packages/api-utils/**/*
+  - packages/api-utils/*
+Profiles:
+  - apis/profiles/**/*
+  - apis/profilesauth/*
+  - packages/api-utils/**/*
+  - packages/api-utils/*
+Web:
+  - apps/web/**/*
+  - apps/web/*
+  - packages/ui/**/*
+  - packages/ui/*
+Storybook:
+  - apps/storybook/**/*
+  - apps/storybook/*
+  - packages/ui/**/*
+  - packages/ui/*
