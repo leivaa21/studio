@@ -1,21 +1,33 @@
 <div align="center">
-  <img src="./docs/images/logo.png" width="30%">
-  <h2>Studio</h2>
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="./docs/images/brand/isologodark.png">
+    <source media="(prefers-color-scheme: light)" srcset="./docs/images/brand/isologo.png" />
+    <img alt="Studio Logo" width="80%" />
+  </picture>
   <p>Insert here a really cool motto</p>
 </div>
 
 <div align="center">
   <a href="https://github.com/leivaa21">
-    <img src="https://img.shields.io/badge/built%20for%20<%20developers%20/>-E662B6?style=for-the-badge"
-      alt="Built for developers" />
+    <picture>
+      <source media="(prefers-color-scheme: dark)" srcset="https://img.shields.io/badge/built%20for%20<%20developers%20/>-22BA56?style=for-the-badge">
+      <source media="(prefers-color-scheme: light)" srcset="https://img.shields.io/badge/built%20for%20<%20developers%20/>-2BE86B?style=for-the-badge" />
+      <img alt="Built for developers" />
+    </picture>
   </a>
   <a href="https://github.com/leivaa21/studio/blob/master/LICENSE">
-    <img src="https://img.shields.io/badge/MIT%20licensed-DADADA?style=for-the-badge"
-      alt="MIT Licensed project" />
+    <picture>
+      <source media="(prefers-color-scheme: dark)" srcset="https://img.shields.io/badge/MIT%20licensed-F1F1F1?style=for-the-badge">
+      <source media="(prefers-color-scheme: light)" srcset="https://img.shields.io/badge/MIT%20licensed-333333?style=for-the-badge" />
+      <img alt="MIT Licensed project" />
+    </picture>
   </a>
   <a href="https://github.com/leivaa21/studio">
-    <img src="https://img.shields.io/badge/TypeScript-1ED0E9?style=for-the-badge&logo=typescript&logoColor=white"
-      alt="Using typescript" />
+    <picture>
+      <source media="(prefers-color-scheme: dark)" srcset="https://img.shields.io/badge/TypeScript-21CA97?style=for-the-badge&logo=typescript&logoColor=F1F1F1">
+      <source media="(prefers-color-scheme: light)" srcset="https://img.shields.io/badge/TypeScript-29FDBD?style=for-the-badge&logo=typescript&logoColor=333" />
+      <img alt="Using typescript" />
+    </picture>
   </a>
 </div>
 
