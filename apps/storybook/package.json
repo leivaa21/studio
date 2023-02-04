@@ -7,7 +7,7 @@
     "build": "build-storybook",
     "start": "http-server storybook-static -p 6006",
     "prod": "yarn build && yarn start",
-    "lint": "eslint './src/**' --fix"
+    "lint": "next lint"
   },
   "dependencies": {
     "@studio/ui": "workspace:packages/ui",
