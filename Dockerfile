@@ -5,13 +5,22 @@ FROM node:18-alpine as base
 
 WORKDIR /usr/src/app
 
+# Setup yarn
 RUN corepack enable
+RUN corepack prepare yarn@stable --activate
 
 COPY package.json .
 COPY yarn.lock .
 
+RUN yarn plugin import workspace-tools
+
+# Build dependencies first
 COPY packages packages
 
+RUN yarn workspaces focus @studio/api-utils
+RUN yarn m:dep:apiutils
+
+# Install all dependencies
 RUN yarn install
 
 ######################
