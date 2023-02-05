@@ -85,7 +85,7 @@ CMD yarn p:api:courses
 ######################
 FROM base as app-web-dev
 
-COPY apps/courses apps/courses
+COPY apps/web apps/web
 
 RUN yarn install
 
@@ -101,4 +101,3 @@ COPY apps/web apps/web
 RUN yarn install
 
 CMD yarn p:apps:web
-
