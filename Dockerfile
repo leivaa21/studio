@@ -89,7 +89,7 @@ COPY apps/web apps/web
 
 RUN yarn install
 
-CMD yarn d:apps:web
+CMD yarn d:app:web
 
 ######################
 ##        WEB       ##
@@ -100,7 +100,7 @@ COPY apps/web apps/web
 
 RUN yarn install
 
-CMD yarn p:apps:web
+CMD yarn p:app:web
 
 ######################
 ##   Storybook-dev  ##
