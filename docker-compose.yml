@@ -31,3 +31,10 @@ services:
       target: app-web
     ports:
       - 3000:3000
+  storybook:
+    container_name: studio-app-storybook
+    build:
+      context: .
+      target: app-sb
+    ports:
+      - 6006:6006
