@@ -101,3 +101,25 @@ COPY apps/web apps/web
 RUN yarn install
 
 CMD yarn p:apps:web
+
+######################
+##   Storybook-dev  ##
+######################
+FROM base as app-sb-dev
+
+COPY apps/storybook apps/storybook
+
+RUN yarn install
+
+CMD yarn d:app:sb
+
+######################
+##     Storybook    ##
+######################
+FROM base as app-sb
+
+COPY apps/storybook apps/storybook
+
+RUN yarn install
+
+CMD yarn p:app:sb
