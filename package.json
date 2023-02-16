@@ -22,6 +22,7 @@
     "d:app:web": "yarn workspace @studio/web dev",
     "d:app:sb": "yarn workspace @studio/storybook dev",
     "m:dep:apiutils": "yarn workspace @studio/api-utils build",
+    "m:dep:di": "yarn workspace @studio/dependency-injection build",
     "build:api:auth": "yarn workspace @studio/api-auth build",
     "build:api:profiles": "yarn workspace @studio/api-auth build",
     "build:api:courses": "yarn workspace @studio/api-auth build",
