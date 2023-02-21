@@ -1,8 +1,7 @@
 name: Quality Assurance
-on:  [pull_request]
+on: [pull_request]
 
 jobs:
-
   AuthQA:
     if: contains( github.event.pull_request.labels.*.name, 'Auth')
     runs-on: ubuntu-latest
@@ -24,6 +23,8 @@ jobs:
         run: |
           yarn workspaces focus @studio/api-utils
           yarn m:dep:apiutils
+          yarn workspaces focus @studio/dependency-injection
+          yarn m:dep:di
           yarn workspaces focus @studio/api-auth
 
       - name: Build auth

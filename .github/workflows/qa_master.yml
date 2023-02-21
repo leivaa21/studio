@@ -21,11 +21,14 @@ jobs:
           corepack prepare yarn@stable --activate
           yarn plugin import workspace-tools
           yarn --version
-      - name: Install & Make dependencies
+      - name: Build Packages
         run: |
           yarn workspaces focus @studio/api-utils
           yarn m:dep:apiutils
-          yarn install
+          yarn workspaces focus @studio/dependency-injection
+          yarn m:dep:di
+      - name: Install dependencies
+        run: yarn install
 
       - name: Build auth
         run: yarn build:api:auth
