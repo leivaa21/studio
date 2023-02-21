@@ -3912,6 +3912,8 @@ __metadata:
     "@types/express": ^4.17.14
     "@types/multer": ^1.4.7
     "@types/node": ^18.11.9
+    "@types/uuid": ^9.0.0
+    "@types/uuid-validate": ^0.0.1
     "@typescript-eslint/eslint-plugin": ^5.50.0
     "@typescript-eslint/parser": ^5.50.0
     class-transformer: 0.4.0
@@ -3926,6 +3928,8 @@ __metadata:
     routing-controllers: 0.9.0
     ts-node-dev: ^2.0.0
     typescript: ^4.9.3
+    uuid: ^9.0.0
+    uuid-validate: ^0.0.3
   languageName: unknown
   linkType: soft
 
@@ -4623,6 +4627,20 @@ __metadata:
   version: 2.0.6
   resolution: "@types/unist@npm:2.0.6"
   checksum: 25cb860ff10dde48b54622d58b23e66214211a61c84c0f15f88d38b61aa1b53d4d46e42b557924a93178c501c166aa37e28d7f6d994aba13d24685326272d5db
+  languageName: node
+  linkType: hard
+
+"@types/uuid-validate@npm:^0.0.1":
+  version: 0.0.1
+  resolution: "@types/uuid-validate@npm:0.0.1"
+  checksum: 8af4512a66e55fa4773b000cfa45dfc8500ff3675abd43a82215cbbab5ffba81fe556cbcd9a7f1f1ffc00f2129090f6ad78f8b84e7a5253a0b2a7cfb98afa10c
+  languageName: node
+  linkType: hard
+
+"@types/uuid@npm:^9.0.0":
+  version: 9.0.0
+  resolution: "@types/uuid@npm:9.0.0"
+  checksum: 59ae56d9547c8758588659da2a2b4c97cce79c2aae1798c892bb29452ef08e87859dea2ec3a66bfa88d0d2153147520be2b1893be920f9f0bc9c53a3207ea6aa
   languageName: node
   linkType: hard
 
@@ -17355,12 +17373,28 @@ __metadata:
   languageName: node
   linkType: hard
 
+"uuid-validate@npm:^0.0.3":
+  version: 0.0.3
+  resolution: "uuid-validate@npm:0.0.3"
+  checksum: fe87d7a69796f74d2f24716dcf08d36b43a4ba8bb18d4f405933f8d24eca5413dae053852fc01c59c77a3a6431249d1bb1bf7a1668b41ca872c4834e92711389
+  languageName: node
+  linkType: hard
+
 "uuid@npm:^3.3.2":
   version: 3.4.0
   resolution: "uuid@npm:3.4.0"
   bin:
     uuid: ./bin/uuid
   checksum: 58de2feed61c59060b40f8203c0e4ed7fd6f99d42534a499f1741218a1dd0c129f4aa1de797bcf822c8ea5da7e4137aa3673431a96dae729047f7aca7b27866f
+  languageName: node
+  linkType: hard
+
+"uuid@npm:^9.0.0":
+  version: 9.0.0
+  resolution: "uuid@npm:9.0.0"
+  bin:
+    uuid: dist/bin/uuid
+  checksum: 8dd2c83c43ddc7e1c71e36b60aea40030a6505139af6bee0f382ebcd1a56f6cd3028f7f06ffb07f8cf6ced320b76aea275284b224b002b289f89fe89c389b028
   languageName: node
   linkType: hard
 
