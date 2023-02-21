@@ -5,13 +5,22 @@ FROM node:18-alpine as base
 
 WORKDIR /usr/src/app
 
+# Setup yarn
 RUN corepack enable
+RUN corepack prepare yarn@stable --activate
 
 COPY package.json .
 COPY yarn.lock .
 
+RUN yarn plugin import workspace-tools
+
+# Build dependencies first
 COPY packages packages
 
+RUN yarn workspaces focus @studio/api-utils
+RUN yarn m:dep:apiutils
+
+# Install all dependencies
 RUN yarn install
 
 ######################
@@ -85,11 +94,11 @@ CMD yarn p:api:courses
 ######################
 FROM base as app-web-dev
 
-COPY apps/courses apps/courses
+COPY apps/web apps/web
 
 RUN yarn install
 
-CMD yarn d:apps:web
+CMD yarn d:app:web
 
 ######################
 ##        WEB       ##
@@ -100,5 +109,26 @@ COPY apps/web apps/web
 
 RUN yarn install
 
-CMD yarn p:apps:web
+CMD yarn p:app:web
 
+######################
+##   Storybook-dev  ##
+######################
+FROM base as app-sb-dev
+
+COPY apps/storybook apps/storybook
+
+RUN yarn install
+
+CMD yarn d:app:sb
+
+######################
+##     Storybook    ##
+######################
+FROM base as app-sb
+
+COPY apps/storybook apps/storybook
+
+RUN yarn install
+
+CMD yarn p:app:sb

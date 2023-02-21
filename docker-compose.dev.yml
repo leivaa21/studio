@@ -38,3 +38,12 @@ services:
       - 3000:3000
     volumes:
       - .:/usr/src/app
+  storybook:
+    container_name: studio-app-storybook-dev
+    build:
+      context: .
+      target: app-sb-dev
+    ports:
+      - 6006:6006
+    volumes:
+      - .:/usr/src/app
