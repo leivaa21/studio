@@ -32,5 +32,11 @@ export class UserBasicCredentials {
       password: this._password.value,
     };
   }
-}
 
+  public doMatch(email: string, password: string) {
+    const receivedEmail = new UserEmail(email);
+    return (
+      this._email.equals(receivedEmail) && this._password.doMatch(password)
+    );
+  }
+}

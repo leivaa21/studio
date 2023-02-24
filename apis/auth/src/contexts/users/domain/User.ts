@@ -39,6 +39,10 @@ export class User extends AggregateRoot {
     this._updatedAt = updatedAt;
   }
 
+  public doBasicCredentialMatch(plainEmail: string, plainPassword: string) {
+    return this._credentials.doMatch(plainEmail, plainPassword);
+  }
+
   toPrimitives(): UserAsPrimitives {
     return {
       id: this._id.value,
