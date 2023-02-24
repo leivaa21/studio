@@ -1,13 +1,13 @@
 import { AggregateRoot } from '../../shared/domain/AggregateRoot';
-import { UUID } from '../../shared/domain/valueObjects/UUID';
 import {
   UserBasicCredentials,
   UserBasicCredentialAsPrimitives,
 } from './UserBasicCredentials';
+import { UserId } from './UserId';
 import { UserNickname } from './UserNickname';
 
 interface UserArgs {
-  id: UUID;
+  id: UserId;
   nickname: UserNickname;
   credentials: UserBasicCredentials;
   createdAt: Date;
@@ -23,7 +23,7 @@ interface UserAsPrimitives {
 }
 
 export class User extends AggregateRoot {
-  private readonly _id: UUID;
+  private readonly _id: UserId;
   private readonly _nickname: UserNickname;
   private readonly _credentials: UserBasicCredentials;
   private readonly _createdAt: Date;
@@ -53,7 +53,7 @@ export class User extends AggregateRoot {
     };
   }
 
-  get id(): UUID {
+  get id(): UserId {
     return this._id;
   }
   get nickname(): UserNickname {
