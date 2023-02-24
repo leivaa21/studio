@@ -1,12 +1,22 @@
 import { AggregateRoot } from '../../shared/domain/AggregateRoot';
 import { UUID } from '../../shared/domain/valueObjects/UUID';
-import UserBasicCredentials from './UserBasicCredentials';
+import UserBasicCredentials, {
+  UserBasicCredentialAsPrimitives,
+} from './UserBasicCredentials';
 import UserNickname from './UserNickname';
 
 interface UserArgs {
   id: UUID;
   nickname: UserNickname;
   credentials: UserBasicCredentials;
+  createdAt: Date;
+  updatedAt: Date;
+}
+
+interface UserAsPrimitives {
+  id: string;
+  nickname: string;
+  credentials: UserBasicCredentialAsPrimitives;
   createdAt: Date;
   updatedAt: Date;
 }
@@ -28,8 +38,27 @@ class User extends AggregateRoot {
     this._updatedAt = updatedAt;
   }
 
-  toPrimitives(): void {
-    throw new Error('Method not implemented.');
+  toPrimitives(): UserAsPrimitives {
+    return {
+      id: this._id.value,
+      nickname: this._nickname.value,
+      credentials: this._credentials.toPrimitives(),
+      createdAt: this._createdAt,
+      updatedAt: this._updatedAt,
+    };
+  }
+
+  get id(): UUID {
+    return this._id;
+  }
+  get nickname(): UserNickname {
+    return this._nickname;
+  }
+  get createdAt(): Date {
+    return this._createdAt;
+  }
+  get updatedAt(): Date {
+    return this._updatedAt;
   }
 }
 
