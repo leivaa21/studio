@@ -1,10 +1,7 @@
 import { Exception } from '../../../shared/domain/exceptions/Exception';
 import { UserNickname } from '../UserNickname';
 
-export class UserNicknameLenghtExceeded
-  extends Error
-  implements Exception
-{
+export class UserNicknameLenghtExceeded extends Error implements Exception {
   readonly kind: string = 'BAD_REQUEST';
 
   constructor(value: string) {
