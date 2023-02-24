@@ -1,7 +1,7 @@
 import { ValueObject } from '../../shared/domain/valueObjects/ValueObject';
-import UserNicknameLenghtExceeded from './exceptions/UserNicknameLengthExceeded';
+import { UserNicknameLenghtExceeded } from './exceptions/UserNicknameLengthExceeded';
 
-class UserNickname extends ValueObject<string> {
+export class UserNickname extends ValueObject<string> {
   static MAX_LENGTH = 16;
   constructor(value: string) {
     super(value);
@@ -14,5 +14,3 @@ class UserNickname extends ValueObject<string> {
     }
   }
 }
-
-export default UserNickname;

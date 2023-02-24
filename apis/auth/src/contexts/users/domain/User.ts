@@ -1,9 +1,10 @@
 import { AggregateRoot } from '../../shared/domain/AggregateRoot';
 import { UUID } from '../../shared/domain/valueObjects/UUID';
-import UserBasicCredentials, {
+import {
+  UserBasicCredentials,
   UserBasicCredentialAsPrimitives,
 } from './UserBasicCredentials';
-import UserNickname from './UserNickname';
+import { UserNickname } from './UserNickname';
 
 interface UserArgs {
   id: UUID;
@@ -21,7 +22,7 @@ interface UserAsPrimitives {
   updatedAt: Date;
 }
 
-class User extends AggregateRoot {
+export class User extends AggregateRoot {
   private readonly _id: UUID;
   private readonly _nickname: UserNickname;
   private readonly _credentials: UserBasicCredentials;
@@ -61,5 +62,3 @@ class User extends AggregateRoot {
     return this._updatedAt;
   }
 }
-
-export default User;

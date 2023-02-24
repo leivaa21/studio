@@ -1,4 +1,4 @@
-import UserEmail from './UserEmail';
+import { UserEmail } from './UserEmail';
 import { UserPassword } from './UserPassword';
 
 interface UserBasicCredentialsArgs {
@@ -13,7 +13,7 @@ export interface UserBasicCredentialAsPrimitives {
   password: string;
 }
 
-class UserBasicCredentials {
+export class UserBasicCredentials {
   private _type: 'BASIC';
   private _email: UserEmail;
   private _password: UserPassword;
@@ -34,4 +34,3 @@ class UserBasicCredentials {
   }
 }
 
-export default UserBasicCredentials;

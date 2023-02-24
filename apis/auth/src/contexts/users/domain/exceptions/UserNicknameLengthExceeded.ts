@@ -1,7 +1,7 @@
 import { Exception } from '../../../shared/domain/exceptions/Exception';
-import UserNickname from '../UserNickname';
+import { UserNickname } from '../UserNickname';
 
-export default class UserNicknameLenghtExceeded
+export class UserNicknameLenghtExceeded
   extends Error
   implements Exception
 {
