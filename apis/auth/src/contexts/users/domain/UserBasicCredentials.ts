@@ -2,7 +2,6 @@ import { UserEmail } from './UserEmail';
 import { UserPassword } from './UserPassword';
 
 interface UserBasicCredentialsArgs {
-  type: 'BASIC';
   email: UserEmail;
   password: UserPassword;
 }
@@ -19,8 +18,8 @@ export class UserBasicCredentials {
   private _password: UserPassword;
 
   constructor(args: UserBasicCredentialsArgs) {
-    const { type, email, password } = args;
-    this._type = type;
+    const { email, password } = args;
+    this._type = 'BASIC';
     this._email = email;
     this._password = password;
   }
@@ -42,5 +41,15 @@ export class UserBasicCredentials {
     return (
       this._email.equals(receivedEmail) && this._password.doMatch(password)
     );
+  }
+
+  get type(): 'BASIC' {
+    return this._type;
+  }
+  get email(): UserEmail {
+    return this._email;
+  }
+  get password(): UserPassword {
+    return this._password;
   }
 }
