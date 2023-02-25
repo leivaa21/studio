@@ -3,11 +3,13 @@ import { UserNicknameLenghtExceeded } from './exceptions/UserNicknameLengthExcee
 
 export class UserNickname extends ValueObject<string> {
   static MAX_LENGTH = 16;
-  constructor(value: string) {
+  public constructor(value: string) {
     super(value);
     this.assertLength();
   }
-
+  public static of(value: string): UserNickname {
+    return new UserNickname(value);
+  }
   assertLength(): void {
     if (this.value.length > UserNickname.MAX_LENGTH) {
       throw new UserNicknameLenghtExceeded(this.value);

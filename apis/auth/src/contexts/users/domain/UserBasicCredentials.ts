@@ -25,6 +25,10 @@ export class UserBasicCredentials {
     this._password = password;
   }
 
+  public static of(args: UserBasicCredentialsArgs): UserBasicCredentials {
+    return new UserBasicCredentials(args);
+  }
+
   public toPrimitives(): UserBasicCredentialAsPrimitives {
     return {
       type: this._type,
