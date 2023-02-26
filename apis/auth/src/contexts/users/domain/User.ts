@@ -1,4 +1,5 @@
 import { AggregateRoot } from '../../shared/domain/AggregateRoot';
+import { UserWasCreatedEvent } from './events/UserWasCreated';
 import {
   UserBasicCredentials,
   UserBasicCredentialAsPrimitives,
@@ -48,14 +49,24 @@ export class User extends AggregateRoot {
     credentials: UserBasicCredentials;
   }): User {
     const { nickname, credentials } = args;
-    return new User({
-      id: UserId.random(),
+    const userId = UserId.random();
+
+    const userWasCreatedEvent = UserWasCreatedEvent.fromPrimitives({
+      aggregateId: userId.value,
+    });
+
+    const user = new User({
+      id: userId,
       nickname,
       credentials,
       verified: false,
       createdAt: new Date(),
       updatedAt: new Date(),
     });
+
+    user.commit(userWasCreatedEvent);
+
+    return user;
   }
 
   public doBasicCredentialMatch(plainEmail: string, plainPassword: string) {

@@ -1,26 +1,26 @@
 import { UUID } from './valueObjects/UUID';
 
+export interface BaseDomainEventArgs {
+  aggregateId: string;
+  eventId?: string;
+  ocurredOn?: Date;
+}
 export abstract class DomainEvent {
   static EVENT_NAME: string;
-  static fromPrimitives: (params: {
-    aggregateId: string;
-    eventId: string;
-    ocurredOn: Date;
-    attributes: DomainEventAttributtes;
-  }) => DomainEvent;
+  static fromPrimitives: (
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    args: BaseDomainEventArgs & { attributes: any }
+  ) => DomainEvent;
 
   readonly aggreagateId: string;
   readonly eventId: string;
   readonly ocurredOn: Date;
   readonly eventName: string;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  abstract readonly attributes: any;
 
-  constructor(params: {
-    eventName: string;
-    aggregateId: string;
-    eventId?: string;
-    ocurredOn?: Date;
-  }) {
-    const { eventName, aggregateId, eventId, ocurredOn } = params;
+  constructor(args: BaseDomainEventArgs & { eventName: string }) {
+    const { eventName, aggregateId, eventId, ocurredOn } = args;
 
     this.eventName = eventName;
     this.aggreagateId = aggregateId;
@@ -28,10 +28,10 @@ export abstract class DomainEvent {
     this.ocurredOn = ocurredOn || new Date();
   }
 
-  abstract toPrimitives(): DomainEventAttributtes;
+  abstract toPrimitives(): unknown;
 }
 
-export type DomainEventClass = {
+export interface DomainEventClass {
   EVENT_NAME: string;
   fromPrimitives(params: {
     aggregateId: string;
@@ -39,7 +39,7 @@ export type DomainEventClass = {
     ocurredOn: Date;
     attributes: DomainEventAttributtes;
   }): DomainEvent;
-};
+}
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 type DomainEventAttributtes = any;
