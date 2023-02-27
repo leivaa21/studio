@@ -1,5 +1,7 @@
 import { Injectable } from '@studio/dependency-injection';
 import { CommandHandler } from '../../../../shared/application/CommandHandler';
+import { EventBus } from '../../../../shared/domain/EventBus';
+import { InMemoryAsyncEventBus } from '../../../../shared/domain/EventBus/InMemoryAsyncEventBus';
 import { InvalidUserException } from '../../../domain/exceptions/UserInvalid';
 import { UserFinder } from '../../../domain/services/UserFinder';
 import { User } from '../../../domain/User';
@@ -18,12 +20,14 @@ export interface RegisterNewUserBasicCredentialsCommand {
 @Injectable({
   dependencies: [],
 })
-export class RegisterNewUserBasicCredentials
-  implements CommandHandler<RegisterNewUserBasicCredentialsCommand>
-{
+export class RegisterNewUserBasicCredentials extends CommandHandler<RegisterNewUserBasicCredentialsCommand> {
   private readonly userFinder: UserFinder;
 
-  constructor(private readonly userRepository: UserRepository) {
+  constructor(
+    private readonly userRepository: UserRepository,
+    eventBus: EventBus
+  ) {
+    super(eventBus);
     this.userFinder = new UserFinder(userRepository);
   }
   async execute(
@@ -55,6 +59,8 @@ export class RegisterNewUserBasicCredentials
     });
 
     await this.userRepository.create(user);
+
+    super.publishAggregateRootEvents(user);
 
     return;
   }
