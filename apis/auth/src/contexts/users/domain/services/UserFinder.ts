@@ -2,6 +2,7 @@ import { UserNotFoundException } from '../exceptions/UserNotFound';
 import { User } from '../User';
 import { UserEmail } from '../UserEmail';
 import { UserId } from '../UserId';
+import { UserNickname } from '../UserNickname';
 import { UserRepository } from '../UserRepository';
 
 export class UserFinder {
@@ -10,6 +11,12 @@ export class UserFinder {
     email: UserEmail
   ): Promise<User | undefined> {
     const userFound = await this.userRepository.findByEmail(email);
+    return userFound;
+  }
+  public async findByNicknameOrUndefined(
+    nickname: UserNickname
+  ): Promise<User | undefined> {
+    const userFound = await this.userRepository.findByNickname(nickname);
     return userFound;
   }
   public async findByIdOrThrow(id: UserId): Promise<User> {

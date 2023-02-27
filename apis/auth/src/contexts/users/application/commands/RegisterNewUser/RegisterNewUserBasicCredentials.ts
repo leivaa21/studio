@@ -1,3 +1,4 @@
+import { Injectable } from '@studio/dependency-injection';
 import { CommandHandler } from '../../../../shared/application/CommandHandler';
 import { InvalidUserException } from '../../../domain/exceptions/UserInvalid';
 import { UserFinder } from '../../../domain/services/UserFinder';
@@ -14,10 +15,14 @@ export interface RegisterNewUserBasicCredentialsCommand {
   password: string;
 }
 
+@Injectable({
+  dependencies: [],
+})
 export class RegisterNewUserBasicCredentials
   implements CommandHandler<RegisterNewUserBasicCredentialsCommand>
 {
   private readonly userFinder: UserFinder;
+
   constructor(private readonly userRepository: UserRepository) {
     this.userFinder = new UserFinder(userRepository);
   }
@@ -30,8 +35,14 @@ export class RegisterNewUserBasicCredentials
       password: plainPassword,
     } = command;
 
-    const nickname = UserNickname.of(plainNickname);
     const email = UserEmail.of(plainEmail);
+
+    await this.verifyEmailIsNotAlreadyInUse(email);
+
+    const nickname = UserNickname.of(plainNickname);
+
+    await this.verifyNicknameIsNotAlreadyInUse(nickname);
+
     const password = UserPassword.of(plainPassword);
     const basicCredentials = UserBasicCredentials.of({
       email,
@@ -43,6 +54,12 @@ export class RegisterNewUserBasicCredentials
       credentials: basicCredentials,
     });
 
+    await this.userRepository.create(user);
+
+    return;
+  }
+
+  private async verifyEmailIsNotAlreadyInUse(email: UserEmail) {
     const userWithSameEmail = await this.userFinder.findByEmailOrUndefined(
       email
     );
@@ -50,8 +67,14 @@ export class RegisterNewUserBasicCredentials
     if (userWithSameEmail) {
       throw InvalidUserException.causeEmailIsAlreadyInUse(email.value);
     }
+  }
 
-    await this.userRepository.create(user);
-    return;
+  private async verifyNicknameIsNotAlreadyInUse(nickname: UserNickname) {
+    const userWithSameNickname =
+      await this.userFinder.findByNicknameOrUndefined(nickname);
+
+    if (userWithSameNickname) {
+      throw InvalidUserException.causeNicknameIsAlreadyInUse(nickname.value);
+    }
   }
 }
