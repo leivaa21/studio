@@ -22,3 +22,6 @@
 ## [ Docker Volumes ] ##
 
 .volumes
+
+## [ JEST ] ##
+**/coverage
