@@ -9,7 +9,8 @@
     "dev": "NODE_ENV=dev ts-node-dev src",
     "prod": "yarn build && yarn start",
     "lint": "eslint './src/**' && prettier .",
-    "lint:fix": "eslint './src/**' --fix && prettier --write ."
+    "lint:fix": "eslint './src/**' --fix && prettier --write .",
+    "test": "jest ."
   },
   "dependencies": {
     "@studio/api-utils": "workspace:packages/api-utils",
@@ -26,6 +27,7 @@
     "uuid-validate": "^0.0.3"
   },
   "devDependencies": {
+    "@faker-js/faker": "^7.6.0",
     "@types/bcrypt": "^5.0.0",
     "@types/body-parser": "^1.19.2",
     "@types/express": "^4.17.14",
