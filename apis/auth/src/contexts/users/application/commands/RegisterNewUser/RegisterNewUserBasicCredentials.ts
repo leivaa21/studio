@@ -10,6 +10,7 @@ import { UserEmail } from '../../../domain/UserEmail';
 import { UserNickname } from '../../../domain/UserNickname';
 import { UserPassword } from '../../../domain/UserPassword';
 import { UserRepository } from '../../../domain/UserRepository';
+import { MongoUserRepository } from '../../../infrastructure/persistance/mongo/MongoUserRepository';
 
 export interface RegisterNewUserBasicCredentialsCommand {
   nickname: string;
@@ -18,7 +19,7 @@ export interface RegisterNewUserBasicCredentialsCommand {
 }
 
 @Injectable({
-  dependencies: [],
+  dependencies: [MongoUserRepository, InMemoryAsyncEventBus],
 })
 export class RegisterNewUserBasicCredentials extends CommandHandler<RegisterNewUserBasicCredentialsCommand> {
   private readonly userFinder: UserFinder;
