@@ -10,7 +10,17 @@ export class UserSchemaFactory implements EntitySchemaFactory<UserData, User> {
     return { _id, ...rest };
   }
   createEntityFromSchema(schema: UserData): User {
-    const { _id: id, ...rest } = schema;
-    return User.fromPrimitives({ id, ...rest });
+    return User.fromPrimitives({
+      id: schema._id,
+      nickname: schema.nickname,
+      credentials: {
+        type: schema.credentials.type,
+        email: schema.credentials.email,
+        password: schema.credentials.password,
+      },
+      verified: schema.verified,
+      createdAt: schema.createdAt,
+      updatedAt: schema.updatedAt,
+    });
   }
 }
