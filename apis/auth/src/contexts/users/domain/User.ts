@@ -4,6 +4,7 @@ import {
   UserBasicCredentials,
   UserBasicCredentialAsPrimitives,
 } from './UserBasicCredentials';
+import { UserEmail } from './UserEmail';
 import { UserId } from './UserId';
 import { UserNickname } from './UserNickname';
 
@@ -33,7 +34,7 @@ export class User extends AggregateRoot {
   private readonly _createdAt: Date;
   private _updatedAt: Date;
 
-  private constructor(args: UserArgs) {
+  public constructor(args: UserArgs) {
     super();
     const { id, nickname, credentials, verified, createdAt, updatedAt } = args;
     this._id = id;
@@ -96,6 +97,9 @@ export class User extends AggregateRoot {
   }
   get nickname(): UserNickname {
     return this._nickname;
+  }
+  get email(): UserEmail {
+    return this._credentials.email;
   }
   get isVerified(): boolean {
     return this._verified;
