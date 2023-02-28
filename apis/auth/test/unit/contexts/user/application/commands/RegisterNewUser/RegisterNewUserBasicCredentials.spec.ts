@@ -5,6 +5,7 @@ import { InvalidUserException } from '../../../../../../../src/contexts/users/do
 import { UserBuilder } from '../../../../../../helpers/builders/user/UserBuilder';
 import { StringMother } from '../../../../../../helpers/object-mother/StringMother';
 import { EmailMother } from '../../../../../../helpers/object-mother/UserEmailMother';
+import { InvalidUserNickname } from '../../../../../../contexts/users/domain/exceptions/InvalidUserNickname';
 
 describe('Register New User with Basic Credentials', () => {
   it('Should create a valid user', () => {
@@ -24,7 +25,36 @@ describe('Register New User with Basic Credentials', () => {
       userRepository.findByEmail(UserEmail.of(command.email))
     ).toBeDefined();
   });
+  it('Should not create a user with invalid nickname (shorter than min)', async () => {
+    const command = {
+      nickname: StringMother.random({ maxLength: 2, minLength: 1 }),
+      email: EmailMother.random().value,
+      password: StringMother.random({ maxLength: 16, minLength: 10 }),
+    };
 
+    const userRepository = new InMemoryUserRepository([]);
+
+    const useCase = new RegisterNewUserBasicCredentials(userRepository);
+
+    await expect(() => useCase.execute(command)).rejects.toThrow(
+      InvalidUserNickname
+    );
+  });
+  it('Should not create a user with invalid nickname (larger than max)', async () => {
+    const command = {
+      nickname: StringMother.random({ maxLength: 20, minLength: 17 }),
+      email: EmailMother.random().value,
+      password: StringMother.random({ maxLength: 16, minLength: 10 }),
+    };
+
+    const userRepository = new InMemoryUserRepository([]);
+
+    const useCase = new RegisterNewUserBasicCredentials(userRepository);
+
+    await expect(() => useCase.execute(command)).rejects.toThrow(
+      InvalidUserNickname
+    );
+  });
   it('Should not create a user with an email that is already in use', async () => {
     const command = {
       nickname: StringMother.random({ maxLength: 16, minLength: 8 }),
