@@ -25,7 +25,7 @@ export class RegisterNewUserBasicCredentials extends CommandHandler<RegisterNewU
 
   constructor(
     private readonly userRepository: UserRepository,
-    eventBus: EventBus
+    eventBus?: EventBus
   ) {
     super(eventBus);
     this.userFinder = new UserFinder(userRepository);
