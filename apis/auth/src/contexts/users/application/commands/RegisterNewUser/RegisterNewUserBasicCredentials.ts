@@ -1,7 +1,7 @@
 import { Injectable } from '@studio/dependency-injection';
 import { CommandHandler } from '../../../../shared/application/CommandHandler';
 import { EventBus } from '../../../../shared/domain/EventBus';
-import { InMemoryAsyncEventBus } from '../../../../shared/domain/EventBus/InMemoryAsyncEventBus';
+import { InMemoryAsyncEventBus } from '../../../../shared/infrastructure/EventBus/InMemoryAsyncEventBus';
 import { InvalidUserException } from '../../../domain/exceptions/UserInvalid';
 import { UserFinder } from '../../../domain/services/UserFinder';
 import { User } from '../../../domain/User';
