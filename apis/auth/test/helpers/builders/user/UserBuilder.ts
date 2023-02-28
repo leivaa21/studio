@@ -11,12 +11,13 @@ import { Builder } from '../builder';
 
 export class UserBuilder implements Builder<User> {
   public email?: string;
+  public nickname?: string;
   public build(): User {
     const createdAt = DateMother.now();
     return new User({
       id: UserId.random(),
       nickname: UserNickname.of(
-        StringMother.random({ minLength: 8, maxLength: 10 })
+        this.nickname || StringMother.random({ minLength: 8, maxLength: 10 })
       ),
       credentials: UserBasicCredentials.of({
         email: this.email ? UserEmail.of(this.email) : EmailMother.random(),
@@ -31,6 +32,10 @@ export class UserBuilder implements Builder<User> {
   }
   public withEmail(email: string): UserBuilder {
     this.email = email;
+    return this;
+  }
+  public withNickname(nickname: string): UserBuilder {
+    this.nickname = nickname;
     return this;
   }
 }
