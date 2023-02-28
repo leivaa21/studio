@@ -55,6 +55,9 @@ export class User extends AggregateRoot {
 
     const userWasCreatedEvent = UserWasCreatedEvent.fromPrimitives({
       aggregateId: userId.value,
+      attributes: {
+        credentialsType: 'BASIC',
+      },
     });
 
     const user = new User({
