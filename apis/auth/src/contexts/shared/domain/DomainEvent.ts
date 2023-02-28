@@ -12,7 +12,7 @@ export abstract class DomainEvent {
     args: BaseDomainEventArgs & { attributes: any }
   ) => DomainEvent;
 
-  readonly aggreagateId: string;
+  readonly aggregateId: string;
   readonly eventId: string;
   readonly ocurredOn: Date;
   readonly eventName: string;
@@ -23,7 +23,7 @@ export abstract class DomainEvent {
     const { eventName, aggregateId, eventId, ocurredOn } = args;
 
     this.eventName = eventName;
-    this.aggreagateId = aggregateId;
+    this.aggregateId = aggregateId;
     this.eventId = eventId || UUID.random().value;
     this.ocurredOn = ocurredOn || new Date();
   }

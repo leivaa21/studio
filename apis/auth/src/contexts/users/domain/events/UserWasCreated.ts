@@ -33,7 +33,7 @@ export class UserWasCreatedEvent extends DomainEvent {
     ocurredOn: Date;
   } {
     return {
-      aggregateId: this.aggreagateId,
+      aggregateId: this.aggregateId,
       eventId: this.eventId,
       ocurredOn: this.ocurredOn,
     };
