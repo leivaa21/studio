@@ -1,8 +1,9 @@
 import { ValueObject } from '../../shared/domain/valueObjects/ValueObject';
-import { UserNicknameLenghtExceeded } from './exceptions/UserNicknameLengthExceeded';
+import { InvalidUserNickname } from './exceptions/InvalidUserNickname';
 
 export class UserNickname extends ValueObject<string> {
   static MAX_LENGTH = 16;
+  static MIN_LENGTH = 3;
   public constructor(value: string) {
     super(value);
     this.assertLength();
@@ -12,7 +13,10 @@ export class UserNickname extends ValueObject<string> {
   }
   assertLength(): void {
     if (this.value.length > UserNickname.MAX_LENGTH) {
-      throw new UserNicknameLenghtExceeded(this.value);
+      throw InvalidUserNickname.causeMaxLengthExceded(this.value);
+    }
+    if (this.value.length < UserNickname.MIN_LENGTH) {
+      throw InvalidUserNickname.causeMinLengthNotReached(this.value);
     }
   }
 }
