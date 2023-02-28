@@ -1,7 +1,10 @@
-import { Exception } from '../../../shared/domain/exceptions/Exception';
+import {
+  Exception,
+  ExceptionKind,
+} from '../../../shared/domain/exceptions/Exception';
 
 export class InvalidUserException extends Error implements Exception {
-  readonly kind: string = 'BAD_REQUEST';
+  readonly kind: ExceptionKind = 'BAD_REQUEST';
 
   constructor(message: string) {
     super(message);

@@ -1,7 +1,10 @@
-import { Exception } from '../../../shared/domain/exceptions/Exception';
+import {
+  Exception,
+  ExceptionKind,
+} from '../../../shared/domain/exceptions/Exception';
 
 export class UserNotFoundException extends Error implements Exception {
-  readonly kind: string = 'NOT_FOUND';
+  readonly kind: ExceptionKind = 'NOT_FOUND';
 
   constructor(message: string) {
     super(message);

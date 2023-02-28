@@ -1,3 +1,4 @@
+import './mapping';
 import { configMongoose, connectToMongo } from './mongo/connection';
 import { createExpressServer } from 'routing-controllers';
 import 'reflect-metadata';

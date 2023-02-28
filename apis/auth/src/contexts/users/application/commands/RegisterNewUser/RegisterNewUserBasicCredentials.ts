@@ -12,10 +12,15 @@ import { UserPassword } from '../../../domain/UserPassword';
 import { UserRepository } from '../../../domain/UserRepository';
 import { MongoUserRepository } from '../../../infrastructure/persistance/mongo/MongoUserRepository';
 
-export interface RegisterNewUserBasicCredentialsCommand {
-  nickname: string;
-  email: string;
-  password: string;
+export class RegisterNewUserBasicCredentialsCommand {
+  public readonly nickname: string;
+  public readonly email: string;
+  public readonly password: string;
+  constructor(args: { nickname: string; email: string; password: string }) {
+    this.nickname = args.nickname;
+    this.email = args.email;
+    this.password = args.password;
+  }
 }
 
 @Injectable({
@@ -45,7 +50,6 @@ export class RegisterNewUserBasicCredentials extends CommandHandler<RegisterNewU
     await this.verifyEmailIsNotAlreadyInUse(email);
 
     const nickname = UserNickname.of(plainNickname);
-
     await this.verifyNicknameIsNotAlreadyInUse(nickname);
 
     const password = UserPassword.of(plainPassword);
