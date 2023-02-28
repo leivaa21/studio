@@ -7,6 +7,7 @@ import {
 import { UserEmail } from './UserEmail';
 import { UserId } from './UserId';
 import { UserNickname } from './UserNickname';
+import { UserPassword } from './UserPassword';
 
 interface UserArgs {
   id: UserId;
@@ -74,6 +75,19 @@ export class User extends AggregateRoot {
     return this._credentials.doMatch(plainEmail, plainPassword);
   }
 
+  public static fromPrimitives(args: UserAsPrimitives) {
+    return new User({
+      id: UserId.of(args.id),
+      nickname: UserNickname.of(args.nickname),
+      credentials: UserBasicCredentials.of({
+        email: UserEmail.of(args.credentials.email),
+        password: UserPassword.of(args.credentials.password),
+      }),
+      verified: args.verified,
+      createdAt: args.createdAt,
+      updatedAt: args.updatedAt,
+    });
+  }
   public toPrimitives(): UserAsPrimitives {
     return {
       id: this._id.value,

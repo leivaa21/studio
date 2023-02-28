@@ -7,6 +7,9 @@ export class UUID extends ValueObject<string> {
   static random(): UUID {
     return new UUID(uuid());
   }
+  static of(value: string): UUID {
+    return new this(value);
+  }
 
   constructor(value: string) {
     super(value);
