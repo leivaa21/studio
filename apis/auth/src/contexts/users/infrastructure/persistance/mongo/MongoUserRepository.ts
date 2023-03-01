@@ -29,7 +29,7 @@ export class MongoUserRepository
   }
   async findByEmail(email: UserEmail): Promise<Nullable<User>> {
     const document = await this.model().findOne<UserData>({
-      credentials: { email: email.value },
+      'credentials.email': email.value,
     });
     if (!document) return null;
     return this.entitySchemaFactory.createEntityFromSchema(document);
