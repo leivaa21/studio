@@ -1,28 +1,24 @@
-@import '../../../../config/colors';
+@import "../../../../config/colors";
 
 .base {
   border: 0;
-  border-radius: 0;
+  border-radius: 0.8rem;
   text-transform: uppercase;
   font-weight: 700;
-  padding: .5em 2em;
-  transition: all .25s ease-out;
+  padding: 0.5em 2em;
+  transition: all 0.25s ease-out;
 
   &.type-Primary {
     background-color: $primary;
-    color: $bright-text-primary;
+    color: $dark-text-primary;
   }
   &.type-Secondary {
     background-color: $secondary;
-    color: $bright-text-primary
-  }
-  &.type-Tertiary {
-    background-color: $tertiary;
-    color: $bright-text-primary
+    color: $dark-text-primary;
   }
   &.type-Cancel {
     background-color: $cancel;
-    color: $bright-text-primary
+    color: $bright-text-primary;
   }
 
   &.size-Small {
@@ -36,9 +32,7 @@
   &.size-Large {
     font-size: 2rem;
   }
-
 }
-
 
 .base:hover {
   cursor: pointer;
@@ -48,9 +42,6 @@
   }
   &.type-Secondary {
     background-color: $secondary-active;
-  }
-  &.type-Tertiary {
-    background-color: $tertiary-active;
   }
   &.type-Cancel {
     background-color: $cancel-active;
