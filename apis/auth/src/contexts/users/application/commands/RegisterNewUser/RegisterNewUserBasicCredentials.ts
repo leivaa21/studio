@@ -71,9 +71,7 @@ export class RegisterNewUserBasicCredentials extends CommandHandler<RegisterNewU
   }
 
   private async verifyEmailIsNotAlreadyInUse(email: UserEmail) {
-    const userWithSameEmail = await this.userFinder.findByEmailOrUndefined(
-      email
-    );
+    const userWithSameEmail = await this.userFinder.findByEmailOrNull(email);
 
     if (userWithSameEmail) {
       throw InvalidUserException.causeEmailIsAlreadyInUse(email.value);
@@ -81,8 +79,9 @@ export class RegisterNewUserBasicCredentials extends CommandHandler<RegisterNewU
   }
 
   private async verifyNicknameIsNotAlreadyInUse(nickname: UserNickname) {
-    const userWithSameNickname =
-      await this.userFinder.findByNicknameOrUndefined(nickname);
+    const userWithSameNickname = await this.userFinder.findByNicknameOrNull(
+      nickname
+    );
 
     if (userWithSameNickname) {
       throw InvalidUserException.causeNicknameIsAlreadyInUse(nickname.value);

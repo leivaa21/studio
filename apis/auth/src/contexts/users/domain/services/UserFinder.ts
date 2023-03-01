@@ -1,3 +1,4 @@
+import { Nullable } from '../../../shared/domain/Nullable';
 import { UserNotFoundException } from '../exceptions/UserNotFound';
 import { User } from '../User';
 import { UserEmail } from '../UserEmail';
@@ -7,15 +8,13 @@ import { UserRepository } from '../UserRepository';
 
 export class UserFinder {
   constructor(private readonly userRepository: UserRepository) {}
-  public async findByEmailOrUndefined(
-    email: UserEmail
-  ): Promise<User | undefined> {
+  public async findByEmailOrNull(email: UserEmail): Promise<Nullable<User>> {
     const userFound = await this.userRepository.findByEmail(email);
     return userFound;
   }
-  public async findByNicknameOrUndefined(
+  public async findByNicknameOrNull(
     nickname: UserNickname
-  ): Promise<User | undefined> {
+  ): Promise<Nullable<User>> {
     const userFound = await this.userRepository.findByNickname(nickname);
     return userFound;
   }
