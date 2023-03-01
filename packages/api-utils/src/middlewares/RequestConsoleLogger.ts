@@ -3,10 +3,10 @@ import { ok, warn } from "../loggers/console";
 
 function RequestConsoleLogger(req: Request, res: Response, next: NextFunction) {
 
-  const startTime = new Date().getMilliseconds();
+  const startTime = new Date().getTime();
 
-  req.on('end', () => {
-    const endTime = new Date().getMilliseconds();
+  res.on('finish', () => {
+    const endTime = new Date().getTime();
     if (res.statusCode.toString().startsWith('2') || res.statusCode === 304) {
       ok(`${req.method} ${req.path} ${res.statusCode} - ${endTime - startTime}ms`)    
     }
