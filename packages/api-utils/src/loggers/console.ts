@@ -1,21 +1,29 @@
+import { Colors } from "./colors";
+
+function formatTag(text: string, color: string) {
+  return `[${color}${text}${Colors.reset}]`;
+}
 
 function info(msg: string) {
-  console.info(`[INFO] ${msg}`)
+  const tag = formatTag('INFO', Colors.cyan);
+  console.info(`${tag} ${msg}`)
 }
 function log(msg: string) {
-  console.log(`[LOG] ${msg}`)
+		const tag = formatTag('LOG', Colors.orange);
+    console.info(`${tag} ${msg}`)
 }
 function ok(msg: string) {
-  console.log(`[OK] ${msg}`)
+		const tag = formatTag('OK', Colors.green);
+    console.info(`${tag} ${msg}`)
 }
 function error(msg: string) {
-  console.error(`[ERROR] ${msg}`)
+		const tag = formatTag('ERROR', Colors.red);
+    console.info(`${tag} ${msg}`)
 }
 function warn(msg: string) {
-  console.warn(`[WARN] ${msg}`)
+		const tag = formatTag('WARN', Colors.yellow);
+    console.info(`${tag} ${msg}`)
 }
-
-
 
 const consoleLogger = {
   info,
