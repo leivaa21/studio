@@ -1,9 +1,8 @@
-@import '../../../config/colors';
+@import "../../../config/colors";
 
 .base {
   display: flex;
   flex-direction: column;
-  border: 1px solid black;
   border-right: 5px solid $secondary;
   padding: 1em;
 
@@ -20,55 +19,65 @@
       font-weight: 400;
       text-transform: uppercase;
       text-align: center;
-    
+
       &::selection,
       *::selection {
         background-color: $secondary;
         color: $bright-text-primary;
       }
-
     }
     margin-bottom: 3em;
   }
 
   .body {
-    
     display: flex;
     flex-direction: column;
     align-items: center;
 
     .textInput {
-      margin: .5em;
+      margin: 0.5em;
       border: none;
-      border-bottom: .25em solid $bright-placeholder;
-      
+      border-bottom: 0.25em solid $bright-placeholder;
+
       background: rgba(204, 204, 204, 0.18823529411764706);
       backdrop-filter: blur(3.6px);
       -webkit-backdrop-filter: blur(3.6px);
-      
+
       font-size: 1.3em;
-      padding: .5em;
+      padding: 0.5em;
 
       max-width: 100%;
 
-      transition: all .5s ease-out;
+      transition: all 0.5s ease-out;
 
       &:focus {
         $_startColor: #ffffff00;
         $_endColor: $primary-mask;
         outline: none;
-        
-        border-bottom: .25em solid $primary;
 
-        background: rgba(255,255,255,0);
+        border-bottom: 0.25em solid $primary;
+
+        background: rgba(255, 255, 255, 0);
         background: -moz-linear-gradient(top, $_startColor 0%, $_endColor 100%);
-        background: -webkit-gradient(left top, left bottom, color-stop(0%, $_startColor), color-stop(100%, $_endColor));
-        background: -webkit-linear-gradient(top, $_startColor 0%, $_endColor 100%);
+        background: -webkit-gradient(
+          left top,
+          left bottom,
+          color-stop(0%, $_startColor),
+          color-stop(100%, $_endColor)
+        );
+        background: -webkit-linear-gradient(
+          top,
+          $_startColor 0%,
+          $_endColor 100%
+        );
         background: -o-linear-gradient(top, $_startColor 0%, $_endColor 100%);
         background: -ms-linear-gradient(top, $_startColor 0%, $_endColor 100%);
-        background: linear-gradient(to bottom, $_startColor 0%, $_endColor 100%);
+        background: linear-gradient(
+          to bottom,
+          $_startColor 0%,
+          $_endColor 100%
+        );
         filter: progid:DXImageTransform.Microsoft.gradient( startColorstr=$_startColor, endColorstr=$_endColor, GradientType=0 );
-
       }
       &::selection,
       *::selection {
@@ -98,6 +107,4 @@
       }
     }
   }
-
-
 }

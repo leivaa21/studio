@@ -18,7 +18,7 @@ export default {
       control: 'select',
       description: 'Type of the button',
       defaultValue: {summary: 'Primary'},
-      options: ['Primary', 'Secondary', 'Tertiary', 'Cancel']
+      options: ['Primary', 'Secondary', 'Cancel']
     },
     Size: {
       control: 'select',
@@ -45,6 +45,13 @@ export const Secondary = Template.bind({});
 Secondary.args = {
   Label: 'Button',
   Type: 'Secondary',
+  Size: 'Medium',
+};
+
+export const Cancel = Template.bind({});
+Cancel.args = {
+  Label: 'Button',
+  Type: 'Cancel',
   Size: 'Medium',
 };
 
