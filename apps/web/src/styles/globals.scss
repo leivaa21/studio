@@ -1,9 +1,15 @@
+@import "./colors";
 html,
 body {
   padding: 0;
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
     Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
+}
+
+body {
+  color: $dark-text-primary;
+  background: $white-background;
 }
 
 a {
@@ -20,7 +26,7 @@ a {
     color-scheme: dark;
   }
   body {
-    color: white;
-    background: black;
+    color: $bright-text-primary;
+    background: $dark-background;
   }
 }
