@@ -18,7 +18,6 @@ const Button = ({
 }: ButtonProps ) => {    
   
   const classes = `${styles.base} ${styles[`type-${Type}`]} ${styles[`size-${Size}`]}`;
-  console.log(classes);
   return (
     <button
       className={classes}
