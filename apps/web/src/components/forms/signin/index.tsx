@@ -8,7 +8,7 @@ export const SignInForm = () => {
   const [password, setPassword] = React.useState<string>('');
 
   return (
-    <Form style={{ width: '450px' }}>
+    <Form style={{ width: '100%' }}>
       <FormHeader>
         <h1><b>Join now</b> and get access to <b>all</b> the courses!🚀</h1>
       </FormHeader>
