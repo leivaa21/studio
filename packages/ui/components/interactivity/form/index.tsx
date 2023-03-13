@@ -8,12 +8,13 @@ import styles from './form.module.scss';
 interface FormProps extends React.FormHTMLAttributes<HTMLFormElement> {}
 const Form = ({
   children,
+  className,
   ...defaultProps
 }: FormProps) => {
   return (
     <form
       {...defaultProps}
-      className={styles.base}
+      className={`${className} ${styles.base}`}
     >
       {children}    
     </form>
