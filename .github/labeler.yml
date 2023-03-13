@@ -3,23 +3,28 @@ Auth:
   - apis/auth/*
   - packages/api-utils/**/*
   - packages/api-utils/*
+  - packages/commons/*
 Courses:
   - apis/courses/**/*
   - apis/coursesauth/*
   - packages/api-utils/**/*
   - packages/api-utils/*
+  - packages/commons/*
 Profiles:
   - apis/profiles/**/*
   - apis/profilesauth/*
   - packages/api-utils/**/*
   - packages/api-utils/*
+  - packages/commons/*
 Web:
   - apps/web/**/*
   - apps/web/*
   - packages/ui/**/*
   - packages/ui/*
+  - packages/commons/*
 Storybook:
   - apps/storybook/**/*
   - apps/storybook/*
   - packages/ui/**/*
   - packages/ui/*
+  - packages/commons/*
