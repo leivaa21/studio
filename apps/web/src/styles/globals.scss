@@ -10,7 +10,7 @@ body {
 body {
   color: $dark-text-primary;
   background: $white-background;
-  --max-width: 1600px;
+  --max-width: 1400px;
 }
 
 a {
@@ -22,10 +22,14 @@ a {
   box-sizing: border-box;
 }
 
+main {
+  position: relative;
+  border: 1px solid transparent; // hack para colocar bien el logobar (idk por qué)
+}
+
 .maxWidthWrapper {
   margin: auto;
   max-width: var(--max-width);
-  overflow: hidden;
 }
 
 ul.no-dotted-list {
