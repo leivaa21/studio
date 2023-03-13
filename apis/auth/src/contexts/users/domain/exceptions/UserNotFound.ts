@@ -1,7 +1,7 @@
 import {
   Exception,
   ExceptionKind,
-} from '../../../shared/domain/exceptions/Exception';
+} from '@studio/commons/dist/contexts/shared/domain/exceptions/Exception';
 
 export class UserNotFoundException extends Error implements Exception {
   readonly kind: ExceptionKind = 'NOT_FOUND';

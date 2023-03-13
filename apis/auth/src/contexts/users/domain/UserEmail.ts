@@ -1,7 +1,3 @@
-import { ValueObject } from '../../shared/domain/valueObjects/ValueObject';
+import { Email } from '@studio/commons/dist/contexts/shared/domain/Email';
 
-export class UserEmail extends ValueObject<string> {
-  public static of(value: string): UserEmail {
-    return new UserEmail(value);
-  }
-}
+export class UserEmail extends Email {}

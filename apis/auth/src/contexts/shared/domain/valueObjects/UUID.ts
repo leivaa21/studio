@@ -1,7 +1,7 @@
-import { ValueObject } from './ValueObject';
+import { ValueObject } from '@studio/commons/dist/contexts/shared/domain/ValueObject';
 import validate from 'uuid-validate';
 import { v4 as uuid } from 'uuid';
-import { InvalidArgumentException } from '../exceptions/InvalidArgumentException';
+import { InvalidArgumentException } from '@studio/commons/dist/contexts/shared/domain/exceptions/InvalidArgumentException';
 
 export class UUID extends ValueObject<string> {
   static random(): UUID {
