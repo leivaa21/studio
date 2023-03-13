@@ -1,8 +1,8 @@
 import { Injectable } from '@studio/dependency-injection';
 import EventEmitter from 'events';
-import { DomainEvent } from '../DomainEvent';
-import { DomainEventSubscriber } from '../DomainEventSubscriber';
-import { EventBus } from '../EventBus';
+import { DomainEvent } from '../../domain/DomainEvent';
+import { DomainEventSubscriber } from '../../domain/DomainEventSubscriber';
+import { EventBus } from '../../domain/EventBus';
 
 @Injectable()
 export class InMemoryAsyncEventBus extends EventEmitter implements EventBus {

@@ -1,8 +1,13 @@
+import './mapping';
+import { configMongoose, connectToMongo } from './mongo/connection';
 import { createExpressServer } from 'routing-controllers';
 import 'reflect-metadata';
 import { info } from '@studio/api-utils/loggers/console';
 import { EarlyMiddlewares, LateMiddlewares } from './middlewares';
 import { Controllers } from './controllers';
+
+configMongoose();
+connectToMongo();
 
 const port = 5000;
 

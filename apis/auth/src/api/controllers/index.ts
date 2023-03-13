@@ -1,5 +1,6 @@
+import { UserPostController } from './user/UserPostController';
 import { HealthController } from './_health';
 
-const Controllers = [HealthController];
+const Controllers = [HealthController, UserPostController];
 
 export { Controllers };
