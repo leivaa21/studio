@@ -1,7 +1,7 @@
 import {
   Exception,
   ExceptionKind,
-} from '../../../shared/domain/exceptions/Exception';
+} from '@studio/commons/dist/contexts/shared/domain/exceptions/Exception';
 
 export class InvalidUserException extends Error implements Exception {
   readonly kind: ExceptionKind = 'BAD_REQUEST';

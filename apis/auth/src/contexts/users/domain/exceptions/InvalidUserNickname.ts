@@ -1,7 +1,7 @@
 import {
   Exception,
   ExceptionKind,
-} from '../../../shared/domain/exceptions/Exception';
+} from '@studio/commons/dist/contexts/shared/domain/exceptions/Exception';
 import { UserNickname } from '../UserNickname';
 
 export class InvalidUserNickname extends Error implements Exception {
