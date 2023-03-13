@@ -3979,6 +3979,15 @@ __metadata:
   languageName: unknown
   linkType: soft
 
+"@studio/commons@workspace:packages/commons":
+  version: 0.0.0-use.local
+  resolution: "@studio/commons@workspace:packages/commons"
+  dependencies:
+    "@types/node": ^18.11.9
+    typescript: ^4.9.3
+  languageName: unknown
+  linkType: soft
+
 "@studio/courses@workspace:apis/courses":
   version: 0.0.0-use.local
   resolution: "@studio/courses@workspace:apis/courses"
