@@ -5,7 +5,7 @@ import {
   Middleware,
   ExpressErrorMiddlewareInterface,
 } from 'routing-controllers';
-import { Exception } from '../../../contexts/shared/domain/exceptions/Exception';
+import { Exception } from '@studio/commons/dist/contexts/shared/domain/exceptions/Exception';
 
 @Middleware({ priority: 0, type: 'after' })
 export class CustomErrorHandler implements ExpressErrorMiddlewareInterface {
