@@ -17,12 +17,15 @@ export class CustomErrorHandler implements ExpressErrorMiddlewareInterface {
     const isErrorLaunchedFromDomain =
       (error as unknown as ApiError).kind !== undefined;
     if (isErrorLaunchedFromDomain) {
-      const domainException = error as unknown as ApiError;
-      response.status(StatusCode[domainException.kind] || 400).json({
-        message: domainException.message,
-        status: StatusCode[domainException.kind] || 400,
-        type: domainException.kind,
-      });
+      const domainError = error as unknown as ApiError;
+      response
+        .status(StatusCode[domainError.kind] || StatusCode.BAD_REQUEST)
+        .json({
+          message: domainError.message,
+          apiStatus: StatusCode[domainError.kind] || StatusCode.BAD_REQUEST,
+          errorCode: domainError.errorCode,
+          kind: domainError.kind,
+        });
     } else {
       ErrorHandler(error, request, response, next);
     }
