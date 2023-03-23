@@ -1,5 +1,5 @@
 import { Nullable } from '../../../shared/domain/Nullable';
-import { UserNotFoundException } from '../exceptions/UserNotFound';
+import { UserNotFoundError } from '../errors/UserNotFound';
 import { User } from '../User';
 import { UserEmail } from '../UserEmail';
 import { UserId } from '../UserId';
@@ -21,7 +21,7 @@ export class UserFinder {
   public async findByIdOrThrow(id: UserId): Promise<User> {
     const userFound = await this.userRepository.findById(id);
     if (!userFound) {
-      throw UserNotFoundException.searchedById(id.value);
+      throw UserNotFoundError.searchedById(id.value);
     }
     return userFound;
   }

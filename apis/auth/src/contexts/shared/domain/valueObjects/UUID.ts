@@ -1,7 +1,7 @@
 import { ValueObject } from '@studio/commons/dist/contexts/shared/domain/ValueObject';
 import validate from 'uuid-validate';
 import { v4 as uuid } from 'uuid';
-import { InvalidArgumentException } from '@studio/commons/dist/contexts/shared/domain/exceptions/InvalidArgumentException';
+import { InvalidArgumentError } from '@studio/commons/dist/contexts/shared/domain/errors/InvalidArgumentError';
 
 export class UUID extends ValueObject<string> {
   static random(): UUID {
@@ -18,6 +18,6 @@ export class UUID extends ValueObject<string> {
 
   private ensureIsValidUUID(id: string): void {
     if (!validate(id, 4))
-      throw new InvalidArgumentException(this.constructor.name, id);
+      throw new InvalidArgumentError(this.constructor.name, id);
   }
 }

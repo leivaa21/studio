@@ -1,4 +1,5 @@
-import { ExceptionKind } from '@studio/commons/dist/contexts/shared/domain/exceptions/Exception';
+import { ErrorKind } from '@studio/commons/dist/contexts/shared/domain/errors/ApiError';
+
 export class BadRequestException extends Error {
-  public readonly kind: ExceptionKind = 'BAD_REQUEST';
+  public readonly kind: ErrorKind = 'BAD_REQUEST';
 }

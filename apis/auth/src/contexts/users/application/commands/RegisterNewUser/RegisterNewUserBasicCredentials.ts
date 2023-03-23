@@ -2,7 +2,7 @@ import { Injectable } from '@studio/dependency-injection';
 import { CommandHandler } from '../../../../shared/application/CommandHandler';
 import { EventBus } from '../../../../shared/domain/EventBus';
 import { InMemoryAsyncEventBus } from '../../../../shared/infrastructure/EventBus/InMemoryAsyncEventBus';
-import { InvalidUserException } from '../../../domain/exceptions/UserInvalid';
+import { InvalidUserError } from '../../../domain/errors/UserInvalid';
 import { UserFinder } from '../../../domain/services/UserFinder';
 import { User } from '../../../domain/User';
 import { UserBasicCredentials } from '../../../domain/UserBasicCredentials';
@@ -74,7 +74,7 @@ export class RegisterNewUserBasicCredentials extends CommandHandler<RegisterNewU
     const userWithSameEmail = await this.userFinder.findByEmailOrNull(email);
 
     if (userWithSameEmail) {
-      throw InvalidUserException.causeEmailIsAlreadyInUse(email.value);
+      throw InvalidUserError.causeEmailIsAlreadyInUse(email.value);
     }
   }
 
@@ -84,7 +84,7 @@ export class RegisterNewUserBasicCredentials extends CommandHandler<RegisterNewU
     );
 
     if (userWithSameNickname) {
-      throw InvalidUserException.causeNicknameIsAlreadyInUse(nickname.value);
+      throw InvalidUserError.causeNicknameIsAlreadyInUse(nickname.value);
     }
   }
 }
