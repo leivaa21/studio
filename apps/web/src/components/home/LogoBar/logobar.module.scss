@@ -1,0 +1,23 @@
+.base {
+  display: flex;
+  position: fixed;
+  top: 1;
+  flex: 1;
+  width: 100%;
+  max-height: 5rem;
+  flex-direction: row;
+  padding: 1rem;
+  z-index: 10;
+}
+
+.logoWrapper {
+  --height: 2rem;
+  position: relative;
+  height: var(--height);
+  width: calc(5 * var(--height));
+}
+
+.logo {
+  height: 2rem;
+  object-fit: "contain";
+}
