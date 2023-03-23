@@ -1,4 +1,4 @@
-import { UndefinedArgumentException } from './exceptions/UndefinedArgumentException';
+import { UndefinedArgumentError } from './errors/UndefinedArgumentError';
 
 export type Primitives = string | number | boolean | Date;
 
@@ -6,7 +6,7 @@ export class ValueObject<T extends Primitives> {
   
   public constructor(public readonly value: T) {
     if (value === null || value === undefined) {
-      throw new UndefinedArgumentException(this.constructor.name);
+      throw new UndefinedArgumentError(this.constructor.name);
     }
   }
 
