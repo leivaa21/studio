@@ -4222,6 +4222,9 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@studio/web@workspace:apps/web"
   dependencies:
+    "@studio/api-utils": "workspace:packages/api-utils"
+    "@studio/commons": "workspace:packages/commons"
+    "@studio/ui": "workspace:packages/ui"
     "@types/node": 18.11.10
     "@types/react": 18.0.26
     "@types/react-dom": 18.0.9

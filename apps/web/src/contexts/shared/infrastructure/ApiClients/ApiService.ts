@@ -1,6 +1,6 @@
 import { env } from "../../../../lib/env";
-import { ApiError } from "../../domain/errors/ApiError";
-
+import { ApiError } from '@studio/commons/dist/contexts/shared/domain/errors/ApiError';
+import { error } from '@studio/api-utils/loggers/console';
 type Method = 'POST' | 'GET'
 
 export abstract class ApiService {
@@ -47,15 +47,21 @@ export abstract class ApiService {
         return responseJson;
       }
       
-      throw new ApiError({
-        errorCode: responseJson.errorCode,
-        apiStatus: responseJson.status,
-        message: responseJson.message
-      })
+      if(responseJson.apiStatus) {
+        // Then is a ApiError
+        throw new ApiError(responseJson)
+      }
+      throw new Error(responseJson.message)
 
-    } catch(error) {
+    } catch(SomeError) {
+      if( typeof SomeError === 'string') {
+        error(SomeError);
+      }
+      if (typeof SomeError === 'object' && SomeError) {
+        error((SomeError as {message: string}).message)
+      }
 
-      throw error
+      throw SomeError;
     }
   }
 
