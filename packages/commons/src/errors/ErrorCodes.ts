@@ -1,4 +1,4 @@
-export const enum ErrorCodes {
+export enum ErrorCodes {
   InvalidCredential = 'auth.invalid-credentials',
   BadRequest = 'general.bad_request',
   InvalidPassword = 'auth.invalid-password',
