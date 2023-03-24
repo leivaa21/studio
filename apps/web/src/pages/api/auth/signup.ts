@@ -1,12 +1,8 @@
 import { NextApiRequest, NextApiResponse } from "next";
 import { SignUpRequest } from '@studio/commons/dist/contracts/auth/SignUpContracts';
+import { GetUserResponse } from '@studio/commons/dist/contracts/user/GetUserContracts';
 import { AuthApiService } from "../../../contexts/shared/infrastructure/ApiClients/AuthApiService";
-import { error } from "@studio/api-utils/loggers/console";
-import { ErrorCodes } from "@studio/commons/dist/errors/ErrorCodes";
-
-interface GetUserResponse {
-  id: string;
-}
+import { SafeControllerHandling } from "../../../lib/controllers/SafeControllerHandling";
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   if(req.method !== 'POST') {
@@ -26,31 +22,16 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     }
   }
 
-  await authApiService.post<SignUpRequest, void>(`/users/singup/basic`, request)
+  await SafeControllerHandling(res, async () => {
+    await authApiService.post<SignUpRequest, void>(`/users/singup/basic`, request)
 
-  const params = new Map([
-    ['email', body.credentials.email]
-  ])
-
-  try {
-    const user = await authApiService.get<GetUserResponse>('/usessr', params);
-
-    console.log(user);
+    const params = new Map([
+      ['email', body.credentials.email]
+    ])
   
-    res.status(200).send({})
-  }
-  catch(someError) {
-    if(typeof someError === 'string') {
-      error(someError)
-      res.status(500).send({
-        apiStatus: 500,
-        message: 'Unhandled Error',
-        errorCode: ErrorCodes.InternalServerError
-      })
-    }
-    if(typeof someError === 'object' && someError && (someError as {message: string}).message) {
-      error((someError as {message: string}).message)
-    }
-    console.log(someError)
-  }
+    const user = await authApiService.get<GetUserResponse>('/user', params);
+  
+    return res.status(201).send(user)
+  })
+
 }
