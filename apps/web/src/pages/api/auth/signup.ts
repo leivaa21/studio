@@ -1,6 +1,8 @@
 import { NextApiRequest, NextApiResponse } from "next";
 import { SignUpRequest } from '@studio/commons/dist/contracts/auth/SignUpContracts';
 import { AuthApiService } from "../../../contexts/shared/infrastructure/ApiClients/AuthApiService";
+import { error } from "@studio/api-utils/loggers/console";
+import { ErrorCodes } from "@studio/commons/dist/errors/ErrorCodes";
 
 interface GetUserResponse {
   id: string;
@@ -37,7 +39,18 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   
     res.status(200).send({})
   }
-  catch(error) {
-    console.log(error)
+  catch(someError) {
+    if(typeof someError === 'string') {
+      error(someError)
+      res.status(500).send({
+        apiStatus: 500,
+        message: 'Unhandled Error',
+        errorCode: ErrorCodes.InternalServerError
+      })
+    }
+    if(typeof someError === 'object' && someError && (someError as {message: string}).message) {
+      error((someError as {message: string}).message)
+    }
+    console.log(someError)
   }
 }
