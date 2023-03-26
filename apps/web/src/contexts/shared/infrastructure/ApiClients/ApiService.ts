@@ -11,11 +11,12 @@ export abstract class ApiService {
     protected readonly url: string
   ) {}
 
-  protected formatRequest<Data>(method: Method, data: Data): RequestInit {
+  protected formatRequest<Data>(method: Method, data: Data, authorizationToken?: string): RequestInit {
     return {
         method,
         headers: {
           "Content-Type": "application/json",
+          "Authorization": authorizationToken || '',
         },
         body: method === 'GET' ? undefined : JSON.stringify(data)
       }

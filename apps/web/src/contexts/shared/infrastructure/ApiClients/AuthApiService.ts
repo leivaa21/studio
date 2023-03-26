@@ -10,8 +10,8 @@ export class AuthApiService extends ApiService {
     const request = this.formatRequest<Data>('POST', data);
     return this.fetch<Response>(path, request);
   }
-  async get<Response>(path: string, params: Map<string, string>): Promise<Response> {
-    const request = this.formatRequest<{}>('GET', {});
+  async get<Response>(path: string, params: Map<string, string>, authorizationToken?: string): Promise<Response> {
+    const request = this.formatRequest<{}>('GET', {}, authorizationToken);
     return this.fetch<Response>(this.formatPathWithParams(path, params), request);
   }
 

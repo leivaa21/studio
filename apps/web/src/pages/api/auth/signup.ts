@@ -23,15 +23,17 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   }
 
   await SafeControllerHandling(res, async () => {
-    await authApiService.post<SignUpRequest, void>(`/users/singup/basic`, request)
+    const signupResponse = await authApiService.post<SignUpRequest, {message: string, token: string}>(`/auth/signup/basic`, request)
 
+    const { token } = signupResponse;
+    
     const params = new Map([
       ['email', body.credentials.email]
     ])
   
-    const user = await authApiService.get<GetUserResponse>('/user', params);
+    const user = await authApiService.get<GetUserResponse>('/auth/me', params, token);
   
-    return res.status(201).send(user)
+    return res.status(201).send({user, token})
   })
 
 }
