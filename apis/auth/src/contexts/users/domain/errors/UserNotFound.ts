@@ -13,4 +13,7 @@ export class UserNotFoundError extends ApiError {
   public static searchedById(id: string) {
     return new this(`User with id = <${id}> couldn't be found`);
   }
+  public static searchedByEmail(email: string) {
+    return new this(`User with email = <${email}> couldn't be found`);
+  }
 }
