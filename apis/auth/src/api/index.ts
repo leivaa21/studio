@@ -3,7 +3,6 @@ import { configMongoose, connectToMongo } from './mongo/connection';
 import { createExpressServer } from 'routing-controllers';
 import 'reflect-metadata';
 import { info } from '@studio/api-utils/loggers/console';
-import { EarlyMiddlewares, LateMiddlewares } from './middlewares';
 import { authorizationChecker } from './auth/authorizationChecker';
 import { currentUserChecker } from './auth/currentUserChecker';
 import './auth';
@@ -17,7 +16,7 @@ const { NODE_ENV } = process.env;
 
 createExpressServer({
   controllers: [`${__dirname}/controllers/**/*.{ts,js}`],
-  middlewares: [...EarlyMiddlewares, ...LateMiddlewares],
+  middlewares: [`${__dirname}/middlewares/**/*.{ts,js}`],
   interceptors: [],
   defaultErrorHandler: false,
   authorizationChecker: authorizationChecker,
