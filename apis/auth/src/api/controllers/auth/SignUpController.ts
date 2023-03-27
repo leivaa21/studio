@@ -1,5 +1,5 @@
 import { StatusCode } from '@studio/api-utils/http';
-import { DependencyContainer } from '@studio/dependency-injection';
+import { DependencyContainer, Injectable } from '@studio/dependency-injection';
 import { SignUpRequest } from '@studio/commons/dist/contracts/auth/SignUpContracts';
 import { JsonController, HttpCode, Post, Body } from 'routing-controllers';
 import { CommandBus } from '../../../contexts/shared/domain/CommandBus';
@@ -12,13 +12,19 @@ import { GetUserByEmailQuery } from '../../../contexts/users/application/queries
 import { User } from '../../../contexts/users/domain/User';
 import { signJwt } from '../../auth/signJwt';
 
+@Injectable({
+  dependencies: [InMemoryCommandBus, InMemoryQueryBus],
+})
 @JsonController('/auth/signup')
 export class SingUpController {
+  constructor(
+    private readonly commandBus: CommandBus,
+    private readonly queryBus: QueryBus
+  ) {}
+
   @Post('/basic')
   @HttpCode(StatusCode.CREATED)
   async registerWithBasicCredentials(@Body() body: SignUpRequest) {
-    const commandBus = DependencyContainer.get<CommandBus>(InMemoryCommandBus);
-
     const { nickname, credentials } = body;
 
     if (!nickname) {
@@ -31,7 +37,7 @@ export class SingUpController {
       throw new BadRequestException('Invalid credentials body');
     }
 
-    await commandBus.dispatch(
+    await this.commandBus.dispatch(
       new RegisterNewUserBasicCredentialsCommand({
         nickname: nickname,
         email: credentials.email,
@@ -44,9 +50,7 @@ export class SingUpController {
   }
 
   private async getJwtToken(email: string) {
-    const queryBus = DependencyContainer.get<QueryBus>(InMemoryQueryBus);
-
-    const user = await queryBus.dispatch<GetUserByEmailQuery, User>(
+    const user = await this.queryBus.dispatch<GetUserByEmailQuery, User>(
       new GetUserByEmailQuery({ email })
     );
 

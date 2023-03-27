@@ -1,11 +1,12 @@
 import './mapping';
 import { configMongoose, connectToMongo } from './mongo/connection';
-import { createExpressServer } from 'routing-controllers';
+import { createExpressServer, useContainer } from 'routing-controllers';
 import 'reflect-metadata';
 import { info } from '@studio/api-utils/loggers/console';
 import { authorizationChecker } from './auth/authorizationChecker';
 import { currentUserChecker } from './auth/currentUserChecker';
 import './auth';
+import { DependencyContainer } from '@studio/dependency-injection';
 
 configMongoose();
 connectToMongo();
@@ -13,6 +14,8 @@ connectToMongo();
 const port = 5000;
 
 const { NODE_ENV } = process.env;
+
+useContainer(DependencyContainer);
 
 createExpressServer({
   controllers: [`${__dirname}/controllers/**/*.{ts,js}`],

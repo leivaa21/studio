@@ -1,5 +1,6 @@
 import { StatusCode } from '@studio/api-utils/http';
 import { GetUserResponse } from '@studio/commons/dist/contracts/user/GetUserContracts';
+import { Injectable } from '@studio/dependency-injection';
 import {
   JsonController,
   HttpCode,
@@ -9,6 +10,7 @@ import {
 } from 'routing-controllers';
 import { AuthUser } from '../../auth/authUser';
 
+@Injectable()
 @JsonController('/auth')
 @Authorized()
 export class GetUserController {

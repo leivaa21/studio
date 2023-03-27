@@ -1,11 +1,14 @@
 import { StatusCode } from '@studio/api-utils/http';
 import { ErrorHandler } from '@studio/api-utils/middlewares';
 import { ApiError } from '@studio/commons/dist/contexts/shared/domain/errors/ApiError';
+import { Injectable } from '@studio/dependency-injection';
 import { NextFunction, Request, Response } from 'express';
 import {
   Middleware,
   ExpressErrorMiddlewareInterface,
 } from 'routing-controllers';
+
+@Injectable()
 @Middleware({ priority: 0, type: 'after' })
 export class CustomErrorHandler implements ExpressErrorMiddlewareInterface {
   error(
