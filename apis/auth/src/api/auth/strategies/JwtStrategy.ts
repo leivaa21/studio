@@ -1,3 +1,4 @@
+import { error } from '@studio/api-utils/loggers/console';
 import { DependencyContainer } from '@studio/dependency-injection';
 import passport from 'passport';
 import { Strategy as JwtStrategy, StrategyOptions } from 'passport-jwt';
@@ -16,10 +17,14 @@ passport.use(
   new JwtStrategy(opt, async (jwtPayload, cb) => {
     const queryBus = DependencyContainer.get<QueryBus>(InMemoryQueryBus);
 
-    const user = await queryBus.dispatch<GetUserByIdQuery, User>(
-      new GetUserByIdQuery({ id: jwtPayload.id })
-    );
-
-    cb(null, { id: user.id.value, nickname: user.nickname.value });
+    try {
+      const user = await queryBus.dispatch<GetUserByIdQuery, User>(
+        new GetUserByIdQuery({ id: jwtPayload.id })
+      );
+      cb(null, { id: user.id.value, nickname: user.nickname.value });
+    } catch (err) {
+      error((err as { message: string }).message);
+      cb(err, undefined);
+    }
   })
 );
