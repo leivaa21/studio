@@ -52,7 +52,7 @@ export class RegisterNewUserBasicCredentials extends CommandHandler<RegisterNewU
     const nickname = UserNickname.of(plainNickname);
     await this.verifyNicknameIsNotAlreadyInUse(nickname);
 
-    const password = UserPassword.of(plainPassword);
+    const password = UserPassword.new(plainPassword);
     const basicCredentials = UserBasicCredentials.of({
       email,
       password,

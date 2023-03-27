@@ -1,6 +1,8 @@
 import { StatusCode } from '@studio/api-utils/http';
-import { DependencyContainer, Injectable } from '@studio/dependency-injection';
+import { Injectable } from '@studio/dependency-injection';
 import { SignUpRequest } from '@studio/commons/dist/contracts/auth/SignUpContracts';
+import { AuthorizationResponse } from '@studio/commons/dist/contracts/auth/AuthorizationResponse';
+
 import { JsonController, HttpCode, Post, Body } from 'routing-controllers';
 import { CommandBus } from '../../../contexts/shared/domain/CommandBus';
 import { InMemoryCommandBus } from '../../../contexts/shared/infrastructure/CommandBus/InMemoryCommandBus';
@@ -11,7 +13,6 @@ import { InMemoryQueryBus } from '../../../contexts/shared/infrastructure/QueryB
 import { GetUserByEmailQuery } from '../../../contexts/users/application/queries/GetUser/GetUserByEmail';
 import { User } from '../../../contexts/users/domain/User';
 import { signJwt } from '../../auth/signJwt';
-
 @Injectable({
   dependencies: [InMemoryCommandBus, InMemoryQueryBus],
 })
@@ -24,7 +25,9 @@ export class SingUpController {
 
   @Post('/basic')
   @HttpCode(StatusCode.CREATED)
-  async registerWithBasicCredentials(@Body() body: SignUpRequest) {
+  async withBasicCredentials(
+    @Body() body: SignUpRequest
+  ): Promise<AuthorizationResponse> {
     const { nickname, credentials } = body;
 
     if (!nickname) {
@@ -44,16 +47,16 @@ export class SingUpController {
         password: credentials.password,
       })
     );
-    const token = await this.getJwtToken(credentials.email);
 
-    return { message: 'Created!', token };
-  }
-
-  private async getJwtToken(email: string) {
     const user = await this.queryBus.dispatch<GetUserByEmailQuery, User>(
-      new GetUserByEmailQuery({ email })
+      new GetUserByEmailQuery({ email: credentials.email })
     );
 
-    return signJwt({ nickname: user.nickname.value, id: user.id.value });
+    const token = signJwt({ nickname: user.nickname.value, id: user.id.value });
+
+    return {
+      user: { id: user.id.value, nickname: user.nickname.value },
+      token,
+    };
   }
 }

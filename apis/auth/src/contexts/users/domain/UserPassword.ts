@@ -8,7 +8,7 @@ export class UserPassword extends Password {
   }
 
   public static of(value: string): UserPassword {
-    return UserPassword.new(value);
+    return new UserPassword(value);
   }
 
   public doMatch(password: string) {
