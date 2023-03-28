@@ -1,10 +1,22 @@
 /* eslint-disable @next/next/no-img-element */
 import Head from 'next/head'
-import React, { Fragment } from 'react'
+import React, { Fragment, useEffect } from 'react'
 import styles from '../styles/Home.module.scss'
 import { SignInForm } from '../components/forms/signin'
 import { Logobar } from '../components/home/LogoBar'
+import { useRouter } from 'next/router'
+import { getAuthTokenCookie } from '../lib/cookieUtils'
+
 export default function Home() {
+
+  const router = useRouter();
+
+  useEffect(() => {
+    if(getAuthTokenCookie()) {
+      router.push('/panel');
+    }
+  })
+
   return (
     <Fragment>
       <Head>

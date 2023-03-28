@@ -5,16 +5,42 @@ import Form, {FormBody, FormTextInput, FormHeader, FormHint} from '@studio/ui/co
 
 import styles from './singup.module.scss'
 import Link from "next/link";
+import { internalApiClient } from "../../../lib/InternalApiClient";
+import { decodeError } from "../../../lib/decodeError";
+import { useRouter } from "next/router";
+import { setAuthTokenCookie } from "../../../lib/cookieUtils";
 
 export const SignUpForm = () => {
+  const [errMessage, setErrMessage] = React.useState<string>('');
   const [nickname, setNickname] = React.useState<string>('');
   const [email, setEmail] = React.useState<string>('');
   const [password, setPassword] = React.useState<string>('');
 
-  const onSubmitSignUp = (e: React.MouseEvent<HTMLElement>) => {
+  const router = useRouter();
+
+  const onSubmitSignUp = async (e: React.MouseEvent<HTMLElement>) => {
     e.preventDefault();
 
-    console.log({nickname, email, password})
+    const body = {
+      nickname,
+      credentials: {
+        email,
+        password,
+      }
+    }
+
+    try {
+      const response = await internalApiClient.post(`/api/auth/signup`, body );
+      setAuthTokenCookie((response as { token:string }).token);
+      router.push('/panel');
+
+    } catch(err) {
+      console.error(err);
+      const errorMessage = decodeError((err as {errorCode: string}).errorCode);
+      setErrMessage(errorMessage);
+
+    }
+
   }
 
   return (
@@ -22,7 +48,8 @@ export const SignUpForm = () => {
       <FormHeader>
         <h1><b>Join now</b> and get access to <b>all</b> the courses!🚀</h1>
       </FormHeader>
-      <FormBody>
+      <FormBody onChange={(e) => setErrMessage('')}>
+        <span style={{color: 'red', height:'1.5rem'}}>{errMessage}</span>
         <FormTextInput
           Name="Nickname"
           placeholder="nickname"

@@ -12,6 +12,9 @@ function getEnviromentVariableOrThrow(variableName: string): string {
 }
 
 export const env = {
+  app: {
+    url: getEnviromentVariableOrThrow('appUrl')
+  },
   auth: {
     url: getEnviromentVariableOrThrow('authUrl')
   },
