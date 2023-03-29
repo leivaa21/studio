@@ -1,7 +1,2 @@
 coverage
-**/*.js
-**/*.js.map
-*.d.ts
-
-!jest.config.js
-!src/types.d.ts
+dist
