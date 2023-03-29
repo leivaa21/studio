@@ -1,20 +1,23 @@
 import mongoose, { Schema } from 'mongoose';
 
-const UserBasicCredentialsSchema = new Schema({
-  _type: {
-    type: String,
-    required: true,
-    default: 'BASIC',
+const UserBasicCredentialsSchema = new Schema(
+  {
+    _type: {
+      type: String,
+      required: true,
+      default: 'BASIC',
+    },
+    email: {
+      type: String,
+      required: true,
+    },
+    password: {
+      type: String,
+      required: true,
+    },
   },
-  email: {
-    type: String,
-    required: true,
-  },
-  password: {
-    type: String,
-    required: true,
-  },
-});
+  { _id: false }
+);
 
 export const UserSchema = new Schema(
   {

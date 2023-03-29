@@ -1,12 +1,12 @@
 import { RegisterNewUserBasicCredentials } from '../../../../../../../src/contexts/users/application/commands/RegisterNewUser/RegisterNewUserBasicCredentials';
 import { UserEmail } from '../../../../../../../src/contexts/users/domain/UserEmail';
 import { InMemoryUserRepository } from '../../../../../../../src/contexts/users/infrastructure/persistance/InMemoryUserRepository';
-import { InvalidUserException } from '../../../../../../../src/contexts/users/domain/exceptions/UserInvalid';
+import { InvalidUserError } from '../../../../../../contexts/users/domain/errors/UserInvalid';
 import { UserBuilder } from '../../../../../../helpers/builders/user/UserBuilder';
 import { StringMother } from '../../../../../../helpers/object-mother/StringMother';
 import { EmailMother } from '../../../../../../helpers/object-mother/UserEmailMother';
-import { InvalidUserNickname } from '../../../../../../../src/contexts/users/domain/exceptions/InvalidUserNickname';
 import { UserNickname } from '../../../../../../../src/contexts/users/domain/UserNickname';
+import { InvalidUserNicknameError } from '@studio/commons/dist/contexts/user/domain/errors/InvalidUserNicknameError';
 
 describe('Register New User with Basic Credentials', () => {
   it('Should create a valid user', () => {
@@ -41,7 +41,7 @@ describe('Register New User with Basic Credentials', () => {
     const useCase = new RegisterNewUserBasicCredentials(userRepository);
 
     await expect(() => useCase.execute(command)).rejects.toThrow(
-      InvalidUserNickname
+      InvalidUserNicknameError
     );
   });
   it('Should not create a user with invalid nickname (larger than max)', async () => {
@@ -56,7 +56,7 @@ describe('Register New User with Basic Credentials', () => {
     const useCase = new RegisterNewUserBasicCredentials(userRepository);
 
     await expect(() => useCase.execute(command)).rejects.toThrow(
-      InvalidUserNickname
+      InvalidUserNicknameError
     );
   });
   it('Should not create a user with a nickname that is already in use', async () => {
@@ -78,7 +78,7 @@ describe('Register New User with Basic Credentials', () => {
     const useCase = new RegisterNewUserBasicCredentials(userRepository);
 
     await expect(() => useCase.execute(command)).rejects.toThrow(
-      InvalidUserException
+      InvalidUserError
     );
   });
   it('Should not create a user with an email that is already in use', async () => {
@@ -100,7 +100,7 @@ describe('Register New User with Basic Credentials', () => {
     const useCase = new RegisterNewUserBasicCredentials(userRepository);
 
     await expect(() => useCase.execute(command)).rejects.toThrow(
-      InvalidUserException
+      InvalidUserError
     );
   });
 });

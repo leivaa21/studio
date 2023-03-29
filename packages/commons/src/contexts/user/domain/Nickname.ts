@@ -1,5 +1,5 @@
 import { ValueObject } from '../../shared/domain/ValueObject';
-import { InvalidUserNickname } from './exceptions/InvalidUserNickname';
+import { InvalidUserNicknameError } from './errors/InvalidUserNicknameError';
 
 export class Nickname extends ValueObject<string> {
 
@@ -17,10 +17,10 @@ export class Nickname extends ValueObject<string> {
 
   public assertLength(): void {
     if (this.value.length > Nickname.MAX_LENGTH) {
-      throw InvalidUserNickname.causeMaxLengthExceded(this.value);
+      throw InvalidUserNicknameError.causeMaxLengthExceded(this.value);
     }
     if (this.value.length < Nickname.MIN_LENGTH) {
-      throw InvalidUserNickname.causeMinLengthNotReached(this.value);
+      throw InvalidUserNicknameError.causeMinLengthNotReached(this.value);
     }
   }
 }

@@ -38,9 +38,10 @@ export class UserBasicCredentials {
 
   public doMatch(email: string, password: string) {
     const receivedEmail = new UserEmail(email);
-    return (
-      this._email.equals(receivedEmail) && this._password.doMatch(password)
-    );
+    const doEmailMatch = this._email.equals(receivedEmail);
+    const doPasswordMatch = this._password.doMatch(password);
+
+    return doEmailMatch && doPasswordMatch;
   }
 
   get type(): 'BASIC' {

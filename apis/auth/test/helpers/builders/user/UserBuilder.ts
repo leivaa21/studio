@@ -12,6 +12,8 @@ import { Builder } from '../builder';
 export class UserBuilder implements Builder<User> {
   public email?: string;
   public nickname?: string;
+  public plainPassword?: string;
+
   public build(): User {
     const createdAt = DateMother.now();
     return new User({
@@ -22,7 +24,8 @@ export class UserBuilder implements Builder<User> {
       credentials: UserBasicCredentials.of({
         email: this.email ? UserEmail.of(this.email) : EmailMother.random(),
         password: UserPassword.new(
-          StringMother.random({ minLength: 10, maxLength: 16 })
+          this.plainPassword ||
+            StringMother.random({ minLength: 10, maxLength: 16 })
         ),
       }),
       verified: false,
@@ -34,6 +37,12 @@ export class UserBuilder implements Builder<User> {
     this.email = email;
     return this;
   }
+
+  public withPlainPassword(plainPassword: string): UserBuilder {
+    this.plainPassword = plainPassword;
+    return this;
+  }
+
   public withNickname(nickname: string): UserBuilder {
     this.nickname = nickname;
     return this;
