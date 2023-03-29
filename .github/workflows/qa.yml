@@ -123,7 +123,7 @@ jobs:
           yarn workspaces focus @studio/commons
           yarn m:dep:commons
           yarn workspaces focus @studio/api-utils
-          yarn m:dep:api-utils
+          yarn m:dep:apiutils
           yarn workspaces focus @studio/web
 
       - name: Build web
