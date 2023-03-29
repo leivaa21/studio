@@ -1,4 +1,4 @@
-const StatusCode = {
+export const StatusCode = {
   OK: 200,
   CREATED: 201,
   NO_CONTENT: 204,
@@ -10,5 +10,3 @@ const StatusCode = {
   INTERNAL_ERROR: 500,
   NOT_IMPLEMENTED: 501
 }
-
-export default StatusCode;

@@ -1,3 +1,1 @@
-import HttpError from "./httpError";
-
-export {HttpError}
+export * from "./httpError";

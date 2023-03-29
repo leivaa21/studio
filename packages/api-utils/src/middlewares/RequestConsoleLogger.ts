@@ -1,7 +1,7 @@
 import { NextFunction, Request, Response } from "express";
-import { ok, warn } from "../loggers/console";
+import { ok, warn } from "../loggers";
 
-function RequestConsoleLogger(req: Request, res: Response, next: NextFunction) {
+export function RequestConsoleLogger(req: Request, res: Response, next: NextFunction) {
 
   const startTime = new Date().getTime();
 
@@ -17,5 +17,3 @@ function RequestConsoleLogger(req: Request, res: Response, next: NextFunction) {
 
   next();
 }
-
-export default RequestConsoleLogger;

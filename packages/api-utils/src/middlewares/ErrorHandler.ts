@@ -1,8 +1,8 @@
 import { NextFunction, Request, Response } from "express";
 import { StatusCode } from "../http";
-import HttpError from "../interfaces/httpError";
+import { HttpError } from "../interfaces";
 
-function ErrorHandler(err: Error, req: Request, res: Response, next: NextFunction) {
+export function ErrorHandler(err: Error, req: Request, res: Response, next: NextFunction) {
 
   let data = {
     message: err.message,
@@ -19,5 +19,3 @@ function ErrorHandler(err: Error, req: Request, res: Response, next: NextFunctio
   res.status(data.status).json(data).end();
 
 }
-
-export default ErrorHandler;

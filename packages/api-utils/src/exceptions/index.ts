@@ -1,3 +1,1 @@
-import RouteNotFound from "./RouteNotFound";
-
-export {RouteNotFound}
+export * from "./RouteNotFound";

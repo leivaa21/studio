@@ -1,3 +1,1 @@
-import ConsoleLogger from "./console";
-
-export { ConsoleLogger };
+export * from "./console";
