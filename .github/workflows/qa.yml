@@ -100,7 +100,7 @@ jobs:
         run: yarn lint:api:profiles
 
   WebQA:
-    # if: contains( github.event.pull_request.labels.*.name, 'Web')
+    if: contains( github.event.pull_request.labels.*.name, 'Web')
     runs-on: ubuntu-latest
 
     steps:
