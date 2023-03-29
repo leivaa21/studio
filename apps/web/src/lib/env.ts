@@ -4,21 +4,21 @@ import { EnviromentVariableNotFoundError } from '../contexts/shared/domain/error
 function getEnviromentVariableOrThrow(variableName: string): string {
   const variable = process.env[variableName];
 
-  if(!variable) {
+  if (!variable) {
     throw EnviromentVariableNotFoundError.causeIsUndefined(variableName);
   }
 
-  return variable
+  return variable;
 }
 
 export const env = {
   app: {
-    url: getEnviromentVariableOrThrow('appUrl')
+    url: getEnviromentVariableOrThrow('appUrl'),
   },
   auth: {
-    url: getEnviromentVariableOrThrow('authUrl')
+    url: getEnviromentVariableOrThrow('authUrl'),
   },
   jwt: {
-    secret: getEnviromentVariableOrThrow('jwtSecret')
-  }
-}
+    secret: getEnviromentVariableOrThrow('jwtSecret'),
+  },
+};
