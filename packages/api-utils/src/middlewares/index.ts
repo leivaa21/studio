@@ -1,4 +1,2 @@
-import ErrorHandler from "./ErrorHandler";
-import RequestConsoleLogger from "./RequestConsoleLogger";
-
-export {ErrorHandler, RequestConsoleLogger}
+export * from "./ErrorHandler";
+export * from "./RequestConsoleLogger";

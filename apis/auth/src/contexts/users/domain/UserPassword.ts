@@ -1,5 +1,5 @@
 import bcrypt from 'bcrypt';
-import { Password } from '@studio/commons/dist/contexts/user/domain/Password';
+import { Password } from '@studio/commons';
 
 export class UserPassword extends Password {
   public static new(value: string) {

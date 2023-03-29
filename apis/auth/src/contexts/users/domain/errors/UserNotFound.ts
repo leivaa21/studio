@@ -1,5 +1,5 @@
-import { ApiError } from '@studio/commons/dist/contexts/shared/domain/errors/ApiError';
-import { ErrorCodes } from '@studio/commons/dist/errors/ErrorCodes';
+import { ApiError } from '@studio/commons';
+import { ErrorCodes } from '@studio/commons';
 
 export class UserNotFoundError extends ApiError {
   constructor(message: string) {

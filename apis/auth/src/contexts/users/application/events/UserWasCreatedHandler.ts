@@ -1,4 +1,4 @@
-import { info } from '@studio/api-utils/loggers/console';
+import { info } from '@studio/api-utils';
 import { Injectable } from '@studio/dependency-injection';
 import { DomainEventClass } from '../../../shared/domain/DomainEvent';
 import { DomainEventSubscriber } from '../../../shared/domain/DomainEventSubscriber';

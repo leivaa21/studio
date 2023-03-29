@@ -1,4 +1,4 @@
-import { ErrorCodes } from '@studio/commons/dist/errors/ErrorCodes';
+import { ErrorCodes } from '@studio/commons';
 
 const errorCodeToErrorMessage = new Map<string, string>([
   [ErrorCodes.EmailAlreadyInUse, 'The email is already in use'],

@@ -1,4 +1,4 @@
-import { RequestConsoleLogger } from '@studio/api-utils/middlewares';
+import { RequestConsoleLogger } from '@studio/api-utils';
 import { Injectable } from '@studio/dependency-injection';
 import { NextFunction, Request, Response } from 'express';
 import { Middleware, ExpressMiddlewareInterface } from 'routing-controllers';

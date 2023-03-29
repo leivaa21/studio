@@ -2,7 +2,7 @@ import './mapping';
 import { configMongoose, connectToMongo } from './mongo/connection';
 import { createExpressServer, useContainer } from 'routing-controllers';
 import 'reflect-metadata';
-import { info } from '@studio/api-utils/loggers/console';
+import { info } from '@studio/api-utils';
 import { authorizationChecker } from './auth/authorizationChecker';
 import { currentUserChecker } from './auth/currentUserChecker';
 import './auth';

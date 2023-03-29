@@ -1,5 +1,5 @@
-import { StatusCode } from '@studio/api-utils/http';
-import { GetUserResponse } from '@studio/commons/dist/contracts/user/GetUserContracts';
+import { StatusCode } from '@studio/api-utils';
+import { GetUserResponse } from '@studio/commons';
 import { Injectable } from '@studio/dependency-injection';
 import {
   JsonController,

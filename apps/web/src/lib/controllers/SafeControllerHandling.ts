@@ -1,4 +1,4 @@
-import { ErrorCodes } from '@studio/commons/dist/errors/ErrorCodes';
+import { ErrorCodes } from '@studio/commons';
 import { NextApiResponse } from 'next';
 
 export async function SafeControllerHandling(

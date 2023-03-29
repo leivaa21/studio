@@ -1,6 +1,6 @@
-import { StatusCode } from '@studio/api-utils/http';
-import { ErrorHandler } from '@studio/api-utils/middlewares';
-import { ApiError } from '@studio/commons/dist/contexts/shared/domain/errors/ApiError';
+import { StatusCode } from '@studio/api-utils';
+import { ErrorHandler } from '@studio/api-utils';
+import { ApiError } from '@studio/commons';
 import { Injectable } from '@studio/dependency-injection';
 import { NextFunction, Request, Response } from 'express';
 import {

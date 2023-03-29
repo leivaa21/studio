@@ -1,20 +1,16 @@
 {
 	"compilerOptions": {
-		"experimentalDecorators": true,
 		"target": "es2022",
+		"experimentalDecorators": true,
+		"emitDecoratorMetadata": true,
 		"module": "commonjs",
-		"rootDir": "./src",
-		"outDir": ".",
+		"rootDir": "src",
+		"outDir": "dist",
 		"esModuleInterop": true,
 		"forceConsistentCasingInFileNames": true,
 		"strict": true,
 		"skipLibCheck": true,
-		"removeComments": true,
-		"sourceMap": true,
-		"emitDecoratorMetadata": true,
-		"allowJs": true,
 		"declaration": true
 	},
-	"include": ["src"],
-	"exclude": ["node_modules"]
+	"include": ["./src"]
 }

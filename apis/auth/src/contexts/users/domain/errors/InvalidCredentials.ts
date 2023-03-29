@@ -1,5 +1,5 @@
-import { ErrorCodes } from '@studio/commons/dist/errors/ErrorCodes';
-import { ApiError } from '@studio/commons/dist/contexts/shared/domain/errors/ApiError';
+import { ErrorCodes } from '@studio/commons';
+import { ApiError } from '@studio/commons';
 
 export class InvalidCredentialsError extends ApiError {
   constructor(errorCode: ErrorCodes, message: string) {
