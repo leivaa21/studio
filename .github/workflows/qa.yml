@@ -3,7 +3,7 @@ on: [pull_request]
 
 jobs:
   AuthQA:
-    if: contains( github.event.pull_request.labels.*.name, 'Auth')
+    # if: contains( github.event.pull_request.labels.*.name, 'Auth')
     runs-on: ubuntu-latest
 
     steps:
@@ -34,7 +34,7 @@ jobs:
       - name: Check linter auth
         run: yarn lint:api:auth
   CoursesQA:
-    if: contains( github.event.pull_request.labels.*.name, 'Courses')
+    # if: contains( github.event.pull_request.labels.*.name, 'Courses')
     runs-on: ubuntu-latest
 
     steps:
@@ -61,7 +61,7 @@ jobs:
       - name: Check linter courses
         run: yarn lint:api:courses
   ProfilesQA:
-    if: contains( github.event.pull_request.labels.*.name, 'Profiles')
+    # if: contains( github.event.pull_request.labels.*.name, 'Profiles')
     runs-on: ubuntu-latest
 
     steps:
@@ -88,7 +88,7 @@ jobs:
       - name: Check linter profiles
         run: yarn lint:api:profiles
   WebQA:
-    if: contains( github.event.pull_request.labels.*.name, 'Web')
+    # if: contains( github.event.pull_request.labels.*.name, 'Web')
     runs-on: ubuntu-latest
 
     steps:
@@ -112,7 +112,7 @@ jobs:
       - name: Check linter web
         run: yarn lint:app:web
   StorybookQA:
-    if: contains( github.event.pull_request.labels.*.name, 'Storybook')
+    # if: contains( github.event.pull_request.labels.*.name, 'Storybook')
     runs-on: ubuntu-latest
 
     steps:
