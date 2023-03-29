@@ -1,4 +1,4 @@
-import { RouteNotFound } from '@studio/api-utils/exceptions';
+import { RouteNotFound } from '@studio/api-utils';
 import { Request, Response } from 'express';
 import { Middleware, ExpressMiddlewareInterface } from 'routing-controllers';
 

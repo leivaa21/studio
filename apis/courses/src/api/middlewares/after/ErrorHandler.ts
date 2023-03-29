@@ -1,4 +1,4 @@
-import { ErrorHandler } from '@studio/api-utils/middlewares';
+import { ErrorHandler } from '@studio/api-utils';
 import { NextFunction, Request, Response } from 'express';
 import {
   Middleware,

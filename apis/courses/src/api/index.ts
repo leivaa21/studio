@@ -1,6 +1,6 @@
 import { createExpressServer } from 'routing-controllers';
 import 'reflect-metadata';
-import { info } from '@studio/api-utils/loggers/console';
+import { info } from '@studio/api-utils';
 import { EarlyMiddlewares, LateMiddlewares } from './middlewares';
 import { Controllers } from './controllers';
 
