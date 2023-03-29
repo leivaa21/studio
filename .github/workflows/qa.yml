@@ -28,7 +28,6 @@ jobs:
           yarn workspaces focus @studio/dependency-injection
           yarn m:dep:di
           yarn workspaces focus @studio/api-auth
-
       - name: Build auth
         run: yarn build:api:auth
       - name: Check linter auth
@@ -55,7 +54,6 @@ jobs:
           yarn workspaces focus @studio/api-utils
           yarn m:dep:apiutils
           yarn workspaces focus @studio/courses
-
       - name: Build courses
         run: yarn build:api:courses
       - name: Check linter courses
@@ -82,7 +80,6 @@ jobs:
           yarn workspaces focus @studio/api-utils
           yarn m:dep:apiutils
           yarn workspaces focus @studio/profiles
-
       - name: Build profiles
         run: yarn build:api:profiles
       - name: Check linter profiles
@@ -106,7 +103,6 @@ jobs:
           yarn --version
       - name: Install & Make dependencies
         run: yarn workspaces focus @studio/web
-
       - name: Build web
         run: yarn build:app:web
       - name: Check linter web
@@ -130,7 +126,6 @@ jobs:
           yarn --version
       - name: Install & Make dependencies
         run: yarn workspaces focus @studio/storybook
-
       - name: Build storybook
         run: yarn build:app:sb
       - name: Check linter storybook

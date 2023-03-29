@@ -3,28 +3,43 @@ Auth:
   - apis/auth/*
   - packages/api-utils/**/*
   - packages/api-utils/*
+  - packages/commons/**/*
   - packages/commons/*
+  - packages/dependency-injection/**/*
+  - packages/dependency-injection/*
+
 Courses:
   - apis/courses/**/*
-  - apis/coursesauth/*
+  - apis/courses/*
   - packages/api-utils/**/*
   - packages/api-utils/*
+  - packages/commons/**/*
   - packages/commons/*
+  - packages/dependency-injection/**/*
+  - packages/dependency-injection/*
+
 Profiles:
   - apis/profiles/**/*
-  - apis/profilesauth/*
+  - apis/profiles/*
   - packages/api-utils/**/*
   - packages/api-utils/*
+  - packages/commons/**/*
   - packages/commons/*
+  - packages/dependency-injection/**/*
+  - packages/dependency-injection/*
+
 Web:
   - apps/web/**/*
   - apps/web/*
   - packages/ui/**/*
   - packages/ui/*
+  - packages/api-utils/**/*
+  - packages/api-utils/*
+  - packages/commons/**/*
   - packages/commons/*
+
 Storybook:
   - apps/storybook/**/*
   - apps/storybook/*
   - packages/ui/**/*
   - packages/ui/*
-  - packages/commons/*
