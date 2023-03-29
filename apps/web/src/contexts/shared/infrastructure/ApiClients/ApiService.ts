@@ -1,5 +1,5 @@
 import { env } from '../../../../lib/env';
-import { ApiError } from '@studio/commons/dist/contexts/shared/domain/errors/ApiError';
+import { ApiError } from '@studio/commons';
 import { error } from '@studio/api-utils';
 type Method = 'POST' | 'GET';
 

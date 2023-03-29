@@ -1,4 +1,4 @@
-import { ApiError } from '@studio/commons/dist/contexts/shared/domain/errors/ApiError';
+import { ApiError } from '@studio/commons';
 
 type Method = 'POST' | 'GET';
 

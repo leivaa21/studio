@@ -1,2 +1,2 @@
-import { Nickname } from '@studio/commons/dist/contexts/user/domain/Nickname';
+import { Nickname } from '@studio/commons';
 export class UserNickname extends Nickname {}

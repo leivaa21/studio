@@ -1,7 +1,7 @@
 import { StatusCode } from '@studio/api-utils';
 import { Injectable } from '@studio/dependency-injection';
-import { SignUpRequest } from '@studio/commons/dist/contracts/auth/SignUpContracts';
-import { AuthorizationResponse } from '@studio/commons/dist/contracts/auth/AuthorizationResponse';
+import { SignUpRequest } from '@studio/commons';
+import { AuthorizationResponse } from '@studio/commons';
 
 import { JsonController, HttpCode, Post, Body } from 'routing-controllers';
 import { CommandBus } from '../../../contexts/shared/domain/CommandBus';

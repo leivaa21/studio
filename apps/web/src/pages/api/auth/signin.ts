@@ -1,6 +1,6 @@
 import { NextApiRequest, NextApiResponse } from 'next';
-import { SignInRequest } from '@studio/commons/dist/contracts/auth/SignInContracts';
-import { AuthorizationResponse } from '@studio/commons/dist/contracts/auth/AuthorizationResponse';
+import { SignInRequest } from '@studio/commons';
+import { AuthorizationResponse } from '@studio/commons';
 import { AuthApiService } from '../../../contexts/shared/infrastructure/ApiClients/AuthApiService';
 import { SafeControllerHandling } from '../../../lib/controllers/SafeControllerHandling';
 

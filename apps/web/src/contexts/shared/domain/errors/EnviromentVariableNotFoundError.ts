@@ -1,5 +1,5 @@
-import { DomainError } from '@studio/commons/dist/contexts/shared/domain/errors/DomainError';
-import { ErrorCodes } from '@studio/commons/dist/errors/ErrorCodes';
+import { DomainError } from '@studio/commons';
+import { ErrorCodes } from '@studio/commons';
 
 export class EnviromentVariableNotFoundError extends DomainError {
   public static causeIsUndefined(varName: string) {

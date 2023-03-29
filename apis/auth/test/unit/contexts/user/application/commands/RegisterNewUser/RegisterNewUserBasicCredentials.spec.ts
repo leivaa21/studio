@@ -6,7 +6,7 @@ import { UserBuilder } from '../../../../../../helpers/builders/user/UserBuilder
 import { StringMother } from '../../../../../../helpers/object-mother/StringMother';
 import { EmailMother } from '../../../../../../helpers/object-mother/UserEmailMother';
 import { UserNickname } from '../../../../../../../src/contexts/users/domain/UserNickname';
-import { InvalidUserNicknameError } from '@studio/commons/dist/contexts/user/domain/errors/InvalidUserNicknameError';
+import { InvalidUserNicknameError } from '@studio/commons';
 
 describe('Register New User with Basic Credentials', () => {
   it('Should create a valid user', () => {
