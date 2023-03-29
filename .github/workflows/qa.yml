@@ -13,12 +13,14 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: 18.x
+
       - name: Update Yarn
         run: |
           corepack enable
           corepack prepare yarn@stable --activate
           yarn plugin import workspace-tools
           yarn --version
+
       - name: Install & Make dependencies
         run: |
           yarn workspaces focus @studio/commons
@@ -31,8 +33,10 @@ jobs:
 
       - name: Build auth
         run: yarn build:api:auth
+
       - name: Check linter auth
         run: yarn lint:api:auth
+
   CoursesQA:
     if: contains( github.event.pull_request.labels.*.name, 'Courses')
     runs-on: ubuntu-latest
@@ -44,12 +48,14 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: 18.x
+
       - name: Update Yarn
         run: |
           corepack enable
           corepack prepare yarn@stable --activate
           yarn plugin import workspace-tools
           yarn --version
+
       - name: Install & Make dependencies
         run: |
           yarn workspaces focus @studio/api-utils
@@ -58,8 +64,10 @@ jobs:
 
       - name: Build courses
         run: yarn build:api:courses
+
       - name: Check linter courses
         run: yarn lint:api:courses
+
   ProfilesQA:
     if: contains( github.event.pull_request.labels.*.name, 'Profiles')
     runs-on: ubuntu-latest
@@ -71,12 +79,14 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: 18.x
+
       - name: Update Yarn
         run: |
           corepack enable
           corepack prepare yarn@stable --activate
           yarn plugin import workspace-tools
           yarn --version
+
       - name: Install & Make dependencies
         run: |
           yarn workspaces focus @studio/api-utils
@@ -85,8 +95,10 @@ jobs:
 
       - name: Build profiles
         run: yarn build:api:profiles
+
       - name: Check linter profiles
         run: yarn lint:api:profiles
+
   WebQA:
     if: contains( github.event.pull_request.labels.*.name, 'Web')
     runs-on: ubuntu-latest
@@ -98,19 +110,28 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: 18.x
+
       - name: Update Yarn
         run: |
           corepack enable
           corepack prepare yarn@stable --activate
           yarn plugin import workspace-tools
           yarn --version
+
       - name: Install & Make dependencies
-        run: yarn workspaces focus @studio/web
+        run: |
+          yarn workspaces focus @studio/commons
+          yarn m:dep:commons
+          yarn workspaces focus @studio/api-utils
+          yarn m:dep:apiutils
+          yarn workspaces focus @studio/web
 
       - name: Build web
         run: yarn build:app:web
+
       - name: Check linter web
         run: yarn lint:app:web
+
   StorybookQA:
     if: contains( github.event.pull_request.labels.*.name, 'Storybook')
     runs-on: ubuntu-latest
@@ -122,16 +143,19 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: 18.x
+
       - name: Update Yarn
         run: |
           corepack enable
           corepack prepare yarn@stable --activate
           yarn plugin import workspace-tools
           yarn --version
+
       - name: Install & Make dependencies
         run: yarn workspaces focus @studio/storybook
 
       - name: Build storybook
         run: yarn build:app:sb
+
       - name: Check linter storybook
         run: yarn lint:app:sb

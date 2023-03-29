@@ -14,14 +14,42 @@ COPY yarn.lock .
 
 RUN yarn plugin import workspace-tools
 
-# Build dependencies first
-COPY packages packages
+RUN yarn install
+
+# Build commons
+
+COPY packages/commons/package.json packages/commons/package.json
+
+RUN yarn workspaces focus @studio/commons
+
+COPY packages/commons packages/commons
+
+RUN yarn m:dep:commons
+
+# Build api-utils
+COPY packages/api-utils/package.json packages/api-utils/package.json
 
 RUN yarn workspaces focus @studio/api-utils
+
+COPY packages/api-utils packages/api-utils
+
 RUN yarn m:dep:apiutils
 
-# Install all dependencies
-RUN yarn install
+# Build dependency-injection
+COPY packages/dependency-injection/package.json packages/dependency-injection/package.json
+
+RUN yarn workspaces focus @studio/dependency-injection
+
+COPY packages/dependency-injection packages/dependency-injection
+
+RUN yarn m:dep:di
+
+# Build ui
+COPY packages/ui/package.json packages/ui/package.json
+
+RUN yarn workspaces focus @studio/ui
+
+COPY packages/ui packages/ui
 
 ######################
 ##   AuthAPI-dev    ##
