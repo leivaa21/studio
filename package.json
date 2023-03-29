@@ -25,15 +25,15 @@
     "m:dep:apiutils": "yarn workspace @studio/api-utils build",
     "m:dep:di": "yarn workspace @studio/dependency-injection build",
     "build:api:auth": "yarn workspace @studio/api-auth build",
-    "build:api:profiles": "yarn workspace @studio/api-auth build",
-    "build:api:courses": "yarn workspace @studio/api-auth build",
-    "build:app:web": "yarn workspace @studio/api-auth build",
-    "build:app:sb": "yarn workspace @studio/api-auth build",
+    "build:api:profiles": "yarn workspace @studio/profiles build",
+    "build:api:courses": "yarn workspace @studio/courses build",
+    "build:app:web": "yarn workspace @studio/web build",
+    "build:app:sb": "yarn workspace @studio/storybook build",
     "lint:api:auth": "yarn workspace @studio/api-auth lint",
-    "lint:api:profiles": "yarn workspace @studio/api-auth lint",
-    "lint:api:courses": "yarn workspace @studio/api-auth lint",
-    "lint:app:web": "yarn workspace @studio/api-auth lint",
-    "lint:app:sb": "yarn workspace @studio/api-auth lint"
+    "lint:api:profiles": "yarn workspace @studio/profiles lint",
+    "lint:api:courses": "yarn workspace @studio/courses lint",
+    "lint:app:web": "yarn workspace @studio/web lint",
+    "lint:app:sb": "yarn workspace @studio/storybook lint"
   },
   "repository": {
     "type": "git",
