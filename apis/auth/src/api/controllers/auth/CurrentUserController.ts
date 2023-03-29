@@ -1,4 +1,4 @@
-import { StatusCode } from '@studio/api-utils/http';
+import { StatusCode } from '@studio/api-utils';
 import { GetUserResponse } from '@studio/commons/dist/contracts/user/GetUserContracts';
 import { Injectable } from '@studio/dependency-injection';
 import {

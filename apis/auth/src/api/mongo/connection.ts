@@ -1,4 +1,4 @@
-import { info } from '@studio/api-utils/loggers/console';
+import { info } from '@studio/api-utils';
 import mongoose, { ConnectOptions } from 'mongoose';
 import config from './config';
 

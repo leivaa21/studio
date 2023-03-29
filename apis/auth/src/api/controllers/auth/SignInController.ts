@@ -1,4 +1,4 @@
-import { StatusCode } from '@studio/api-utils/http';
+import { StatusCode } from '@studio/api-utils';
 import { Body, HttpCode, JsonController, Post } from 'routing-controllers';
 import { SignInRequest } from '@studio/commons/dist/contracts/auth/SignInContracts';
 import { Injectable } from '@studio/dependency-injection';

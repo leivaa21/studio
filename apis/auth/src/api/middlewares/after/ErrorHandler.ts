@@ -1,5 +1,5 @@
-import { StatusCode } from '@studio/api-utils/http';
-import { ErrorHandler } from '@studio/api-utils/middlewares';
+import { StatusCode } from '@studio/api-utils';
+import { ErrorHandler } from '@studio/api-utils';
 import { ApiError } from '@studio/commons/dist/contexts/shared/domain/errors/ApiError';
 import { Injectable } from '@studio/dependency-injection';
 import { NextFunction, Request, Response } from 'express';

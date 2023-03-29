@@ -1,4 +1,4 @@
-import { error } from '@studio/api-utils/loggers/console';
+import { error } from '@studio/api-utils';
 import { DependencyContainer } from '@studio/dependency-injection';
 import passport from 'passport';
 import { Strategy as JwtStrategy, StrategyOptions } from 'passport-jwt';
