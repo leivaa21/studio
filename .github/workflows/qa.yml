@@ -102,7 +102,10 @@ jobs:
           yarn plugin import workspace-tools
           yarn --version
       - name: Install & Make dependencies
-        run: yarn workspaces focus @studio/web
+        run: |
+          yarn workspaces focus @studio/commons
+          yarn m:dep:commons
+          yarn workspaces focus @studio/web
       - name: Build web
         run: yarn build:app:web
       - name: Check linter web
