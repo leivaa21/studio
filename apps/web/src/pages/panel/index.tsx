@@ -1,6 +1,7 @@
 import { useRouter } from 'next/router';
 import React, { useEffect } from 'react';
 import { Fragment } from 'react';
+import { Header } from '../../components/header/header';
 import {
   clearAuthTokenCookie,
   getAuthTokenCookie,
@@ -16,6 +17,7 @@ export default function Panel() {
 
   return (
     <Fragment>
+      <Header />
       <h1>Panel Here!</h1>
       <p>{token}</p>
       <button

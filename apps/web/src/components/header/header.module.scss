@@ -1,0 +1,114 @@
+@import "../../styles/colors";
+
+.header {
+  display: flex;
+  flex-grow: 1;
+  flex-direction: row;
+
+  align-items: center;
+  background-color: $panel-header-background;
+  color: $bright-text-primary;
+
+  &-section {
+    list-style: none;
+    
+    display: flex;
+    flex-direction: row;
+    padding: 0;
+    margin: 0;
+
+    li {
+      padding: 1.5rem 1rem;
+    }
+
+    &--left {
+      flex-grow: 1;
+    }
+
+    &--right {
+      padding-right: 1rem;
+    }
+  }
+
+  &-logo {
+    --height: 1.5rem;
+
+    position: relative;
+    height: var(--height);
+    width: calc(2 * var(--height));
+
+    margin: 0 1rem;
+  }
+
+  &-link, &-settings {
+    cursor: default;
+    transition: all .25s ease-in-out;
+  }
+
+  &-link:hover {
+    color: $primary;
+  }
+
+  &-sublink {
+    padding: 1rem;
+    &:hover {
+      cursor: default;
+      color: $primary;
+    }
+  }
+
+  &-settings {
+    display: flex;
+    flex-direction: row;
+    height: 100%;
+    align-items: center;
+    margin: 0;
+
+    &-profile {
+      .header-icon {
+        margin-left: 1rem;
+      }
+    }
+
+    &-logout {
+      cursor: pointer !important;
+    }
+  }
+
+  &-settings:hover {
+    color: $secondary;
+  }
+
+  &-icon {
+    font-size: 1.2rem;
+  }
+
+  &-settings-dropdown-content {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    right: 0ch;
+
+    &-setting {
+      &:hover {
+        color: $secondary;
+        cursor: default;
+      }
+    }
+
+  }
+}
+
+.dropdown-content {
+  display: none;
+  flex-direction: column;
+  width: 20ch;
+  position: absolute;
+  background: $panel-headerdropdown-background;
+  box-shadow: 0px 8px 16px 0px $panel-headerdropdown-background;
+  z-index: 1;
+}
+
+.dropdown:hover .dropdown-content {
+  display: flex;
+}
