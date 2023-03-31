@@ -7,5 +7,10 @@ export enum ErrorCodes {
   NicknameAlreadyInUse = 'auth.used-nickname',
   EmailAlreadyInUse = 'auth.used-email',
   UserNotFound = 'auth.user-not-found',
-  InternalServerError = 'internal.error'
+  InternalServerError = 'internal.error',
+  PasswordTooShort = 'auth.password-too-short',
+  PasswordShouldContainLowercase = 'auth.password-lowercase',
+  PasswordShouldContainUppercase = 'auth.password-uppercase',
+  PasswordShouldContainNumber = 'auth.password-number',
+  PasswordShouldContainSymbol = 'auth.password-symbol'
 }
