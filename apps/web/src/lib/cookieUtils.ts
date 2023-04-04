@@ -1,6 +1,5 @@
 import { GetUserResponse } from '@studio/commons';
 import { getCookie, setCookie, deleteCookie } from 'cookies-next';
-import jwt from 'jsonwebtoken';
 import { internalApiClient } from './InternalApiClient';
 
 export function getAuthTokenCookie() {
