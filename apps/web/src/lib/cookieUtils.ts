@@ -16,7 +16,6 @@ export async function getAuthTokenCookieDecoded(): Promise<GetUserResponse | nul
 }
 
 export function setAuthTokenCookie(token: string) {
-  if (!jwt.decode(token)) return;
   setCookie('user-token', token);
 }
 
