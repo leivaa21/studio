@@ -1,7 +1,5 @@
 import { error, StatusCode } from '@studio/api-utils';
 import { Injectable } from '@studio/dependency-injection';
-import { Request, Response } from 'express';
-import passport from 'passport';
 import {
   BadRequestError,
   Get,
@@ -16,6 +14,8 @@ import { User } from '../../../contexts/users/domain/User';
 import { signJwt } from '../../auth/signJwt';
 import { env } from '../../config/env';
 
+const redirect_uri = `${env.web.api_url}/auth/google`;
+
 @Injectable({
   dependencies: [InMemoryQueryBus],
 })
@@ -24,7 +24,7 @@ export class GoogleOAuthController {
   constructor(private readonly queryBus: QueryBus) {}
 
   @Get('/url')
-  @HttpCode(200)
+  @HttpCode(StatusCode.OK)
   async GetGoogleUrl() {
     return { url: this.getGoogleUrl() };
   }
@@ -33,7 +33,7 @@ export class GoogleOAuthController {
     const rootUrl = `https://accounts.google.com/o/oauth2/v2/auth`;
 
     const options = {
-      redirect_uri: `${env.auth.url}/auth/google`,
+      redirect_uri,
       client_id: env.google.id,
       access_type: 'offline',
       response_type: 'code',
@@ -50,7 +50,7 @@ export class GoogleOAuthController {
   }
 
   @Get('/')
-  @HttpCode(200)
+  @HttpCode(StatusCode.OK)
   async Authenticate(@QueryParam('code') code: string) {
     if (!code) {
       throw new BadRequestError('');
@@ -92,7 +92,7 @@ export class GoogleOAuthController {
       code,
       client_id: env.google.id,
       client_secret: env.google.secret,
-      redirect_uri: `${env.auth.url}/auth/google`,
+      redirect_uri,
       grant_type: 'authorization_code',
       scopes: [],
     };

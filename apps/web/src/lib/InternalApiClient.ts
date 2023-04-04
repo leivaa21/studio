@@ -9,7 +9,7 @@ class InternalApiService {
   }
   async get<Response>(
     path: string,
-    params: Map<string, string>,
+    params: Map<string, string> = new Map<string, string>(),
     authorizationToken?: string
   ): Promise<Response> {
     const request = this.formatRequest<undefined>(

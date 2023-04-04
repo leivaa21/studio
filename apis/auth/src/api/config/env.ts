@@ -15,6 +15,10 @@ export const env = {
     port: getEnvVariableOrThrow('PORT'),
     url: getEnvVariableOrThrow('URL'),
   },
+  web: {
+    url: getEnvVariableOrThrow('WEB_URL'),
+    api_url: `${getEnvVariableOrThrow('WEB_URL')}/api`,
+  },
   jwt: {
     secret: getEnvVariableOrThrow('JWT_SECRET'),
   },

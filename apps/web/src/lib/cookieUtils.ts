@@ -1,5 +1,6 @@
 import { getCookie, setCookie, deleteCookie } from 'cookies-next';
 import jwt from 'jsonwebtoken';
+import { NextRouter } from 'next/router';
 
 export function getAuthTokenCookie() {
   return getCookie('user-token')?.toString();
@@ -16,6 +17,7 @@ export function getAuthTokenCookieDecoded(): {
 }
 
 export function setAuthTokenCookie(token: string) {
+  if (!jwt.decode(token)) return;
   setCookie('user-token', token);
 }
 

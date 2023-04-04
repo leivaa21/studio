@@ -12,6 +12,9 @@ import { internalApiClient } from '../../../lib/InternalApiClient';
 import { setAuthTokenCookie } from '../../../lib/cookieUtils';
 import { useRouter } from 'next/router';
 import { decodeError } from '../../../lib/decodeError';
+import { GoogleAuthButton } from '../../auth/GoogleAuthButton';
+import { GithubAuthButton } from '../../auth/GithubAuthButton';
+import { OAuthIcons } from '../../auth/OAuthIcons';
 
 export const SignInForm = () => {
   const [errMessage, setErrMessage] = React.useState<string>('');
@@ -75,6 +78,7 @@ export const SignInForm = () => {
             Sing up here!
           </Link>
         </FormHint>
+        <OAuthIcons />
       </FormBody>
     </Form>
   );
