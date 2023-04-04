@@ -1,18 +1,19 @@
+import { GetUserResponse } from '@studio/commons';
 import { getCookie, setCookie, deleteCookie } from 'cookies-next';
 import jwt from 'jsonwebtoken';
+import { internalApiClient } from './InternalApiClient';
 
 export function getAuthTokenCookie() {
   return getCookie('user-token')?.toString();
 }
-export function getAuthTokenCookieDecoded(): {
-  nickname: string;
-  id: string;
-} | null {
+export async function getAuthTokenCookieDecoded(): Promise<GetUserResponse | null> {
   const token = getCookie('user-token')?.toString();
-  return jwt.decode(token || '', { json: true }) as {
-    nickname: string;
-    id: string;
-  } | null;
+
+  const user = await internalApiClient.getCurrentUser(token);
+
+  if (!user) return null;
+
+  return user;
 }
 
 export function setAuthTokenCookie(token: string) {

@@ -1,4 +1,4 @@
-import { ApiError } from '@studio/commons';
+import { ApiError, GetUserResponse } from '@studio/commons';
 
 type Method = 'POST' | 'GET';
 
@@ -20,6 +20,21 @@ class InternalApiService {
     return this.fetch<Response>(
       this.formatPathWithParams(path, params),
       request
+    );
+  }
+
+  async getCurrentUser(
+    authorizationToken?: string
+  ): Promise<GetUserResponse | undefined> {
+    if (!authorizationToken) return undefined;
+
+    const request = this.formatRequest<undefined>(
+      'GET',
+      undefined,
+      authorizationToken
+    );
+    return this.fetch<GetUserResponse>('/api/auth/me', request).catch(
+      () => undefined
     );
   }
 
