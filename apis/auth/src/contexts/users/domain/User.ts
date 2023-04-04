@@ -1,10 +1,17 @@
 import { AggregateRoot } from '../../shared/domain/AggregateRoot';
+import { InvalidUserError } from './errors/UserInvalid';
 import { UserWasCreatedEvent } from './events/UserWasCreated';
+import { GoogleId } from './GoogleId';
+import {
+  PossibleUserCredentials,
+  PossibleUserCredentialsAsPrimitives,
+} from './PossibleUserCredentials';
 import {
   UserBasicCredentials,
   UserBasicCredentialAsPrimitives,
 } from './UserBasicCredentials';
 import { UserEmail } from './UserEmail';
+import { UserGoogleCredentials } from './UserGoogleCredentials';
 import { UserId } from './UserId';
 import { UserNickname } from './UserNickname';
 import { UserPassword } from './UserPassword';
@@ -12,7 +19,7 @@ import { UserPassword } from './UserPassword';
 interface UserArgs {
   id: UserId;
   nickname: UserNickname;
-  credentials: UserBasicCredentials;
+  credentials: PossibleUserCredentials;
   verified: boolean;
   createdAt: Date;
   updatedAt: Date;
@@ -21,7 +28,7 @@ interface UserArgs {
 interface UserAsPrimitives {
   id: string;
   nickname: string;
-  credentials: UserBasicCredentialAsPrimitives;
+  credentials: PossibleUserCredentialsAsPrimitives;
   verified: boolean;
   createdAt: Date;
   updatedAt: Date;
@@ -30,7 +37,7 @@ interface UserAsPrimitives {
 export class User extends AggregateRoot {
   private readonly _id: UserId;
   private readonly _nickname: UserNickname;
-  private readonly _credentials: UserBasicCredentials;
+  private readonly _credentials: PossibleUserCredentials;
   private _verified: boolean;
   private readonly _createdAt: Date;
   private _updatedAt: Date;
@@ -74,18 +81,77 @@ export class User extends AggregateRoot {
     return user;
   }
 
+  public static createNewWithGoogleCredentials(args: {
+    nickname: UserNickname;
+    credentials: UserGoogleCredentials;
+  }) {
+    const { nickname, credentials } = args;
+    const userId = UserId.random();
+
+    const userWasCreatedEvent = UserWasCreatedEvent.fromPrimitives({
+      aggregateId: userId.value,
+      attributes: {
+        credentialsType: 'GOOGLE',
+      },
+    });
+
+    const user = new User({
+      id: userId,
+      nickname,
+      credentials,
+      verified: false,
+      createdAt: new Date(),
+      updatedAt: new Date(),
+    });
+
+    user.commit(userWasCreatedEvent);
+
+    return user;
+  }
+
   public doBasicCredentialMatch(plainEmail: string, plainPassword: string) {
+    if (this._credentials.type !== 'BASIC') {
+      return false;
+    }
     return this._credentials.doMatch(plainEmail, plainPassword);
   }
 
+  public doGoogleCredentialMatch(credentials: {
+    email: UserEmail;
+    googleId: GoogleId;
+  }) {
+    if (this._credentials.type !== 'GOOGLE') {
+      return false;
+    }
+    return this._credentials.doMatch(credentials);
+  }
+
   public static fromPrimitives(args: UserAsPrimitives) {
+    let credentials: PossibleUserCredentials;
+
+    switch (args.credentials.type) {
+      case 'BASIC':
+        credentials = UserBasicCredentials.of({
+          email: UserEmail.of(args.credentials.email),
+          password: UserPassword.of(args.credentials.password),
+        });
+        break;
+      case 'GOOGLE':
+        credentials = UserGoogleCredentials.of({
+          googleId: GoogleId.of(args.credentials.googleId),
+          email: UserEmail.of(args.credentials.email),
+        });
+        break;
+      default:
+        throw InvalidUserError.causeInvalidCredentialsType();
+    }
     return new User({
       id: UserId.of(args.id),
-      nickname: UserNickname.of(args.nickname),
-      credentials: UserBasicCredentials.of({
-        email: UserEmail.of(args.credentials.email),
-        password: UserPassword.of(args.credentials.password),
-      }),
+      nickname:
+        args.credentials.type === 'GOOGLE'
+          ? UserNickname.fromEmail(args.nickname)
+          : UserNickname.of(args.nickname),
+      credentials,
       verified: args.verified,
       createdAt: args.createdAt,
       updatedAt: args.updatedAt,
@@ -117,6 +183,9 @@ export class User extends AggregateRoot {
   }
   get email(): UserEmail {
     return this._credentials.email;
+  }
+  get credentials(): PossibleUserCredentials {
+    return this._credentials;
   }
   get isVerified(): boolean {
     return this._verified;

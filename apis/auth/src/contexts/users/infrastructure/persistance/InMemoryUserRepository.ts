@@ -1,4 +1,5 @@
 import { Nullable } from '../../../shared/domain/Nullable';
+import { GoogleId } from '../../domain/GoogleId';
 import { User } from '../../domain/User';
 import { UserEmail } from '../../domain/UserEmail';
 import { UserId } from '../../domain/UserId';
@@ -18,6 +19,15 @@ export class InMemoryUserRepository implements UserRepository {
   }
   async findByEmail(email: UserEmail): Promise<Nullable<User>> {
     const user = this.users.find((user) => user.email.equals(email));
+    if (!user) return null;
+    return user;
+  }
+  async findByGoogleId(googleId: GoogleId): Promise<Nullable<User>> {
+    const user = this.users.find(
+      (user) =>
+        user.credentials.type === 'GOOGLE' &&
+        user.credentials.googleId.equals(googleId)
+    );
     if (!user) return null;
     return user;
   }

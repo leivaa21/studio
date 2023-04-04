@@ -1,11 +1,10 @@
 import mongoose, { Schema } from 'mongoose';
 
-const UserBasicCredentialsSchema = new Schema(
+const UserCredentialsSchema = new Schema(
   {
     _type: {
       type: String,
       required: true,
-      default: 'BASIC',
     },
     email: {
       type: String,
@@ -13,7 +12,9 @@ const UserBasicCredentialsSchema = new Schema(
     },
     password: {
       type: String,
-      required: true,
+    },
+    googleId: {
+      type: String,
     },
   },
   { _id: false }
@@ -30,7 +31,7 @@ export const UserSchema = new Schema(
       required: true,
     },
     credentials: {
-      type: UserBasicCredentialsSchema,
+      type: UserCredentialsSchema,
       required: true,
     },
     verified: {

@@ -6,13 +6,20 @@ export class Nickname extends ValueObject<string> {
   static MAX_LENGTH = 16;
   static MIN_LENGTH = 3;
 
-  public constructor(value: string) {
+  public constructor(value: string, noAssertions: boolean = false) {
     super(value);
+
+    if(noAssertions) return;
+
     this.assertLength();
   }
 
   public static of(value: string): Nickname {
     return new Nickname(value);
+  }
+
+  public static fromEmail(value: string) {
+    return new Nickname(value, true)
   }
 
   public assertLength(): void {
