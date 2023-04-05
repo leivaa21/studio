@@ -26,4 +26,11 @@ export class InvalidUserNicknameError extends ApiError {
       `Nicknames can't be shorter than ${Nickname.MIN_LENGTH} => <${nickname}>`
     );
   }
+
+  public static causeNicknameHasInvalidCharacters(nickname: string) {
+    return new this(
+      ErrorCodes.InvalidNickname,
+      `<${nickname}> contains invalid symbols`
+    );
+  }
 }

@@ -27,6 +27,15 @@ describe('User Nickname Tests', () => {
     }).toThrowError(InvalidUserNicknameError);
   });
 
+  it(`Should assert nicknames that contain invalid characters`, () => {
+    expect(() => {
+      UserNickname.of('InvalidN@ckname');
+    }).toThrowError(InvalidUserNicknameError);
+    expect(() => {
+      UserNickname.of('<!45234vewv');
+    }).toThrowError(InvalidUserNicknameError);
+  });
+
   it('Should let instanciate a nickname thats valid', () => {
     const randomNickname = StringMother.random({
       maxLength: UserNickname.MAX_LENGTH,
