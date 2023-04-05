@@ -1,4 +1,4 @@
-import { InvalidUserNicknameError } from '@studio/commons';
+import { InvalidNicknameError } from '@studio/commons';
 import { UserNickname } from '../../../../../src/contexts/users/domain/UserNickname';
 import { StringMother } from '../../../../helpers/object-mother/StringMother';
 import { EmailMother } from '../../../../helpers/object-mother/UserEmailMother';
@@ -11,7 +11,7 @@ describe('User Nickname Tests', () => {
       UserNickname.of(
         StringMother.random({ maxLength: lengthToLow, minLength: lengthToLow })
       );
-    }).toThrowError(InvalidUserNicknameError);
+    }).toThrowError(InvalidNicknameError);
   });
 
   it(`Should assert nicknames longer than ${UserNickname.MAX_LENGTH} characters`, () => {
@@ -24,16 +24,16 @@ describe('User Nickname Tests', () => {
           minLength: lengthToHigh,
         })
       );
-    }).toThrowError(InvalidUserNicknameError);
+    }).toThrowError(InvalidNicknameError);
   });
 
   it(`Should assert nicknames that contain invalid characters`, () => {
     expect(() => {
       UserNickname.of('InvalidN@ckname');
-    }).toThrowError(InvalidUserNicknameError);
+    }).toThrowError(InvalidNicknameError);
     expect(() => {
       UserNickname.of('<!45234vewv');
-    }).toThrowError(InvalidUserNicknameError);
+    }).toThrowError(InvalidNicknameError);
   });
 
   it('Should let instanciate a nickname thats valid', () => {

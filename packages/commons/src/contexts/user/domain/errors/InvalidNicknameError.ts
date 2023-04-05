@@ -2,7 +2,7 @@ import { ErrorCodes } from '../../../../errors/ErrorCodes';
 import { ApiError } from '../../../shared/domain/errors/ApiError';
 import { Nickname } from '../Nickname';
 
-export class InvalidUserNicknameError extends ApiError {
+export class InvalidNicknameError extends ApiError {
 
   constructor(errorCode: ErrorCodes, message: string) {
     super({

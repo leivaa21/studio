@@ -1,5 +1,5 @@
 import { ValueObject } from '../../shared/domain/ValueObject';
-import { InvalidUserNicknameError } from './errors/InvalidUserNicknameError';
+import { InvalidNicknameError } from './errors/InvalidNicknameError';
 
 export class Nickname extends ValueObject<string> {
 
@@ -25,13 +25,13 @@ export class Nickname extends ValueObject<string> {
 
   public asserts(): void {
     if (this.value.length > Nickname.MAX_LENGTH) {
-      throw InvalidUserNicknameError.causeMaxLengthExceded(this.value);
+      throw InvalidNicknameError.causeMaxLengthExceded(this.value);
     }
     if (this.value.length < Nickname.MIN_LENGTH) {
-      throw InvalidUserNicknameError.causeMinLengthNotReached(this.value);
+      throw InvalidNicknameError.causeMinLengthNotReached(this.value);
     }
     if(!Nickname.ValidationRegex.test(this.value)) {
-      throw InvalidUserNicknameError.causeNicknameHasInvalidCharacters(this.value);
+      throw InvalidNicknameError.causeNicknameHasInvalidCharacters(this.value);
     }
   }
 }

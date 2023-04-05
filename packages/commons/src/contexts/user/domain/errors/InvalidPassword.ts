@@ -1,6 +1,6 @@
-import { ErrorCodes } from '@studio/commons';
-import { ApiError } from '@studio/commons';
-import { UserPassword } from '../UserPassword';
+import { ErrorCodes } from "../../../../errors/ErrorCodes";
+import { ApiError } from "../../../shared/domain/errors/ApiError";
+import { Password } from "../Password";
 
 export class InvalidPasswordError extends ApiError {
   constructor(errorCode: ErrorCodes, message: string) {
@@ -14,7 +14,7 @@ export class InvalidPasswordError extends ApiError {
   public static causePasswordIsTooShort(password: string) {
     return new this(
       ErrorCodes.PasswordTooShort,
-      `Passwords can't be shorter than ${UserPassword.MIN_LENGTH} => <${password}>`
+      `Passwords can't be shorter than ${Password.MIN_LENGTH} => <${password}>`
     );
   }
   public static causePasswordShouldContainLowercase(password: string) {
