@@ -2,11 +2,22 @@ import { InMemoryUserRepository } from '../../../../../../../src/contexts/users/
 import { UserBuilder } from '../../../../../../helpers/builders/user/UserBuilder';
 import { SignInWithBasicCredentialsHandler } from '../../../../../../../src/contexts/users/application/queries/SignIn/SignInWithBasicCredentials';
 import { InvalidCredentialsError } from '../../../../../../../src/contexts/users/domain/errors/InvalidCredentials';
-import { StringMother } from '../../../../../../helpers/object-mother/StringMother';
+import {
+  PossibleSymbol,
+  StringMother,
+} from '../../../../../../helpers/object-mother/StringMother';
+import { UserPassword } from '../../../../../../../src/contexts/users/domain/UserPassword';
+
+const generateValidPassword = () =>
+  StringMother.random({
+    minLength: UserPassword.MIN_LENGTH,
+    casing: 'mixed',
+    withSymbols: UserPassword.acceptedSymbols as PossibleSymbol[],
+  });
 
 describe('Sign In User with Basic Credentials', () => {
   it('Should validate a valid user', async () => {
-    const password = StringMother.random({ minLength: 10, maxLength: 16 });
+    const password = generateValidPassword();
     const user = new UserBuilder().withPlainPassword(password).build();
 
     const query = {
@@ -24,7 +35,7 @@ describe('Sign In User with Basic Credentials', () => {
   });
 
   it('Should throw invalid credentials error if non-existant user', async () => {
-    const password = StringMother.random({ minLength: 10, maxLength: 16 });
+    const password = generateValidPassword();
     const user = new UserBuilder().withPlainPassword(password).build();
 
     const query = {
@@ -42,7 +53,7 @@ describe('Sign In User with Basic Credentials', () => {
   });
 
   it('Should throw invalid credentials error if password do not match', async () => {
-    const password = StringMother.random({ minLength: 10, maxLength: 16 });
+    const password = generateValidPassword();
     const user = new UserBuilder().withPlainPassword(password).build();
 
     const query = {
