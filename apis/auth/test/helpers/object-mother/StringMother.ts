@@ -27,33 +27,43 @@ export class StringMother {
     const { maxLength, minLength, length, casing, withSymbols, onlyAlpha } =
       options || {};
 
-    const count =
+    let randomGeneratedString = '';
+
+    if (casing === 'lower' || casing === 'mixed')
+      randomGeneratedString = randomGeneratedString.concat('a');
+    if (casing === 'upper' || casing === 'mixed')
+      randomGeneratedString = randomGeneratedString.concat('A');
+    if (!onlyAlpha) {
+      randomGeneratedString = randomGeneratedString.concat(
+        NumberMother.random({ min: 0, max: 9 }).toString()
+      );
+    }
+    if (withSymbols) {
+      const selectedSymbol =
+        withSymbols[
+          NumberMother.random({ min: 0, max: withSymbols.length - 1 })
+        ];
+      randomGeneratedString = randomGeneratedString.concat(selectedSymbol);
+    }
+
+    const targetLength =
       length ||
       NumberMother.random({
         min: minLength || 4,
         max: maxLength || 12,
       });
-    let randomGeneratedString: string;
 
-    // If there's no symbols, generate the string normally
-    if (!withSymbols) {
-      if (onlyAlpha)
-        randomGeneratedString = faker.random.alpha({ count, casing });
-      else randomGeneratedString = faker.random.alphaNumeric(count, { casing });
+    const count = targetLength - randomGeneratedString.length;
 
-      return randomGeneratedString;
-    }
-
-    // If there's symbols, generate the string 1 character less than requested
-    // (to concat the symbol later)
     if (onlyAlpha)
-      randomGeneratedString = faker.random.alpha({ count: count - 1, casing });
+      randomGeneratedString = randomGeneratedString.concat(
+        faker.random.alpha({ count, casing })
+      );
     else
-      randomGeneratedString = faker.random.alphaNumeric(count - 1, { casing });
+      randomGeneratedString = randomGeneratedString.concat(
+        faker.random.alphaNumeric(count, { casing })
+      );
 
-    const selectedSymbol =
-      withSymbols[NumberMother.random({ min: 0, max: withSymbols.length - 1 })];
-
-    return randomGeneratedString.concat(selectedSymbol);
+    return randomGeneratedString;
   }
 }
