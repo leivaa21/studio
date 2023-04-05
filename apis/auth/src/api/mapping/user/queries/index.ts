@@ -13,6 +13,10 @@ import {
   SignInWithBasicCredentialsHandler,
   SignInWithBasicCredentialsQuery,
 } from '../../../../contexts/users/application/queries/SignIn/SignInWithBasicCredentials';
+import {
+  SignInWithGoogleCredentialsHandler,
+  SignInWithGoogleCredentialsQuery,
+} from '../../../../contexts/users/application/queries/SignIn/SignInWithGoogleCredentials';
 const queryBus = DependencyContainer.get<QueryBus>(InMemoryQueryBus);
 
 queryBus.subscribe(GetUserByEmailQuery, GetUserByEmailHandler);
@@ -20,4 +24,8 @@ queryBus.subscribe(GetUserByIdQuery, GetUserByIdHandler);
 queryBus.subscribe(
   SignInWithBasicCredentialsQuery,
   SignInWithBasicCredentialsHandler
+);
+queryBus.subscribe(
+  SignInWithGoogleCredentialsQuery,
+  SignInWithGoogleCredentialsHandler
 );

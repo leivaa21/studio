@@ -82,7 +82,9 @@ export function Header() {
   }
 
   useEffect(() => {
-    setName(getAuthTokenCookieDecoded()?.nickname);
+    getAuthTokenCookieDecoded().then((response) => {
+      setName(response?.nickname);
+    });
   }, []);
 
   return (

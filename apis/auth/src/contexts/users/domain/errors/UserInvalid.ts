@@ -22,4 +22,10 @@ export class InvalidUserError extends ApiError {
       `The nickname <${nickname}> is already in use!`
     );
   }
+  public static causeInvalidCredentialsType() {
+    return new this(
+      ErrorCodes.InternalServerError,
+      `Credential type is not valid!`
+    );
+  }
 }

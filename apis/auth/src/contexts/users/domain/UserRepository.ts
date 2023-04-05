@@ -1,4 +1,5 @@
 import { Nullable } from '../../shared/domain/Nullable';
+import { GoogleId } from './GoogleId';
 import { User } from './User';
 import { UserEmail } from './UserEmail';
 import { UserId } from './UserId';
@@ -8,5 +9,6 @@ export interface UserRepository {
   create(user: User): Promise<void>;
   findById(id: UserId): Promise<Nullable<User>>;
   findByEmail(email: UserEmail): Promise<Nullable<User>>;
+  findByGoogleId(googleId: GoogleId): Promise<Nullable<User>>;
   findByNickname(nickname: UserNickname): Promise<Nullable<User>>;
 }

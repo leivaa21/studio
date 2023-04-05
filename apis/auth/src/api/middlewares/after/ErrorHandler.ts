@@ -17,6 +17,7 @@ export class CustomErrorHandler implements ExpressErrorMiddlewareInterface {
     response: Response,
     next: NextFunction
   ) {
+    console.error(error);
     const isErrorLaunchedFromDomain =
       (error as unknown as ApiError).kind !== undefined;
     if (isErrorLaunchedFromDomain) {

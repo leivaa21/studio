@@ -14,6 +14,7 @@ import { internalApiClient } from '../../../lib/InternalApiClient';
 import { decodeError } from '../../../lib/decodeError';
 import { useRouter } from 'next/router';
 import { setAuthTokenCookie } from '../../../lib/cookieUtils';
+import { OAuthIcons } from '../../auth/OAuthIcons';
 
 export const SignUpForm = () => {
   const [errMessage, setErrMessage] = React.useState<string>('');
@@ -89,6 +90,7 @@ export const SignUpForm = () => {
             Back to landing page!
           </Link>
         </FormHint>
+        <OAuthIcons />
       </FormBody>
     </Form>
   );

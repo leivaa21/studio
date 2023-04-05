@@ -2,14 +2,14 @@ import {
   BaseDomainEventArgs,
   DomainEvent,
 } from '../../../shared/domain/DomainEvent';
-import { PossibleUserCredentials } from '../PossibleUserCredentials';
+import { PossibleUserCredentialsType } from '../PossibleUserCredentials';
 
 type UserWasCreatedEventArgs = BaseDomainEventArgs & {
-  attributes: { credentialsType: PossibleUserCredentials };
+  attributes: { credentialsType: PossibleUserCredentialsType };
 };
 export class UserWasCreatedEvent extends DomainEvent {
   public static EVENT_NAME: 'AUTH.USER_WAS_CREATED';
-  public readonly attributes: { credentialsType: PossibleUserCredentials };
+  public readonly attributes: { credentialsType: PossibleUserCredentialsType };
 
   public static fromPrimitives(
     args: UserWasCreatedEventArgs
