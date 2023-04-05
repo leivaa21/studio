@@ -6,22 +6,17 @@ import { EmailMother } from '../../../../helpers/object-mother/UserEmailMother';
 describe('User Nickname Tests', () => {
   it(`Should assert nicknames shorter than ${UserNickname.MIN_LENGTH} characters`, () => {
     expect(() => {
-      const lengthToLow = UserNickname.MIN_LENGTH - 1;
-
       UserNickname.of(
-        StringMother.random({ maxLength: lengthToLow, minLength: lengthToLow })
+        StringMother.random({ length: UserNickname.MIN_LENGTH - 1 })
       );
     }).toThrowError(InvalidNicknameError);
   });
 
   it(`Should assert nicknames longer than ${UserNickname.MAX_LENGTH} characters`, () => {
     expect(() => {
-      const lengthToHigh = UserNickname.MAX_LENGTH + 1;
-
       UserNickname.of(
         StringMother.random({
-          maxLength: lengthToHigh,
-          minLength: lengthToHigh,
+          length: UserNickname.MAX_LENGTH + 1,
         })
       );
     }).toThrowError(InvalidNicknameError);
