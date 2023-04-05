@@ -8,6 +8,7 @@ export * from './contexts/shared/domain/errors/UndefinedArgumentError';
 export * from './contexts/user/domain/Nickname';
 export * from './contexts/user/domain/Password';
 export * from './contexts/user/domain/errors/InvalidNicknameError';
+export * from './contexts/user/domain/errors/InvalidPasswordError';
 
 export * from './contracts/auth/AuthorizationResponse';
 export * from './contracts/auth/SignInContracts';

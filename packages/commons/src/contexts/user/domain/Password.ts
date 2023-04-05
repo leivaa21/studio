@@ -1,6 +1,6 @@
 import bcrypt from 'bcrypt';
 import { ValueObject } from '../../shared/domain/ValueObject';
-import { InvalidPasswordError } from './errors/InvalidPassword';
+import { InvalidPasswordError } from './errors/InvalidPasswordError';
 export class Password extends ValueObject<string> {
 
   public static fromPrimitives(hash: string) {
@@ -42,6 +42,10 @@ export class Password extends ValueObject<string> {
   }
 
   public static assertIsSecure(password: string) {
+    if(password.includes(' ')) {
+      throw InvalidPasswordError.causePasswordContainsSpaces(password)
+    }
+    
     if (password.length < 8) {
       throw InvalidPasswordError.causePasswordIsTooShort(password);
     }

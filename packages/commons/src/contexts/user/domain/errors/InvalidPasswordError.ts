@@ -44,4 +44,12 @@ export class InvalidPasswordError extends ApiError {
       `Passwords should include symbols => <${password}>`
     );
   }
+
+  public static causePasswordContainsSpaces(password: string) {
+    return new this(
+      ErrorCodes.InvalidPassword,
+      `Passwords should not include spaces => <${password}>`
+    );
+
+  }
 }
