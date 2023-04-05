@@ -1,4 +1,3 @@
-import bcrypt from 'bcrypt';
 import { ValueObject } from '../../shared/domain/ValueObject';
 import { InvalidPasswordError } from './errors/InvalidPasswordError';
 export class Password extends ValueObject<string> {
@@ -27,18 +26,8 @@ export class Password extends ValueObject<string> {
 
   static MIN_LENGTH = 8;
 
-  public static new(value: string) {
-    this.assertIsSecure(value);
-    const hash = bcrypt.hashSync(value, 12);
-    return new this(hash);
-  }
-
   public static of(value: string): Password {
     return new Password(value);
-  }
-
-  public doMatch(password: string) {
-    return bcrypt.compareSync(password, this.value);
   }
 
   public static assertIsSecure(password: string) {
