@@ -1,7 +1,7 @@
 import { Casing, faker } from '@faker-js/faker';
 import { NumberMother } from './NumberMother';
 
-type PossibleSymbol =
+export type PossibleSymbol =
   | '@'
   | '!'
   | '_'
@@ -20,10 +20,12 @@ type StringOptions = {
   length?: number;
   casing?: Casing;
   withSymbols?: PossibleSymbol[];
+  onlyAlpha?: boolean;
 };
 export class StringMother {
   public static random(options?: StringOptions): string {
-    const { maxLength, minLength, length, casing, withSymbols } = options || {};
+    const { maxLength, minLength, length, casing, withSymbols, onlyAlpha } =
+      options || {};
 
     const count =
       length ||
@@ -31,14 +33,27 @@ export class StringMother {
         min: minLength || 4,
         max: maxLength || 12,
       });
+    let randomGeneratedString: string;
 
-    const randomGeneratedString = faker.random.alphaNumeric(count, { casing });
+    // If there's no symbols, generate the string normally
+    if (!withSymbols) {
+      if (onlyAlpha)
+        randomGeneratedString = faker.random.alpha({ count, casing });
+      else randomGeneratedString = faker.random.alphaNumeric(count, { casing });
 
-    if (!withSymbols) return randomGeneratedString;
+      return randomGeneratedString;
+    }
+
+    // If there's symbols, generate the string 1 character less than requested
+    // (to concat the symbol later)
+    if (onlyAlpha)
+      randomGeneratedString = faker.random.alpha({ count: count - 1, casing });
+    else
+      randomGeneratedString = faker.random.alphaNumeric(count - 1, { casing });
 
     const selectedSymbol =
       withSymbols[NumberMother.random({ min: 0, max: withSymbols.length - 1 })];
 
-    return randomGeneratedString.slice(1).concat(selectedSymbol);
+    return randomGeneratedString.concat(selectedSymbol);
   }
 }
