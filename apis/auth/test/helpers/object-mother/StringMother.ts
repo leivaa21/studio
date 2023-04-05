@@ -1,7 +1,18 @@
 import { Casing, faker } from '@faker-js/faker';
 import { NumberMother } from './NumberMother';
 
-type PossibleSymbol = '@' | '!' | '_' | '-' | '.' | '?' | '¡' | '¿' | '<' | '>';
+type PossibleSymbol =
+  | '@'
+  | '!'
+  | '_'
+  | '-'
+  | '.'
+  | '?'
+  | '¡'
+  | '¿'
+  | '<'
+  | '>'
+  | ' ';
 
 type StringOptions = {
   maxLength?: number;

@@ -23,11 +23,14 @@ describe('User Nickname Tests', () => {
   });
 
   it(`Should assert nicknames that contain invalid characters`, () => {
+    const randomNicknameWithNonValidSymbol = StringMother.random({
+      maxLength: UserNickname.MAX_LENGTH,
+      minLength: UserNickname.MIN_LENGTH,
+      withSymbols: ['@', '-', '!', '?', '<', '>', '¿', ' ', '¡'],
+    });
+
     expect(() => {
-      UserNickname.of('InvalidN@ckname');
-    }).toThrowError(InvalidNicknameError);
-    expect(() => {
-      UserNickname.of('<!45234vewv');
+      UserNickname.of(randomNicknameWithNonValidSymbol);
     }).toThrowError(InvalidNicknameError);
   });
 
@@ -35,6 +38,7 @@ describe('User Nickname Tests', () => {
     const randomNickname = StringMother.random({
       maxLength: UserNickname.MAX_LENGTH,
       minLength: UserNickname.MIN_LENGTH,
+      withSymbols: ['_', '.'],
     });
 
     const nickname = UserNickname.of(randomNickname);
