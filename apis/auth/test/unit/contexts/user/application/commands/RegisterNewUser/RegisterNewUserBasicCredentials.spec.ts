@@ -1,12 +1,23 @@
 import { RegisterNewUserBasicCredentials } from '../../../../../../../src/contexts/users/application/commands/RegisterNewUser/RegisterNewUserBasicCredentials';
 import { UserEmail } from '../../../../../../../src/contexts/users/domain/UserEmail';
 import { InMemoryUserRepository } from '../../../../../../../src/contexts/users/infrastructure/persistance/InMemoryUserRepository';
-import { InvalidUserError } from '../../../../../../contexts/users/domain/errors/UserInvalid';
+import { InvalidUserError } from '../../../../../../../src/contexts/users/domain/errors/UserInvalid';
 import { UserBuilder } from '../../../../../../helpers/builders/user/UserBuilder';
-import { StringMother } from '../../../../../../helpers/object-mother/StringMother';
+import {
+  PossibleSymbol,
+  StringMother,
+} from '../../../../../../helpers/object-mother/StringMother';
 import { EmailMother } from '../../../../../../helpers/object-mother/UserEmailMother';
 import { UserNickname } from '../../../../../../../src/contexts/users/domain/UserNickname';
-import { InvalidUserNicknameError } from '@studio/commons';
+import { InvalidNicknameError } from '@studio/commons';
+import { UserPassword } from '../../../../../../../src/contexts/users/domain/UserPassword';
+
+const generateValidPassword = () =>
+  StringMother.random({
+    minLength: UserPassword.MIN_LENGTH,
+    casing: 'mixed',
+    withSymbols: UserPassword.acceptedSymbols as PossibleSymbol[],
+  });
 
 describe('Register New User with Basic Credentials', () => {
   it('Should create a valid user', () => {
@@ -14,9 +25,10 @@ describe('Register New User with Basic Credentials', () => {
       nickname: StringMother.random({
         maxLength: UserNickname.MAX_LENGTH,
         minLength: UserNickname.MIN_LENGTH,
+        withSymbols: ['_', '.'],
       }),
       email: EmailMother.random().value,
-      password: StringMother.random({ maxLength: 16, minLength: 10 }),
+      password: generateValidPassword(),
     };
 
     const userRepository = new InMemoryUserRepository([]);
@@ -31,9 +43,9 @@ describe('Register New User with Basic Credentials', () => {
   });
   it('Should not create a user with invalid nickname (shorter than min)', async () => {
     const command = {
-      nickname: StringMother.random({ maxLength: 2, minLength: 1 }),
+      nickname: StringMother.random({ length: UserNickname.MIN_LENGTH - 1 }),
       email: EmailMother.random().value,
-      password: StringMother.random({ maxLength: 16, minLength: 10 }),
+      password: generateValidPassword(),
     };
 
     const userRepository = new InMemoryUserRepository([]);
@@ -41,14 +53,14 @@ describe('Register New User with Basic Credentials', () => {
     const useCase = new RegisterNewUserBasicCredentials(userRepository);
 
     await expect(() => useCase.execute(command)).rejects.toThrow(
-      InvalidUserNicknameError
+      InvalidNicknameError
     );
   });
   it('Should not create a user with invalid nickname (larger than max)', async () => {
     const command = {
-      nickname: StringMother.random({ maxLength: 20, minLength: 17 }),
+      nickname: StringMother.random({ length: UserNickname.MAX_LENGTH + 1 }),
       email: EmailMother.random().value,
-      password: StringMother.random({ maxLength: 16, minLength: 10 }),
+      password: generateValidPassword(),
     };
 
     const userRepository = new InMemoryUserRepository([]);
@@ -56,7 +68,7 @@ describe('Register New User with Basic Credentials', () => {
     const useCase = new RegisterNewUserBasicCredentials(userRepository);
 
     await expect(() => useCase.execute(command)).rejects.toThrow(
-      InvalidUserNicknameError
+      InvalidNicknameError
     );
   });
   it('Should not create a user with a nickname that is already in use', async () => {
@@ -66,7 +78,7 @@ describe('Register New User with Basic Credentials', () => {
         minLength: UserNickname.MIN_LENGTH,
       }),
       email: EmailMother.random().value,
-      password: StringMother.random({ maxLength: 16, minLength: 10 }),
+      password: generateValidPassword(),
     };
 
     const alreadyPersistedUser = new UserBuilder()
@@ -88,7 +100,7 @@ describe('Register New User with Basic Credentials', () => {
         minLength: UserNickname.MIN_LENGTH,
       }),
       email: EmailMother.random().value,
-      password: StringMother.random({ maxLength: 16, minLength: 10 }),
+      password: generateValidPassword(),
     };
 
     const alreadyPersistedUser = new UserBuilder()

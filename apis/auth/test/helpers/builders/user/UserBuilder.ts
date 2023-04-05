@@ -5,9 +5,16 @@ import { UserId } from '../../../../src/contexts/users/domain/UserId';
 import { UserNickname } from '../../../../src/contexts/users/domain/UserNickname';
 import { UserPassword } from '../../../../src/contexts/users/domain/UserPassword';
 import { DateMother } from '../../object-mother/DateMother';
-import { StringMother } from '../../object-mother/StringMother';
+import { PossibleSymbol, StringMother } from '../../object-mother/StringMother';
 import { EmailMother } from '../../object-mother/UserEmailMother';
 import { Builder } from '../builder';
+
+const generateValidPassword = () =>
+  StringMother.random({
+    minLength: UserPassword.MIN_LENGTH,
+    casing: 'mixed',
+    withSymbols: UserPassword.acceptedSymbols as PossibleSymbol[],
+  });
 
 export class UserBuilder implements Builder<User> {
   public email?: string;
@@ -24,8 +31,7 @@ export class UserBuilder implements Builder<User> {
       credentials: UserBasicCredentials.of({
         email: this.email ? UserEmail.of(this.email) : EmailMother.random(),
         password: UserPassword.new(
-          this.plainPassword ||
-            StringMother.random({ minLength: 10, maxLength: 16 })
+          this.plainPassword || generateValidPassword()
         ),
       }),
       verified: false,
