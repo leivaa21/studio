@@ -73,11 +73,11 @@ describe('User Password Tests', () => {
   });
 
   it(`should let instanciate a valid password`, () => {
-    const invalidPassword = StringMother.random({
+    const validPassword = StringMother.random({
       minLength: UserPassword.MIN_LENGTH,
       casing: 'mixed',
       withSymbols: UserPassword.acceptedSymbols as PossibleSymbol[],
     });
-    expect(UserPassword.new(invalidPassword).value).toBeDefined();
+    expect(UserPassword.new(validPassword).value).toBeDefined();
   });
 });
