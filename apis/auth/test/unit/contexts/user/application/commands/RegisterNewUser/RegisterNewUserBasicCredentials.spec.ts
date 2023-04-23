@@ -3,21 +3,11 @@ import { UserEmail } from '../../../../../../../src/contexts/users/domain/UserEm
 import { InMemoryUserRepository } from '../../../../../../../src/contexts/users/infrastructure/persistance/InMemoryUserRepository';
 import { InvalidUserError } from '../../../../../../../src/contexts/users/domain/errors/UserInvalid';
 import { UserBuilder } from '../../../../../../helpers/builders/user/UserBuilder';
-import {
-  PossibleSymbol,
-  StringMother,
-} from '../../../../../../helpers/object-mother/StringMother';
+import { StringMother } from '../../../../../../helpers/object-mother/StringMother';
 import { EmailMother } from '../../../../../../helpers/object-mother/UserEmailMother';
 import { UserNickname } from '../../../../../../../src/contexts/users/domain/UserNickname';
 import { InvalidNicknameError } from '@studio/commons';
-import { UserPassword } from '../../../../../../../src/contexts/users/domain/UserPassword';
-
-const generateValidPassword = () =>
-  StringMother.random({
-    minLength: UserPassword.MIN_LENGTH,
-    casing: 'mixed',
-    withSymbols: UserPassword.acceptedSymbols as PossibleSymbol[],
-  });
+import { generateValidPassword } from '../../../../../../helpers/lib/generateValidPassword';
 
 describe('Register New User with Basic Credentials', () => {
   it('Should create a valid user', () => {

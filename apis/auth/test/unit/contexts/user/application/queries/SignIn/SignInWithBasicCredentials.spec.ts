@@ -2,18 +2,8 @@ import { InMemoryUserRepository } from '../../../../../../../src/contexts/users/
 import { UserBuilder } from '../../../../../../helpers/builders/user/UserBuilder';
 import { SignInWithBasicCredentialsHandler } from '../../../../../../../src/contexts/users/application/queries/SignIn/SignInWithBasicCredentials';
 import { InvalidCredentialsError } from '../../../../../../../src/contexts/users/domain/errors/InvalidCredentials';
-import {
-  PossibleSymbol,
-  StringMother,
-} from '../../../../../../helpers/object-mother/StringMother';
-import { UserPassword } from '../../../../../../../src/contexts/users/domain/UserPassword';
-
-const generateValidPassword = () =>
-  StringMother.random({
-    minLength: UserPassword.MIN_LENGTH,
-    casing: 'mixed',
-    withSymbols: UserPassword.acceptedSymbols as PossibleSymbol[],
-  });
+import { StringMother } from '../../../../../../helpers/object-mother/StringMother';
+import { generateValidPassword } from '../../../../../../helpers/lib/generateValidPassword';
 
 describe('Sign In User with Basic Credentials', () => {
   it('Should validate a valid user', async () => {
