@@ -8,15 +8,12 @@ import { EmailMother } from '../../../../../../helpers/object-mother/UserEmailMo
 import { UserNickname } from '../../../../../../../src/contexts/users/domain/UserNickname';
 import { InvalidNicknameError } from '@studio/commons';
 import { generateValidPassword } from '../../../../../../helpers/lib/generateValidPassword';
+import { generateValidNickname } from '../../../../../../helpers/lib/generateValidNickname';
 
 describe('Register New User with Basic Credentials', () => {
   it('Should create a valid user', () => {
     const command = {
-      nickname: StringMother.random({
-        maxLength: UserNickname.MAX_LENGTH,
-        minLength: UserNickname.MIN_LENGTH,
-        withSymbols: ['_', '.'],
-      }),
+      nickname: generateValidNickname(),
       email: EmailMother.random().value,
       password: generateValidPassword(),
     };
@@ -63,10 +60,7 @@ describe('Register New User with Basic Credentials', () => {
   });
   it('Should not create a user with a nickname that is already in use', async () => {
     const command = {
-      nickname: StringMother.random({
-        maxLength: UserNickname.MAX_LENGTH,
-        minLength: UserNickname.MIN_LENGTH,
-      }),
+      nickname: generateValidNickname(),
       email: EmailMother.random().value,
       password: generateValidPassword(),
     };
@@ -85,10 +79,7 @@ describe('Register New User with Basic Credentials', () => {
   });
   it('Should not create a user with an email that is already in use', async () => {
     const command = {
-      nickname: StringMother.random({
-        maxLength: UserNickname.MAX_LENGTH,
-        minLength: UserNickname.MIN_LENGTH,
-      }),
+      nickname: generateValidNickname(),
       email: EmailMother.random().value,
       password: generateValidPassword(),
     };
