@@ -6,10 +6,7 @@ import {
   PossibleUserCredentials,
   PossibleUserCredentialsAsPrimitives,
 } from './PossibleUserCredentials';
-import {
-  UserBasicCredentials,
-  UserBasicCredentialAsPrimitives,
-} from './UserBasicCredentials';
+import { UserBasicCredentials } from './UserBasicCredentials';
 import { UserEmail } from './UserEmail';
 import { UserGoogleCredentials } from './UserGoogleCredentials';
 import { UserId } from './UserId';
