@@ -9,6 +9,8 @@ import { UserNickname } from '../../../../../../../src/contexts/users/domain/Use
 import { InvalidNicknameError } from '@studio/commons';
 import { generateValidPassword } from '../../../../../../helpers/lib/generateValidPassword';
 import { generateValidNickname } from '../../../../../../helpers/lib/generateValidNickname';
+import { UserBasicCredentials } from '../../../../../../../src/contexts/users/domain/UserBasicCredentials';
+import { UserPassword } from '../../../../../../../src/contexts/users/domain/UserPassword';
 
 describe('Register New User with Basic Credentials', () => {
   it('Should create a valid user', () => {
@@ -65,8 +67,8 @@ describe('Register New User with Basic Credentials', () => {
       password: generateValidPassword(),
     };
 
-    const alreadyPersistedUser = new UserBuilder()
-      .withNickname(command.nickname)
+    const alreadyPersistedUser = UserBuilder.aBasicCredentialsUser()
+      .withNickname(UserNickname.of(command.nickname))
       .build();
 
     const userRepository = new InMemoryUserRepository([alreadyPersistedUser]);
@@ -84,8 +86,13 @@ describe('Register New User with Basic Credentials', () => {
       password: generateValidPassword(),
     };
 
-    const alreadyPersistedUser = new UserBuilder()
-      .withEmail(command.email)
+    const alreadyPersistedUser = UserBuilder.aBasicCredentialsUser()
+      .withCredentials(
+        UserBasicCredentials.of({
+          email: UserEmail.of(command.email),
+          password: UserPassword.of(generateValidPassword()),
+        })
+      )
       .build();
 
     const userRepository = new InMemoryUserRepository([alreadyPersistedUser]);
