@@ -9,6 +9,7 @@ import { UserWasCreatedEvent } from '../../../../../src/contexts/users/domain/ev
 import { GoogleId } from '../../../../../src/contexts/users/domain/GoogleId';
 import { StringMother } from '../../../../helpers/object-mother/StringMother';
 import { UserGoogleCredentials } from '../../../../../src/contexts/users/domain/UserGoogleCredentials';
+import { UserBuilder } from '../../../../helpers/builders/user/UserBuilder';
 
 describe('Create users', () => {
   it('Should let create user with basic credentials', () => {
@@ -59,5 +60,79 @@ describe('Create users', () => {
 
     expect(events).toHaveLength(1);
     expect(events[0].eventName).toBe(UserWasCreatedEvent.EVENT_NAME);
+  });
+});
+
+describe('Verify credentials', () => {
+  describe('Basic Credentials', () => {
+    it('should let verify basic credentials', () => {
+      const password = generateValidPassword();
+
+      const user = UserBuilder.aBasicCredentialsUser()
+        .withPlainPassword(password)
+        .build();
+
+      expect(
+        user.doBasicCredentialMatch(user.email.value, password)
+      ).toBeTruthy();
+    });
+
+    it('should not verify if email is not correct with basic credentials', () => {
+      const password = generateValidPassword();
+
+      const user = UserBuilder.aBasicCredentialsUser()
+        .withPlainPassword(password)
+        .build();
+
+      expect(
+        user.doBasicCredentialMatch(EmailMother.random().value, password)
+      ).toBeFalsy();
+    });
+
+    it('should not verify if password is not correct with basic credentials', () => {
+      const password = generateValidPassword();
+
+      const user = UserBuilder.aBasicCredentialsUser().build();
+
+      expect(
+        user.doBasicCredentialMatch(user.email.value, password)
+      ).toBeFalsy();
+    });
+  });
+
+  describe('Google Credentials', () => {
+    it('Should let verify google credentials', () => {
+      const id = GoogleId.of(StringMother.random());
+      const user = UserBuilder.aGoogleCredentialsUser()
+        .withGoogleId(id)
+        .build();
+
+      expect(
+        user.doGoogleCredentialMatch({ email: user.email, googleId: id })
+      ).toBeTruthy();
+    });
+
+    it('Should not verify if googleId is wrong', () => {
+      const id = GoogleId.of(StringMother.random());
+      const user = UserBuilder.aGoogleCredentialsUser().build();
+
+      expect(
+        user.doGoogleCredentialMatch({ email: user.email, googleId: id })
+      ).toBeFalsy();
+    });
+
+    it('Should not verify if email is wrong', () => {
+      const id = GoogleId.of(StringMother.random());
+      const user = UserBuilder.aGoogleCredentialsUser()
+        .withGoogleId(id)
+        .build();
+
+      expect(
+        user.doGoogleCredentialMatch({
+          email: EmailMother.random(),
+          googleId: id,
+        })
+      ).toBeFalsy();
+    });
   });
 });
