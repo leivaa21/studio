@@ -7,9 +7,10 @@ import { authorizationChecker } from './auth/authorizationChecker';
 import { currentUserChecker } from './auth/currentUserChecker';
 import './auth';
 import { DependencyContainer } from '@studio/dependency-injection';
+import { options, uri } from './mongo/config';
 
 configMongoose();
-connectToMongo();
+connectToMongo({ uri, options });
 
 const port = 5000;
 
