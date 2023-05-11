@@ -6,7 +6,7 @@ import { EmailMother } from '../../../../../../helpers/object-mother/UserEmailMo
 import { RegisterNewUserGoogleCredentials } from '../../../../../../../src/contexts/users/application/commands/RegisterNewUser/RegisterNewUserGoogleCredentials';
 import { GoogleId } from '../../../../../../../src/contexts/users/domain/GoogleId';
 
-describe('Register New User with Basic Credentials', () => {
+describe('Register New User with Google Credentials', () => {
   it('Should create a valid user', async () => {
     const command = {
       email: EmailMother.random().value,
