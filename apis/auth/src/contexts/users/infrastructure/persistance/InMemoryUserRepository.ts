@@ -7,7 +7,7 @@ import { UserNickname } from '../../domain/UserNickname';
 import { UserRepository } from '../../domain/UserRepository';
 
 export class InMemoryUserRepository implements UserRepository {
-  constructor(private readonly users: User[] = []) {}
+  constructor(public readonly users: User[] = []) {}
 
   async create(user: User): Promise<void> {
     this.users.push(user);
