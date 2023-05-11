@@ -1,7 +1,6 @@
 import { UserFinder } from '../../../../../../src/contexts/users/domain/services/UserFinder';
 import { InMemoryUserRepository } from '../../../../../../src/contexts/users/infrastructure/persistance/InMemoryUserRepository';
 import { GoogleId } from '../../../../../../src/contexts/users/domain/GoogleId';
-import { UserId } from '../../../../../../src/contexts/users/domain/UserId';
 import { UserNotFoundError } from '../../../../../../src/contexts/users/domain/errors/UserNotFound';
 import { UserBuilder } from '../../../../../helpers/builders/user/UserBuilder';
 import { StringMother } from '../../../../../helpers/object-mother/StringMother';
