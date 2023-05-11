@@ -16,4 +16,11 @@ export class InvalidCredentialsError extends ApiError {
       `The email or the password do not match`
     );
   }
+
+  public static causeGoogleCredentialsDoNotMatch() {
+    return new this(
+      ErrorCodes.InvalidCredential,
+      `The google credentials do not match`
+    );
+  }
 }

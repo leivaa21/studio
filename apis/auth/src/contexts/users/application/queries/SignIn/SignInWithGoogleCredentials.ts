@@ -9,6 +9,7 @@ import { UserEmail } from '../../../domain/UserEmail';
 import { UserRepository } from '../../../domain/UserRepository';
 import { MongoUserRepository } from '../../../infrastructure/persistance/mongo/MongoUserRepository';
 import { RegisterNewUserGoogleCredentialsCommand } from '../../commands/RegisterNewUser/RegisterNewUserGoogleCredentials';
+import { InvalidCredentialsError } from '../../../domain/errors/InvalidCredentials';
 
 export class SignInWithGoogleCredentialsQuery {
   public readonly googleId: string;
@@ -42,6 +43,10 @@ export class SignInWithGoogleCredentialsHandler
     if (!user) {
       await this.createNonExistingUser(googleId, email);
       user = await this.userFinder.findByGoogleIdOrThrow(googleId);
+    }
+
+    if (!user.doGoogleCredentialMatch({ email, googleId })) {
+      throw InvalidCredentialsError.causeGoogleCredentialsDoNotMatch();
     }
 
     return user;
