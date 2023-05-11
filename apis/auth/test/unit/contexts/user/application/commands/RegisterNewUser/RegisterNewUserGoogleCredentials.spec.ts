@@ -17,7 +17,7 @@ describe('Register New User with Google Credentials', () => {
 
     const useCase = new RegisterNewUserGoogleCredentials(userRepository);
 
-    useCase.execute(command);
+    await useCase.execute(command);
 
     const user = await userRepository.findByEmail(UserEmail.of(command.email));
 
