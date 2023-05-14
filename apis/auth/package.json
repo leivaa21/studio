@@ -10,7 +10,8 @@
     "prod": "yarn build && yarn start",
     "lint": "eslint './src/**' && prettier .",
     "lint:fix": "eslint './src/**' --fix && prettier --write .",
-    "test": "jest ."
+    "test": "jest .",
+    "test:e2e": "jest test/e2e"
   },
   "dependencies": {
     "@studio/api-utils": "workspace:packages/api-utils",
