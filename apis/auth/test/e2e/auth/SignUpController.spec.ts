@@ -1,7 +1,7 @@
 import request from 'supertest';
 import { StartedTestContainer } from 'testcontainers';
 import { DependencyContainer } from '@studio/dependency-injection';
-import { ErrorCodes, Nickname } from '@studio/commons';
+import { ErrorCodes } from '@studio/commons';
 
 import {
   disconnectMongoTest,
