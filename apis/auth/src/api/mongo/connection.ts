@@ -12,8 +12,7 @@ export const connectToMongo = async ({
   uri: string;
   options?: ConnectOptions;
 }) => {
-  console.log(uri);
   return mongoose
     .connect(uri, options)
-    .then(() => info('Conection to mongo stablished succesfully'));
+    .then(() => info(`Conection to mongo at ${uri} stablished succesfully`));
 };
