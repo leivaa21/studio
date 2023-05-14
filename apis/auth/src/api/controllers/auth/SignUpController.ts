@@ -36,6 +36,12 @@ export class SingUpController {
       );
     }
 
+    if (!credentials) {
+      throw new BadRequestException(
+        'Credentials should be defined in request body'
+      );
+    }
+
     if (!credentials.email || !credentials.password) {
       throw new BadRequestException('Invalid credentials body');
     }
