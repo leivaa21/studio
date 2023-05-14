@@ -1,4 +1,4 @@
-import { Mongoose } from 'mongoose';
+import mongoose from 'mongoose';
 import { GenericContainer, StartedTestContainer, Wait } from 'testcontainers';
 import { connectToMongo } from '../../../src/api/mongo/connection';
 
@@ -23,6 +23,6 @@ export async function connectMongooseToContainer(
   await connectToMongo({ uri });
 }
 
-export async function disconnectMongoTest(mongooseInstance: Mongoose) {
-  await mongooseInstance.disconnect();
+export async function disconnectMongoTest() {
+  await mongoose.disconnect();
 }

@@ -1,4 +1,3 @@
-import mongoose from 'mongoose';
 import { StartedTestContainer } from 'testcontainers';
 
 import {
@@ -27,7 +26,7 @@ describe('Mongo User Repository', () => {
   });
 
   afterAll(async () => {
-    await disconnectMongoTest(mongoose);
+    await disconnectMongoTest();
     await container.stop();
   });
 
