@@ -101,7 +101,6 @@ describe(`POST ${route}`, () => {
       .expect('Content-Type', /json/);
 
     const { body } = response;
-    console.log(body.user);
 
     expect(body.errorCode).toBe(ErrorCodes.InvalidNickname);
   });
