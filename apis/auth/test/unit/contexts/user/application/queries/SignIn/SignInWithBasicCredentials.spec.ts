@@ -3,11 +3,14 @@ import { UserBuilder } from '../../../../../../helpers/builders/user/UserBuilder
 import { SignInWithBasicCredentialsHandler } from '../../../../../../../src/contexts/users/application/queries/SignIn/SignInWithBasicCredentials';
 import { InvalidCredentialsError } from '../../../../../../../src/contexts/users/domain/errors/InvalidCredentials';
 import { StringMother } from '../../../../../../helpers/object-mother/StringMother';
+import { generateValidPassword } from '../../../../../../helpers/lib/generateValidPassword';
 
 describe('Sign In User with Basic Credentials', () => {
   it('Should validate a valid user', async () => {
-    const password = StringMother.random({ minLength: 10, maxLength: 16 });
-    const user = new UserBuilder().withPlainPassword(password).build();
+    const password = generateValidPassword();
+    const user = UserBuilder.aBasicCredentialsUser()
+      .withPlainPassword(password)
+      .build();
 
     const query = {
       email: user.email.value,
@@ -24,8 +27,10 @@ describe('Sign In User with Basic Credentials', () => {
   });
 
   it('Should throw invalid credentials error if non-existant user', async () => {
-    const password = StringMother.random({ minLength: 10, maxLength: 16 });
-    const user = new UserBuilder().withPlainPassword(password).build();
+    const password = generateValidPassword();
+    const user = UserBuilder.aBasicCredentialsUser()
+      .withPlainPassword(password)
+      .build();
 
     const query = {
       email: user.email.value,
@@ -42,8 +47,10 @@ describe('Sign In User with Basic Credentials', () => {
   });
 
   it('Should throw invalid credentials error if password do not match', async () => {
-    const password = StringMother.random({ minLength: 10, maxLength: 16 });
-    const user = new UserBuilder().withPlainPassword(password).build();
+    const password = generateValidPassword();
+    const user = UserBuilder.aBasicCredentialsUser()
+      .withPlainPassword(password)
+      .build();
 
     const query = {
       email: user.email.value,

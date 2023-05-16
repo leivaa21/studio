@@ -9,6 +9,7 @@ import { UserGoogleCredentials } from '../../../domain/UserGoogleCredentials';
 import { UserNickname } from '../../../domain/UserNickname';
 import { UserRepository } from '../../../domain/UserRepository';
 import { MongoUserRepository } from '../../../infrastructure/persistance/mongo/MongoUserRepository';
+import { UserFinder } from '../../../domain/services/UserFinder';
 
 export class RegisterNewUserGoogleCredentialsCommand {
   public readonly googleId: string;
@@ -23,17 +24,26 @@ export class RegisterNewUserGoogleCredentialsCommand {
   dependencies: [MongoUserRepository, InMemoryAsyncEventBus],
 })
 export class RegisterNewUserGoogleCredentials extends CommandHandler<RegisterNewUserGoogleCredentialsCommand> {
+  private readonly userFinder: UserFinder;
   constructor(
     private readonly userRepository: UserRepository,
     eventBus?: EventBus
   ) {
     super(eventBus);
+    this.userFinder = new UserFinder(userRepository);
   }
   async execute(
     command: RegisterNewUserGoogleCredentialsCommand
   ): Promise<void> {
     const googleId = GoogleId.of(command.googleId);
     const email = UserEmail.of(command.email);
+
+    const alreadyPersisted =
+      (await this.userFinder.findByGoogleId(googleId)) !== null;
+
+    if (alreadyPersisted) {
+      return;
+    }
 
     const credentials = UserGoogleCredentials.of({
       googleId,

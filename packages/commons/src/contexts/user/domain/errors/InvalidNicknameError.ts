@@ -2,7 +2,7 @@ import { ErrorCodes } from '../../../../errors/ErrorCodes';
 import { ApiError } from '../../../shared/domain/errors/ApiError';
 import { Nickname } from '../Nickname';
 
-export class InvalidUserNicknameError extends ApiError {
+export class InvalidNicknameError extends ApiError {
 
   constructor(errorCode: ErrorCodes, message: string) {
     super({
@@ -24,6 +24,13 @@ export class InvalidUserNicknameError extends ApiError {
     return new this(
       ErrorCodes.InvalidNickname,
       `Nicknames can't be shorter than ${Nickname.MIN_LENGTH} => <${nickname}>`
+    );
+  }
+
+  public static causeNicknameHasInvalidCharacters(nickname: string) {
+    return new this(
+      ErrorCodes.InvalidNickname,
+      `<${nickname}> contains invalid symbols`
     );
   }
 }
