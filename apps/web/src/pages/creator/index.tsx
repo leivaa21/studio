@@ -6,6 +6,7 @@ import { Fragment, useEffect } from 'react';
 import { Header } from '../../components/header/header';
 import { CreatorHeader } from '../../components/creator/header';
 import { CreatorPanel } from '../../components/creator/panel';
+import Button from '@studio/ui/components/interactivity/cta/button';
 
 const possibleCourseTags = [
   'Backend',
@@ -31,7 +32,10 @@ export default function CreatorDashboard() {
     <Fragment>
       <Header />
       <div className="row">
-        <CourseSearcher onFetch={onFetch} tags={possibleCourseTags} />
+        <div className="sidebar">
+          <Button Type="Secondary" Size="Small" Label="Create new course" />
+          <CourseSearcher onFetch={onFetch} tags={possibleCourseTags} />
+        </div>
         <div className="column">
           <CreatorHeader />
           <CreatorPanel />

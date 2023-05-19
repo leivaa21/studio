@@ -1,5 +1,4 @@
 import { HTMLInputTypeAttribute, useCallback, useEffect, useState } from 'react';
-import Button from '../interactivity/cta/button';
 
 import styles from './search.module.scss';
 import { CheckableTag } from '../interactivity/tags';
@@ -30,9 +29,6 @@ export function CourseSearcher({tags, onFetch}: CourseSearcherProps ) {
   return (
     <div className={styles.courseSearcher}>
       <ul className={`no-dotted-list ${styles['utils-list']}`}>
-        <li>
-          <Button Type="Secondary" Size="Small" Label="Create new course" />
-        </li>
         <li>
           <div className={styles['search-input']}>
             <label htmlFor="search">Search</label>
