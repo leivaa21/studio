@@ -1,0 +1,27 @@
+.courseSearcher {
+  padding: 2rem 4rem;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+
+  .search-input {
+    display: flex;
+    flex-direction: column;
+    label {
+      padding-bottom: 0.5rem;
+    }
+  }
+
+  .utils-list {
+    li {
+      padding: 0.5rem 0;
+    }
+  }
+
+  .tags-picker {
+    li {
+      padding-bottom: 0.3rem;
+      padding-left: 1rem;
+    }
+  }
+}
