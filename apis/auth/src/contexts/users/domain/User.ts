@@ -8,6 +8,7 @@ import {
 } from './PossibleUserCredentials';
 import { UserBasicCredentials } from './UserBasicCredentials';
 import { UserEmail } from './UserEmail';
+import { UserGithubCredentials } from './UserGithubCredentials';
 import { UserGoogleCredentials } from './UserGoogleCredentials';
 import { UserId } from './UserId';
 import { UserNickname } from './UserNickname';
@@ -89,6 +90,34 @@ export class User extends AggregateRoot {
       aggregateId: userId.value,
       attributes: {
         credentialsType: 'GOOGLE',
+      },
+    });
+
+    const user = new User({
+      id: userId,
+      nickname,
+      credentials,
+      verified: false,
+      createdAt: new Date(),
+      updatedAt: new Date(),
+    });
+
+    user.commit(userWasCreatedEvent);
+
+    return user;
+  }
+
+  public static createNewWithGithubCredentials(args: {
+    nickname: UserNickname;
+    credentials: UserGithubCredentials;
+  }) {
+    const { nickname, credentials } = args;
+    const userId = UserId.random();
+
+    const userWasCreatedEvent = UserWasCreatedEvent.fromPrimitives({
+      aggregateId: userId.value,
+      attributes: {
+        credentialsType: 'GITHUB',
       },
     });
 

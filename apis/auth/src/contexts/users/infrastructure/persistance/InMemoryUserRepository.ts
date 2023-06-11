@@ -1,4 +1,5 @@
 import { Nullable } from '../../../shared/domain/Nullable';
+import { GithubId } from '../../domain/GithubId';
 import { GoogleId } from '../../domain/GoogleId';
 import { User } from '../../domain/User';
 import { UserEmail } from '../../domain/UserEmail';
@@ -27,6 +28,16 @@ export class InMemoryUserRepository implements UserRepository {
       (user) =>
         user.credentials.type === 'GOOGLE' &&
         user.credentials.googleId.equals(googleId)
+    );
+    if (!user) return null;
+    return user;
+  }
+
+  async findByGithubId(githubId: GithubId): Promise<Nullable<User>> {
+    const user = this.users.find(
+      (user) =>
+        user.credentials.type === 'GITHUB' &&
+        user.credentials.googleId.equals(githubId)
     );
     if (!user) return null;
     return user;

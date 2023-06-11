@@ -1,5 +1,6 @@
 import { Nullable } from '../../../shared/domain/Nullable';
 import { UserNotFoundError } from '../errors/UserNotFound';
+import { GithubId } from '../GithubId';
 import { GoogleId } from '../GoogleId';
 import { User } from '../User';
 import { UserEmail } from '../UserEmail';
@@ -16,6 +17,11 @@ export class UserFinder {
   }
   public async findByGoogleId(googleId: GoogleId): Promise<Nullable<User>> {
     const userFound = await this.userRepository.findByGoogleId(googleId);
+    return userFound;
+  }
+
+  public async findByGithubId(githubId: GithubId): Promise<Nullable<User>> {
+    const userFound = await this.userRepository.findByGithubId(githubId);
     return userFound;
   }
 
