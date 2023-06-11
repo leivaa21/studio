@@ -11,6 +11,8 @@ import { StatusCode, error } from '@studio/api-utils';
 import { InMemoryQueryBus } from '../../../contexts/shared/infrastructure/QueryBus/InMemoryQueryBus';
 import { QueryBus } from '../../../contexts/shared/domain/QueryBus';
 import { signJwt } from '../../auth/signJwt';
+import { User } from '../../../contexts/users/domain/User';
+import { SignInWithGithubCredentialsQuery } from '../../../contexts/users/application/queries/SignIn/SignInWithGithubCredentials';
 
 @Injectable({
   dependencies: [InMemoryQueryBus],
@@ -33,9 +35,17 @@ export class GithubOauthController {
       throw new Error('');
     }
 
-    // Persist User w/SignIn UseCase
+    const user = await this.queryBus.dispatch<
+      SignInWithGithubCredentialsQuery,
+      User
+    >(
+      new SignInWithGithubCredentialsQuery({
+        githubId: data.id,
+        name: data.name,
+      })
+    );
 
-    const token = signJwt({ id: data.id, nickname: data.name });
+    const token = signJwt({ id: user.id.value, nickname: user.nickname.value });
 
     return {
       user: { id: data.id, nickname: data.name },
@@ -65,7 +75,6 @@ export class GithubOauthController {
       });
       const data = await response.json();
       if (response.ok) {
-        console.log('OK!');
         return data;
       }
       error(JSON.stringify({ ...data, status: response.status }));
@@ -80,7 +89,7 @@ export class GithubOauthController {
     access_token,
   }: {
     access_token: string;
-  }): Promise<{ id: string; name: string }> {
+  }): Promise<{ id: number; name: string }> {
     const url = `https://api.github.com/user`;
 
     try {
@@ -93,7 +102,6 @@ export class GithubOauthController {
       });
       const data = await response.json();
       if (response.ok) {
-        console.log('OK!');
         return data;
       }
       error(JSON.stringify({ ...data, status: response.status }));
