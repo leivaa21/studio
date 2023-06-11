@@ -23,7 +23,7 @@ const route = '/auth/signin/basic';
 beforeAll(async () => {
   mongoContainer = await initializeMongoContainer();
   connectMongooseToContainer(mongoContainer);
-});
+}, 99999);
 
 afterAll(async () => {
   await disconnectMongoTest();
