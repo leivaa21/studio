@@ -10,6 +10,10 @@ import { GoogleId } from '../../../../../src/contexts/users/domain/GoogleId';
 import { StringMother } from '../../../../helpers/object-mother/StringMother';
 import { UserGoogleCredentials } from '../../../../../src/contexts/users/domain/UserGoogleCredentials';
 import { UserBuilder } from '../../../../helpers/builders/user/UserBuilder';
+import { UserEmail } from '../../../../../src/contexts/users/domain/UserEmail';
+import { GithubId } from '../../../../../src/contexts/users/domain/GithubId';
+import { NumberMother } from '../../../../helpers/object-mother/NumberMother';
+import { UserGithubCredentials } from '../../../../../src/contexts/users/domain/UserGithubCredentials';
 
 describe('Create users', () => {
   it('Should let create user with basic credentials', () => {
@@ -61,6 +65,29 @@ describe('Create users', () => {
     expect(events).toHaveLength(1);
     expect(events[0].eventName).toBe(UserWasCreatedEvent.EVENT_NAME);
   });
+
+  it('Should let create user with github credentials', () => {
+    const nickname = UserNickname.of(generateValidNickname());
+    const githubId = GithubId.of(NumberMother.random());
+    const credentials = UserGithubCredentials.of({ githubId });
+
+    const user = User.createNewWithGithubCredentials({ nickname, credentials });
+
+    expect(user.toPrimitives()).toMatchObject(
+      expect.objectContaining({
+        nickname: nickname.value,
+        credentials: {
+          githubId: githubId.value,
+          type: 'GITHUB',
+        },
+      })
+    );
+
+    const events = user.pullEvents();
+
+    expect(events).toHaveLength(1);
+    expect(events[0].eventName).toBe(UserWasCreatedEvent.EVENT_NAME);
+  });
 });
 
 describe('Verify credentials', () => {
@@ -73,7 +100,7 @@ describe('Verify credentials', () => {
         .build();
 
       expect(
-        user.doBasicCredentialMatch(user.email.value, password)
+        user.doBasicCredentialMatch((user.email as UserEmail).value, password)
       ).toBeTruthy();
     });
 
@@ -95,7 +122,7 @@ describe('Verify credentials', () => {
       const user = UserBuilder.aBasicCredentialsUser().build();
 
       expect(
-        user.doBasicCredentialMatch(user.email.value, password)
+        user.doBasicCredentialMatch((user.email as UserEmail).value, password)
       ).toBeFalsy();
     });
   });
@@ -108,7 +135,10 @@ describe('Verify credentials', () => {
         .build();
 
       expect(
-        user.doGoogleCredentialMatch({ email: user.email, googleId: id })
+        user.doGoogleCredentialMatch({
+          email: user.email as UserEmail,
+          googleId: id,
+        })
       ).toBeTruthy();
     });
 
@@ -117,7 +147,10 @@ describe('Verify credentials', () => {
       const user = UserBuilder.aGoogleCredentialsUser().build();
 
       expect(
-        user.doGoogleCredentialMatch({ email: user.email, googleId: id })
+        user.doGoogleCredentialMatch({
+          email: user.email as UserEmail,
+          googleId: id,
+        })
       ).toBeFalsy();
     });
 
@@ -131,6 +164,33 @@ describe('Verify credentials', () => {
         user.doGoogleCredentialMatch({
           email: EmailMother.random(),
           googleId: id,
+        })
+      ).toBeFalsy();
+    });
+  });
+
+  describe('Github Credentials', () => {
+    it('Should let verify github credentials', () => {
+      const id = GithubId.of(NumberMother.random());
+      const user = UserBuilder.aGithubCredentialsUser()
+        .withGithubId(id)
+        .build();
+
+      expect(
+        user.doGithubCredentialMatch({
+          githubId: id,
+        })
+      ).toBeTruthy();
+    });
+
+    it('Should not verify if github id is wrong', () => {
+      const id = GithubId.of(NumberMother.random());
+
+      const user = UserBuilder.aGithubCredentialsUser().build();
+
+      expect(
+        user.doGithubCredentialMatch({
+          githubId: id,
         })
       ).toBeFalsy();
     });

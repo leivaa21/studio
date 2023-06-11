@@ -10,6 +10,7 @@ import { UserRepository } from '../../../domain/UserRepository';
 import { UserData } from './UserData';
 import { UserModel } from './UserSchema';
 import { UserSchemaFactory } from './UserSchemaFactory';
+import { GithubId } from '../../../domain/GithubId';
 
 @Injectable({ dependencies: [UserSchemaFactory] })
 export class MongoUserRepository
@@ -41,6 +42,14 @@ export class MongoUserRepository
   async findByGoogleId(googleId: GoogleId): Promise<Nullable<User>> {
     const document = await this.model().findOne<UserData>({
       'credentials.googleId': googleId.value,
+    });
+    if (!document) return null;
+    return this.entitySchemaFactory.createEntityFromSchema(document);
+  }
+
+  async findByGithubId(githubId: GithubId): Promise<Nullable<User>> {
+    const document = await this.model().findOne<UserData>({
+      'credentials.githubId': githubId.value,
     });
     if (!document) return null;
     return this.entitySchemaFactory.createEntityFromSchema(document);

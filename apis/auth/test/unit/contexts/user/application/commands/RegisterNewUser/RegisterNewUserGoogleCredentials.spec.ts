@@ -34,7 +34,7 @@ describe('Register New User with Google Credentials', () => {
 
     const command = {
       googleId: googleId.value,
-      email: alreadyPersistedUser.email.value,
+      email: (alreadyPersistedUser.email as UserEmail).value,
     };
 
     const userRepository = new InMemoryUserRepository([alreadyPersistedUser]);

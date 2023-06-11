@@ -8,7 +8,7 @@ export function GithubAuthButton() {
 
   useEffect(() => {
     internalApiClient
-      .get<{ url: string }>('/api/auth/google/url')
+      .get<{ url: string }>('/api/auth/github/url')
       .then((response) => setGithubUrl(response.url));
   }, []);
 

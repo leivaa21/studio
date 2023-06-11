@@ -26,4 +26,8 @@ export const env = {
     id: getEnvVariableOrThrow('GOOGLE_OAUTH_ID'),
     secret: getEnvVariableOrThrow('GOOGLE_OAUTH_SECRET'),
   },
+  github: {
+    id: getEnvVariableOrThrow('GITHUB_OAUTH_ID'),
+    secret: getEnvVariableOrThrow('GITHUB_OAUTH_SECRET'),
+  },
 };

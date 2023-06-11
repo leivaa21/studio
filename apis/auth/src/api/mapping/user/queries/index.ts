@@ -17,6 +17,10 @@ import {
   SignInWithGoogleCredentialsHandler,
   SignInWithGoogleCredentialsQuery,
 } from '../../../../contexts/users/application/queries/SignIn/SignInWithGoogleCredentials';
+import {
+  SignInWithGithubCredentialsHandler,
+  SignInWithGithubCredentialsQuery,
+} from '../../../../contexts/users/application/queries/SignIn/SignInWithGithubCredentials';
 const queryBus = DependencyContainer.get<QueryBus>(InMemoryQueryBus);
 
 queryBus.subscribe(GetUserByEmailQuery, GetUserByEmailHandler);
@@ -28,4 +32,9 @@ queryBus.subscribe(
 queryBus.subscribe(
   SignInWithGoogleCredentialsQuery,
   SignInWithGoogleCredentialsHandler
+);
+
+queryBus.subscribe(
+  SignInWithGithubCredentialsQuery,
+  SignInWithGithubCredentialsHandler
 );

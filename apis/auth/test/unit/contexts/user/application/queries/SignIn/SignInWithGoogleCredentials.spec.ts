@@ -10,6 +10,7 @@ import { InMemoryCommandBus } from '../../../../../../../src/contexts/shared/inf
 import { UserRepository } from '../../../../../../../src/contexts/users/domain/UserRepository';
 import { RegisterNewUserGoogleCredentialsCommand } from '../../../../../../../src/contexts/users/application/commands/RegisterNewUser/RegisterNewUserGoogleCredentials';
 import { EmailMother } from '../../../../../../helpers/object-mother/UserEmailMother';
+import { UserEmail } from '../../../../../../../src/contexts/users/domain/UserEmail';
 
 const commandBus = mock<InMemoryCommandBus>();
 
@@ -21,7 +22,7 @@ describe('Sign In User with Google Credentials', () => {
       .build();
 
     const query = {
-      email: user.email.value,
+      email: (user.email as UserEmail).value,
       googleId: googleId.value,
     };
 
@@ -34,7 +35,7 @@ describe('Sign In User with Google Credentials', () => {
 
     const response = await queryHandler.execute(query);
 
-    expect(response.email.value).toEqual(query.email);
+    expect((response.email as UserEmail).value).toEqual(query.email);
   });
 
   it('Should call commandBus if non-persisted user', async () => {
@@ -44,7 +45,7 @@ describe('Sign In User with Google Credentials', () => {
       .build();
 
     const query = {
-      email: user.email.value,
+      email: (user.email as UserEmail).value,
       googleId: googleId.value,
     };
     const userRepository = mock<UserRepository>();
@@ -64,7 +65,7 @@ describe('Sign In User with Google Credentials', () => {
       new RegisterNewUserGoogleCredentialsCommand(query)
     );
     expect(userRepository.findByGoogleId).toHaveBeenCalledTimes(2);
-    expect(response.email.value).toEqual(query.email);
+    expect((response.email as UserEmail).value).toEqual(query.email);
   });
 
   it('Should not validate a invalid user', async () => {

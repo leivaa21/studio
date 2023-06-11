@@ -5,6 +5,7 @@ import { UserNotFoundError } from '../../../../../../src/contexts/users/domain/e
 import { UserBuilder } from '../../../../../helpers/builders/user/UserBuilder';
 import { StringMother } from '../../../../../helpers/object-mother/StringMother';
 import { EmailMother } from '../../../../../helpers/object-mother/UserEmailMother';
+import { UserEmail } from '../../../../../../src/contexts/users/domain/UserEmail';
 
 describe('User Finder', () => {
   it('Should be able to find user by id', async () => {
@@ -37,7 +38,9 @@ describe('User Finder', () => {
     const repository = new InMemoryUserRepository([user]);
     const userFinder = new UserFinder(repository);
 
-    const userFound = await userFinder.findByEmailOrThrow(user.email);
+    const userFound = await userFinder.findByEmailOrThrow(
+      user.email as UserEmail
+    );
 
     expect(userFound).toStrictEqual(user);
   });
@@ -47,7 +50,9 @@ describe('User Finder', () => {
     const repository = new InMemoryUserRepository([user]);
     const userFinder = new UserFinder(repository);
 
-    const userFound = await userFinder.findByEmailOrThrow(user.email);
+    const userFound = await userFinder.findByEmailOrThrow(
+      user.email as UserEmail
+    );
 
     expect(userFound).toStrictEqual(user);
   });

@@ -26,7 +26,7 @@ const route = '/auth/signup/basic';
 beforeAll(async () => {
   mongoContainer = await initializeMongoContainer();
   connectMongooseToContainer(mongoContainer);
-});
+}, 99999);
 
 afterAll(async () => {
   await disconnectMongoTest();
@@ -138,7 +138,7 @@ describe(`POST ${route}`, () => {
       .post(route)
       .send({
         credentials: {
-          email: persistedUser.email.value,
+          email: persistedUser.email?.value,
           password: password,
         },
         nickname: nickname.value,

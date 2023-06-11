@@ -23,7 +23,7 @@ const route = '/auth/signin/basic';
 beforeAll(async () => {
   mongoContainer = await initializeMongoContainer();
   connectMongooseToContainer(mongoContainer);
-});
+}, 99999);
 
 afterAll(async () => {
   await disconnectMongoTest();
@@ -41,7 +41,7 @@ describe(`POST ${route}`, () => {
     const response = await request(app)
       .post('/auth/signin/basic')
       .send({
-        email: persistedUser.email.value,
+        email: persistedUser.email?.value,
         password: password,
       })
       .expect('Content-Type', /json/)
@@ -66,7 +66,7 @@ describe(`POST ${route}`, () => {
     const response = await request(app)
       .post('/auth/signin/basic')
       .send({
-        email: persistedUser.email.value,
+        email: persistedUser.email?.value,
         password: generateValidPassword(),
       })
       .expect('Content-Type', /json/)
