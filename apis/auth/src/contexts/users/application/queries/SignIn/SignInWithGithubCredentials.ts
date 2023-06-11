@@ -23,7 +23,7 @@ export class SignInWithGithubCredentialsQuery {
 @Injectable({
   dependencies: [InMemoryCommandBus, MongoUserRepository],
 })
-export class SignInWithGoogleCredentialsHandler
+export class SignInWithGithubCredentialsHandler
   implements QueryHandler<SignInWithGithubCredentialsQuery, User>
 {
   private readonly userFinder: UserFinder;
