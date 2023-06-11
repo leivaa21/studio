@@ -1,10 +1,108 @@
 import { Injectable } from '@studio/dependency-injection';
-import { Get, JsonController } from 'routing-controllers';
+import {
+  BadRequestError,
+  Get,
+  HttpCode,
+  JsonController,
+  QueryParam,
+} from 'routing-controllers';
 import { env } from '../../config/env';
+import { StatusCode, error } from '@studio/api-utils';
+import { InMemoryQueryBus } from '../../../contexts/shared/infrastructure/QueryBus/InMemoryQueryBus';
+import { QueryBus } from '../../../contexts/shared/domain/QueryBus';
+import { signJwt } from '../../auth/signJwt';
 
-@Injectable()
+@Injectable({
+  dependencies: [InMemoryQueryBus],
+})
 @JsonController('/auth/github')
 export class GithubOauthController {
+  constructor(private readonly queryBus: QueryBus) {}
+
+  @Get('/')
+  @HttpCode(StatusCode.OK)
+  async Authenticate(@QueryParam('code') code: string) {
+    if (!code) {
+      throw new BadRequestError('');
+    }
+
+    const { access_token } = await this.checkToken({ code });
+
+    const data = await this.getUser({ access_token });
+    if (!data.name || !data.id) {
+      throw new Error('');
+    }
+
+    // Persist User w/SignIn UseCase
+
+    const token = signJwt({ id: data.id, nickname: data.name });
+
+    return {
+      user: { id: data.id, nickname: data.name },
+      token: token,
+    };
+  }
+
+  private async checkToken({
+    code,
+  }: {
+    code: string;
+  }): Promise<{ access_token: string }> {
+    const url = `https://github.com/login/oauth/access_token`;
+
+    try {
+      const response = await fetch(url, {
+        method: 'POST',
+        headers: {
+          Accept: 'application/vnd.github+json',
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          client_id: env.github.id,
+          client_secret: env.github.secret,
+          code,
+        }),
+      });
+      const data = await response.json();
+      if (response.ok) {
+        console.log('OK!');
+        return data;
+      }
+      error(JSON.stringify({ ...data, status: response.status }));
+    } catch (err) {
+      console.error(err);
+      error('Failed to fetch Github Oauth Tokens!');
+    }
+    throw new Error();
+  }
+
+  private async getUser({
+    access_token,
+  }: {
+    access_token: string;
+  }): Promise<{ id: string; name: string }> {
+    const url = `https://api.github.com/user`;
+
+    try {
+      const response = await fetch(url, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${access_token}`,
+        },
+      });
+      const data = await response.json();
+      if (response.ok) {
+        console.log('OK!');
+        return data;
+      }
+      error(JSON.stringify({ ...data, status: response.status }));
+    } catch (err) {
+      error('Failed to fetch Github Oauth Tokens!');
+    }
+    throw new Error();
+  }
+
   @Get('/url')
   async getGithubUrl() {
     return { url: this.formatGithubUrl() };
