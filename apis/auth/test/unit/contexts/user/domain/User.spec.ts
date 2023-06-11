@@ -10,6 +10,7 @@ import { GoogleId } from '../../../../../src/contexts/users/domain/GoogleId';
 import { StringMother } from '../../../../helpers/object-mother/StringMother';
 import { UserGoogleCredentials } from '../../../../../src/contexts/users/domain/UserGoogleCredentials';
 import { UserBuilder } from '../../../../helpers/builders/user/UserBuilder';
+import { UserEmail } from '../../../../../src/contexts/users/domain/UserEmail';
 
 describe('Create users', () => {
   it('Should let create user with basic credentials', () => {
@@ -73,7 +74,7 @@ describe('Verify credentials', () => {
         .build();
 
       expect(
-        user.doBasicCredentialMatch(user.email.value, password)
+        user.doBasicCredentialMatch((user.email as UserEmail).value, password)
       ).toBeTruthy();
     });
 
@@ -95,7 +96,7 @@ describe('Verify credentials', () => {
       const user = UserBuilder.aBasicCredentialsUser().build();
 
       expect(
-        user.doBasicCredentialMatch(user.email.value, password)
+        user.doBasicCredentialMatch((user.email as UserEmail).value, password)
       ).toBeFalsy();
     });
   });
@@ -108,7 +109,10 @@ describe('Verify credentials', () => {
         .build();
 
       expect(
-        user.doGoogleCredentialMatch({ email: user.email, googleId: id })
+        user.doGoogleCredentialMatch({
+          email: user.email as UserEmail,
+          googleId: id,
+        })
       ).toBeTruthy();
     });
 
@@ -117,7 +121,10 @@ describe('Verify credentials', () => {
       const user = UserBuilder.aGoogleCredentialsUser().build();
 
       expect(
-        user.doGoogleCredentialMatch({ email: user.email, googleId: id })
+        user.doGoogleCredentialMatch({
+          email: user.email as UserEmail,
+          googleId: id,
+        })
       ).toBeFalsy();
     });
 

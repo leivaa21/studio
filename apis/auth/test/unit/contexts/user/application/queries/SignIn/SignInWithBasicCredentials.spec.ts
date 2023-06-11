@@ -4,6 +4,7 @@ import { SignInWithBasicCredentialsHandler } from '../../../../../../../src/cont
 import { InvalidCredentialsError } from '../../../../../../../src/contexts/users/domain/errors/InvalidCredentials';
 import { StringMother } from '../../../../../../helpers/object-mother/StringMother';
 import { generateValidPassword } from '../../../../../../helpers/lib/generateValidPassword';
+import { UserEmail } from '../../../../../../../src/contexts/users/domain/UserEmail';
 
 describe('Sign In User with Basic Credentials', () => {
   it('Should validate a valid user', async () => {
@@ -13,7 +14,7 @@ describe('Sign In User with Basic Credentials', () => {
       .build();
 
     const query = {
-      email: user.email.value,
+      email: (user.email as UserEmail).value,
       password,
     };
 
@@ -23,7 +24,7 @@ describe('Sign In User with Basic Credentials', () => {
 
     const response = await queryHandler.execute(query);
 
-    expect(response.email.value).toEqual(query.email);
+    expect((response.email as UserEmail).value).toEqual(query.email);
   });
 
   it('Should throw invalid credentials error if non-existant user', async () => {
@@ -33,7 +34,7 @@ describe('Sign In User with Basic Credentials', () => {
       .build();
 
     const query = {
-      email: user.email.value,
+      email: (user.email as UserEmail).value,
       password,
     };
 
@@ -53,7 +54,7 @@ describe('Sign In User with Basic Credentials', () => {
       .build();
 
     const query = {
-      email: user.email.value,
+      email: (user.email as UserEmail).value,
       password: StringMother.random({ minLength: 10, maxLength: 16 }),
     };
 
