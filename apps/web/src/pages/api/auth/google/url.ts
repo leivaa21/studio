@@ -19,6 +19,6 @@ export default async function handler(
       '/auth/google/url'
     );
 
-    return res.status(201).send(response);
+    return res.status(200).send(response);
   });
 }
