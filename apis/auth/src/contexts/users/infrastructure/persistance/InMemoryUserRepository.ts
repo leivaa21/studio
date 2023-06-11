@@ -19,7 +19,7 @@ export class InMemoryUserRepository implements UserRepository {
     return user;
   }
   async findByEmail(email: UserEmail): Promise<Nullable<User>> {
-    const user = this.users.find((user) => user.email.equals(email));
+    const user = this.users.find((user) => user.email?.equals(email));
     if (!user) return null;
     return user;
   }
@@ -37,7 +37,7 @@ export class InMemoryUserRepository implements UserRepository {
     const user = this.users.find(
       (user) =>
         user.credentials.type === 'GITHUB' &&
-        user.credentials.googleId.equals(githubId)
+        user.credentials.githubId.equals(githubId)
     );
     if (!user) return null;
     return user;

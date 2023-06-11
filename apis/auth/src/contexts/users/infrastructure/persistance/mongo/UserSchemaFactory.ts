@@ -2,7 +2,12 @@ import { Injectable } from '@studio/dependency-injection';
 import { EntitySchemaFactory } from '../../../../shared/infrastructure/mongo/EntitySchemaFactory';
 import { PossibleUserCredentialsAsPrimitives } from '../../../domain/PossibleUserCredentials';
 import { User } from '../../../domain/User';
-import { PossibleCredentialsData, UserData } from './UserData';
+import {
+  BasicCredentialsData,
+  GoogleCredentialsData,
+  PossibleCredentialsData,
+  UserData,
+} from './UserData';
 
 @Injectable()
 export class UserSchemaFactory implements EntitySchemaFactory<UserData, User> {
@@ -15,7 +20,7 @@ export class UserSchemaFactory implements EntitySchemaFactory<UserData, User> {
       case 'BASIC':
         credentialsData = {
           _type: 'BASIC',
-          email: credentials.email,
+          email: (credentials as unknown as BasicCredentialsData).email,
           password: user.credentials.password.value,
         };
         break;
@@ -23,9 +28,14 @@ export class UserSchemaFactory implements EntitySchemaFactory<UserData, User> {
         credentialsData = {
           _type: 'GOOGLE',
           googleId: user.credentials.googleId.value,
-          email: credentials.email,
+          email: (credentials as unknown as GoogleCredentialsData).email,
         };
         break;
+      case 'GITHUB':
+        credentialsData = {
+          _type: 'GITHUB',
+          githubId: user.credentials.githubId.value,
+        };
     }
 
     return {
@@ -50,6 +60,12 @@ export class UserSchemaFactory implements EntitySchemaFactory<UserData, User> {
           type: 'GOOGLE',
           googleId: schema.credentials.googleId,
           email: schema.credentials.email,
+        };
+        break;
+      case 'GITHUB':
+        credentials = {
+          type: 'GITHUB',
+          githubId: schema.credentials.githubId,
         };
         break;
     }

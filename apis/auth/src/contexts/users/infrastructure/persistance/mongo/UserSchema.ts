@@ -8,13 +8,15 @@ const UserCredentialsSchema = new Schema(
     },
     email: {
       type: String,
-      required: true,
     },
     password: {
       type: String,
     },
     googleId: {
       type: String,
+    },
+    githubId: {
+      type: Number,
     },
   },
   { _id: false }
