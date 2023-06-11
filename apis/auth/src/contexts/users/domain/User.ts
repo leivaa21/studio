@@ -1,6 +1,7 @@
 import { AggregateRoot } from '../../shared/domain/AggregateRoot';
 import { InvalidUserError } from './errors/UserInvalid';
 import { UserWasCreatedEvent } from './events/UserWasCreated';
+import { GithubId } from './GithubId';
 import { GoogleId } from './GoogleId';
 import {
   PossibleUserCredentials,
@@ -147,6 +148,16 @@ export class User extends AggregateRoot {
     googleId: GoogleId;
   }) {
     if (this._credentials.type !== 'GOOGLE') {
+      return false;
+    }
+    return this._credentials.doMatch(credentials);
+  }
+
+  public doGithubCredentialMatch(credentials: {
+    name: UserNickname;
+    githubId: GithubId;
+  }) {
+    if (this._credentials.type !== 'GITHUB') {
       return false;
     }
     return this._credentials.doMatch(credentials);

@@ -41,6 +41,14 @@ export class UserFinder {
     return userFound;
   }
 
+  public async findByGithubIdOrThrow(githubId: GithubId): Promise<User> {
+    const userFound = await this.userRepository.findByGithubId(githubId);
+    if (!userFound) {
+      throw UserNotFoundError.searchedByGithubId(githubId.value);
+    }
+    return userFound;
+  }
+
   public async findByNicknameOrNull(
     nickname: UserNickname
   ): Promise<Nullable<User>> {
