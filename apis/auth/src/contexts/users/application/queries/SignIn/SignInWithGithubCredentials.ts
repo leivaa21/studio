@@ -45,7 +45,7 @@ export class SignInWithGoogleCredentialsHandler
       user = await this.userFinder.findByGithubIdOrThrow(githubId);
     }
 
-    if (!user.doGithubCredentialMatch({ name, githubId })) {
+    if (!user.doGithubCredentialMatch({ githubId })) {
       throw InvalidCredentialsError.causeGoogleCredentialsDoNotMatch();
     }
 

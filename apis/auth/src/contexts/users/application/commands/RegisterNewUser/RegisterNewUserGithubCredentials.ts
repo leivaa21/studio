@@ -46,7 +46,6 @@ export class RegisterNewUserGithubCredentials extends CommandHandler<RegisterNew
 
     const credentials = UserGithubCredentials.of({
       githubId,
-      name,
     });
 
     const user = User.createNewWithGithubCredentials({

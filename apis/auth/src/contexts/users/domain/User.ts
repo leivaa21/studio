@@ -1,4 +1,5 @@
 import { AggregateRoot } from '../../shared/domain/AggregateRoot';
+import { Nullable } from '../../shared/domain/Nullable';
 import { InvalidUserError } from './errors/UserInvalid';
 import { UserWasCreatedEvent } from './events/UserWasCreated';
 import { GithubId } from './GithubId';
@@ -153,10 +154,7 @@ export class User extends AggregateRoot {
     return this._credentials.doMatch(credentials);
   }
 
-  public doGithubCredentialMatch(credentials: {
-    name: UserNickname;
-    githubId: GithubId;
-  }) {
+  public doGithubCredentialMatch(credentials: { githubId: GithubId }) {
     if (this._credentials.type !== 'GITHUB') {
       return false;
     }
@@ -177,6 +175,12 @@ export class User extends AggregateRoot {
         credentials = UserGoogleCredentials.of({
           googleId: GoogleId.of(args.credentials.googleId),
           email: UserEmail.of(args.credentials.email),
+        });
+        break;
+
+      case 'GITHUB':
+        credentials = UserGithubCredentials.of({
+          githubId: GithubId.of(args.credentials.githubId),
         });
         break;
       default:
@@ -218,8 +222,11 @@ export class User extends AggregateRoot {
   get nickname(): UserNickname {
     return this._nickname;
   }
-  get email(): UserEmail {
-    return this._credentials.email;
+  get email(): Nullable<UserEmail> {
+    if (this.credentials.type === 'GITHUB') return null;
+
+    return (this._credentials as UserBasicCredentials | UserGoogleCredentials)
+      .email;
   }
   get credentials(): PossibleUserCredentials {
     return this._credentials;
