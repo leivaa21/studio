@@ -10,6 +10,9 @@ import { DateMother } from '../../object-mother/DateMother';
 import { PossibleSymbol, StringMother } from '../../object-mother/StringMother';
 import { EmailMother } from '../../object-mother/UserEmailMother';
 import { Builder } from '../builder';
+import { UserGithubCredentials } from '../../../../src/contexts/users/domain/UserGithubCredentials';
+import { NumberMother } from '../../object-mother/NumberMother';
+import { GithubId } from '../../../../src/contexts/users/domain/GithubId';
 
 const generateValidPassword = () =>
   StringMother.random({
@@ -73,6 +76,14 @@ export class UserBuilder implements Builder<User> {
     });
   }
 
+  public static aGithubCredentialsUser() {
+    return new this({
+      credentials: UserGithubCredentials.of({
+        githubId: GithubId.of(NumberMother.random()),
+      }),
+    });
+  }
+
   withGoogleId(googleId: GoogleId) {
     if (this.credentails?.type !== 'GOOGLE') {
       throw new Error('Invalid use of builder');
@@ -81,6 +92,18 @@ export class UserBuilder implements Builder<User> {
     this.credentails = UserGoogleCredentials.of({
       email: this.credentails.email,
       googleId,
+    });
+
+    return this;
+  }
+
+  withGithubId(githubId: GithubId) {
+    if (this.credentails?.type !== 'GITHUB') {
+      throw new Error('Invalid use of builder');
+    }
+
+    this.credentails = UserGithubCredentials.of({
+      githubId,
     });
 
     return this;

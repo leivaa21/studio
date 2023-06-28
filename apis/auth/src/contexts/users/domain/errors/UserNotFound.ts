@@ -20,4 +20,8 @@ export class UserNotFoundError extends ApiError {
   public static searchedByGoogleId(googleId: string) {
     return new this(`User with google Id = <${googleId}> couldn't be found`);
   }
+
+  public static searchedByGithubId(githubId: number) {
+    return new this(`User with github Id = <${githubId}> couldn't be found`);
+  }
 }

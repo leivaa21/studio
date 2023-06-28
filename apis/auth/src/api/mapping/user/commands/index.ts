@@ -9,6 +9,10 @@ import {
   RegisterNewUserGoogleCredentials,
   RegisterNewUserGoogleCredentialsCommand,
 } from '../../../../contexts/users/application/commands/RegisterNewUser/RegisterNewUserGoogleCredentials';
+import {
+  RegisterNewUserGithubCredentials,
+  RegisterNewUserGithubCredentialsCommand,
+} from '../../../../contexts/users/application/commands/RegisterNewUser/RegisterNewUserGithubCredentials';
 
 const commandBus = DependencyContainer.get<CommandBus>(InMemoryCommandBus);
 
@@ -19,4 +23,9 @@ commandBus.subscribe(
 commandBus.subscribe(
   RegisterNewUserGoogleCredentialsCommand,
   RegisterNewUserGoogleCredentials
+);
+
+commandBus.subscribe(
+  RegisterNewUserGithubCredentialsCommand,
+  RegisterNewUserGithubCredentials
 );

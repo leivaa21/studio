@@ -19,6 +19,12 @@ export interface GoogleCredentialsData {
   email: string;
 }
 
+export interface GithubCredentialsData {
+  _type: 'GITHUB';
+  githubId: number;
+}
+
 export type PossibleCredentialsData =
   | BasicCredentialsData
-  | GoogleCredentialsData;
+  | GoogleCredentialsData
+  | GithubCredentialsData;

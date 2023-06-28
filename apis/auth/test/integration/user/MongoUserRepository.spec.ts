@@ -12,6 +12,7 @@ import { UserSchemaFactory } from '../../../src/contexts/users/infrastructure/pe
 import { UserRepository } from '../../../src/contexts/users/domain/UserRepository';
 import { GoogleId } from '../../../src/contexts/users/domain/GoogleId';
 import { StringMother } from '../../helpers/object-mother/StringMother';
+import { UserEmail } from '../../../src/contexts/users/domain/UserEmail';
 
 describe('Mongo User Repository', () => {
   jest.setTimeout(9999999);
@@ -64,7 +65,9 @@ describe('Mongo User Repository', () => {
 
     describe('Should let find by email', () => {
       it('With basicCredentials', async () => {
-        const user = await repository.findByEmail(basicCredentialsUser.email);
+        const user = await repository.findByEmail(
+          basicCredentialsUser.email as UserEmail
+        );
 
         expect(user?.toPrimitives()).toStrictEqual(
           basicCredentialsUser.toPrimitives()
@@ -72,7 +75,9 @@ describe('Mongo User Repository', () => {
       });
 
       it('With googleCredentials', async () => {
-        const user = await repository.findByEmail(googleCredentialsUser.email);
+        const user = await repository.findByEmail(
+          googleCredentialsUser.email as UserEmail
+        );
 
         expect(user?.toPrimitives()).toStrictEqual(
           googleCredentialsUser.toPrimitives()

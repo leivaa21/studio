@@ -16,7 +16,7 @@ export default async function handler(
 
   await SafeControllerHandling(res, async () => {
     const response = await authApiService.get<{ url: string }>(
-      '/auth/google/url'
+      '/auth/github/url'
     );
 
     return res.status(200).send(response);
