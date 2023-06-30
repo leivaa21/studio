@@ -67,5 +67,13 @@ function CreateNewCourseModal({
   isShown: boolean;
   closeFunction: () => void;
 }) {
-  return <Modal title="" isShown={isShown} closeFunction={closeFunction} />;
+  return (
+    <Modal
+      title="Create a new course"
+      isShown={isShown}
+      closeFunction={closeFunction}
+    >
+      <h1>Lorem Ipsum</h1>
+    </Modal>
+  );
 }
