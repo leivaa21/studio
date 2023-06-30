@@ -13,6 +13,7 @@
   },
   "dependencies": {
     "@studio/api-utils": "workspace:packages/api-utils",
+    "@studio/commons": "workspace:packages/commons",
     "@studio/dependency-injection": "workspace:packages/dependency-injection",
     "class-transformer": "0.4.0",
     "class-validator": "^0.14.0",
