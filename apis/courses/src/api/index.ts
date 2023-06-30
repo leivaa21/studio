@@ -1,18 +1,17 @@
-import { createExpressServer } from 'routing-controllers';
-import 'reflect-metadata';
 import { info } from '@studio/api-utils';
-import { EarlyMiddlewares, LateMiddlewares } from './middlewares';
-import { Controllers } from './controllers';
 
-const port = 5002;
+import { app } from './app';
+import { env } from './config/env';
+import { configMongoose, connectToMongo } from './mongo/connection';
+import { options, uri } from './mongo/config';
 
 const { NODE_ENV } = process.env;
 
-createExpressServer({
-  controllers: [...Controllers],
-  middlewares: [...EarlyMiddlewares, ...LateMiddlewares],
-  interceptors: [],
-  defaultErrorHandler: false,
-}).listen(port, () => {
-  info(`Hey, running on http://localhost:${port} on env: ${NODE_ENV}`);
+configMongoose();
+connectToMongo({ uri, options });
+
+app.listen(env.courses.port, () => {
+  info(
+    `Hey, running on ${env.courses.url}:${env.courses.port} on env: ${NODE_ENV}`
+  );
 });

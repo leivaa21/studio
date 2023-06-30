@@ -58,8 +58,12 @@ jobs:
 
       - name: Install & Make dependencies
         run: |
+          yarn workspaces focus @studio/commons
+          yarn m:dep:commons
           yarn workspaces focus @studio/api-utils
           yarn m:dep:apiutils
+          yarn workspaces focus @studio/dependency-injection
+          yarn m:dep:di
           yarn workspaces focus @studio/courses
 
       - name: Build courses
