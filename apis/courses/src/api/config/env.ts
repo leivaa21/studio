@@ -1,18 +1,14 @@
 import 'dotenv/config';
 
-function getEnvVariableOrThrow(varName: string): string {
-  const variable = process.env[varName];
+function getEnvVariableOrDefault<T>(varName: string, defaultValue: T): T {
+  const variable = process.env[varName] as T;
 
-  if (!variable) {
-    throw new Error(`<${varName}> Should be defined in .env file`);
-  }
-
-  return variable;
+  return variable || defaultValue;
 }
 
 export const env = {
   courses: {
-    port: getEnvVariableOrThrow('PORT'),
-    url: getEnvVariableOrThrow('URL'),
+    port: getEnvVariableOrDefault<number>('PORT', 5002),
+    url: getEnvVariableOrDefault<string>('URL', 'http://localhost'),
   },
 };
