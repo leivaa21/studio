@@ -7,7 +7,7 @@ import { Header } from '../../components/header/header';
 import { CreatorHeader } from '../../components/creator/header';
 import { CreatorPanel } from '../../components/creator/panel';
 import Button from '@studio/ui/components/interactivity/cta/button';
-import { Modal } from '@studio/ui/components/modal';
+import { CreateNewCourseModal } from '../../components/creator/create-modal';
 
 const possibleCourseTags = [
   'Backend',
@@ -57,23 +57,5 @@ export default function CreatorDashboard() {
         }}
       />
     </Fragment>
-  );
-}
-
-function CreateNewCourseModal({
-  isShown,
-  closeFunction,
-}: {
-  isShown: boolean;
-  closeFunction: () => void;
-}) {
-  return (
-    <Modal
-      title="Create a new course"
-      isShown={isShown}
-      closeFunction={closeFunction}
-    >
-      <h1>Lorem Ipsum</h1>
-    </Modal>
   );
 }
