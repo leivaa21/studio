@@ -1,7 +1,9 @@
+import { AggregateRoot } from '../../shared/domain/AggregateRoot';
 import { AuthorId } from './AuthorId';
 import { CourseDescription } from './CourseDescription';
 import { CourseId } from './CourseId';
 import { CourseTitle } from './CourseTitle';
+import { CourseWasCreatedEvent } from './events/CourseWasCreated';
 
 export interface CourseParams {
   readonly id: CourseId;
@@ -11,7 +13,15 @@ export interface CourseParams {
   readonly createdAt: Date;
 }
 
-export class Course {
+export interface CoursePrimitives {
+  readonly id: string;
+  readonly authorId: string;
+  readonly title: string;
+  readonly description: string;
+  readonly createdAt: Date;
+}
+
+export class Course extends AggregateRoot {
   public readonly id: CourseId;
   public readonly authorId: AuthorId;
   private _title: CourseTitle;
@@ -19,6 +29,7 @@ export class Course {
   public readonly createdAt: Date;
 
   constructor({ id, authorId, title, description, createdAt }: CourseParams) {
+    super();
     this.id = id;
     this.authorId = authorId;
     this._title = title;
@@ -35,13 +46,24 @@ export class Course {
     title: CourseTitle;
     description: CourseDescription;
   }): Course {
+    const courseId = CourseId.random();
+
+    const courseWasCreatedEvent = CourseWasCreatedEvent.fromPrimitives({
+      aggregateId: courseId.value,
+      attributes: {
+        authorId: authorId.value,
+      },
+    });
+
     const course = new Course({
-      id: CourseId.random(),
+      id: courseId,
       authorId,
       title,
       description,
       createdAt: new Date(),
     });
+
+    course.commit(courseWasCreatedEvent);
 
     return course;
   }
@@ -52,5 +74,15 @@ export class Course {
 
   get description(): CourseTitle {
     return this._description;
+  }
+
+  toPrimitives(): CoursePrimitives {
+    return {
+      id: this.id.value,
+      authorId: this.authorId.value,
+      title: this.title.value,
+      description: this.description.value,
+      createdAt: this.createdAt,
+    };
   }
 }
