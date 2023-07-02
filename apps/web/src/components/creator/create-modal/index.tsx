@@ -18,7 +18,9 @@ export function CreateNewCourseModal({
   const [title, setTitle] = useState<string>();
   const [description, setDescription] = useState<string>();
 
-  const onSubmitCreateCourse = async () => {
+  const onSubmitCreateCourse = async (e: React.MouseEvent<HTMLElement>) => {
+    e.preventDefault();
+
     if (!title) {
       return;
     }
