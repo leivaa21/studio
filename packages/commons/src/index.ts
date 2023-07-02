@@ -15,4 +15,7 @@ export * from './contracts/auth/SignInContracts';
 export * from './contracts/auth/SignUpContracts';
 export * from './contracts/user/GetUserContracts';
 
+export * from './contracts/courses/CourseContracts';
+export * from './contracts/courses/CreateCourseContracts';
+
 export * from './errors/ErrorCodes';
