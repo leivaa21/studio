@@ -16,7 +16,6 @@ export function CourseSearcher({tags, onFetch}: CourseSearcherProps ) {
     setTagState(
       tags.map((tag) => { return { label: tag, checked: false} })
     )
-    console.log('times');
   }, [tags])
 
   const updateCheckOfTag = (tagIndex: number) => function (e: React.ChangeEvent<HTMLInputElement>) {

@@ -52,7 +52,6 @@ export default function CreatorDashboard() {
       <CreateNewCourseModal
         isShown={creatorModalIsShown}
         closeFunction={() => {
-          console.log('hee hee');
           setCreatorModalIsShownTo(false);
         }}
       />
