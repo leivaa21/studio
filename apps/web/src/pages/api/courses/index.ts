@@ -1,12 +1,7 @@
 import { NextApiRequest, NextApiResponse } from 'next';
 import { SafeControllerHandling } from '../../../lib/controllers/SafeControllerHandling';
 import { CoursesApiService } from '../../../contexts/shared/infrastructure/ApiClients/CoursesApiService';
-import {
-  CreateCourseRequest,
-  CreateCourseResponse,
-  GetUserResponse,
-} from '@studio/commons';
-import { AuthApiService } from '../../../contexts/shared/infrastructure/ApiClients/AuthApiService';
+import { CreateCourseRequest, CreateCourseResponse } from '@studio/commons';
 
 export default async function handler(
   req: NextApiRequest,
@@ -21,22 +16,15 @@ export default async function handler(
   const authToken = req.headers.authorization;
 
   const coursesApiService = new CoursesApiService();
-  const authApiService = new AuthApiService();
 
   const { body } = req;
 
-  await SafeControllerHandling(res, async () => {
-    const user = await authApiService.get<GetUserResponse>(
-      '/auth/me',
-      undefined,
-      authToken
-    );
-    const request: CreateCourseRequest = {
-      title: body.title,
-      description: body.description,
-      authorId: user.id,
-    };
+  const request: CreateCourseRequest = {
+    title: body.title,
+    description: body.description,
+  };
 
+  await SafeControllerHandling(res, async () => {
     const response = await coursesApiService.post<
       CreateCourseRequest,
       CreateCourseResponse
