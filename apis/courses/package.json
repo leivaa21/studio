@@ -23,7 +23,9 @@
     "passport": "^0.6.0",
     "passport-jwt": "^4.0.1",
     "reflect-metadata": "0.1.13",
-    "routing-controllers": "0.9.0"
+    "routing-controllers": "0.9.0",
+    "uuid": "^9.0.0",
+    "uuid-validate": "^0.0.3"
   },
   "devDependencies": {
     "@types/body-parser": "^1.19.2",
@@ -33,6 +35,8 @@
     "@types/node": "^18.11.9",
     "@types/passport": "^1.0.12",
     "@types/passport-jwt": "^3.0.8",
+    "@types/uuid": "^9.0.0",
+    "@types/uuid-validate": "^0.0.1",
     "@typescript-eslint/eslint-plugin": "^5.50.0",
     "@typescript-eslint/parser": "^5.50.0",
     "eslint": "^8.33.0",
