@@ -5,6 +5,9 @@ import { CourseTitle } from '../../domain/CourseTitle';
 import { CourseDescription } from '../../domain/CourseDescription';
 import { Course } from '../../domain/Course';
 import { CourseRepository } from '../../domain/CourseRepository';
+import { Injectable } from '@studio/dependency-injection';
+import { MongoCourseRepository } from '../../infrastructure/persistance/mongo/MongoCourseRepository';
+import { InMemoryAsyncEventBus } from '../../../shared/infrastructure/EventBus/InMemoryAsyncEventBus';
 
 export class CreateNewCourseCommand {
   public readonly authorId: string;
@@ -17,6 +20,9 @@ export class CreateNewCourseCommand {
   }
 }
 
+@Injectable({
+  dependencies: [MongoCourseRepository, InMemoryAsyncEventBus],
+})
 export class CreateNewCourse extends CommandHandler<CreateNewCourseCommand> {
   constructor(
     private readonly courseRepository: CourseRepository,

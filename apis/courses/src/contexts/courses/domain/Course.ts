@@ -68,15 +68,25 @@ export class Course extends AggregateRoot {
     return course;
   }
 
-  get title(): CourseTitle {
+  public get title(): CourseTitle {
     return this._title;
   }
 
-  get description(): CourseTitle {
+  public get description(): CourseTitle {
     return this._description;
   }
 
-  toPrimitives(): CoursePrimitives {
+  public static fromPrimitives(coursePrimitives: CoursePrimitives): Course {
+    return new Course({
+      id: CourseId.of(coursePrimitives.id),
+      authorId: AuthorId.of(coursePrimitives.authorId),
+      title: CourseTitle.of(coursePrimitives.title),
+      description: CourseDescription.of(coursePrimitives.description),
+      createdAt: coursePrimitives.createdAt,
+    });
+  }
+
+  public toPrimitives(): CoursePrimitives {
     return {
       id: this.id.value,
       authorId: this.authorId.value,
