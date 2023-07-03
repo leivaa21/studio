@@ -3,6 +3,7 @@ import 'reflect-metadata';
 import { DependencyContainer } from '@studio/dependency-injection';
 import { authorizationChecker } from './auth/authorizationChecker';
 import { currentUserChecker } from './auth/currentUserChecker';
+import './mapping';
 import './auth';
 
 useContainer(DependencyContainer);
