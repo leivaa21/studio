@@ -1,10 +1,10 @@
 import passport from 'passport';
 import { Action } from 'routing-controllers';
-import { AuthUser } from './authUser';
+import { User } from './user';
 
 export const authorizationChecker = (action: Action) =>
   new Promise<boolean>((resolve, reject) => {
-    passport.authenticate('jwt', (err: Error, user: AuthUser) => {
+    passport.authenticate('jwt', (err: Error, user: User) => {
       if (err) {
         return reject(err);
       }

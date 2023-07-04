@@ -1,5 +1,6 @@
 import { StatusCode } from '@studio/api-utils';
 import {
+  Authorized,
   BadRequestError,
   Body,
   CurrentUser,
@@ -12,7 +13,7 @@ import { Injectable } from '@studio/dependency-injection';
 import { InMemoryCommandBus } from '../../../contexts/shared/infrastructure/CommandBus/InMemoryCommandBus';
 import { CommandBus } from '../../../contexts/shared/domain/CommandBus';
 import { CreateNewCourseCommand } from '../../../contexts/courses/application/commands/CreateNewCourse';
-import { AuthUser } from '../../auth/authUser';
+import { User } from '../../auth/user';
 
 @Injectable({
   dependencies: [InMemoryCommandBus],
@@ -24,9 +25,10 @@ export class CreateNewCourseController {
   @Post()
   @HttpCode(StatusCode.CREATED)
   @OnUndefined(StatusCode.CREATED)
+  @Authorized()
   public async execute(
     @Body() body: { title: string; description: string },
-    @CurrentUser({ required: true }) user: AuthUser
+    @CurrentUser({ required: true }) user: User
   ) {
     const { title, description } = body;
 
