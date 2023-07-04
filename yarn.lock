@@ -4489,6 +4489,7 @@ __metadata:
     prettier: ^2.8.3
     reflect-metadata: 0.1.13
     routing-controllers: 0.9.0
+    testcontainers: ^9.9.1
     ts-jest: ^29.1.1
     ts-node-dev: ^2.0.0
     typescript: ^4.9.3
@@ -4812,6 +4813,16 @@ __metadata:
     "@types/docker-modem": "*"
     "@types/node": "*"
   checksum: 392d7bdfa15659941a50260f91110b9332fa1860c3ca258e08959d7a2624520bd64c5bb20fa75940a87b0c7586e4e40bae05f23c79976375b58031205493acba
+  languageName: node
+  linkType: hard
+
+"@types/dockerode@npm:^3.3.19":
+  version: 3.3.19
+  resolution: "@types/dockerode@npm:3.3.19"
+  dependencies:
+    "@types/docker-modem": "*"
+    "@types/node": "*"
+  checksum: 96d6cd3811a778d12382432413c3b0a935912c175ca939c77aaa0db2630c205daf14d5fa52e458a6fd44355c444f4fa1bd821e0364d4d0b6388061b5fe889431
   languageName: node
   linkType: hard
 
@@ -9205,6 +9216,15 @@ __metadata:
   dependencies:
     yaml: ^1.10.2
   checksum: 1704825954ec8645e4b099cc2641531955eef5a8a9729c885fab7067ae4d7935c663252e51b49878397e51cd5a3efcf2f13c8460e252aa39d14a0722c0bacfe5
+  languageName: node
+  linkType: hard
+
+"docker-compose@npm:^0.24.1":
+  version: 0.24.1
+  resolution: "docker-compose@npm:0.24.1"
+  dependencies:
+    yaml: ^2.2.2
+  checksum: 709c23a496a7a6ef40e66d0135478dfae6ab89fe74dcaff16b8849cc6a4eb50213c9aca907ee94f2a2cb3ad8eb9aac9362212b77e6d7b8a1d2c2015611d0a28b
   languageName: node
   linkType: hard
 
@@ -15303,6 +15323,20 @@ __metadata:
   languageName: node
   linkType: hard
 
+"node-fetch@npm:^2.6.11":
+  version: 2.6.12
+  resolution: "node-fetch@npm:2.6.12"
+  dependencies:
+    whatwg-url: ^5.0.0
+  peerDependencies:
+    encoding: ^0.1.0
+  peerDependenciesMeta:
+    encoding:
+      optional: true
+  checksum: 3bc1655203d47ee8e313c0d96664b9673a3d4dd8002740318e9d27d14ef306693a4b2ef8d6525775056fd912a19e23f3ac0d7111ad8925877b7567b29a625592
+  languageName: node
+  linkType: hard
+
 "node-fetch@npm:^2.6.9":
   version: 2.6.11
   resolution: "node-fetch@npm:2.6.11"
@@ -17546,7 +17580,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"rimraf@npm:^3.0.2":
+"rimraf@npm:^3.0.0, rimraf@npm:^3.0.2":
   version: 3.0.2
   resolution: "rimraf@npm:3.0.2"
   dependencies:
@@ -19065,6 +19099,29 @@ __metadata:
   languageName: node
   linkType: hard
 
+"testcontainers@npm:^9.9.1":
+  version: 9.9.1
+  resolution: "testcontainers@npm:9.9.1"
+  dependencies:
+    "@balena/dockerignore": ^1.0.2
+    "@types/archiver": ^5.3.2
+    "@types/dockerode": ^3.3.19
+    archiver: ^5.3.1
+    async-lock: ^1.4.0
+    byline: ^5.0.0
+    debug: ^4.3.4
+    docker-compose: ^0.24.1
+    dockerode: ^3.3.5
+    get-port: ^5.1.1
+    node-fetch: ^2.6.11
+    properties-reader: ^2.2.0
+    ssh-remote-port-forward: ^1.0.4
+    tar-fs: ^2.1.1
+    tmp: ^0.2.1
+  checksum: 3285fa7ddd1868d39a4ea63e156d57685aca030bca68940cf6cacf6e8df20c56fe7b796e661f567200b24415591b40ffd50adc3d7926af8d27a39101ba85777c
+  languageName: node
+  linkType: hard
+
 "text-table@npm:^0.2.0":
   version: 0.2.0
   resolution: "text-table@npm:0.2.0"
@@ -19098,6 +19155,15 @@ __metadata:
     globalyzer: 0.1.0
     globrex: ^0.1.2
   checksum: aea5801eb6663ddf77ebb74900b8f8bd9dfcfc9b6a1cc8018cb7421590c00bf446109ff45e4b64a98e6c95ddb1255a337a5d488fb6311930e2a95334151ec9c6
+  languageName: node
+  linkType: hard
+
+"tmp@npm:^0.2.1":
+  version: 0.2.1
+  resolution: "tmp@npm:0.2.1"
+  dependencies:
+    rimraf: ^3.0.0
+  checksum: 8b1214654182575124498c87ca986ac53dc76ff36e8f0e0b67139a8d221eaecfdec108c0e6ec54d76f49f1f72ab9325500b246f562b926f85bcdfca8bf35df9e
   languageName: node
   linkType: hard
 
@@ -20590,6 +20656,13 @@ __metadata:
   version: 1.10.2
   resolution: "yaml@npm:1.10.2"
   checksum: ce4ada136e8a78a0b08dc10b4b900936912d15de59905b2bf415b4d33c63df1d555d23acb2a41b23cf9fb5da41c256441afca3d6509de7247daa062fd2c5ea5f
+  languageName: node
+  linkType: hard
+
+"yaml@npm:^2.2.2":
+  version: 2.3.1
+  resolution: "yaml@npm:2.3.1"
+  checksum: 2c7bc9a7cd4c9f40d3b0b0a98e370781b68b8b7c4515720869aced2b00d92f5da1762b4ffa947f9e795d6cd6b19f410bd4d15fdd38aca7bd96df59bd9486fb54
   languageName: node
   linkType: hard
 
