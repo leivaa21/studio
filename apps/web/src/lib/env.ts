@@ -18,6 +18,9 @@ export const env = {
   auth: {
     url: getEnviromentVariableOrThrow('authUrl'),
   },
+  courses: {
+    url: getEnviromentVariableOrThrow('coursesUrl'),
+  },
   jwt: {
     secret: getEnviromentVariableOrThrow('jwtSecret'),
   },

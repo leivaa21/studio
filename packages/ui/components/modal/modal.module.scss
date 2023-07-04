@@ -1,0 +1,72 @@
+@import "../../config/colors";
+
+.modalContainer {
+  position: absolute;
+  width: 100vw;
+  height: 100vh;
+  top: 0;
+  display: flex;
+  justify-content: center;
+  justify-items: center;
+  align-items: center;
+  align-content: center;
+}
+
+.backdrop {
+  height: 100%;
+  width: 100%;
+  position: absolute;
+  top: 0;
+  right: 0;
+  background-color: rgba(0, 0, 0, 0.4);
+  z-index: 10;
+}
+
+.hidden {
+  display: none;
+}
+
+.modal {
+  background-color: white;
+  z-index: 100;
+  border-radius: 0.7rem;
+
+  .header {
+    padding: 1.5rem 3rem 0rem;
+    width: 100%;
+    text-align: center;
+
+    border-bottom: 1px solid $primary;
+
+    display: flex;
+
+    justify-content: center;
+    justify-items: center;
+    align-content: center;
+    align-items: center;
+
+    .title {
+      text-align: start;
+      padding: 0 4rem;
+    }
+
+    .rightColumn {
+      margin-left: auto;
+    }
+
+    .closeIcon {
+      cursor: pointer;
+      font-size: 1.4rem;
+
+      transition: all 0.25s ease-out;
+
+      &:hover {
+        color: $cancel;
+      }
+    }
+  }
+
+  .content {
+    padding: 1.5rem 3rem;
+  }
+}
