@@ -7,6 +7,7 @@ import Form, {
 import { Modal } from '@studio/ui/components/modal';
 import { createCourse } from '../../../contexts/courses/application/CreateCourse';
 import { useState } from 'react';
+import { getAuthTokenCookie } from '../../../lib/cookieUtils';
 
 export function CreateNewCourseModal({
   isShown,
@@ -28,10 +29,13 @@ export function CreateNewCourseModal({
       return;
     }
 
-    await createCourse({
-      title,
-      description,
-    });
+    await createCourse(
+      {
+        title,
+        description,
+      },
+      getAuthTokenCookie() || ''
+    );
   };
 
   return (
