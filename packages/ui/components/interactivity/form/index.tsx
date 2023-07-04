@@ -4,6 +4,7 @@ import FormBody from './body';
 import FormTextInput from './body/textInput';
 import FormHint from './hint';
 import styles from './form.module.scss';
+import FormAreaTextInput from "./body/textAreaInput";
 
 interface FormProps extends React.FormHTMLAttributes<HTMLFormElement> {}
 const Form = ({
@@ -22,6 +23,6 @@ const Form = ({
 
 }
 
-export {FormHeader, FormBody, FormTextInput, FormHint};
+export {FormHeader, FormBody, FormTextInput, FormHint, FormAreaTextInput};
 
 export default Form;

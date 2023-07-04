@@ -37,6 +37,23 @@ ul.no-dotted-list {
   padding: 0;
 }
 
+.row {
+  display: flex;
+  flex-direction: row;
+}
+
+.column {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+}
+.sidebar {
+  padding: 2rem 4rem;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
 // @media (prefers-color-scheme: dark) {
 //   html {
 //     color-scheme: dark;

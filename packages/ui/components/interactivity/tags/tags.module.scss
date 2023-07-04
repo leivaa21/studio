@@ -1,0 +1,10 @@
+@import "../../../config/colors";
+
+.checkableTag {
+  input[type="checkbox"] {
+    display: none;
+  }
+  input[type="checkbox"]:checked + label {
+    color: $secondary;
+  }
+}
