@@ -32,8 +32,8 @@ export class CreateNewCourse extends CommandHandler<CreateNewCourseCommand> {
   }
   async execute(command: CreateNewCourseCommand): Promise<void> {
     const authorId = AuthorId.of(command.authorId);
-    const title = CourseTitle.of(command.authorId);
-    const description = CourseDescription.of(command.authorId);
+    const title = CourseTitle.of(command.title);
+    const description = CourseDescription.of(command.description);
 
     const course = Course.new({ authorId, title, description });
 
