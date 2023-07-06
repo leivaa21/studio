@@ -4397,7 +4397,6 @@ __metadata:
     "@types/node": ^18.11.9
     "@types/passport": ^1.0.12
     "@types/passport-jwt": ^3.0.8
-    "@types/passport-local": ^1.0.35
     "@types/supertest": ^2.0.12
     "@types/uuid": ^9.0.0
     "@types/uuid-validate": ^0.0.1
@@ -4418,7 +4417,6 @@ __metadata:
     multer: 1.4.4
     passport: ^0.6.0
     passport-jwt: ^4.0.1
-    passport-local: ^1.0.0
     prettier: ^2.8.3
     reflect-metadata: 0.1.13
     rimraf: ^5.0.0
@@ -5147,17 +5145,6 @@ __metadata:
     "@types/jsonwebtoken": "*"
     "@types/passport-strategy": "*"
   checksum: 321eca319eff51c87a5ddebf590937b24ed7fa6c8cc2465cecb4edf49f839b7770e57a4ed009f323c66ade6c0f1d9b6a51033d82dd392270b17976380893af2f
-  languageName: node
-  linkType: hard
-
-"@types/passport-local@npm:^1.0.35":
-  version: 1.0.35
-  resolution: "@types/passport-local@npm:1.0.35"
-  dependencies:
-    "@types/express": "*"
-    "@types/passport": "*"
-    "@types/passport-strategy": "*"
-  checksum: b4ed4c40d2c7c42370c8a0ca7e18728bf3dbf2a56171d45c4f4d0281af9d91595ef9677a4f47ef10fdd5374a917b0ea64fb02d44ff4c424e48965e92915da294
   languageName: node
   linkType: hard
 
@@ -16037,15 +16024,6 @@ __metadata:
     jsonwebtoken: ^9.0.0
     passport-strategy: ^1.0.0
   checksum: 0669d5bf8fc18ee57eb39601491c59ac084acfa6c972e0a3289e9d88a3ee6fab9e9fb279f359eee81939fedb66904c4a74423004480b60c54621af0d7b2ee0d5
-  languageName: node
-  linkType: hard
-
-"passport-local@npm:^1.0.0":
-  version: 1.0.0
-  resolution: "passport-local@npm:1.0.0"
-  dependencies:
-    passport-strategy: 1.x.x
-  checksum: 86dc08b12f05f0ce1bb109780ccb0377eff45bbba70aa9c0d65f092b3ef476d344c0443517db2e9f3e5ec0ca849171ab25fb622164e0f69a677173af42b9bba7
   languageName: node
   linkType: hard
 
