@@ -36,6 +36,8 @@ export function CreateNewCourseModal({
       },
       getAuthTokenCookie() || ''
     );
+
+    closeFunction();
   };
 
   return (
