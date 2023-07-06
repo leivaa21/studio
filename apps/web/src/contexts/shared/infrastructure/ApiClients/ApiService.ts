@@ -48,7 +48,10 @@ export abstract class ApiService {
 
     try {
       const response = await fetch(url, data);
-      const responseJson = await response.json();
+
+      const responseAsString = await response.text();
+
+      const responseJson = responseAsString ? JSON.parse(responseAsString) : {};
 
       if (response.ok) {
         return responseJson;

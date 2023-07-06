@@ -25,11 +25,12 @@ export default async function handler(
   };
 
   await SafeControllerHandling(res, async () => {
-    const response = await coursesApiService.post<
-      CreateCourseRequest,
-      CreateCourseResponse
-    >('/courses', request, authToken);
+    await coursesApiService.post<CreateCourseRequest, CreateCourseResponse>(
+      '/courses',
+      request,
+      authToken
+    );
 
-    res.status(201).send(response);
+    res.status(201).end();
   });
 }

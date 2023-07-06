@@ -3,8 +3,12 @@ import { ApiError, GetUserResponse } from '@studio/commons';
 type Method = 'POST' | 'GET';
 
 class InternalApiService {
-  async post<Data, Response>(path: string, data: Data): Promise<Response> {
-    const request = this.formatRequest<Data>('POST', data);
+  async post<Data, Response>(
+    path: string,
+    data: Data,
+    authorizationToken?: string
+  ): Promise<Response> {
+    const request = this.formatRequest<Data>('POST', data, authorizationToken);
     return this.fetch<Response>(path, request);
   }
   async get<Response>(
@@ -73,7 +77,8 @@ class InternalApiService {
     data: RequestInit
   ): Promise<Response> {
     const response = await fetch(url, data);
-    const responseJson = await response.json();
+    const responseAsString = await response.text();
+    const responseJson = responseAsString ? JSON.parse(responseAsString) : {};
 
     if (response.ok) {
       return responseJson;
