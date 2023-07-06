@@ -77,7 +77,8 @@ class InternalApiService {
     data: RequestInit
   ): Promise<Response> {
     const response = await fetch(url, data);
-    const responseJson = await response.json();
+    const responseAsString = await response.text();
+    const responseJson = responseAsString ? JSON.parse(responseAsString) : {};
 
     if (response.ok) {
       return responseJson;
