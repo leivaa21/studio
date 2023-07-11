@@ -1,7 +1,7 @@
 import { NextApiRequest, NextApiResponse } from 'next';
 import { SafeControllerHandling } from '../../../lib/controllers/SafeControllerHandling';
 import { CoursesApiService } from '../../../contexts/shared/infrastructure/ApiClients/CoursesApiService';
-import { CreateCourseRequest, CreateCourseResponse } from '@studio/commons';
+import { CreateCourseRequest } from '@studio/commons';
 
 export default async function handler(
   req: NextApiRequest,
@@ -25,7 +25,7 @@ export default async function handler(
   };
 
   await SafeControllerHandling(res, async () => {
-    await coursesApiService.post<CreateCourseRequest, CreateCourseResponse>(
+    await coursesApiService.post<CreateCourseRequest, void>(
       '/courses',
       request,
       authToken
