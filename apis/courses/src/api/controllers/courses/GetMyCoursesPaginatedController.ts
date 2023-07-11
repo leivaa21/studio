@@ -6,7 +6,7 @@ import {
   HttpCode,
   JsonController,
   OnUndefined,
-  Param,
+  QueryParam,
 } from 'routing-controllers';
 import { Injectable } from '@studio/dependency-injection';
 import { User } from '../../auth/user';
@@ -29,9 +29,9 @@ export class GetMyCoursesPaginatedController {
   @Authorized()
   public async execute(
     @CurrentUser({ required: true }) user: User,
-    @Param('page') page = 0,
-    @Param('count') count = 0,
-    @Param('title') title: string
+    @QueryParam('page') page = 0,
+    @QueryParam('count') count = 0,
+    @QueryParam('title') title: string
   ): Promise<CourseInfoResponse[]> {
     const courses = await this.queryBus.dispatch<
       GetMyCoursesPaginatedQuery,
