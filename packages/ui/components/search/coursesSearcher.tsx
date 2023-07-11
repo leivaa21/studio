@@ -18,11 +18,12 @@ export function CourseSearcher({tags, onFetch}: CourseSearcherProps ) {
     )
   }, [tags])
 
-  const updateCheckOfTag = (tagIndex: number) => function (e: React.ChangeEvent<HTMLInputElement>) {
+  const updateCheckOfTag = (tagIndex: number) => async function (e: React.ChangeEvent<HTMLInputElement>) {
     const { checked }= e.currentTarget;
     let newTagsState = [...tagsState];
     newTagsState[tagIndex].checked = checked;
     setTagState(newTagsState);
+    await onFetch();
   }
 
   return (

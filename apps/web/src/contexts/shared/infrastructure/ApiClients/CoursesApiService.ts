@@ -25,6 +25,7 @@ export class CoursesApiService extends ApiService {
       undefined,
       authorizationToken
     );
+
     return this.fetch<Response>(
       this.formatPathWithParams(path, params),
       request

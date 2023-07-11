@@ -16,19 +16,20 @@ export default async function handler(
   const authToken = req.headers.authorization;
   const params = new Map([
     ['page', req.query.page as string],
-    ['pageSize', req.query.pageSize as string],
-    ['title', req.query.title as string],
+    ['count', req.query.pageSize as string],
+    ['title', (req.query.title as string) || ''],
   ]);
+
+  console.log(params);
 
   const coursesApiService = new CoursesApiService();
 
   await SafeControllerHandling(res, async () => {
-    const courses = await coursesApiService.get<CourseInfoResponse>(
-      '/courses',
+    const courses = await coursesApiService.get<CourseInfoResponse[]>(
+      '/courses/authored',
       params,
       authToken
     );
-
-    res.status(200).end(courses);
+    res.status(200).send(courses);
   });
 }

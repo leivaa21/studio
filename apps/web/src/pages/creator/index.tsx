@@ -8,6 +8,7 @@ import { CreatorHeader } from '../../components/creator/header';
 import { CreatorPanel } from '../../components/creator/panel';
 import Button from '@studio/ui/components/interactivity/cta/button';
 import { CreateNewCourseModal } from '../../components/creator/create-modal';
+import { getAuthoredCoursesPaginated } from '../../contexts/courses/application/GetAuthoredCoursesPaginated';
 
 const possibleCourseTags = [
   'Backend',
@@ -28,7 +29,13 @@ export default function CreatorDashboard() {
   }, [router]);
 
   const onFetch = async () => {
-    //
+    const courses = await getAuthoredCoursesPaginated(
+      getAuthTokenCookie() || '',
+      1,
+      3,
+      ''
+    );
+    console.log(courses);
   };
 
   return (
