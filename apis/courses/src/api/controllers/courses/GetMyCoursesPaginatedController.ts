@@ -14,6 +14,7 @@ import { InMemoryQueryBus } from '../../../contexts/shared/infrastructure/QueryB
 import { QueryBus } from '../../../contexts/shared/domain/QueryBus';
 import { GetMyCoursesPaginatedQuery } from '../../../contexts/courses/application/queries/GetMyCoursesPaginated';
 import { Course } from '../../../contexts/courses/domain/Course';
+import { CourseInfoResponse } from '@studio/commons';
 
 @Injectable({
   dependencies: [InMemoryQueryBus],
@@ -31,8 +32,11 @@ export class CreateNewCourseController {
     @Param('page') page = 0,
     @Param('count') count = 0,
     @Param('title') title: string
-  ) {
-    await this.queryBus.dispatch<GetMyCoursesPaginatedQuery, Course[]>(
+  ): Promise<CourseInfoResponse[]> {
+    const courses = await this.queryBus.dispatch<
+      GetMyCoursesPaginatedQuery,
+      Course[]
+    >(
       new GetMyCoursesPaginatedQuery({
         authorId: user.id,
         pageSize: count,
@@ -42,5 +46,13 @@ export class CreateNewCourseController {
         },
       })
     );
+
+    return courses.map((course) => {
+      return {
+        id: course.id.value,
+        title: course.title.value,
+        description: course.description.value,
+      };
+    });
   }
 }
