@@ -1,8 +1,10 @@
+import { Injectable } from '@studio/dependency-injection';
 import { QueryHandler } from '../../../shared/application/QueryHandler';
 import { AuthorId } from '../../domain/AuthorId';
 import { Course } from '../../domain/Course';
 import { CourseRepository } from '../../domain/CourseRepository';
 import { CourseFinder } from '../services/CourseFinder';
+import { MongoCourseRepository } from '../../infrastructure/persistance/mongo/MongoCourseRepository';
 
 export class GetMyCoursesPaginatedQuery {
   public readonly authorId: string;
@@ -27,6 +29,9 @@ export class GetMyCoursesPaginatedQuery {
   }
 }
 
+@Injectable({
+  dependencies: [MongoCourseRepository],
+})
 export class GetMyCoursesPaginated
   implements QueryHandler<GetMyCoursesPaginatedQuery, Course[]>
 {

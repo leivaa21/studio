@@ -20,7 +20,7 @@ import { CourseInfoResponse } from '@studio/commons';
   dependencies: [InMemoryQueryBus],
 })
 @JsonController('/courses/authored')
-export class CreateNewCourseController {
+export class GetMyCoursesPaginatedController {
   constructor(private readonly queryBus: QueryBus) {}
 
   @Get()
