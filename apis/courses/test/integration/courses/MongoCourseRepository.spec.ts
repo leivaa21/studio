@@ -13,7 +13,6 @@ import { CourseBuilder } from '../../helpers/builders/CourseBuilder';
 import { MongoCriteriaConverter } from '../../../src/contexts/shared/infrastructure/mongo/MongoCriteriaConverter';
 import { AuthorId } from '../../../src/contexts/courses/domain/AuthorId';
 import { CourseCriteria } from '../../../src/contexts/courses/domain/criteria/CourseCriteria';
-import { NumberMother } from '../../helpers/object-mother/NumberMother';
 
 describe('Mongo User Repository', () => {
   jest.setTimeout(9999999);
