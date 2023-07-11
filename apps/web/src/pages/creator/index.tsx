@@ -9,6 +9,7 @@ import { CreatorPanel } from '../../components/creator/panel';
 import Button from '@studio/ui/components/interactivity/cta/button';
 import { CreateNewCourseModal } from '../../components/creator/create-modal';
 import { getAuthoredCoursesPaginated } from '../../contexts/courses/application/GetAuthoredCoursesPaginated';
+import { CourseInfoResponse } from '@studio/commons';
 
 const possibleCourseTags = [
   'Backend',
@@ -24,18 +25,20 @@ export default function CreatorDashboard() {
   const [creatorModalIsShown, setCreatorModalIsShownTo] =
     useState<boolean>(false);
 
+  const [coursesShown, setCoursesShown] = useState<CourseInfoResponse[]>([]);
+
   useEffect(() => {
     if (!getAuthTokenCookie()) router.push('/');
   }, [router]);
 
-  const onFetch = async () => {
+  const onFetch = async (title: string) => {
     const courses = await getAuthoredCoursesPaginated(
       getAuthTokenCookie() || '',
-      1,
-      3,
-      ''
+      0,
+      25,
+      title
     );
-    console.log(courses);
+    setCoursesShown(courses);
   };
 
   return (
@@ -53,13 +56,14 @@ export default function CreatorDashboard() {
         </div>
         <div className="column">
           <CreatorHeader />
-          <CreatorPanel />
+          <CreatorPanel courses={coursesShown} />
         </div>
       </div>
       <CreateNewCourseModal
         isShown={creatorModalIsShown}
         closeFunction={() => {
           setCreatorModalIsShownTo(false);
+          onFetch('');
         }}
       />
     </Fragment>
