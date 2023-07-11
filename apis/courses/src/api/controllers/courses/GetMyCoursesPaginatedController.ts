@@ -1,18 +1,14 @@
 import { StatusCode } from '@studio/api-utils';
 import {
   Authorized,
-  BadRequestError,
-  Body,
   CurrentUser,
   Get,
   HttpCode,
   JsonController,
   OnUndefined,
   Param,
-  Post,
 } from 'routing-controllers';
 import { Injectable } from '@studio/dependency-injection';
-import { CreateNewCourseCommand } from '../../../contexts/courses/application/commands/CreateNewCourse';
 import { User } from '../../auth/user';
 import { InMemoryQueryBus } from '../../../contexts/shared/infrastructure/QueryBus/InMemoryQueryBus';
 import { QueryBus } from '../../../contexts/shared/domain/QueryBus';
