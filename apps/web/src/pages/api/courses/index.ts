@@ -21,6 +21,7 @@ export default async function handler(
 
   const request: CreateCourseRequest = {
     title: body.title,
+    tags: body.tags,
     description: body.description,
   };
 

@@ -31,8 +31,21 @@ export class GetMyCoursesPaginatedController {
     @CurrentUser({ required: true }) user: User,
     @QueryParam('page') page = 0,
     @QueryParam('count') count = 0,
-    @QueryParam('title') title: string
+    @QueryParam('title') title: string,
+    @QueryParam('tags') tagsAsString: string
   ): Promise<CourseInfoResponse[]> {
+    const tags = tagsAsString.split(',').filter((tag) => tag !== '');
+
+    const query = new GetMyCoursesPaginatedQuery({
+      authorId: user.id,
+      pageSize: count,
+      page,
+      with: {
+        title,
+        tags,
+      },
+    });
+
     const courses = await this.queryBus.dispatch<
       GetMyCoursesPaginatedQuery,
       Course[]
@@ -42,7 +55,8 @@ export class GetMyCoursesPaginatedController {
         pageSize: count,
         page,
         with: {
-          title: title,
+          title,
+          tags,
         },
       })
     );
@@ -54,5 +68,7 @@ export class GetMyCoursesPaginatedController {
         description: course.description.value,
       };
     });
+
+    return [];
   }
 }

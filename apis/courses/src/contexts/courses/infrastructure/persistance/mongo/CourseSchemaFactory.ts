@@ -20,6 +20,7 @@ export class CourseSchemaFactory
       id: schema._id,
       authorId: schema.authorId,
       title: schema.title,
+      tags: schema.tags,
       description: schema.description,
       createdAt: schema.createdAt,
     });

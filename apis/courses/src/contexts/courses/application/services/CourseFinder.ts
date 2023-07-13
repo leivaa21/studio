@@ -12,6 +12,7 @@ export class CourseFinder {
     page: number;
     with?: {
       title?: string;
+      tags?: string[];
     };
   }): Promise<Course[]> {
     const criteria = CourseCriteria.paginatedFromAuthorWithFilters({
@@ -20,6 +21,7 @@ export class CourseFinder {
       page: params.page,
       filters: {
         includingOnTitle: params.with?.title,
+        havingTags: params.with?.tags,
       },
     });
 

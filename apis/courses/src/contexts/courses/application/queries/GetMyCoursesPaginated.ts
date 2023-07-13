@@ -20,6 +20,7 @@ export class GetMyCoursesPaginatedQuery {
     page: number;
     with?: {
       title?: string;
+      tags?: string[];
     };
   }) {
     this.authorId = params.authorId;

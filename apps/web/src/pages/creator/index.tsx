@@ -31,12 +31,13 @@ export default function CreatorDashboard() {
     if (!getAuthTokenCookie()) router.push('/');
   }, [router]);
 
-  const onFetch = async (title: string) => {
+  const onFetch = async (title: string, tags: string[]) => {
     const courses = await getAuthoredCoursesPaginated(
       getAuthTokenCookie() || '',
       0,
       25,
-      title
+      title,
+      tags
     );
     setCoursesShown(courses);
   };

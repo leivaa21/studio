@@ -5,24 +5,21 @@ export async function getAuthoredCoursesPaginated(
   authorizationToken: string,
   page: number,
   pageSize: number,
-  title: string
+  title: string,
+  tags: string[]
 ): Promise<CourseInfoResponse[]> {
   const params = new Map([
     ['page', page.toString()],
     ['pageSize', pageSize.toString()],
     ['title', title],
+    ['tags', tags.join(',')],
   ]);
 
-  let courses: CourseInfoResponse[] = [];
-  try {
-    courses = await internalApiClient.get<CourseInfoResponse[]>(
-      '/api/courses/authored',
-      params,
-      authorizationToken
-    );
-  } catch (err) {
-    console.log(err);
-  }
+  const courses = await internalApiClient.get<CourseInfoResponse[]>(
+    '/api/courses/authored',
+    params,
+    authorizationToken
+  );
 
   return courses;
 }

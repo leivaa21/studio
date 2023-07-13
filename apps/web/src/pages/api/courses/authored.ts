@@ -18,9 +18,8 @@ export default async function handler(
     ['page', req.query.page as string],
     ['count', req.query.pageSize as string],
     ['title', (req.query.title as string) || ''],
+    ['tags', (req.query.tags as string) || ''],
   ]);
-
-  console.log(params);
 
   const coursesApiService = new CoursesApiService();
 

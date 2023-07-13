@@ -5,8 +5,8 @@ import { Operator } from '../../domain/criteria/FilterOperator';
 import { Filters } from '../../domain/criteria/Filters';
 import { Order } from '../../domain/criteria/Order';
 
-type MongoFilterOperator = '$eq' | '$ne' | '$gt' | '$lt' | '$regex';
-type MongoFilterValue = boolean | string | number;
+type MongoFilterOperator = '$eq' | '$ne' | '$gt' | '$lt' | '$regex' | '$in';
+type MongoFilterValue = boolean | string | number | string[];
 type MongoFilterOperation = {
   [operator in MongoFilterOperator]?: MongoFilterValue;
 };
@@ -45,6 +45,7 @@ export class MongoCriteriaConverter {
       [Operator.LT, this.lowerThanFilter],
       [Operator.CONTAINS, this.containsFilter],
       [Operator.NOT_CONTAINS, this.notContainsFilter],
+      [Operator.INCLUDES, this.includesFilter],
     ]);
   }
 
@@ -104,5 +105,9 @@ export class MongoCriteriaConverter {
 
   private notContainsFilter(filter: Filter): MongoFilter {
     return { [filter.field.value]: { $not: { $regex: filter.value.value } } };
+  }
+
+  private includesFilter(filter: Filter): MongoFilter {
+    return { [filter.field.value]: { $in: [...filter.value.value] } };
   }
 }
