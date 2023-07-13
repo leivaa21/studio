@@ -10,6 +10,8 @@ export * from './contexts/user/domain/Password';
 export * from './contexts/user/domain/errors/InvalidNicknameError';
 export * from './contexts/user/domain/errors/InvalidPasswordError';
 
+export * from './contexts/courses/domain/CourseTag';
+
 export * from './contracts/auth/AuthorizationResponse';
 export * from './contracts/auth/SignInContracts';
 export * from './contracts/auth/SignUpContracts';

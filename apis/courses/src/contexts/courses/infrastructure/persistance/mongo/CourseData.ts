@@ -3,5 +3,6 @@ export interface CourseData {
   authorId: string;
   title: string;
   description: string;
+  tags: string[];
   createdAt: Date;
 }

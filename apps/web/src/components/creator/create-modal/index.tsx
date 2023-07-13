@@ -2,12 +2,14 @@ import Button from '@studio/ui/components/interactivity/cta/button';
 import Form, {
   FormAreaTextInput,
   FormBody,
+  FormSelectMultipleInput,
   FormTextInput,
 } from '@studio/ui/components/interactivity/form';
 import { Modal } from '@studio/ui/components/modal';
 import { createCourse } from '../../../contexts/courses/application/CreateCourse';
 import { useState } from 'react';
 import { getAuthTokenCookie } from '../../../lib/cookieUtils';
+import { CourseTagsRecord } from '@studio/commons';
 
 export function CreateNewCourseModal({
   isShown,
@@ -17,6 +19,7 @@ export function CreateNewCourseModal({
   closeFunction: () => void;
 }) {
   const [title, setTitle] = useState<string>();
+  const [tags, setTags] = useState<string[]>([]);
   const [description, setDescription] = useState<string>();
 
   const onSubmitCreateCourse = async (e: React.MouseEvent<HTMLElement>) => {
@@ -32,6 +35,7 @@ export function CreateNewCourseModal({
     await createCourse(
       {
         title,
+        tags,
         description,
       },
       getAuthTokenCookie() || ''
@@ -59,6 +63,11 @@ export function CreateNewCourseModal({
             placeholder="Description"
             type="text"
             onChange={(e) => setDescription(e.currentTarget.value)}
+          />
+          <FormSelectMultipleInput
+            Name="Tags"
+            Values={CourseTagsRecord}
+            OnSelect={(values) => setTags(values)}
           />
 
           <Button

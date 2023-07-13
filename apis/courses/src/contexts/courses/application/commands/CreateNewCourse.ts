@@ -8,14 +8,22 @@ import { CourseRepository } from '../../domain/CourseRepository';
 import { Injectable } from '@studio/dependency-injection';
 import { MongoCourseRepository } from '../../infrastructure/persistance/mongo/MongoCourseRepository';
 import { InMemoryAsyncEventBus } from '../../../shared/infrastructure/EventBus/InMemoryAsyncEventBus';
+import { CourseTag } from '../../domain/CourseTag';
 
 export class CreateNewCourseCommand {
   public readonly authorId: string;
   public readonly title: string;
+  public readonly tags: string[];
   public readonly description: string;
-  constructor(args: { authorId: string; title: string; description: string }) {
+  constructor(args: {
+    authorId: string;
+    title: string;
+    tags: string[];
+    description: string;
+  }) {
     this.authorId = args.authorId;
     this.title = args.title;
+    this.tags = args.tags;
     this.description = args.description;
   }
 }
@@ -34,8 +42,9 @@ export class CreateNewCourse extends CommandHandler<CreateNewCourseCommand> {
     const authorId = AuthorId.of(command.authorId);
     const title = CourseTitle.of(command.title);
     const description = CourseDescription.of(command.description);
+    const tags = command.tags.map((tag) => CourseTag.of(tag));
 
-    const course = Course.new({ authorId, title, description });
+    const course = Course.new({ authorId, title, tags, description });
 
     await this.courseRepository.create(course);
 

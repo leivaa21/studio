@@ -15,6 +15,11 @@ export const CourseSchema = new Schema(
       type: String,
       required: true,
     },
+    tags: {
+      type: [String],
+      required: true,
+      default: [],
+    },
     description: {
       type: String,
       required: true,

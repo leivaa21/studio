@@ -27,10 +27,10 @@ export class CreateNewCourseController {
   @OnUndefined(StatusCode.CREATED)
   @Authorized()
   public async execute(
-    @Body() body: { title: string; description: string },
+    @Body() body: { title: string; tags: string[]; description: string },
     @CurrentUser({ required: true }) user: User
   ) {
-    const { title, description } = body;
+    const { title, tags, description } = body;
 
     if (!title || !description) {
       throw new BadRequestError(
@@ -41,6 +41,7 @@ export class CreateNewCourseController {
     await this.commandBus.dispatch<CreateNewCourseCommand>(
       new CreateNewCourseCommand({
         title,
+        tags,
         description,
         authorId: user.id,
       })

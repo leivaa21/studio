@@ -1,11 +1,11 @@
 import React from "react"
+import styles from './form.module.scss';
 import FormHeader from './header';
 import FormBody from './body';
 import FormTextInput from './body/textInput';
 import FormHint from './hint';
-import styles from './form.module.scss';
 import FormAreaTextInput from "./body/textAreaInput";
-
+import FormSelectMultipleInput from './body/selectMultipleInput';
 interface FormProps extends React.FormHTMLAttributes<HTMLFormElement> {}
 const Form = ({
   children,
@@ -23,6 +23,6 @@ const Form = ({
 
 }
 
-export {FormHeader, FormBody, FormTextInput, FormHint, FormAreaTextInput};
+export {FormHeader, FormBody, FormTextInput, FormHint, FormAreaTextInput, FormSelectMultipleInput};
 
 export default Form;
