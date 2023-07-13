@@ -15,16 +15,11 @@ export async function getAuthoredCoursesPaginated(
     ['tags', tags.join(',')],
   ]);
 
-  let courses: CourseInfoResponse[] = [];
-  try {
-    courses = await internalApiClient.get<CourseInfoResponse[]>(
-      '/api/courses/authored',
-      params,
-      authorizationToken
-    );
-  } catch (err) {
-    console.log(err);
-  }
+  const courses = await internalApiClient.get<CourseInfoResponse[]>(
+    '/api/courses/authored',
+    params,
+    authorizationToken
+  );
 
   return courses;
 }

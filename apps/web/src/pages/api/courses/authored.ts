@@ -21,8 +21,6 @@ export default async function handler(
     ['tags', (req.query.tags as string) || ''],
   ]);
 
-  console.log(params);
-
   const coursesApiService = new CoursesApiService();
 
   await SafeControllerHandling(res, async () => {

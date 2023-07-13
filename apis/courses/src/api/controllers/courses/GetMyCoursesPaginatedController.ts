@@ -46,33 +46,28 @@ export class GetMyCoursesPaginatedController {
       },
     });
 
-    console.log(query);
-    try {
-      const courses = await this.queryBus.dispatch<
-        GetMyCoursesPaginatedQuery,
-        Course[]
-      >(
-        new GetMyCoursesPaginatedQuery({
-          authorId: user.id,
-          pageSize: count,
-          page,
-          with: {
-            title,
-            tags,
-          },
-        })
-      );
+    const courses = await this.queryBus.dispatch<
+      GetMyCoursesPaginatedQuery,
+      Course[]
+    >(
+      new GetMyCoursesPaginatedQuery({
+        authorId: user.id,
+        pageSize: count,
+        page,
+        with: {
+          title,
+          tags,
+        },
+      })
+    );
 
-      return courses.map((course) => {
-        return {
-          id: course.id.value,
-          title: course.title.value,
-          description: course.description.value,
-        };
-      });
-    } catch (err) {
-      console.error(err);
-    }
+    return courses.map((course) => {
+      return {
+        id: course.id.value,
+        title: course.title.value,
+        description: course.description.value,
+      };
+    });
 
     return [];
   }
