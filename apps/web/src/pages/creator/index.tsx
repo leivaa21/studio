@@ -9,16 +9,7 @@ import { CreatorPanel } from '../../components/creator/panel';
 import Button from '@studio/ui/components/interactivity/cta/button';
 import { CreateNewCourseModal } from '../../components/creator/create-modal';
 import { getAuthoredCoursesPaginated } from '../../contexts/courses/application/GetAuthoredCoursesPaginated';
-import { CourseInfoResponse } from '@studio/commons';
-
-const possibleCourseTags = [
-  'Backend',
-  'Frontend',
-  'Personal',
-  'Habits',
-  'Development',
-  'Paradigm',
-];
+import { CourseInfoResponse, CourseTagsRecord } from '@studio/commons';
 
 export default function CreatorDashboard() {
   const router = useRouter();
@@ -53,7 +44,10 @@ export default function CreatorDashboard() {
             Label="Create new course"
             onClick={() => setCreatorModalIsShownTo(true)}
           />
-          <CourseSearcher onFetch={onFetch} tags={possibleCourseTags} />
+          <CourseSearcher
+            onFetch={onFetch}
+            tags={Object.keys(CourseTagsRecord)}
+          />
         </div>
         <div className="column">
           <CreatorHeader />
