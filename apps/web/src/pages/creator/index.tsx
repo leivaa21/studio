@@ -7,15 +7,11 @@ import { Header } from '../../components/header/header';
 import { CreatorHeader } from '../../components/creator/header';
 import { CreatorPanel } from '../../components/creator/panel';
 import Button from '@studio/ui/components/interactivity/cta/button';
-import { CreateNewCourseModal } from '../../components/creator/create-modal';
 import { getAuthoredCoursesPaginated } from '../../contexts/courses/application/GetAuthoredCoursesPaginated';
 import { CourseInfoResponse, CourseTagsRecord } from '@studio/commons';
 
 export default function CreatorDashboard() {
   const router = useRouter();
-  const [creatorModalIsShown, setCreatorModalIsShownTo] =
-    useState<boolean>(false);
-
   const [coursesShown, setCoursesShown] = useState<CourseInfoResponse[]>([]);
 
   useEffect(() => {
@@ -42,7 +38,8 @@ export default function CreatorDashboard() {
             Type="Secondary"
             Size="Small"
             Label="Create new course"
-            onClick={() => setCreatorModalIsShownTo(true)}
+            Link
+            href="/course/new"
           />
           <CourseSearcher
             onFetch={onFetch}
@@ -54,13 +51,6 @@ export default function CreatorDashboard() {
           <CreatorPanel courses={coursesShown} />
         </div>
       </div>
-      <CreateNewCourseModal
-        isShown={creatorModalIsShown}
-        closeFunction={() => {
-          setCreatorModalIsShownTo(false);
-          onFetch('', []);
-        }}
-      />
     </Fragment>
   );
 }

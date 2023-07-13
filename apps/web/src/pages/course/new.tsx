@@ -1,3 +1,10 @@
+import { Fragment, useEffect, useState } from 'react';
+import { useRouter } from 'next/router';
+
+import { CourseTagsRecord } from '@studio/commons';
+
+import { getAuthTokenCookie } from '../../lib/cookieUtils';
+import { Header } from '../../components/header/header';
 import Button from '@studio/ui/components/interactivity/cta/button';
 import Form, {
   FormAreaTextInput,
@@ -5,19 +12,15 @@ import Form, {
   FormSelectMultipleInput,
   FormTextInput,
 } from '@studio/ui/components/interactivity/form';
-import { Modal } from '@studio/ui/components/modal';
-import { createCourse } from '../../../contexts/courses/application/CreateCourse';
-import { useState } from 'react';
-import { getAuthTokenCookie } from '../../../lib/cookieUtils';
-import { CourseTagsRecord } from '@studio/commons';
+import { createCourse } from '../../contexts/courses/application/CreateCourse';
 
-export function CreateNewCourseModal({
-  isShown,
-  closeFunction,
-}: {
-  isShown: boolean;
-  closeFunction: () => void;
-}) {
+export default function CreateNewCourseForm() {
+  const router = useRouter();
+
+  useEffect(() => {
+    if (!getAuthTokenCookie()) router.push('/');
+  }, [router]);
+
   const [title, setTitle] = useState<string>();
   const [tags, setTags] = useState<string[]>([]);
   const [description, setDescription] = useState<string>();
@@ -41,15 +44,12 @@ export function CreateNewCourseModal({
       getAuthTokenCookie() || ''
     );
 
-    closeFunction();
+    router.push('/creator');
   };
 
   return (
-    <Modal
-      title="Create a new course"
-      isShown={isShown}
-      closeFunction={closeFunction}
-    >
+    <Fragment>
+      <Header />
       <Form>
         <FormBody>
           <FormTextInput
@@ -78,6 +78,6 @@ export function CreateNewCourseModal({
           />
         </FormBody>
       </Form>
-    </Modal>
+    </Fragment>
   );
 }
