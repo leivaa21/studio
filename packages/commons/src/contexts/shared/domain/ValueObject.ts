@@ -1,6 +1,6 @@
 import { UndefinedArgumentError } from './errors/UndefinedArgumentError';
 
-export type Primitives = string | number | boolean | Date;
+export type Primitives = string | number | boolean | Date | string[];
 
 export class ValueObject<T extends Primitives> {
   

@@ -5,12 +5,14 @@ export async function getAuthoredCoursesPaginated(
   authorizationToken: string,
   page: number,
   pageSize: number,
-  title: string
+  title: string,
+  tags: string[]
 ): Promise<CourseInfoResponse[]> {
   const params = new Map([
     ['page', page.toString()],
     ['pageSize', pageSize.toString()],
     ['title', title],
+    ['tags', tags.join(',')],
   ]);
 
   let courses: CourseInfoResponse[] = [];

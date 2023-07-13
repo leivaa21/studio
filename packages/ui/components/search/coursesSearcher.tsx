@@ -4,7 +4,7 @@ import styles from './search.module.scss';
 import { CheckableTag } from '../interactivity/tags';
 
 export interface CourseSearcherProps {
-  onFetch: (title: string) => Promise<void>;
+  onFetch: (title: string, tags: string[]) => Promise<void>;
   tags: string[];
 }
 
@@ -17,20 +17,23 @@ export function CourseSearcher({tags, onFetch}: CourseSearcherProps ) {
     setTagState(
       tags.map((tag) => { return { label: tag, checked: false} })
     )
-    onFetch(title);
+    
+    onFetch(title, getSelectedTags());
   }, [])
+
+  const getSelectedTags = () => tagsState.filter(tag => tag.checked).map(tag => tag.label);
 
   const updateCheckOfTag = (tagIndex: number) => async function (e: React.ChangeEvent<HTMLInputElement>) {
     const { checked }= e.currentTarget;
     let newTagsState = [...tagsState];
     newTagsState[tagIndex].checked = checked;
     setTagState(newTagsState);
-    await onFetch(title);
+    await onFetch(title, getSelectedTags());
   }
 
   const onChangeTitle = async (e: React.ChangeEvent<HTMLInputElement>) => {
     setTitle(e.currentTarget.value);
-    await onFetch(e.currentTarget.value);
+    await onFetch(e.currentTarget.value, getSelectedTags());
   }
 
   return (

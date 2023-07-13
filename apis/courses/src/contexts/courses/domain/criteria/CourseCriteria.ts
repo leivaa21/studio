@@ -1,4 +1,5 @@
 import { Criteria } from '../../../shared/domain/criteria/Criteria';
+import { FilterAsPrimitives } from '../../../shared/domain/criteria/Filter';
 import { Operator } from '../../../shared/domain/criteria/FilterOperator';
 import { Filters } from '../../../shared/domain/criteria/Filters';
 import { Order } from '../../../shared/domain/criteria/Order';
@@ -6,6 +7,7 @@ import { AuthorId } from '../AuthorId';
 
 interface PossibleCourseFilters {
   includingOnTitle?: string;
+  havingTags?: string[];
 }
 
 export class CourseCriteria extends Criteria {
@@ -29,7 +31,7 @@ export class CourseCriteria extends Criteria {
     page: number;
     filters: PossibleCourseFilters;
   }): CourseCriteria {
-    const criteriaFilters = [
+    const criteriaFilters: FilterAsPrimitives[] = [
       { field: 'authorId', operator: Operator.EQUAL, value: authorId.value },
     ];
 
@@ -38,6 +40,14 @@ export class CourseCriteria extends Criteria {
         field: 'title',
         operator: Operator.CONTAINS,
         value: filters.includingOnTitle,
+      });
+    }
+
+    if (filters.havingTags?.length) {
+      criteriaFilters.push({
+        field: 'tags',
+        operator: Operator.INCLUDES,
+        value: filters.havingTags,
       });
     }
 

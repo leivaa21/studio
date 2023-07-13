@@ -7,6 +7,7 @@ export enum Operator {
   LT = '<',
   CONTAINS = 'CONTAINS',
   NOT_CONTAINS = 'NOT_CONTAINS',
+  INCLUDES = 'INCLUDES',
 }
 
 export class FilterOperator extends ValueObject<Operator> {
@@ -28,6 +29,8 @@ export class FilterOperator extends ValueObject<Operator> {
         return new FilterOperator(Operator.CONTAINS);
       case Operator.NOT_CONTAINS:
         return new FilterOperator(Operator.NOT_CONTAINS);
+      case Operator.INCLUDES:
+        return new FilterOperator(Operator.INCLUDES);
       default:
         throw new InvalidArgumentError(FilterOperator.name, value);
     }

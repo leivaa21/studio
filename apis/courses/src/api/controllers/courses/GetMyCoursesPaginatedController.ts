@@ -31,28 +31,49 @@ export class GetMyCoursesPaginatedController {
     @CurrentUser({ required: true }) user: User,
     @QueryParam('page') page = 0,
     @QueryParam('count') count = 0,
-    @QueryParam('title') title: string
+    @QueryParam('title') title: string,
+    @QueryParam('tags') tagsAsString: string
   ): Promise<CourseInfoResponse[]> {
-    const courses = await this.queryBus.dispatch<
-      GetMyCoursesPaginatedQuery,
-      Course[]
-    >(
-      new GetMyCoursesPaginatedQuery({
-        authorId: user.id,
-        pageSize: count,
-        page,
-        with: {
-          title: title,
-        },
-      })
-    );
+    const tags = tagsAsString.split(',').filter((tag) => tag !== '');
 
-    return courses.map((course) => {
-      return {
-        id: course.id.value,
-        title: course.title.value,
-        description: course.description.value,
-      };
+    const query = new GetMyCoursesPaginatedQuery({
+      authorId: user.id,
+      pageSize: count,
+      page,
+      with: {
+        title,
+        tags,
+      },
     });
+
+    console.log(query);
+    try {
+      const courses = await this.queryBus.dispatch<
+        GetMyCoursesPaginatedQuery,
+        Course[]
+      >(
+        new GetMyCoursesPaginatedQuery({
+          authorId: user.id,
+          pageSize: count,
+          page,
+          with: {
+            title,
+            tags,
+          },
+        })
+      );
+
+      return courses.map((course) => {
+        return {
+          id: course.id.value,
+          title: course.title.value,
+          description: course.description.value,
+        };
+      });
+    } catch (err) {
+      console.error(err);
+    }
+
+    return [];
   }
 }
