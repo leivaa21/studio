@@ -64,7 +64,7 @@ export default function CreatorDashboard() {
         isShown={creatorModalIsShown}
         closeFunction={() => {
           setCreatorModalIsShownTo(false);
-          onFetch('');
+          onFetch('', []);
         }}
       />
     </Fragment>
