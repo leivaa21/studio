@@ -65,6 +65,7 @@ export class GetMyCoursesPaginatedController {
       return {
         id: course.id.value,
         title: course.title.value,
+        tags: course.tags.map((tag) => tag.value),
         description: course.description.value,
       };
     });
