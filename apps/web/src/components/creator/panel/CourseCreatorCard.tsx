@@ -1,10 +1,12 @@
 import { CourseInfoResponse } from '@studio/commons';
 import { BiEdit } from 'react-icons/bi';
 import styles from './panel.module.scss';
+import { CourseTags } from './CourseTags';
+import Link from 'next/link';
 
 export interface CourseParams {
   course: CourseInfoResponse;
-  key?: string;
+  key: string;
 }
 
 export function CourseCreatorCard({ key, course }: CourseParams) {
@@ -13,16 +15,16 @@ export function CourseCreatorCard({ key, course }: CourseParams) {
       <div className={styles['card-header']}>
         <h4 className={styles['card-header-title']}>{course.title}</h4>
         <div className={styles['card-header-buttons']}>
-          <BiEdit />
+          <Link href={`/creator/edit/${course.id}`}>
+            <BiEdit className={styles.edit} />
+          </Link>
         </div>
       </div>
       <div className={styles['card-body']}>
         <p>{course.description}</p>
       </div>
       <div className={styles['card-footer']}>
-        {course.tags.map((tag) => (
-          <a key={`${key}>${tag}`}>{tag} </a>
-        ))}
+        <CourseTags keyPrefix={key} tags={course.tags} />
       </div>
     </div>
   );
