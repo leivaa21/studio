@@ -1,0 +1,100 @@
+@import "../../../styles/colors";
+
+.card {
+
+  display: flex;
+  flex-direction: column;
+
+  width: 25rem;
+  height: 15rem;
+
+  border: 0.8ch solid $primary;
+  margin: .5rem;
+
+  &-header {
+
+    display: flex;
+    flex-direction: row;
+
+    border-bottom: .5ch solid $primary;
+
+    height: 3rem;
+
+    &-title {
+      display: flex;
+      flex: 1;
+      height: 100%;
+
+      align-items: center;
+
+      margin: 0;
+      padding: 0 1rem;
+
+    }
+
+    &-buttons {
+      align-items: center;
+      display: flex;
+
+      flex: 0.3;
+      height: 100%;
+
+      justify-content: center;
+
+      border-left: .5ch solid $primary;
+
+      .edit {
+        font-size: 1.5rem;
+        transition: all .25s ease-in-out;
+        &:hover {
+          cursor: pointer;
+          font-size: 1.7rem;
+        }
+      }
+
+    }
+  }
+
+  &-body {
+    display: flex;
+    flex: 1;
+    
+    padding: 0 .4rem;
+    text-align: justify;
+
+    max-height: 9rem;
+  }
+
+  &-footer {
+    display: flex;
+    flex: 1;
+    max-height: 3rem;
+    align-items: center;
+    padding: 0 1rem;
+  }
+
+}
+
+.tags {
+  list-style: none;
+  display: flex;
+  flex-direction: row;
+  padding: 0;
+
+  .tag {
+    margin: 1ch;
+    display: flex;
+    flex: 1;
+    background-color: $secondary-mask;
+    border-radius: 5px;
+    padding: .4rem .6rem;
+  }
+}
+
+
+.grid {
+  display: flex;
+  flex-flow: row wrap;
+  gap: 1rem;
+  flex-grow: 1;
+}
