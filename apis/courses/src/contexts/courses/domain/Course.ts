@@ -85,7 +85,7 @@ export class Course extends AggregateRoot {
   }
 
   public isAuthoredBy(authorId: AuthorId): boolean {
-    return this.authorId.equals(authorId);
+    return this.authorId.value === authorId.value;
   }
 
   public rename(title: CourseTitle): void {
