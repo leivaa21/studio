@@ -2,6 +2,7 @@ import { AuthorId } from '../../../src/contexts/courses/domain/AuthorId';
 import { Course } from '../../../src/contexts/courses/domain/Course';
 import { CourseDescription } from '../../../src/contexts/courses/domain/CourseDescription';
 import { CourseId } from '../../../src/contexts/courses/domain/CourseId';
+import { CourseTag } from '../../../src/contexts/courses/domain/CourseTag';
 import { CourseTitle } from '../../../src/contexts/courses/domain/CourseTitle';
 import { StringMother } from '../object-mother/StringMother';
 import { Builder } from './builder';
@@ -9,6 +10,7 @@ import { Builder } from './builder';
 export class CourseBuilder implements Builder<Course> {
   private _id: CourseId = CourseId.random();
   private _title: CourseTitle = CourseTitle.of(StringMother.random());
+  private _tags: CourseTag[] = [];
   private _description: CourseDescription = CourseDescription.of(
     StringMother.random()
   );
@@ -19,6 +21,7 @@ export class CourseBuilder implements Builder<Course> {
     return new Course({
       id: this._id,
       title: this._title,
+      tags: this._tags,
       description: this._description,
       authorId: this._authorId || AuthorId.random(),
       createdAt: this._createdAt,
