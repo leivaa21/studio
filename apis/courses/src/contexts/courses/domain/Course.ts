@@ -5,6 +5,7 @@ import { CourseId } from './CourseId';
 import { CourseTag } from './CourseTag';
 import { CourseTitle } from './CourseTitle';
 import { CourseWasCreatedEvent } from './events/CourseWasCreated';
+import { CourseWasRenamedEvent } from './events/CourseWasRenamed';
 
 export interface CourseParams {
   readonly id: CourseId;
@@ -81,6 +82,25 @@ export class Course extends AggregateRoot {
     course.commit(courseWasCreatedEvent);
 
     return course;
+  }
+
+  public isAuthoredBy(authorId: AuthorId): boolean {
+    return this.authorId.equals(authorId);
+  }
+
+  public rename(title: CourseTitle): void {
+    if (this._title.equals(title)) return;
+
+    this._title = title;
+
+    const renamedEvent = CourseWasRenamedEvent.fromPrimitives({
+      aggregateId: this.id.value,
+      attributes: {
+        title: title.value,
+      },
+    });
+
+    this.commit(renamedEvent);
   }
 
   public get title(): CourseTitle {
