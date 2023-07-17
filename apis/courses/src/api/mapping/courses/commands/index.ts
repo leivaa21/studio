@@ -5,7 +5,12 @@ import {
   CreateNewCourse,
   CreateNewCourseCommand,
 } from '../../../../contexts/courses/application/commands/CreateNewCourse';
+import {
+  UpdateCourse,
+  UpdateCourseCommand,
+} from '../../../../contexts/courses/application/commands/UpdateCourse';
 
 const commandBus = DependencyContainer.get<CommandBus>(InMemoryCommandBus);
 
 commandBus.subscribe(CreateNewCourseCommand, CreateNewCourse);
+commandBus.subscribe(UpdateCourseCommand, UpdateCourse);
