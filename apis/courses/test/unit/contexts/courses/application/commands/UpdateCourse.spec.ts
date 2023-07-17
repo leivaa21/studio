@@ -6,7 +6,6 @@ import {
 import { CourseRepository } from '../../../../../../src/contexts/courses/domain/CourseRepository';
 import { EventBus } from '../../../../../../src/contexts/shared/domain/EventBus';
 import { CourseBuilder } from '../../../../../helpers/builders/CourseBuilder';
-import { StringMother } from '../../../../../helpers/object-mother/StringMother';
 import { CourseNotFoundError } from '../../../../../../src/contexts/courses/domain/errors/CourseNotFoundError';
 import { AuthorId } from '../../../../../../src/contexts/courses/domain/AuthorId';
 
@@ -19,8 +18,9 @@ describe('Update an existant course', () => {
     mockReset(eventBus);
   });
 
-  it('Should let author rename an existant course', async () => {
+  it('Should let author update an existant course', async () => {
     const course = new CourseBuilder().build();
+    const { title, description, tags } = new CourseBuilder().build();
 
     courseRepository.findById.mockResolvedValue(course);
     courseRepository.update.mockResolvedValue();
@@ -30,30 +30,9 @@ describe('Update an existant course', () => {
     const command = new UpdateCourseCommand({
       authorId: course.authorId.value,
       courseId: course.id.value,
-      title: StringMother.random(),
-      description: course.description.value,
-      tags: course.tags.values,
-    });
-
-    await expect(useCase.execute(command)).resolves.not.toThrow();
-    expect(courseRepository.update).toBeCalled();
-    expect(eventBus.publish).toBeCalled();
-  });
-
-  it('Should let author update description of an existant course', async () => {
-    const course = new CourseBuilder().build();
-
-    courseRepository.findById.mockResolvedValue(course);
-    courseRepository.update.mockResolvedValue();
-
-    const useCase = new UpdateCourse(courseRepository, eventBus);
-
-    const command = new UpdateCourseCommand({
-      authorId: course.authorId.value,
-      courseId: course.id.value,
-      title: StringMother.random(),
-      description: course.description.value,
-      tags: course.tags.values,
+      title: title.value,
+      description: description.value,
+      tags: tags.values,
     });
 
     await expect(useCase.execute(command)).resolves.not.toThrow();
