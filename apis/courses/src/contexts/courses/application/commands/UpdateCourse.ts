@@ -10,22 +10,30 @@ import { CourseId } from '../../domain/CourseId';
 import { CourseFinder } from '../services/CourseFinder';
 import { Course } from '../../domain/Course';
 import { CourseNotFoundError } from '../../domain/errors/CourseNotFoundError';
+import { CourseDescription } from '../../domain/CourseDescription';
 
-export class RenameCourseCommand {
+export class UpdateCourseCommand {
   public readonly authorId: string;
   public readonly courseId: string;
   public readonly title: string;
-  constructor(args: { authorId: string; courseId: string; title: string }) {
+  public readonly description: string;
+  constructor(args: {
+    authorId: string;
+    courseId: string;
+    title: string;
+    description: string;
+  }) {
     this.authorId = args.authorId;
     this.courseId = args.courseId;
     this.title = args.title;
+    this.description = args.description;
   }
 }
 
 @Injectable({
   dependencies: [MongoCourseRepository, InMemoryAsyncEventBus],
 })
-export class RenameCourse extends CommandHandler<RenameCourseCommand> {
+export class UpdateCourse extends CommandHandler<UpdateCourseCommand> {
   private readonly courseFinder: CourseFinder;
   constructor(
     private readonly courseRepository: CourseRepository,
@@ -34,18 +42,18 @@ export class RenameCourse extends CommandHandler<RenameCourseCommand> {
     super(eventBus);
     this.courseFinder = new CourseFinder(courseRepository);
   }
-  async execute(command: RenameCourseCommand): Promise<void> {
+  async execute(command: UpdateCourseCommand): Promise<void> {
     const authorId = AuthorId.of(command.authorId);
     const courseId = CourseId.of(command.courseId);
     const title = CourseTitle.of(command.title);
+    const description = CourseDescription.of(command.description);
 
     const course = await this.courseFinder.findByIdOrThrow(courseId);
 
     this.assertCourseIsAuthoredByUser(course, authorId);
 
-    if (course.title.equals(title)) return;
-
     course.rename(title);
+    course.updateDescription(description);
 
     await this.courseRepository.update(course);
 

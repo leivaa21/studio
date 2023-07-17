@@ -103,6 +103,12 @@ export class Course extends AggregateRoot {
     this.commit(renamedEvent);
   }
 
+  public updateDescription(description: CourseDescription): void {
+    if (this._description.equals(description)) return;
+
+    this._description = description;
+  }
+
   public get title(): CourseTitle {
     return this._title;
   }
