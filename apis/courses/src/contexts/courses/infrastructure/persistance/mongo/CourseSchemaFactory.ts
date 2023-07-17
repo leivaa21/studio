@@ -23,6 +23,7 @@ export class CourseSchemaFactory
       tags: schema.tags,
       description: schema.description,
       createdAt: schema.createdAt,
+      updatedAt: schema.updatedAt,
     });
   }
 }

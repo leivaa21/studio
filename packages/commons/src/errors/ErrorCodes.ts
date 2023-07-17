@@ -12,5 +12,6 @@ export enum ErrorCodes {
   PasswordShouldContainLowercase = 'auth.password-lowercase',
   PasswordShouldContainUppercase = 'auth.password-uppercase',
   PasswordShouldContainNumber = 'auth.password-number',
-  PasswordShouldContainSymbol = 'auth.password-symbol'
+  PasswordShouldContainSymbol = 'auth.password-symbol',
+  CourseNotFound = 'courses.course-not-found',
 }

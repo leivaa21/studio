@@ -28,6 +28,10 @@ export const CourseSchema = new Schema(
       type: Date,
       required: true,
     },
+    updatedAt: {
+      type: Date,
+      required: true,
+    },
   },
   { versionKey: false, timestamps: false }
 );
