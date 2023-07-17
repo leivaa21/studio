@@ -13,18 +13,26 @@ import Form, {
   FormTextInput,
 } from '@studio/ui/components/interactivity/form';
 import { updateCourse } from '../../../contexts/courses/application/UpdateCourse';
+import { getCourseById } from '../../../contexts/courses/application/GetCourseById';
 
 export default function UpdateCourseForm() {
   const router = useRouter();
-
-  useEffect(() => {
-    if (!getAuthTokenCookie()) router.push('/');
-  }, [router]);
 
   const courseId = router.query.id as string;
   const [title, setTitle] = useState<string>();
   const [tags, setTags] = useState<string[]>([]);
   const [description, setDescription] = useState<string>();
+
+  useEffect(() => {
+    if (!getAuthTokenCookie()) router.push('/');
+    if (!courseId) return;
+
+    getCourseById(courseId).then((course) => {
+      setTitle(course.title);
+      setTags(course.tags);
+      setDescription(course.description);
+    });
+  }, [router, courseId]);
 
   const onSubmitUpdateCourse = async (e: React.MouseEvent<HTMLElement>) => {
     e.preventDefault();
@@ -58,17 +66,20 @@ export default function UpdateCourseForm() {
             Name="Title"
             placeholder="Title"
             type="text"
+            value={title}
             onChange={(e) => setTitle(e.currentTarget.value)}
           />
           <FormAreaTextInput
             Name="Description"
             placeholder="Description"
             type="text"
+            value={description}
             onChange={(e) => setDescription(e.currentTarget.value)}
           />
           <FormSelectMultipleInput
             Name="Tags"
             Values={CourseTagsRecord}
+            SelectedValues={tags}
             OnSelect={(values) => setTags(values)}
           />
 
