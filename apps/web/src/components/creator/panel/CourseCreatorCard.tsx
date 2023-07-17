@@ -15,7 +15,7 @@ export function CourseCreatorCard({ key, course }: CourseParams) {
       <div className={styles['card-header']}>
         <h4 className={styles['card-header-title']}>{course.title}</h4>
         <div className={styles['card-header-buttons']}>
-          <Link href={`/creator/edit/${course.id}`}>
+          <Link href={`/course/edit/${course.id}`}>
             <BiEdit className={styles.edit} />
           </Link>
         </div>

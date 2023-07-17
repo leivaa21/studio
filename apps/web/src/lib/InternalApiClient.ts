@@ -1,6 +1,6 @@
 import { ApiError, GetUserResponse } from '@studio/commons';
 
-type Method = 'POST' | 'GET';
+type Method = 'POST' | 'GET' | 'PUT';
 
 class InternalApiService {
   async post<Data, Response>(
@@ -11,6 +11,16 @@ class InternalApiService {
     const request = this.formatRequest<Data>('POST', data, authorizationToken);
     return this.fetch<Response>(path, request);
   }
+
+  async put<Data, Response>(
+    path: string,
+    data: Data,
+    authorizationToken?: string
+  ): Promise<Response> {
+    const request = this.formatRequest<Data>('PUT', data, authorizationToken);
+    return this.fetch<Response>(path, request);
+  }
+
   async get<Response>(
     path: string,
     params: Map<string, string> = new Map<string, string>(),
