@@ -43,6 +43,8 @@ export class RenameCourse extends CommandHandler<RenameCourseCommand> {
 
     this.assertCourseIsAuthoredByUser(course, authorId);
 
+    if (course.title.equals(title)) return;
+
     course.rename(title);
 
     await this.courseRepository.update(course);
