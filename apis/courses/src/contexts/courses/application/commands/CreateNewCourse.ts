@@ -9,6 +9,7 @@ import { Injectable } from '@studio/dependency-injection';
 import { MongoCourseRepository } from '../../infrastructure/persistance/mongo/MongoCourseRepository';
 import { InMemoryAsyncEventBus } from '../../../shared/infrastructure/EventBus/InMemoryAsyncEventBus';
 import { CourseTag } from '../../domain/CourseTag';
+import { CourseTags } from '../../domain/CourseTags';
 
 export class CreateNewCourseCommand {
   public readonly authorId: string;
@@ -42,7 +43,7 @@ export class CreateNewCourse extends CommandHandler<CreateNewCourseCommand> {
     const authorId = AuthorId.of(command.authorId);
     const title = CourseTitle.of(command.title);
     const description = CourseDescription.of(command.description);
-    const tags = command.tags.map((tag) => CourseTag.of(tag));
+    const tags = CourseTags.of(command.tags.map((tag) => CourseTag.of(tag)));
 
     const course = Course.new({ authorId, title, tags, description });
 

@@ -3,6 +3,7 @@ import { AuthorId } from './AuthorId';
 import { CourseDescription } from './CourseDescription';
 import { CourseId } from './CourseId';
 import { CourseTag } from './CourseTag';
+import { CourseTags } from './CourseTags';
 import { CourseTitle } from './CourseTitle';
 import { CourseWasCreatedEvent } from './events/CourseWasCreated';
 import { CourseWasRenamedEvent } from './events/CourseWasRenamed';
@@ -11,7 +12,7 @@ export interface CourseParams {
   readonly id: CourseId;
   readonly authorId: AuthorId;
   readonly title: CourseTitle;
-  readonly tags: CourseTag[];
+  readonly tags: CourseTags;
   readonly description: CourseDescription;
   readonly createdAt: Date;
 }
@@ -29,7 +30,7 @@ export class Course extends AggregateRoot {
   public readonly id: CourseId;
   public readonly authorId: AuthorId;
   private _title: CourseTitle;
-  private _tags: CourseTag[];
+  private _tags: CourseTags;
   private _description: CourseDescription;
   public readonly createdAt: Date;
 
@@ -58,7 +59,7 @@ export class Course extends AggregateRoot {
   }: {
     authorId: AuthorId;
     title: CourseTitle;
-    tags: CourseTag[];
+    tags: CourseTags;
     description: CourseDescription;
   }): Course {
     const courseId = CourseId.random();
@@ -117,7 +118,7 @@ export class Course extends AggregateRoot {
     return this._description;
   }
 
-  public get tags(): CourseTag[] {
+  public get tags(): CourseTags {
     return this._tags;
   }
 
@@ -126,7 +127,9 @@ export class Course extends AggregateRoot {
       id: CourseId.of(coursePrimitives.id),
       authorId: AuthorId.of(coursePrimitives.authorId),
       title: CourseTitle.of(coursePrimitives.title),
-      tags: coursePrimitives.tags.map((tag) => CourseTag.of(tag)),
+      tags: CourseTags.of(
+        coursePrimitives.tags.map((tag) => CourseTag.of(tag))
+      ),
       description: CourseDescription.of(coursePrimitives.description),
       createdAt: coursePrimitives.createdAt,
     });
@@ -137,7 +140,7 @@ export class Course extends AggregateRoot {
       id: this.id.value,
       authorId: this.authorId.value,
       title: this.title.value,
-      tags: this.tags.map((tag) => tag.value),
+      tags: this.tags.values,
       description: this.description.value,
       createdAt: this.createdAt,
     };
