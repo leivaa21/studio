@@ -5,7 +5,7 @@ import styles from '../form.module.scss';
 interface FormSelectMultipleInputProps extends React.InputHTMLAttributes<HTMLSelectElement> {
   Name: string;
   Values: Record<string, string>;
-  SelectedValues: string[];
+  SelectedValues?: string[];
   OnSelect: (selectedOptions: string[]) => void;
 }
 
@@ -19,7 +19,7 @@ const FormSelectMultipleInput = ({
   const [selectedOptions, setSelectedOptions] = useState<string[]>([]);
 
   useEffect(() => {
-    setSelectedOptions(SelectedValues)
+    setSelectedOptions(SelectedValues || [])
   }, [SelectedValues])
 
   const handleCheckboxChange = (selectedOption: string) => {
