@@ -5,7 +5,12 @@ import {
   GetMyCoursesPaginated,
   GetMyCoursesPaginatedQuery,
 } from '../../../../contexts/courses/application/queries/GetMyCoursesPaginated';
+import {
+  GetCourseById,
+  GetCourseByIdQuery,
+} from '../../../../contexts/courses/application/queries/GetCourseById';
 
 const queryBus = DependencyContainer.get<QueryBus>(InMemoryQueryBus);
 
 queryBus.subscribe(GetMyCoursesPaginatedQuery, GetMyCoursesPaginated);
+queryBus.subscribe(GetCourseByIdQuery, GetCourseById);
