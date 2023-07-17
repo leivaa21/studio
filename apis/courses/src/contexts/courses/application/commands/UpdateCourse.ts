@@ -11,22 +11,27 @@ import { CourseFinder } from '../services/CourseFinder';
 import { Course } from '../../domain/Course';
 import { CourseNotFoundError } from '../../domain/errors/CourseNotFoundError';
 import { CourseDescription } from '../../domain/CourseDescription';
+import { CourseTags } from '../../domain/CourseTags';
+import { CourseTag } from '../../domain/CourseTag';
 
 export class UpdateCourseCommand {
   public readonly authorId: string;
   public readonly courseId: string;
   public readonly title: string;
   public readonly description: string;
+  public readonly tags: string[];
   constructor(args: {
     authorId: string;
     courseId: string;
     title: string;
     description: string;
+    tags: string[];
   }) {
     this.authorId = args.authorId;
     this.courseId = args.courseId;
     this.title = args.title;
     this.description = args.description;
+    this.tags = args.tags;
   }
 }
 
@@ -47,6 +52,7 @@ export class UpdateCourse extends CommandHandler<UpdateCourseCommand> {
     const courseId = CourseId.of(command.courseId);
     const title = CourseTitle.of(command.title);
     const description = CourseDescription.of(command.description);
+    const tags = CourseTags.of(command.tags.map((tag) => CourseTag.of(tag)));
 
     const course = await this.courseFinder.findByIdOrThrow(courseId);
 
@@ -54,6 +60,7 @@ export class UpdateCourse extends CommandHandler<UpdateCourseCommand> {
 
     course.rename(title);
     course.updateDescription(description);
+    course.updateTags(tags);
 
     await this.courseRepository.update(course);
 

@@ -110,6 +110,12 @@ export class Course extends AggregateRoot {
     this._description = description;
   }
 
+  public updateTags(tags: CourseTags) {
+    if (this._tags.equals(tags)) return;
+
+    this._tags = tags;
+  }
+
   public get title(): CourseTitle {
     return this._title;
   }
