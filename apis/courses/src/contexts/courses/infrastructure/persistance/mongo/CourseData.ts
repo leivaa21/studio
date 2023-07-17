@@ -5,4 +5,5 @@ export interface CourseData {
   description: string;
   tags: string[];
   createdAt: Date;
+  updatedAt: Date;
 }
