@@ -36,16 +36,6 @@ export class GetMyCoursesPaginatedController {
   ): Promise<CourseInfoResponse[]> {
     const tags = tagsAsString.split(',').filter((tag) => tag !== '');
 
-    const query = new GetMyCoursesPaginatedQuery({
-      authorId: user.id,
-      pageSize: count,
-      page,
-      with: {
-        title,
-        tags,
-      },
-    });
-
     const courses = await this.queryBus.dispatch<
       GetMyCoursesPaginatedQuery,
       Course[]
@@ -65,7 +55,7 @@ export class GetMyCoursesPaginatedController {
       return {
         id: course.id.value,
         title: course.title.value,
-        tags: course.tags.map((tag) => tag.value),
+        tags: course.tags.values,
         description: course.description.value,
       };
     });
