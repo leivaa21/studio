@@ -2,15 +2,16 @@ import { AuthorId } from '../../../src/contexts/courses/domain/AuthorId';
 import { Course } from '../../../src/contexts/courses/domain/Course';
 import { CourseDescription } from '../../../src/contexts/courses/domain/CourseDescription';
 import { CourseId } from '../../../src/contexts/courses/domain/CourseId';
-import { CourseTag } from '../../../src/contexts/courses/domain/CourseTag';
+import { CourseTags } from '../../../src/contexts/courses/domain/CourseTags';
 import { CourseTitle } from '../../../src/contexts/courses/domain/CourseTitle';
+import { CourseTagMother } from '../object-mother/CourseTagMother';
 import { StringMother } from '../object-mother/StringMother';
 import { Builder } from './builder';
 
 export class CourseBuilder implements Builder<Course> {
   private _id: CourseId = CourseId.random();
   private _title: CourseTitle = CourseTitle.of(StringMother.random());
-  private _tags: CourseTag[] = [];
+  private _tags: CourseTags = CourseTagMother.randomTags();
   private _description: CourseDescription = CourseDescription.of(
     StringMother.random()
   );

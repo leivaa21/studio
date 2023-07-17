@@ -32,6 +32,7 @@ describe('Update an existant course', () => {
       courseId: course.id.value,
       title: StringMother.random(),
       description: course.description.value,
+      tags: course.tags.values,
     });
 
     await expect(useCase.execute(command)).resolves.not.toThrow();
@@ -52,6 +53,7 @@ describe('Update an existant course', () => {
       courseId: course.id.value,
       title: StringMother.random(),
       description: course.description.value,
+      tags: course.tags.values,
     });
 
     await expect(useCase.execute(command)).resolves.not.toThrow();
@@ -71,6 +73,7 @@ describe('Update an existant course', () => {
       courseId: course.id.value,
       title: course.title.value,
       description: course.description.value,
+      tags: course.tags.values,
     });
 
     await expect(useCase.execute(command)).rejects.toThrow(CourseNotFoundError);
@@ -88,6 +91,7 @@ describe('Update an existant course', () => {
       courseId: course.id.value,
       title: course.title.value,
       description: course.description.value,
+      tags: course.tags.values,
     });
 
     await expect(useCase.execute(command)).rejects.toThrow(CourseNotFoundError);
