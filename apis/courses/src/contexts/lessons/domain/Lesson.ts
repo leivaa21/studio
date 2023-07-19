@@ -3,6 +3,7 @@ import { AggregateRoot } from '../../shared/domain/AggregateRoot';
 import { LessonContent } from './LessonContent';
 import { LessonId } from './LessonId';
 import { LessonTitle } from './LessonTitle';
+import { LessonWasCreatedEvent } from './events/LessonWasCreated';
 
 export interface LessonParams {
   readonly id: LessonId;
@@ -38,6 +39,38 @@ export class Lesson extends AggregateRoot {
     this._content = args.content;
     this.createdAt = args.createdAt;
     this._updatedAt = args.updatedAt;
+  }
+
+  public static new({
+    courseId,
+    title,
+    content,
+  }: {
+    courseId: CourseId;
+    title: LessonTitle;
+    content: LessonContent;
+  }): Lesson {
+    const lessonId = LessonId.random();
+
+    const lessonWasCreatedEvent = LessonWasCreatedEvent.fromPrimitives({
+      aggregateId: lessonId.value,
+      attributes: {
+        courseId: courseId.value,
+      },
+    });
+
+    const lesson = new Lesson({
+      id: lessonId,
+      courseId: courseId,
+      title: title,
+      content: content,
+      createdAt: new Date(),
+      updatedAt: new Date(),
+    });
+
+    lesson.commit(lessonWasCreatedEvent);
+
+    return lesson;
   }
 
   get title(): LessonTitle {
