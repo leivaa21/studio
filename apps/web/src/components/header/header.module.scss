@@ -2,7 +2,7 @@
 
 .header {
   display: flex;
-  flex-grow: 1;
+  flex: 0 1 auto;
   flex-direction: row;
 
   align-items: center;
@@ -12,7 +12,7 @@
   &-section {
     list-style: none;
     
-    display: flex;
+    display: flex;  
     flex-direction: row;
     padding: 0;
     margin: 0;

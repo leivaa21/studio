@@ -2,7 +2,16 @@
 
 .header {
   &--section {
-    padding: 2.5rem 4rem;
+    display: flex;
+    flex: 0 1 auto;
+    max-height: 20vh;
+    min-height: 10vh;
+
+    align-items: center;
+    justify-content: center;
+
+    background-color: $primary;
+
     h2 {
       text-align: center;
       padding: 0;
@@ -16,5 +25,7 @@
     padding: 2.5rem 4rem;
     display: flex;
     flex-direction: column;
+    flex: 1;
+    height: 100vh;
   }
 }
