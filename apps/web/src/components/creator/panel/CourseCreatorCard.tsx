@@ -1,5 +1,5 @@
 import { CourseInfoResponse } from '@studio/commons';
-import { BiEdit } from 'react-icons/bi';
+import { BiChevronRightCircle } from 'react-icons/bi';
 import styles from './panel.module.scss';
 import { CourseTags } from './CourseTags';
 import Link from 'next/link';
@@ -15,8 +15,8 @@ export function CourseCreatorCard({ key, course }: CourseParams) {
       <div className={styles['card-header']}>
         <h4 className={styles['card-header-title']}>{course.title}</h4>
         <div className={styles['card-header-buttons']}>
-          <Link href={`/course/edit/${course.id}`}>
-            <BiEdit className={styles.edit} />
+          <Link href={`/course/${course.id}`}>
+            <BiChevronRightCircle className={styles.edit} />
           </Link>
         </div>
       </div>
