@@ -70,3 +70,24 @@
   }
 
 }
+
+.previewNavigator {
+  list-style: none;
+  padding: 0;
+
+  li {
+    font-size: 1.4rem;
+    padding: .5rem 0;
+
+    &:hover {
+      font-weight: 600;
+    }
+
+    &.active, &.active:hover {
+      font-weight: bold;
+    }
+  }
+
+
+
+}
