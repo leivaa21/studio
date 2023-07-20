@@ -19,7 +19,7 @@ export default function CreatorCoursePreviewPage() {
   return (
     <Fragment>
       <Header />
-      <CreatorHeader />
+      <CreatorHeader title="Creator Course View" />
       <div className="row">
         <div className="sidebar">
           <CoursePreviewNavigator courseId={courseId} />

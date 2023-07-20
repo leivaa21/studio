@@ -32,7 +32,7 @@ export default function CreatorDashboard() {
   return (
     <Fragment>
       <Header />
-      <CreatorHeader />
+      <CreatorHeader title="Creator Dashboard" />
       <div className="row">
         <div className="sidebar">
           <Button
