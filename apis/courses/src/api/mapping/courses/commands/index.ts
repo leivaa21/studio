@@ -9,8 +9,13 @@ import {
   UpdateCourse,
   UpdateCourseCommand,
 } from '../../../../contexts/courses/application/commands/UpdateCourse';
+import {
+  RenameCourse,
+  RenameCourseCommand,
+} from '../../../../contexts/courses/application/commands/RenameCourse';
 
 const commandBus = DependencyContainer.get<CommandBus>(InMemoryCommandBus);
 
 commandBus.subscribe(CreateNewCourseCommand, CreateNewCourse);
 commandBus.subscribe(UpdateCourseCommand, UpdateCourse);
+commandBus.subscribe(RenameCourseCommand, RenameCourse);
