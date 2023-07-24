@@ -3,3 +3,8 @@ export interface UpdateCourseRequest {
   tags: string[];
   description: string;
 }
+
+
+export interface RenameCourseRequest {
+  title: string;
+}

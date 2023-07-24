@@ -8,6 +8,8 @@ import Button from '@studio/ui/components/interactivity/cta/button';
 import { Modal } from '@studio/ui/components/modal';
 import { FormSelectMultipleInput } from '@studio/ui/components/interactivity/form';
 import { CourseTagsRecord } from '@studio/commons';
+import { renameCourse } from '../../../contexts/courses/application/RenameCourse';
+import { getAuthTokenCookie } from '../../../lib/cookieUtils';
 
 export interface CreatorCoursePreviewParams {
   courseId: string;
@@ -44,6 +46,20 @@ export function CreatorCoursePreview({ courseId }: CreatorCoursePreviewParams) {
       console.log(course);
     });
   }, [router, courseId]);
+
+  const onSubmitRenameCourse = async () => {
+    if (newTitle === title || !newTitle) {
+      setRenameModalShown(false);
+      return;
+    }
+
+    await renameCourse(
+      { title: newTitle },
+      courseId,
+      getAuthTokenCookie() || ''
+    );
+    router.reload();
+  };
 
   return (
     <div className={styles.coursePreview}>
@@ -104,7 +120,12 @@ export function CreatorCoursePreview({ courseId }: CreatorCoursePreviewParams) {
               setNewTitle(e.currentTarget.value);
             }}
           />
-          <Button Type="Primary" Size="Small" Label="Rename course!" />
+          <Button
+            Type="Primary"
+            Size="Small"
+            Label="Rename course!"
+            onClick={onSubmitRenameCourse}
+          />
         </div>
       </Modal>
       <Modal
