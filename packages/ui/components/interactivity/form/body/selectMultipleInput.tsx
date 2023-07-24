@@ -1,8 +1,6 @@
 import React, { useEffect, useState } from "react";
 
-import styles from '../form.module.scss';
-
-interface FormSelectMultipleInputProps extends React.InputHTMLAttributes<HTMLSelectElement> {
+interface FormSelectMultipleInputProps extends React.InputHTMLAttributes<HTMLDivElement> {
   Name: string;
   Values: Record<string, string>;
   SelectedValues?: string[];
@@ -37,7 +35,7 @@ const FormSelectMultipleInput = ({
   const id = `input-${Name}`;
 
   return (
-    <div id={id}>
+    <div id={id} {...defaultProps}>
       {
       Object.entries(Values).map(value => (
         <label key={value[0]}>

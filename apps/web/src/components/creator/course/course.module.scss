@@ -30,6 +30,10 @@
       display: flex;
       flex: 1 1 auto;
       max-width: 25%;
+      
+      button {
+        width: 13rem;
+      }
     }
 
   }
@@ -46,6 +50,39 @@
       margin-right: 1rem;
     }
   }  
+}
+
+.modifyCourseModal {
+  display: flex;
+  flex-direction: column;
+
+  min-width: 25rem;
+
+  input, textarea {
+    border: none;
+    margin: 2rem;
+    font-size: 1.5rem;
+
+    &:focus {
+      outline: none;
+      background-color: $primary-mask;
+    }
+
+  }
+
+  input {
+    border-bottom: 1px solid $primary;
+  }
+
+  textarea {
+    border: 1px solid $primary;
+  }
+
+  .tagsSelect {
+    display: flex;
+    flex-direction: column;
+  }
+
 }
 
 .newLessonForm {
