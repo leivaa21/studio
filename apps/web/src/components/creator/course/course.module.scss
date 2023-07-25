@@ -127,6 +127,63 @@
     }
   }
 
+}
 
+.lessonsList {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  align-items: center;
+
+  .lessonCard {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+
+    width: 80%;
+    padding: 1rem 2.5rem;
+    margin: 1rem;
+
+    background: $sidebar-background;
+
+    .lessonOrderControls {
+      display: flex;
+      flex-direction: column;
+      width: 10ch;
+
+      svg {
+        margin: .3rem;
+        font-size: 2.4rem;
+        transition: all 250ms ease-in-out;
+
+        &.hide {
+          display: none;
+        }
+
+        &:hover {
+          color: $primary;
+          font-size: 3rem;
+          margin: 0.2rem 0;
+          cursor: pointer;
+        }
+      }
+    }
+
+    .lessonTitle {
+      display: flex;
+      flex: 1;
+      font-size: 1.5rem;
+      padding: 0 1rem;
+    }
+
+    .lessonLinks {
+      display: flex;
+      flex-direction: column;
+      a {
+        margin: .5rem 0;
+      }
+    }
+
+  }
 
 }
