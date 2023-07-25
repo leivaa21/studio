@@ -39,4 +39,17 @@ export class CourseFinder {
 
     return course;
   }
+
+  public async findAuthoredByIdOrThrow(
+    authorId: AuthorId,
+    courseId: CourseId
+  ): Promise<Course> {
+    const course = await this.repository.findById(courseId);
+
+    if (!course?.isAuthoredBy(authorId)) {
+      throw CourseNotFoundError.searchedById(courseId.value);
+    }
+
+    return course;
+  }
 }

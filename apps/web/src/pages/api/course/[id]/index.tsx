@@ -2,8 +2,8 @@ import { NextApiRequest, NextApiResponse } from 'next';
 
 import { CourseInfoResponse, UpdateCourseRequest } from '@studio/commons';
 
-import { SafeControllerHandling } from '../../../lib/controllers/SafeControllerHandling';
-import { CoursesApiService } from '../../../contexts/shared/infrastructure/ApiClients/CoursesApiService';
+import { SafeControllerHandling } from '../../../../lib/controllers/SafeControllerHandling';
+import { CoursesApiService } from '../../../../contexts/shared/infrastructure/ApiClients/CoursesApiService';
 
 export default async function handler(
   req: NextApiRequest,

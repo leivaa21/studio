@@ -11,6 +11,13 @@ body {
   color: $dark-text-primary;
   background: $white-background;
   --max-width: 1400px;
+  min-height: 100vh;
+}
+
+#__next {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
 }
 
 a {
@@ -40,6 +47,8 @@ ul.no-dotted-list {
 .row {
   display: flex;
   flex-direction: row;
+  flex: 1 1 auto;
+  height: 100%;
 }
 
 .column {
@@ -51,7 +60,8 @@ ul.no-dotted-list {
   padding: 2rem 4rem;
   display: flex;
   flex-direction: column;
-  height: 100%;
+  flex: 0 1 auto;
+  background-color: $sidebar-background;
 }
 
 // @media (prefers-color-scheme: dark) {

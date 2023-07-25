@@ -32,10 +32,11 @@ export default function CreatorDashboard() {
   return (
     <Fragment>
       <Header />
+      <CreatorHeader title="Creator Dashboard" />
       <div className="row">
         <div className="sidebar">
           <Button
-            Type="Secondary"
+            Type="Primary"
             Size="Small"
             Label="Create new course"
             Link
@@ -47,7 +48,6 @@ export default function CreatorDashboard() {
           />
         </div>
         <div className="column">
-          <CreatorHeader />
           <CreatorPanel courses={coursesShown} />
         </div>
       </div>

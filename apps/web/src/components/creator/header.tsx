@@ -1,9 +1,9 @@
 import React from 'react';
 import styles from './creator.module.scss';
-export function CreatorHeader() {
+export function CreatorHeader({ title }: { title: string }) {
   return (
     <section className={styles['header--section']}>
-      <h2>Creator Dashboard</h2>
+      <h2>{title}</h2>
     </section>
   );
 }

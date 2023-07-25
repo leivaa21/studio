@@ -1,10 +1,16 @@
 @import "../../../config/colors";
 
 .checkableTag {
+  margin: 0.2rem 0;
+  label {
+    padding: 0.4rem;
+  }
   input[type="checkbox"] {
     display: none;
   }
   input[type="checkbox"]:checked + label {
-    color: $secondary;
+    background-color: $secondary;
+    border-radius: 10px;
+    font-weight: bold;
   }
 }
