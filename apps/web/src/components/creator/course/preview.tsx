@@ -6,7 +6,7 @@ import styles from './course.module.scss';
 import { getCourseById } from '../../../contexts/courses/application/GetCourseById';
 import Button from '@studio/ui/components/interactivity/cta/button';
 import { Modal } from '@studio/ui/components/modal';
-import { FormSelectMultipleInput } from '@studio/ui/components/interactivity/form';
+import { FormAreaTextInput, FormSelectMultipleInput, FormTextInput } from '@studio/ui/components/interactivity/form';
 import { CourseTagsRecord } from '@studio/commons';
 import { renameCourse } from '../../../contexts/courses/application/RenameCourse';
 import { updateCourseDescription } from '../../../contexts/courses/application/UpdateCourseDescription';
@@ -144,7 +144,10 @@ export function CreatorCoursePreview({ courseId }: CreatorCoursePreviewParams) {
         }}
       >
         <div className={styles.modifyCourseModal}>
-          <input
+          <FormTextInput
+            Name="Course title"
+            placeholder="Course title"
+            type="text"
             value={newTitle}
             onChange={(e) => {
               setNewTitle(e.currentTarget.value);
@@ -166,7 +169,9 @@ export function CreatorCoursePreview({ courseId }: CreatorCoursePreviewParams) {
         }}
       >
         <div className={styles.modifyCourseModal}>
-          <textarea
+          <FormAreaTextInput
+            Name="Course description"
+            placeholder="Course description"
             value={newDescription}
             onChange={(e) => {
               setNewDescription(e.currentTarget.value);
