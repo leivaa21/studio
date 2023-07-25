@@ -10,6 +10,8 @@ import styles from '../course.module.scss';
 
 import { getCourseById } from '../../../../contexts/courses/application/GetCourseById';
 import { useRouter } from 'next/router';
+import { createLesson } from '../../../../contexts/lessons/aplication/CreateLesson';
+import { getAuthTokenCookie } from '../../../../lib/cookieUtils';
 
 const MDEditor = dynamic(() => import('@uiw/react-md-editor'), { ssr: false });
 
@@ -31,7 +33,14 @@ export default function NewLessonForm({ courseId }: NewLessonFormParams) {
     '# New Lesson \n - [x] Make awesome courses \n - [ ] Use markdown to start creating!'
   );
 
-  const onLessonSubmit = () => {
+  const onLessonSubmit = async () => {
+    if (!title || !content) return;
+
+    await createLesson(
+      { courseId, title, content },
+      getAuthTokenCookie() || ''
+    );
+
     router.push(`/course/${courseId}/lessons`);
   };
 

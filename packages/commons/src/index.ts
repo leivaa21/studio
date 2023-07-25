@@ -20,5 +20,6 @@ export * from './contracts/user/GetUserContracts';
 export * from './contracts/courses/CourseContracts';
 export * from './contracts/courses/CreateCourseContracts';
 export * from './contracts/courses/UpdateCourseContracts';
+export * from './contracts/courses/CreateLessonContracts';
 
 export * from './errors/ErrorCodes';
