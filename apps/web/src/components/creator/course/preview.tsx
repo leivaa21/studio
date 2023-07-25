@@ -9,6 +9,7 @@ import { Modal } from '@studio/ui/components/modal';
 import { FormSelectMultipleInput } from '@studio/ui/components/interactivity/form';
 import { CourseTagsRecord } from '@studio/commons';
 import { renameCourse } from '../../../contexts/courses/application/RenameCourse';
+import { updateCourseDescription } from '../../../contexts/courses/application/UpdateCourseDescription';
 import { getAuthTokenCookie } from '../../../lib/cookieUtils';
 
 export interface CreatorCoursePreviewParams {
@@ -25,7 +26,7 @@ export function CreatorCoursePreview({ courseId }: CreatorCoursePreviewParams) {
   const [renameModalShown, setRenameModalShown] = useState<boolean>(false);
   const [newTitle, setNewTitle] = useState<string>();
 
-  const [changeDescriptionModalShown, setChangeDescriptionModalShown] =
+  const [updateDescriptionModalShown, setUpdateDescriptionModalShown] =
     useState<boolean>(false);
   const [newDescription, setNewDescription] = useState<string>();
 
@@ -61,6 +62,20 @@ export function CreatorCoursePreview({ courseId }: CreatorCoursePreviewParams) {
     router.reload();
   };
 
+  const onSubmitUpdateDescription = async () => {
+    if (newDescription === description || !newDescription) {
+      setUpdateDescriptionModalShown(false);
+      return;
+    }
+
+    await updateCourseDescription(
+      { description: newDescription },
+      courseId,
+      getAuthTokenCookie() || ''
+    );
+    router.reload();
+  };
+
   return (
     <div className={styles.coursePreview}>
       <div className={styles.propertyRow}>
@@ -83,7 +98,7 @@ export function CreatorCoursePreview({ courseId }: CreatorCoursePreviewParams) {
             Type="Primary"
             Size="Small"
             Label="Change Description"
-            onClick={() => setChangeDescriptionModalShown(true)}
+            onClick={() => setUpdateDescriptionModalShown(true)}
           />
         </div>
       </div>
@@ -129,23 +144,24 @@ export function CreatorCoursePreview({ courseId }: CreatorCoursePreviewParams) {
         </div>
       </Modal>
       <Modal
-        isShown={changeDescriptionModalShown}
-        title={`Change course description`}
+        isShown={updateDescriptionModalShown}
+        title={`Update course description`}
         closeFunction={() => {
-          setChangeDescriptionModalShown(false);
+          setUpdateDescriptionModalShown(false);
         }}
       >
         <div className={styles.modifyCourseModal}>
           <textarea
             value={newDescription}
             onChange={(e) => {
-              setDescription(e.currentTarget.value);
+              setNewDescription(e.currentTarget.value);
             }}
           />
           <Button
             Type="Primary"
             Size="Small"
-            Label="Change course description!"
+            Label="Update course description!"
+            onClick={onSubmitUpdateDescription}
           />
         </div>
       </Modal>

@@ -4,7 +4,10 @@ export interface UpdateCourseRequest {
   description: string;
 }
 
-
 export interface RenameCourseRequest {
   title: string;
+}
+
+export interface UpdateCourseDescriptionRequest {
+  description: string;
 }
