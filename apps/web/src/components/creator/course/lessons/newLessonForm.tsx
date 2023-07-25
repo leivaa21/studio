@@ -22,13 +22,14 @@ export interface NewLessonFormParams {
 export default function NewLessonForm({ courseId }: NewLessonFormParams) {
   const router = useRouter();
 
-  const [title, setTitle] = useState<string>();
+  const [courseTitle, setCourseTitle] = useState<string>();
 
   useEffect(() => {
     if (!courseId) return;
-    getCourseById(courseId).then((course) => setTitle(course.title));
+    getCourseById(courseId).then((course) => setCourseTitle(course.title));
   });
 
+  const [title, setTitle] = useState<string>('');
   const [content, setContent] = useState<string>(
     '# New Lesson \n - [x] Make awesome courses \n - [ ] Use markdown to start creating!'
   );
@@ -46,12 +47,16 @@ export default function NewLessonForm({ courseId }: NewLessonFormParams) {
 
   return (
     <div className={styles.newLessonForm}>
-      <h2>New Lesson for {title}</h2>
+      <h2>New Lesson for {courseTitle}</h2>
       <div className={styles.field}>
         <label htmlFor="lesson-title-input" className={styles.label}>
           Lesson title
         </label>
-        <input id="lesson-title-input" />
+        <input
+          id="lesson-title-input"
+          value={title}
+          onChange={(e) => setTitle(e.currentTarget.value)}
+        />
       </div>
       <div className={styles.field}>
         <span className={styles.label}>Content</span>
