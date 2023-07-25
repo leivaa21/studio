@@ -1,1 +1,2 @@
 import './courses';
+import './lessons';
