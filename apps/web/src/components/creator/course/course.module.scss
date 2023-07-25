@@ -58,31 +58,23 @@
 
   min-width: 25rem;
 
-  input, textarea {
-    border: none;
-    margin: 2rem;
-    font-size: 1.5rem;
-
-    &:focus {
-      outline: none;
-      background-color: $primary-mask;
-    }
-
-  }
-
-  input {
-    border-bottom: 1px solid $primary;
-  }
-
-  textarea {
-    border: 1px solid $primary;
-  }
-
   .tagsSelect {
     display: flex;
     flex-direction: column;
   }
 
+}
+
+.newCourseForm {
+  display: flex;
+  flex: 0 1 auto;
+  flex-direction: column;
+
+  padding: 1rem 5rem;
+
+  .field {
+    margin: 1rem;
+  }
 }
 
 .newLessonForm {

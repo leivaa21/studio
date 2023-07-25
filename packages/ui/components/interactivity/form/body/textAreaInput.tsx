@@ -8,6 +8,7 @@ interface FormTextInputProps extends React.InputHTMLAttributes<HTMLTextAreaEleme
 
 const FormAreaTextInput = ({
   Name,
+  className,
   ...defaultProps
 }: FormTextInputProps) => {
   const id = `input-${Name}`;
@@ -16,7 +17,7 @@ const FormAreaTextInput = ({
       <textarea
         type="textarea"
         id={id}
-        className={styles.textInput}
+        className={`${styles.textInput} ${className}`}
         {...defaultProps}
       />
     </React.Fragment>
