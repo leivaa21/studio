@@ -17,6 +17,10 @@ import {
   UpdateCourseDescription,
   UpdateCourseDescriptionCommand,
 } from '../../../../contexts/courses/application/commands/UpdateCourseDescription';
+import {
+  UpdateCourseTags,
+  UpdateCourseTagsCommand,
+} from '../../../../contexts/courses/application/commands/UpdateCourseTags';
 
 const commandBus = DependencyContainer.get<CommandBus>(InMemoryCommandBus);
 
@@ -24,3 +28,4 @@ commandBus.subscribe(CreateNewCourseCommand, CreateNewCourse);
 commandBus.subscribe(UpdateCourseCommand, UpdateCourse);
 commandBus.subscribe(RenameCourseCommand, RenameCourse);
 commandBus.subscribe(UpdateCourseDescriptionCommand, UpdateCourseDescription);
+commandBus.subscribe(UpdateCourseTagsCommand, UpdateCourseTags);
