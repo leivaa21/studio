@@ -1,3 +1,4 @@
+import { Injectable } from '@studio/dependency-injection';
 import { CourseFinder } from '../../../courses/application/services/CourseFinder';
 import { AuthorId } from '../../../courses/domain/AuthorId';
 import { CourseId } from '../../../courses/domain/CourseId';
@@ -7,6 +8,9 @@ import { EventBus } from '../../../shared/domain/EventBus';
 import { Lesson } from '../../domain/Lesson';
 import { LessonRepository } from '../../domain/LessonRepository';
 import { LessonTitle } from '../../domain/LessonTitle';
+import { MongoLessonRepository } from '../../infrastructure/persistance/mongo/MongoLessonRepository';
+import { MongoCourseRepository } from '../../../courses/infrastructure/persistance/mongo/MongoCourseRepository';
+import { InMemoryAsyncEventBus } from '../../../shared/infrastructure/EventBus/InMemoryAsyncEventBus';
 
 export class CreateNewLessonCommand {
   public readonly authorId: string;
@@ -27,6 +31,13 @@ export class CreateNewLessonCommand {
   }
 }
 
+@Injectable({
+  dependencies: [
+    MongoLessonRepository,
+    MongoCourseRepository,
+    InMemoryAsyncEventBus,
+  ],
+})
 export class CreateNewLesson extends CommandHandler<CreateNewLessonCommand> {
   private readonly courseFinder: CourseFinder;
   constructor(

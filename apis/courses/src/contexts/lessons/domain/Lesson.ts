@@ -95,4 +95,15 @@ export class Lesson extends AggregateRoot {
       updatedAt: this.updatedAt,
     };
   }
+
+  static fromPrimitives(args: LessonPrimitives): Lesson {
+    return new Lesson({
+      id: LessonId.of(args.id),
+      courseId: CourseId.of(args.courseId),
+      title: LessonTitle.of(args.title),
+      content: LessonContent.of(args.content),
+      createdAt: args.createdAt,
+      updatedAt: args.updatedAt,
+    });
+  }
 }
