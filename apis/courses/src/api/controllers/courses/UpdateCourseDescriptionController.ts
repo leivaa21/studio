@@ -20,7 +20,7 @@ import { UpdateCourseDescriptionCommand } from '../../../contexts/courses/applic
   dependencies: [InMemoryCommandBus],
 })
 @JsonController('/course')
-export class RenameCourseController {
+export class UpdateCourseDescriptionController {
   constructor(private readonly commandBus: CommandBus) {}
 
   @Put('/:id/description')
