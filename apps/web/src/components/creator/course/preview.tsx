@@ -11,6 +11,7 @@ import { CourseTagsRecord } from '@studio/commons';
 import { renameCourse } from '../../../contexts/courses/application/RenameCourse';
 import { updateCourseDescription } from '../../../contexts/courses/application/UpdateCourseDescription';
 import { getAuthTokenCookie } from '../../../lib/cookieUtils';
+import { updateCourseTags } from '../../../contexts/courses/application/UpdateCourseTags';
 
 export interface CreatorCoursePreviewParams {
   courseId: string;
@@ -70,6 +71,20 @@ export function CreatorCoursePreview({ courseId }: CreatorCoursePreviewParams) {
 
     await updateCourseDescription(
       { description: newDescription },
+      courseId,
+      getAuthTokenCookie() || ''
+    );
+    router.reload();
+  };
+
+  const onSubmitUpdateTags = async () => {
+    if (!newTags) {
+      setUpdateTagsModalShown(false);
+      return;
+    }
+
+    await updateCourseTags(
+      { tags: newTags },
       courseId,
       getAuthTokenCookie() || ''
     );
@@ -182,7 +197,12 @@ export function CreatorCoursePreview({ courseId }: CreatorCoursePreviewParams) {
               setNewTags(e);
             }}
           />
-          <Button Type="Primary" Size="Small" Label="Update course tags!" />
+          <Button
+            Type="Primary"
+            Size="Small"
+            Label="Update course tags!"
+            onClick={onSubmitUpdateTags}
+          />
         </div>
       </Modal>
     </div>

@@ -11,3 +11,7 @@ export interface RenameCourseRequest {
 export interface UpdateCourseDescriptionRequest {
   description: string;
 }
+
+export interface UpdateCourseTagsRequest {
+  tags: string[];
+}
