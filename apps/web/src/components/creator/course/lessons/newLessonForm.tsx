@@ -6,8 +6,9 @@ import '@uiw/react-markdown-preview/markdown.css';
 
 import Button from '@studio/ui/components/interactivity/cta/button';
 
-import styles from './course.module.scss';
-import { getCourseById } from '../../../contexts/courses/application/GetCourseById';
+import styles from '../course.module.scss';
+
+import { getCourseById } from '../../../../contexts/courses/application/GetCourseById';
 import { useRouter } from 'next/router';
 
 const MDEditor = dynamic(() => import('@uiw/react-md-editor'), { ssr: false });
@@ -31,7 +32,7 @@ export default function NewLessonForm({ courseId }: NewLessonFormParams) {
   );
 
   const onLessonSubmit = () => {
-    router.push('/creator');
+    router.push(`/course/${courseId}/lessons`);
   };
 
   return (
