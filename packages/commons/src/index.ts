@@ -21,5 +21,6 @@ export * from './contracts/courses/CourseContracts';
 export * from './contracts/courses/CreateCourseContracts';
 export * from './contracts/courses/UpdateCourseContracts';
 export * from './contracts/courses/CreateLessonContracts';
+export * from './contracts/courses/LessonContracts';
 
 export * from './errors/ErrorCodes';
