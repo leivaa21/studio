@@ -85,6 +85,18 @@
 
 }
 
+.newCourseForm {
+  display: flex;
+  flex: 0 1 auto;
+  flex-direction: column;
+
+  padding: 1rem 5rem;
+
+  .field {
+    margin: 1rem;
+  }
+}
+
 .newLessonForm {
   display: flex;
   flex: 0 1 auto;
