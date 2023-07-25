@@ -1,29 +1,32 @@
+import { useEffect, useState } from 'react';
 import styles from '../course.module.scss';
 
 import { CourseLessonCard } from './CourseLessonCard';
 import Button from '@studio/ui/components/interactivity/cta/button';
+import { LessonInfoResponse } from '@studio/commons';
+import { getLessonsByCourseId } from '../../../../contexts/lessons/aplication/GetLessonsByCourseId';
 
 export function CourseLessonsList({ courseId }: { courseId: string }) {
+  const [lessons, setLessons] = useState<LessonInfoResponse[]>([]);
+
+  useEffect(() => {
+    if (!courseId) return;
+
+    getLessonsByCourseId(courseId).then((lessons) => {
+      setLessons(lessons);
+    });
+  }, [courseId]);
+
   return (
     <div className={styles.lessonsList}>
-      <CourseLessonCard
-        key={`course-1`}
-        lesson={{ id: '1', courseId, title: 'First lesson' }}
-        lessonIndex={0}
-        lessonCount={3}
-      />
-      <CourseLessonCard
-        key={`course-2`}
-        lesson={{ id: '2', courseId, title: 'Second lesson' }}
-        lessonIndex={1}
-        lessonCount={3}
-      />
-      <CourseLessonCard
-        key={`course-3`}
-        lesson={{ id: '3', courseId, title: 'Third lesson' }}
-        lessonIndex={2}
-        lessonCount={3}
-      />
+      {lessons.map((lesson, index) => (
+        <CourseLessonCard
+          key={`lesson-${lesson.id}`}
+          lesson={lesson}
+          lessonIndex={index}
+          lessonCount={lessons.length}
+        />
+      ))}
       <Button
         Label="Create new lesson!"
         Type="Primary"
