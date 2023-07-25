@@ -6,7 +6,11 @@ import styles from './course.module.scss';
 import { getCourseById } from '../../../contexts/courses/application/GetCourseById';
 import Button from '@studio/ui/components/interactivity/cta/button';
 import { Modal } from '@studio/ui/components/modal';
-import { FormAreaTextInput, FormSelectMultipleInput, FormTextInput } from '@studio/ui/components/interactivity/form';
+import {
+  FormAreaTextInput,
+  FormSelectMultipleInput,
+  FormTextInput,
+} from '@studio/ui/components/interactivity/form';
 import { CourseTagsRecord } from '@studio/commons';
 import { renameCourse } from '../../../contexts/courses/application/RenameCourse';
 import { updateCourseDescription } from '../../../contexts/courses/application/UpdateCourseDescription';
