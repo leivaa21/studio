@@ -12,6 +12,7 @@ import { getCourseById } from '../../../../contexts/courses/application/GetCours
 import { useRouter } from 'next/router';
 import { createLesson } from '../../../../contexts/lessons/aplication/CreateLesson';
 import { getAuthTokenCookie } from '../../../../lib/cookieUtils';
+import { FormTextInput } from '@studio/ui/components/interactivity/form';
 
 const MDEditor = dynamic(() => import('@uiw/react-md-editor'), { ssr: false });
 
@@ -48,16 +49,13 @@ export default function NewLessonForm({ courseId }: NewLessonFormParams) {
   return (
     <div className={styles.newLessonForm}>
       <h2>New Lesson for {courseTitle}</h2>
-      <div className={styles.field}>
-        <label htmlFor="lesson-title-input" className={styles.label}>
-          Lesson title
-        </label>
-        <input
-          id="lesson-title-input"
-          value={title}
-          onChange={(e) => setTitle(e.currentTarget.value)}
-        />
-      </div>
+      <FormTextInput
+        id="lesson-title-input"
+        Name="Lesson title"
+        placeholder="Lesson title"
+        type="text"
+        onChange={(e) => setTitle(e.currentTarget.value)}
+      />
       <div className={styles.field}>
         <span className={styles.label}>Content</span>
         <MDEditor
