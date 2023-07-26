@@ -4,6 +4,8 @@ import { BsArrowDownShort, BsArrowUpShort } from 'react-icons/bs';
 import { Modal } from '@studio/ui/components/modal';
 import { useState } from 'react';
 import { useRouter } from 'next/router';
+import { deleteLesson } from '../../../../contexts/lessons/aplication/DeleteLesson';
+import { getAuthTokenCookie } from '../../../../lib/cookieUtils';
 
 export interface LessonCardParams {
   lesson: { title: string; id: string; courseId: string };
@@ -22,7 +24,8 @@ export function CourseLessonCard({
 
   const router = useRouter();
 
-  const handleDeleteLesson = () => {
+  const handleDeleteLesson = async () => {
+    await deleteLesson(lesson.id, getAuthTokenCookie() || '');
     router.reload();
   };
 
