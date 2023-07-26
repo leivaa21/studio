@@ -181,6 +181,14 @@
 
 }
 
+.removeLessonModal {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  align-items: center;
+}
+
+
 .lessonPreview {
   display: flex;
   flex: 1;
