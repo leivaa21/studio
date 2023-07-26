@@ -15,23 +15,25 @@ export function CoursePreviewNavigator({
   return (
     <ul className={styles.previewNavigator}>
       <Link
-        href={`/course/${courseId}`}
+        href={`/creator/course/${courseId}`}
         className={`${styles.link} ${
-          pathname === '/course/[courseId]' ? styles.active : undefined
+          pathname === '/creator/course/[courseId]' ? styles.active : undefined
         }`}
       >
         <li
           className={
-            pathname === '/course/[courseId]' ? styles.active : undefined
+            pathname === '/creator/course/[courseId]'
+              ? styles.active
+              : undefined
           }
         >
           Basic Details
         </li>
       </Link>
-      <Link href={`/course/${courseId}/lessons`}>
+      <Link href={`/creator/course/${courseId}/lessons`}>
         <li
           className={
-            pathname === '/course/[courseId]/lessons'
+            pathname === '/creator/course/[courseId]/lessons'
               ? styles.active
               : undefined
           }
@@ -39,10 +41,12 @@ export function CoursePreviewNavigator({
           Lessons
         </li>
       </Link>
-      <Link href={`/course/${courseId}/stats`}>
+      <Link href={`/creator/course/${courseId}/stats`}>
         <li
           className={
-            pathname === '/course/[courseId]/stats' ? styles.active : undefined
+            pathname === '/creator/course/[courseId]/stats'
+              ? styles.active
+              : undefined
           }
         >
           Statistics

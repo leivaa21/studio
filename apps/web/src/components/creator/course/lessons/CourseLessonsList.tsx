@@ -32,7 +32,7 @@ export function CourseLessonsList({ courseId }: { courseId: string }) {
         Type="Primary"
         Size="Medium"
         Link
-        href={`/course/${courseId}/add-lesson`}
+        href={`/creator/course/${courseId}/add-lesson`}
       />
     </div>
   );
