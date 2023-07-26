@@ -7,4 +7,5 @@ export interface LessonRepository {
   create(lesson: Lesson): Promise<void>;
   findByCourseId(courseId: CourseId): Promise<Lesson[]>;
   findById(lessonId: LessonId): Promise<Nullable<Lesson>>;
+  update(lesson: Lesson): Promise<void>;
 }
