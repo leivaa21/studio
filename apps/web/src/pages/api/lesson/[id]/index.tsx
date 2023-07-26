@@ -16,6 +16,9 @@ export default async function handler(
     case 'GET':
       await getLesson(req, res);
       break;
+    case 'DELETE':
+      await deleteLesson(req, res);
+      break;
     default:
       return res
         .status(404)
@@ -55,6 +58,24 @@ async function updateLesson(req: NextApiRequest, res: NextApiResponse) {
     await coursesApiService.put<UpdateLessonRequest, void>(
       `/lesson/${lessonId}`,
       request,
+      authToken
+    );
+
+    res.status(200).end();
+  });
+}
+
+async function deleteLesson(req: NextApiRequest, res: NextApiResponse) {
+  const { id: lessonId } = req.query;
+
+  const authToken = req.headers.authorization;
+
+  const coursesApiService = new CoursesApiService();
+
+  await SafeControllerHandling(res, async () => {
+    await coursesApiService.delete<undefined, void>(
+      `/lesson/${lessonId}`,
+      undefined,
       authToken
     );
 

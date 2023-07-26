@@ -46,4 +46,8 @@ export class MongoLessonRepository
     const document = this.entitySchemaFactory.createSchemaFromEntity(lesson);
     await this.model().findByIdAndUpdate(document._id, document);
   }
+
+  public async deleteById(lessonId: LessonId): Promise<void> {
+    await this.model().findByIdAndDelete(lessonId.value);
+  }
 }

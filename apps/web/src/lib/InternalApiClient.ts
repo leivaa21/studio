@@ -1,6 +1,6 @@
 import { ApiError, GetUserResponse } from '@studio/commons';
 
-type Method = 'POST' | 'GET' | 'PUT';
+type Method = 'POST' | 'GET' | 'PUT' | 'DELETE';
 
 class InternalApiService {
   async post<Data, Response>(
@@ -18,6 +18,19 @@ class InternalApiService {
     authorizationToken?: string
   ): Promise<Response> {
     const request = this.formatRequest<Data>('PUT', data, authorizationToken);
+    return this.fetch<Response>(path, request);
+  }
+
+  async delete<Data, Response>(
+    path: string,
+    data: Data,
+    authorizationToken?: string
+  ): Promise<Response> {
+    const request = this.formatRequest<Data>(
+      'DELETE',
+      data,
+      authorizationToken
+    );
     return this.fetch<Response>(path, request);
   }
 
