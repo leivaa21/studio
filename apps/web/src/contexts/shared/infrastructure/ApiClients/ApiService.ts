@@ -2,7 +2,7 @@ import { env } from '../../../../lib/env';
 import { ApiError } from '@studio/commons';
 import { error } from '@studio/api-utils';
 
-type Method = 'POST' | 'GET' | 'PUT';
+type Method = 'POST' | 'GET' | 'PUT' | 'DELETE';
 
 export abstract class ApiService {
   protected readonly jwtSecret = env.jwt.secret;
