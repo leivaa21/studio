@@ -43,7 +43,7 @@ export default function NewLessonForm({ courseId }: NewLessonFormParams) {
       getAuthTokenCookie() || ''
     );
 
-    router.push(`/course/${courseId}/lessons`);
+    router.push(`/creator/course/${courseId}/lessons`);
   };
 
   return (
