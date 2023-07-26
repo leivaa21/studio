@@ -15,7 +15,7 @@ export function CourseCreatorCard({ key, course }: CourseParams) {
       <div className={styles['card-header']}>
         <h4 className={styles['card-header-title']}>{course.title}</h4>
         <div className={styles['card-header-buttons']}>
-          <Link href={`/course/${course.id}`}>
+          <Link href={`/creator/course/${course.id}`}>
             <BiChevronRightCircle className={styles.edit} />
           </Link>
         </div>

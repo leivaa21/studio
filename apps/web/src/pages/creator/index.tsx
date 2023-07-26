@@ -40,7 +40,7 @@ export default function CreatorDashboard() {
             Size="Small"
             Label="Create new course"
             Link
-            href="/course/new"
+            href="/creator/course/new"
           />
           <CourseSearcher
             onFetch={onFetch}

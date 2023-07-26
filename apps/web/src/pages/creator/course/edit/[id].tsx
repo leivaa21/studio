@@ -3,8 +3,8 @@ import { useRouter } from 'next/router';
 
 import { CourseTagsRecord } from '@studio/commons';
 
-import { getAuthTokenCookie } from '../../../lib/cookieUtils';
-import { Header } from '../../../components/header/header';
+import { getAuthTokenCookie } from '../../../../lib/cookieUtils';
+import { Header } from '../../../../components/header/header';
 import Button from '@studio/ui/components/interactivity/cta/button';
 import Form, {
   FormAreaTextInput,
@@ -12,8 +12,8 @@ import Form, {
   FormSelectMultipleInput,
   FormTextInput,
 } from '@studio/ui/components/interactivity/form';
-import { updateCourse } from '../../../contexts/courses/application/UpdateCourse';
-import { getCourseById } from '../../../contexts/courses/application/GetCourseById';
+import { updateCourse } from '../../../../contexts/courses/application/UpdateCourse';
+import { getCourseById } from '../../../../contexts/courses/application/GetCourseById';
 
 export default function UpdateCourseForm() {
   const router = useRouter();

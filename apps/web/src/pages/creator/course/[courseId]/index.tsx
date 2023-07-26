@@ -1,10 +1,10 @@
 import { Fragment, useEffect } from 'react';
 import { useRouter } from 'next/router';
-import { getAuthTokenCookie } from '../../../lib/cookieUtils';
-import { Header } from '../../../components/header/header';
-import { CreatorHeader } from '../../../components/creator/header';
-import { CoursePreviewNavigator } from '../../../components/creator/course/previewNavigator';
-import { CourseLessonsList } from '../../../components/creator/course/lessons/CourseLessonsList';
+import { getAuthTokenCookie } from '../../../../lib/cookieUtils';
+import { Header } from '../../../../components/header/header';
+import { CreatorCoursePreview } from '../../../../components/creator/course/preview';
+import { CreatorHeader } from '../../../../components/creator/header';
+import { CoursePreviewNavigator } from '../../../../components/creator/course/previewNavigator';
 
 export default function CreatorCoursePreviewPage() {
   const router = useRouter();
@@ -25,7 +25,7 @@ export default function CreatorCoursePreviewPage() {
           <CoursePreviewNavigator courseId={courseId} />
         </div>
         <div className="column">
-          <CourseLessonsList courseId={courseId} />
+          <CreatorCoursePreview courseId={courseId} />
         </div>
       </div>
     </Fragment>
