@@ -180,3 +180,18 @@
   }
 
 }
+
+.lessonPreview {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+
+  padding: 3rem;
+
+  .lessonTitle {
+    font-size: 2rem;
+    display: flex;
+    flex: 0 1 auto;
+    justify-content: center;
+  }
+}
