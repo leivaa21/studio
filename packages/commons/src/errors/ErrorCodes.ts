@@ -14,4 +14,5 @@ export enum ErrorCodes {
   PasswordShouldContainNumber = 'auth.password-number',
   PasswordShouldContainSymbol = 'auth.password-symbol',
   CourseNotFound = 'courses.course-not-found',
+  LessonNotFound = 'courses.lesson-not-found',
 }

@@ -5,7 +5,12 @@ import {
   GetLessonsByCourse,
   GetLessonsByCourseQuery,
 } from '../../../../contexts/lessons/application/queries/GetLessonsByCourse';
+import {
+  GetLessonById,
+  GetLessonByIdQuery,
+} from '../../../../contexts/lessons/application/queries/GetLessonById';
 
 const queryBus = DependencyContainer.get<QueryBus>(InMemoryQueryBus);
 
 queryBus.subscribe(GetLessonsByCourseQuery, GetLessonsByCourse);
+queryBus.subscribe(GetLessonByIdQuery, GetLessonById);

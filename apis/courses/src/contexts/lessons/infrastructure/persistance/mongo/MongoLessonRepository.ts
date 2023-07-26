@@ -6,6 +6,8 @@ import { Lesson } from '../../../domain/Lesson';
 import { LessonSchemaFactory } from './LessonSchemaFactory';
 import { LessonModel } from './LessonSchema';
 import { CourseId } from '../../../../courses/domain/CourseId';
+import { LessonId } from '../../../domain/LessonId';
+import { Nullable } from '../../../../shared/domain/Nullable';
 
 @Injectable({ dependencies: [LessonSchemaFactory] })
 export class MongoLessonRepository
@@ -30,5 +32,13 @@ export class MongoLessonRepository
     return documents.map((document) =>
       this.entitySchemaFactory.createEntityFromSchema(document)
     );
+  }
+
+  public async findById(lessonId: LessonId): Promise<Nullable<Lesson>> {
+    const document = await this.model().findById(lessonId.value);
+
+    return document
+      ? this.entitySchemaFactory.createEntityFromSchema(document)
+      : null;
   }
 }
