@@ -30,14 +30,14 @@ export function CourseLessonCard({
           Size="Small"
           Label="VIEW"
           Link
-          href={`/course/${lesson.courseId}/lesson/${lesson.id}`}
+          href={`/creator/course/${lesson.courseId}/lesson/${lesson.id}`}
         />
         <Button
           Type="Primary"
           Size="Small"
           Label="EDIT"
           Link
-          href={`/course/${lesson.courseId}/lesson/${lesson.id}/edit`}
+          href={`/creator/course/${lesson.courseId}/lesson/${lesson.id}/edit`}
         />
       </div>
     </div>
