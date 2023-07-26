@@ -85,6 +85,20 @@ export class Lesson extends AggregateRoot {
     return this._updatedAt;
   }
 
+  public updateTitle(title: LessonTitle): void {
+    if (this.title.equals(title)) return;
+
+    this._title = title;
+    this._updatedAt = new Date();
+  }
+
+  public updateContent(content: LessonContent): void {
+    if (this.content.equals(content)) return;
+
+    this._content = content;
+    this._updatedAt = new Date();
+  }
+
   public toPrimitives(): LessonPrimitives {
     return {
       id: this.id.value,

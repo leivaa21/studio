@@ -41,4 +41,9 @@ export class MongoLessonRepository
       ? this.entitySchemaFactory.createEntityFromSchema(document)
       : null;
   }
+
+  public async update(lesson: Lesson): Promise<void> {
+    const document = this.entitySchemaFactory.createSchemaFromEntity(lesson);
+    await this.model().findByIdAndUpdate(document._id, document);
+  }
 }

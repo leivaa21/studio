@@ -10,3 +10,8 @@ export interface LessonResponse {
   title: string;
   content: string;
 }
+
+export interface UpdateLessonRequest {
+  title: string;
+  content: string;
+}
