@@ -73,8 +73,21 @@
   padding: 1rem 5rem;
 
   .field {
-    margin: 1rem;
+    display: flex;
+    flex: 1 0 auto;
+    flex-direction: column;
+    padding: 1rem;
   }
+  
+  .label {
+    font-size: 1.2rem;
+    font-weight: 600;
+  }
+
+  .markdownEditor {
+    min-height: 25vh;
+  }
+
 }
 
 .newLessonForm {
