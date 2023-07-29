@@ -7,7 +7,6 @@ import { getCourseById } from '../../../contexts/courses/application/GetCourseBy
 import Button from '@studio/ui/components/interactivity/cta/button';
 import { Modal } from '@studio/ui/components/modal';
 import {
-  FormAreaTextInput,
   FormSelectMultipleInput,
   FormTextInput,
 } from '@studio/ui/components/interactivity/form';
