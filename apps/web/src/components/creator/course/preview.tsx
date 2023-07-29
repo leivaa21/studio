@@ -7,7 +7,6 @@ import { getCourseById } from '../../../contexts/courses/application/GetCourseBy
 import Button from '@studio/ui/components/interactivity/cta/button';
 import { Modal } from '@studio/ui/components/modal';
 import {
-  FormAreaTextInput,
   FormSelectMultipleInput,
   FormTextInput,
 } from '@studio/ui/components/interactivity/form';
@@ -16,6 +15,15 @@ import { renameCourse } from '../../../contexts/courses/application/RenameCourse
 import { updateCourseDescription } from '../../../contexts/courses/application/UpdateCourseDescription';
 import { getAuthTokenCookie } from '../../../lib/cookieUtils';
 import { updateCourseTags } from '../../../contexts/courses/application/UpdateCourseTags';
+
+import '@uiw/react-md-editor/markdown-editor.css';
+import '@uiw/react-markdown-preview/markdown.css';
+import dynamic from 'next/dynamic';
+
+import { serialize } from 'next-mdx-remote/serialize';
+import { MDXRemote, MDXRemoteSerializeResult } from 'next-mdx-remote';
+
+const MDEditor = dynamic(() => import('@uiw/react-md-editor'), { ssr: false });
 
 export interface CreatorCoursePreviewParams {
   courseId: string;
@@ -27,6 +35,10 @@ export function CreatorCoursePreview({ courseId }: CreatorCoursePreviewParams) {
   const [title, setTitle] = useState<string>();
   const [tags, setTags] = useState<string[]>([]);
   const [description, setDescription] = useState<string>();
+  const [descriptionMdx, setDescriptionMdx] =
+    useState<
+      MDXRemoteSerializeResult<Record<string, unknown>, Record<string, unknown>>
+    >();
 
   const [renameModalShown, setRenameModalShown] = useState<boolean>(false);
   const [newTitle, setNewTitle] = useState<string>();
@@ -49,7 +61,10 @@ export function CreatorCoursePreview({ courseId }: CreatorCoursePreviewParams) {
       setNewTags(course.tags);
       setDescription(course.description);
       setNewDescription(course.description);
-      console.log(course);
+
+      serialize(course.description, { mdxOptions: { development: true } }).then(
+        (mdxSource) => setDescriptionMdx(mdxSource)
+      );
     });
   }, [router, courseId]);
 
@@ -111,7 +126,16 @@ export function CreatorCoursePreview({ courseId }: CreatorCoursePreviewParams) {
       </div>
       <div className={styles.propertyRow}>
         <h4 className={styles.propertyName}>Description</h4>
-        <p className={styles.propertyValue}>{description}</p>
+        {descriptionMdx ? (
+          <div
+            className={styles.propertyValue}
+            style={{ flexDirection: 'column' }}
+          >
+            <MDXRemote {...descriptionMdx} />
+          </div>
+        ) : (
+          <p className={styles.propertyValue}>{description}</p>
+        )}
         <div className={styles.propertyControls}>
           <Button
             Type="Primary"
@@ -173,14 +197,15 @@ export function CreatorCoursePreview({ courseId }: CreatorCoursePreviewParams) {
         }}
       >
         <div className={styles.modifyCourseModal}>
-          <FormAreaTextInput
-            Name="Course description"
-            placeholder="Course description"
-            value={newDescription}
-            onChange={(e) => {
-              setNewDescription(e.currentTarget.value);
-            }}
-          />
+          <div className={styles.field}>
+            <span className={styles.label}>Description</span>
+            <MDEditor
+              className={styles.markdownEditor}
+              value={newDescription}
+              onChange={(e) => setNewDescription(e || '')}
+              enableScroll
+            />
+          </div>
           <Button
             Type="Primary"
             Size="Small"
