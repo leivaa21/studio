@@ -20,6 +20,9 @@ import '@uiw/react-md-editor/markdown-editor.css';
 import '@uiw/react-markdown-preview/markdown.css';
 import dynamic from 'next/dynamic';
 
+import { serialize } from 'next-mdx-remote/serialize';
+import { MDXRemote, MDXRemoteSerializeResult } from 'next-mdx-remote';
+
 const MDEditor = dynamic(() => import('@uiw/react-md-editor'), { ssr: false });
 
 export interface CreatorCoursePreviewParams {
@@ -32,6 +35,10 @@ export function CreatorCoursePreview({ courseId }: CreatorCoursePreviewParams) {
   const [title, setTitle] = useState<string>();
   const [tags, setTags] = useState<string[]>([]);
   const [description, setDescription] = useState<string>();
+  const [descriptionMdx, setDescriptionMdx] =
+    useState<
+      MDXRemoteSerializeResult<Record<string, unknown>, Record<string, unknown>>
+    >();
 
   const [renameModalShown, setRenameModalShown] = useState<boolean>(false);
   const [newTitle, setNewTitle] = useState<string>();
@@ -54,7 +61,10 @@ export function CreatorCoursePreview({ courseId }: CreatorCoursePreviewParams) {
       setNewTags(course.tags);
       setDescription(course.description);
       setNewDescription(course.description);
-      console.log(course);
+
+      serialize(course.description, { mdxOptions: { development: true } }).then(
+        (mdxSource) => setDescriptionMdx(mdxSource)
+      );
     });
   }, [router, courseId]);
 
@@ -116,7 +126,16 @@ export function CreatorCoursePreview({ courseId }: CreatorCoursePreviewParams) {
       </div>
       <div className={styles.propertyRow}>
         <h4 className={styles.propertyName}>Description</h4>
-        <p className={styles.propertyValue}>{description}</p>
+        {descriptionMdx ? (
+          <div
+            className={styles.propertyValue}
+            style={{ flexDirection: 'column' }}
+          >
+            <MDXRemote {...descriptionMdx} />
+          </div>
+        ) : (
+          <p className={styles.propertyValue}>{description}</p>
+        )}
         <div className={styles.propertyControls}>
           <Button
             Type="Primary"
