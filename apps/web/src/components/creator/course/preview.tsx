@@ -17,6 +17,12 @@ import { updateCourseDescription } from '../../../contexts/courses/application/U
 import { getAuthTokenCookie } from '../../../lib/cookieUtils';
 import { updateCourseTags } from '../../../contexts/courses/application/UpdateCourseTags';
 
+import '@uiw/react-md-editor/markdown-editor.css';
+import '@uiw/react-markdown-preview/markdown.css';
+import dynamic from 'next/dynamic';
+
+const MDEditor = dynamic(() => import('@uiw/react-md-editor'), { ssr: false });
+
 export interface CreatorCoursePreviewParams {
   courseId: string;
 }
@@ -173,14 +179,15 @@ export function CreatorCoursePreview({ courseId }: CreatorCoursePreviewParams) {
         }}
       >
         <div className={styles.modifyCourseModal}>
-          <FormAreaTextInput
-            Name="Course description"
-            placeholder="Course description"
-            value={newDescription}
-            onChange={(e) => {
-              setNewDescription(e.currentTarget.value);
-            }}
-          />
+          <div className={styles.field}>
+            <span className={styles.label}>Description</span>
+            <MDEditor
+              className={styles.markdownEditor}
+              value={newDescription}
+              onChange={(e) => setNewDescription(e || '')}
+              enableScroll
+            />
+          </div>
           <Button
             Type="Primary"
             Size="Small"

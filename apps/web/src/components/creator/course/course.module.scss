@@ -56,13 +56,27 @@
   display: flex;
   flex-direction: column;
 
-  min-width: 25rem;
+  min-width: 50vw;
 
   .tagsSelect {
-    display: flex;
-    flex-direction: column;
+    padding: 1rem;
   }
 
+  .field {
+    display: flex;
+    flex: 1 0 auto;
+    flex-direction: column;
+    padding: 1rem;
+  }
+
+  .label {
+    font-size: 1.2rem;
+    font-weight: 600;
+  }
+
+  .markdownEditor {
+    min-height: 50vh;
+  }
 }
 
 .newCourseForm {
