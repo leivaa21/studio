@@ -11,6 +11,8 @@ import { LessonTitle } from '../../domain/LessonTitle';
 import { MongoLessonRepository } from '../../infrastructure/persistance/mongo/MongoLessonRepository';
 import { MongoCourseRepository } from '../../../courses/infrastructure/persistance/mongo/MongoCourseRepository';
 import { InMemoryAsyncEventBus } from '../../../shared/infrastructure/EventBus/InMemoryAsyncEventBus';
+import { LessonFinder } from '../services/LessonFinder';
+import { LessonOrder } from '../../domain/LessonOrder';
 
 export class CreateNewLessonCommand {
   public readonly authorId: string;
@@ -40,6 +42,7 @@ export class CreateNewLessonCommand {
 })
 export class CreateNewLesson extends CommandHandler<CreateNewLessonCommand> {
   private readonly courseFinder: CourseFinder;
+  private readonly lessonFinder: LessonFinder;
   constructor(
     private readonly lessonRepository: LessonRepository,
     courseRepository: CourseRepository,
@@ -47,6 +50,7 @@ export class CreateNewLesson extends CommandHandler<CreateNewLessonCommand> {
   ) {
     super(eventBus);
     this.courseFinder = new CourseFinder(courseRepository);
+    this.lessonFinder = new LessonFinder(lessonRepository);
   }
   public async execute(command: CreateNewLessonCommand): Promise<void> {
     const authorId = AuthorId.of(command.authorId);
@@ -54,10 +58,13 @@ export class CreateNewLesson extends CommandHandler<CreateNewLessonCommand> {
 
     await this.courseFinder.findAuthoredByIdOrThrow(authorId, courseId);
 
+    const lessons = await this.lessonFinder.findByCourseId(courseId);
+
+    const order = LessonOrder.of(lessons.length);
     const title = LessonTitle.of(command.title);
     const content = LessonTitle.of(command.content);
 
-    const lesson = Lesson.new({ courseId, title, content });
+    const lesson = Lesson.new({ courseId, order, title, content });
 
     await this.lessonRepository.create(lesson);
 

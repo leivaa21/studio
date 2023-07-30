@@ -19,6 +19,7 @@ export class LessonSchemaFactory
     return Lesson.fromPrimitives({
       id: schema._id,
       courseId: schema.courseId,
+      order: schema.order,
       title: schema.title,
       content: schema.content,
       createdAt: schema.createdAt,
