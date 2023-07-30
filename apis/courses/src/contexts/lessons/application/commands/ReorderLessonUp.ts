@@ -79,7 +79,7 @@ export class ReorderLessonUp extends CommandHandler<ReorderLessonUpCommand> {
     lessonOrder: LessonOrder,
     lessons: Lesson[]
   ): Lesson {
-    const previousOrder = LessonOrder.of(lessonOrder.value - 1);
+    const previousOrder = LessonOrder.previousOf(lessonOrder);
     const lesson = lessons.find(
       (lesson) => lesson.order.value === previousOrder.value
     );
