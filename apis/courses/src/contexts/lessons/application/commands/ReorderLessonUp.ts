@@ -75,11 +75,6 @@ export class ReorderLessonUp extends CommandHandler<ReorderLessonUpCommand> {
     );
   }
 
-  private getLessonFromArray(lessonId: LessonId, lessons: Lesson[]): Lesson {
-    const lesson = lessons.find((lesson) => lesson.id.value === lessonId.value);
-    if (!lesson) throw LessonNotFoundError.searchedById(lessonId.value);
-    return lesson;
-  }
   private getPreviousLessonFromArray(
     lessonOrder: LessonOrder,
     lessons: Lesson[]
