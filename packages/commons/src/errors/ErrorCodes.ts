@@ -15,4 +15,5 @@ export enum ErrorCodes {
   PasswordShouldContainSymbol = 'auth.password-symbol',
   CourseNotFound = 'courses.course-not-found',
   LessonNotFound = 'courses.lesson-not-found',
+  UnableToReorderLesson = 'courses.unable-to-reorder-lesson',
 }
