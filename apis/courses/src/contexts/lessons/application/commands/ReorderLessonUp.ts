@@ -80,12 +80,10 @@ export class ReorderLessonUp extends CommandHandler<ReorderLessonUpCommand> {
     lessons: Lesson[]
   ): Lesson {
     const previousOrder = LessonOrder.previousOf(lessonOrder);
-    const lesson = lessons.find(
-      (lesson) => lesson.order.value === previousOrder.value
-    );
+    const lesson = lessons.find((lesson) => lesson.order.equals(previousOrder));
     if (!lesson)
       throw LessonNotFoundError.searchedByOrderOnArray(
-        lessonOrder.value,
+        previousOrder.value,
         lessons.map((lesson) => lesson.id.value)
       );
     return lesson;
