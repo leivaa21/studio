@@ -27,7 +27,9 @@ export class MongoLessonRepository
   }
 
   public async findByCourseId(courseId: CourseId): Promise<Lesson[]> {
-    const documents = await this.model().find({ courseId: courseId.value });
+    const documents = await this.model()
+      .find({ courseId: courseId.value })
+      .sort({ order: 1 });
 
     return documents.map((document) =>
       this.entitySchemaFactory.createEntityFromSchema(document)

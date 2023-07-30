@@ -11,6 +11,10 @@ export const LessonSchema = new Schema(
       type: String,
       required: true,
     },
+    order: {
+      type: Number,
+      required: true,
+    },
     title: {
       type: String,
       required: true,
