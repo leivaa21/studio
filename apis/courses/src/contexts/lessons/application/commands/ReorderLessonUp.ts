@@ -9,7 +9,6 @@ import { MongoLessonRepository } from '../../infrastructure/persistance/mongo/Mo
 import { MongoCourseRepository } from '../../../courses/infrastructure/persistance/mongo/MongoCourseRepository';
 import { InMemoryAsyncEventBus } from '../../../shared/infrastructure/EventBus/InMemoryAsyncEventBus';
 import { AuthorId } from '../../../courses/domain/AuthorId';
-import { CourseId } from '../../../courses/domain/CourseId';
 import { LessonId } from '../../domain/LessonId';
 import { Lesson } from '../../domain/Lesson';
 import { LessonNotFoundError } from '../../domain/errors/LessonNotFoundError';
@@ -18,16 +17,10 @@ import { UnableToReorderLessonError } from '../../domain/errors/UnableToReorderL
 
 export class ReorderLessonUpCommand {
   readonly authorId: string;
-  readonly courseId: string;
   readonly lessonId: string;
 
-  public constructor(args: {
-    authorId: string;
-    courseId: string;
-    lessonId: string;
-  }) {
+  public constructor(args: { authorId: string; lessonId: string }) {
     this.authorId = args.authorId;
-    this.courseId = args.courseId;
     this.lessonId = args.lessonId;
   }
 }
@@ -54,14 +47,14 @@ export class ReorderLessonUp extends CommandHandler<ReorderLessonUpCommand> {
   }
 
   public async execute(command: ReorderLessonUpCommand): Promise<void> {
-    const authorId = AuthorId.of(command.authorId);
-    const courseId = CourseId.of(command.courseId);
-    await this.courseFinder.findAuthoredByIdOrThrow(authorId, courseId);
-
     const lessonId = LessonId.of(command.lessonId);
-    const lessons = await this.lessonFinder.findByCourseId(courseId);
+    const lesson = await this.lessonFinder.findByIdOrThrow(lessonId);
 
-    const lesson = this.getLessonFromArray(lessonId, lessons);
+    const authorId = AuthorId.of(command.authorId);
+
+    await this.courseFinder.findAuthoredByIdOrThrow(authorId, lesson.courseId);
+
+    const lessons = await this.lessonFinder.findByCourseId(lesson.courseId);
 
     if (lesson.order.isFirst) {
       throw UnableToReorderLessonError.lessonIsAlreadyFirst(lessonId.value);
