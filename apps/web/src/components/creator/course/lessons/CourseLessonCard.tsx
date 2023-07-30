@@ -85,7 +85,7 @@ export function CourseLessonCard({
         closeFunction={() => setMoveUpLessonModal(false)}
         title="Move lesson up!"
       >
-        <div className={styles.removeLessonModal}>
+        <div className={styles.performActionModal}>
           <h4>Are you sure to move lesson &quot;{lesson.title}&quot; up?</h4>
           <Button
             Type="Primary"
@@ -100,7 +100,7 @@ export function CourseLessonCard({
         closeFunction={() => setMoveDownLessonModal(false)}
         title="Move lesson down!"
       >
-        <div className={styles.removeLessonModal}>
+        <div className={styles.performActionModal}>
           <h4>Are you sure to move lesson &quot;{lesson.title}&quot; down?</h4>
           <Button
             Type="Primary"
@@ -115,7 +115,7 @@ export function CourseLessonCard({
         closeFunction={() => setDeleteModalShown(false)}
         title="Remove lesson"
       >
-        <div className={styles.removeLessonModal}>
+        <div className={styles.performActionModal}>
           <h4>Are you sure to delete lesson &quot;{lesson.title}&quot;?</h4>
           <Button
             Type="Cancel"
