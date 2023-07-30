@@ -34,6 +34,7 @@ export class GetLessonsByCourseIdController {
       return {
         id: lesson.id.value,
         courseId: lesson.courseId.value,
+        order: lesson.order.value,
         title: lesson.title.value,
       };
     });
