@@ -14,4 +14,10 @@ export class UnableToReorderLessonError extends ApiError {
       `Lesson with id = <${id}> is already first lesson on course`
     );
   }
+
+  public static lessonIsAlreadyLast(id: string) {
+    return new this(
+      `Lesson with id = <${id}> is already last lesson on course`
+    );
+  }
 }
