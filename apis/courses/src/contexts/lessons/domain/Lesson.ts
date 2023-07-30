@@ -4,6 +4,7 @@ import { LessonContent } from './LessonContent';
 import { LessonId } from './LessonId';
 import { LessonOrder } from './LessonOrder';
 import { LessonTitle } from './LessonTitle';
+import { UnableToReorderLessonError } from './errors/UnableToReorderLessonError';
 import { LessonWasCreatedEvent } from './events/LessonWasCreated';
 
 export interface LessonParams {
@@ -95,6 +96,17 @@ export class Lesson extends AggregateRoot {
 
   get updatedAt(): Date {
     return this._updatedAt;
+  }
+
+  public moveUp(): void {
+    if (this.order.isFirst) {
+      throw UnableToReorderLessonError.lessonIsAlreadyFirst(this.id.value);
+    }
+    this._order = LessonOrder.previousOf(this.order);
+  }
+
+  public moveDown(): void {
+    this._order = LessonOrder.posteriorOf(this.order);
   }
 
   public updateTitle(title: LessonTitle): void {
