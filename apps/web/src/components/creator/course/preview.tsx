@@ -35,6 +35,8 @@ export function CreatorCoursePreview({ courseId }: CreatorCoursePreviewParams) {
   const [title, setTitle] = useState<string>();
   const [tags, setTags] = useState<string[]>([]);
   const [description, setDescription] = useState<string>();
+  const [isPublished, setIsPublished] = useState<boolean>();
+  const [publishedAt, setPublishedAt] = useState<Date | null>();
   const [descriptionMdx, setDescriptionMdx] =
     useState<
       MDXRemoteSerializeResult<Record<string, unknown>, Record<string, unknown>>
@@ -51,6 +53,8 @@ export function CreatorCoursePreview({ courseId }: CreatorCoursePreviewParams) {
     useState<boolean>(false);
   const [newTags, setNewTags] = useState<string[]>();
 
+  const [publishModalShown, setPublishModalShown] = useState<boolean>(false);
+
   useEffect(() => {
     if (!courseId) return;
 
@@ -61,7 +65,8 @@ export function CreatorCoursePreview({ courseId }: CreatorCoursePreviewParams) {
       setNewTags(course.tags);
       setDescription(course.description);
       setNewDescription(course.description);
-
+      setIsPublished(course.isPublished);
+      setPublishedAt(course.publishedAt);
       serialize(course.description, { mdxOptions: { development: true } }).then(
         (mdxSource) => setDescriptionMdx(mdxSource)
       );
@@ -163,7 +168,20 @@ export function CreatorCoursePreview({ courseId }: CreatorCoursePreviewParams) {
           />
         </div>
       </div>
-
+      <div className={styles.propertyRow}>
+        <h4 className={styles.propertyName}>Published</h4>
+        <p className={styles.propertyValue}>
+          {isPublished ? publishedAt?.toDateString() : 'Not published yet'}
+        </p>
+        <div className={styles.propertyControls}>
+          <Button
+            Type={isPublished ? 'Cancel' : 'Primary'}
+            Size="Small"
+            Label={isPublished ? 'Unpublish' : 'Publish'}
+            onClick={() => setPublishModalShown(true)}
+          />
+        </div>
+      </div>
       <Modal
         isShown={renameModalShown}
         title={`Rename course`}
@@ -236,6 +254,22 @@ export function CreatorCoursePreview({ courseId }: CreatorCoursePreviewParams) {
             Size="Small"
             Label="Update course tags!"
             onClick={onSubmitUpdateTags}
+          />
+        </div>
+      </Modal>
+      <Modal
+        isShown={publishModalShown}
+        title={isPublished ? 'Unpublish course' : 'Publish course'}
+        closeFunction={() => {
+          setPublishModalShown(false);
+        }}
+      >
+        <div className={styles.modifyCourseModal}>
+          <Button
+            Type={isPublished ? 'Cancel' : 'Primary'}
+            Size="Small"
+            Label={isPublished ? 'Unpublish' : 'Publish'}
+            onClick={() => setPublishModalShown(true)}
           />
         </div>
       </Modal>

@@ -24,6 +24,7 @@ export class CourseSchemaFactory
       description: schema.description,
       createdAt: schema.createdAt,
       updatedAt: schema.updatedAt,
+      publishedAt: schema.publishedAt,
     });
   }
 }

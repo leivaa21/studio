@@ -3,4 +3,6 @@ export interface CourseInfoResponse {
   title: string;
   tags: string[];
   description: string;
+  isPublished: boolean;
+  publishedAt: Date | null | undefined;
 }

@@ -32,6 +32,8 @@ export class GetCourseByIdController {
       title: course.title.value,
       tags: course.tags.values,
       description: course.description.value,
+      isPublished: course.isPublished,
+      publishedAt: course.publishedAt,
     };
   }
 }
