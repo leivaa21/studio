@@ -4,4 +4,5 @@ export interface CourseInfoResponse {
   tags: string[];
   description: string;
   isPublished: boolean;
+  publishedAt: Date | null | undefined;
 }

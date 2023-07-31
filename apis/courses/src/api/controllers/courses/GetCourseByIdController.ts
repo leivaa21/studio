@@ -33,6 +33,7 @@ export class GetCourseByIdController {
       tags: course.tags.values,
       description: course.description.value,
       isPublished: course.isPublished,
+      publishedAt: course.publishedAt,
     };
   }
 }
