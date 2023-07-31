@@ -152,6 +152,10 @@ export class Course extends AggregateRoot {
     return this._publishedAt;
   }
 
+  public get isPublished(): boolean {
+    return !!this._publishedAt;
+  }
+
   public static fromPrimitives(coursePrimitives: CoursePrimitives): Course {
     return new Course({
       id: CourseId.of(coursePrimitives.id),
