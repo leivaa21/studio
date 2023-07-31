@@ -1,4 +1,5 @@
 import { AggregateRoot } from '../../shared/domain/AggregateRoot';
+import { Nullable } from '../../shared/domain/Nullable';
 import { AuthorId } from './AuthorId';
 import { CourseDescription } from './CourseDescription';
 import { CourseId } from './CourseId';
@@ -16,6 +17,7 @@ export interface CourseParams {
   readonly description: CourseDescription;
   readonly createdAt: Date;
   readonly updatedAt: Date;
+  readonly publishedAt: Nullable<Date>;
 }
 
 export interface CoursePrimitives {
@@ -26,6 +28,7 @@ export interface CoursePrimitives {
   readonly description: string;
   readonly createdAt: Date;
   readonly updatedAt: Date;
+  readonly publishedAt: Nullable<Date>;
 }
 
 export class Course extends AggregateRoot {
@@ -36,6 +39,7 @@ export class Course extends AggregateRoot {
   private _description: CourseDescription;
   public readonly createdAt: Date;
   private _updatedAt: Date;
+  private _publishedAt: Nullable<Date>;
 
   constructor({
     id,
@@ -45,6 +49,7 @@ export class Course extends AggregateRoot {
     description,
     createdAt,
     updatedAt,
+    publishedAt,
   }: CourseParams) {
     super();
     this.id = id;
@@ -54,6 +59,7 @@ export class Course extends AggregateRoot {
     this._description = description;
     this.createdAt = createdAt;
     this._updatedAt = updatedAt;
+    this._publishedAt = publishedAt;
   }
 
   static new({
@@ -84,6 +90,7 @@ export class Course extends AggregateRoot {
       description,
       createdAt: new Date(),
       updatedAt: new Date(),
+      publishedAt: null,
     });
 
     course.commit(courseWasCreatedEvent);
@@ -141,6 +148,10 @@ export class Course extends AggregateRoot {
     return this._updatedAt;
   }
 
+  public get publishedAt(): Nullable<Date> {
+    return this._publishedAt;
+  }
+
   public static fromPrimitives(coursePrimitives: CoursePrimitives): Course {
     return new Course({
       id: CourseId.of(coursePrimitives.id),
@@ -152,6 +163,7 @@ export class Course extends AggregateRoot {
       description: CourseDescription.of(coursePrimitives.description),
       createdAt: coursePrimitives.createdAt,
       updatedAt: coursePrimitives.updatedAt,
+      publishedAt: coursePrimitives.publishedAt,
     });
   }
 
@@ -164,6 +176,7 @@ export class Course extends AggregateRoot {
       description: this.description.value,
       createdAt: this.createdAt,
       updatedAt: this.updatedAt,
+      publishedAt: this.publishedAt,
     };
   }
 }

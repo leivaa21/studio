@@ -32,6 +32,9 @@ export const CourseSchema = new Schema(
       type: Date,
       required: true,
     },
+    publishedAt: {
+      type: Date,
+    },
   },
   { versionKey: false, timestamps: false }
 );
