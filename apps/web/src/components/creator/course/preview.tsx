@@ -22,6 +22,7 @@ import dynamic from 'next/dynamic';
 
 import { serialize } from 'next-mdx-remote/serialize';
 import { MDXRemote, MDXRemoteSerializeResult } from 'next-mdx-remote';
+import { publishCourse } from '../../../contexts/courses/application/PublishCourse';
 
 const MDEditor = dynamic(() => import('@uiw/react-md-editor'), { ssr: false });
 
@@ -115,6 +116,11 @@ export function CreatorCoursePreview({ courseId }: CreatorCoursePreviewParams) {
     router.reload();
   };
 
+  const onSubmitPublish = async () => {
+    await publishCourse(courseId, getAuthTokenCookie() || '');
+    router.reload();
+  };
+
   return (
     <div className={styles.coursePreview}>
       <div className={styles.propertyRow}>
@@ -171,7 +177,7 @@ export function CreatorCoursePreview({ courseId }: CreatorCoursePreviewParams) {
       <div className={styles.propertyRow}>
         <h4 className={styles.propertyName}>Published</h4>
         <p className={styles.propertyValue}>
-          {isPublished ? publishedAt?.toDateString() : 'Not published yet'}
+          {publishedAt ? publishedAt.toString() : 'Not published yet'}
         </p>
         <div className={styles.propertyControls}>
           <Button
@@ -269,7 +275,7 @@ export function CreatorCoursePreview({ courseId }: CreatorCoursePreviewParams) {
             Type={isPublished ? 'Cancel' : 'Primary'}
             Size="Small"
             Label={isPublished ? 'Unpublish' : 'Publish'}
-            onClick={() => setPublishModalShown(true)}
+            onClick={isPublished ? undefined : onSubmitPublish}
           />
         </div>
       </Modal>
