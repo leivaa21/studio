@@ -7,7 +7,7 @@ type CourseWasCreatedEventArgs = BaseDomainEventArgs & {
   attributes: { authorId: string };
 };
 export class CourseWasCreatedEvent extends DomainEvent {
-  public static EVENT_NAME: 'COURSES.COURSE_WAS_CREATED';
+  public static EVENT_NAME = 'COURSES.COURSE_WAS_CREATED';
   public readonly attributes: { authorId: string };
 
   public static fromPrimitives(

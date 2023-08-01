@@ -8,7 +8,7 @@ type UserWasCreatedEventArgs = BaseDomainEventArgs & {
   attributes: { credentialsType: PossibleUserCredentialsType };
 };
 export class UserWasCreatedEvent extends DomainEvent {
-  public static EVENT_NAME: 'AUTH.USER_WAS_CREATED';
+  public static EVENT_NAME = 'AUTH.USER_WAS_CREATED';
   public readonly attributes: { credentialsType: PossibleUserCredentialsType };
 
   public static fromPrimitives(

@@ -5,7 +5,7 @@ import {
 
 type CourseWasPublishedEventArgs = BaseDomainEventArgs;
 export class CourseWasPublishedEvent extends DomainEvent {
-  public static EVENT_NAME: 'COURSES.COURSE_WAS_PUBLISHED';
+  public static EVENT_NAME = 'COURSES.COURSE_WAS_PUBLISHED';
   public readonly attributes: undefined;
 
   public static fromPrimitives(

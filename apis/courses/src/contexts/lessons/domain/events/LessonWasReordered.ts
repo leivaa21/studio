@@ -7,7 +7,7 @@ type LessonWasReorderedEventArgs = BaseDomainEventArgs & {
   attributes: { courseId: string };
 };
 export class LessonWasReorderedEvent extends DomainEvent {
-  public static EVENT_NAME: 'LESSONS.LESSON_WAS_REORDERED';
+  public static EVENT_NAME = 'LESSONS.LESSON_WAS_REORDERED';
   public readonly attributes: { courseId: string };
 
   public static fromPrimitives(

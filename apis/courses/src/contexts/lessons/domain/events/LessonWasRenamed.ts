@@ -7,7 +7,7 @@ type LessonWasRenamedEventArgs = BaseDomainEventArgs & {
   attributes: { courseId: string };
 };
 export class LessonWasRenamedEvent extends DomainEvent {
-  public static EVENT_NAME: 'LESSONS.LESSON_WAS_RENAMED';
+  public static EVENT_NAME = 'LESSONS.LESSON_WAS_RENAMED';
   public readonly attributes: { courseId: string };
 
   public static fromPrimitives(

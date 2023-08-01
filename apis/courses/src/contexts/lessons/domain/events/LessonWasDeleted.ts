@@ -7,7 +7,7 @@ type LessonWasDeletedEventArgs = BaseDomainEventArgs & {
   attributes: { courseId: string };
 };
 export class LessonWasDeletedEvent extends DomainEvent {
-  public static EVENT_NAME: 'LESSONS.LESSON_WAS_DELETED';
+  public static EVENT_NAME = 'LESSONS.LESSON_WAS_DELETED';
   public readonly attributes: { courseId: string };
 
   public static fromPrimitives(
