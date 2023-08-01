@@ -23,6 +23,7 @@ import dynamic from 'next/dynamic';
 import { serialize } from 'next-mdx-remote/serialize';
 import { MDXRemote, MDXRemoteSerializeResult } from 'next-mdx-remote';
 import { publishCourse } from '../../../contexts/courses/application/PublishCourse';
+import { unpublishCourse } from '../../../contexts/courses/application/UnpublishCourse';
 
 const MDEditor = dynamic(() => import('@uiw/react-md-editor'), { ssr: false });
 
@@ -118,6 +119,11 @@ export function CreatorCoursePreview({ courseId }: CreatorCoursePreviewParams) {
 
   const onSubmitPublish = async () => {
     await publishCourse(courseId, getAuthTokenCookie() || '');
+    router.reload();
+  };
+
+  const onSubmitUnpublish = async () => {
+    await unpublishCourse(courseId, getAuthTokenCookie() || '');
     router.reload();
   };
 
@@ -275,7 +281,7 @@ export function CreatorCoursePreview({ courseId }: CreatorCoursePreviewParams) {
             Type={isPublished ? 'Cancel' : 'Primary'}
             Size="Small"
             Label={isPublished ? 'Unpublish' : 'Publish'}
-            onClick={isPublished ? undefined : onSubmitPublish}
+            onClick={isPublished ? onSubmitUnpublish : onSubmitPublish}
           />
         </div>
       </Modal>

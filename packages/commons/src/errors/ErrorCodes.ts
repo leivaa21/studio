@@ -17,4 +17,5 @@ export enum ErrorCodes {
   LessonNotFound = 'courses.lesson-not-found',
   UnableToReorderLesson = 'courses.unable-to-reorder-lesson',
   UnableToPublishCourse = 'courses.course-already-published',
+  UnableToUnpublishCourse = 'courses.course-not-published',
 }
