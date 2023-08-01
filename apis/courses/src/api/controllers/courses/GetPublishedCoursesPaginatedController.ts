@@ -1,6 +1,5 @@
 import { StatusCode } from '@studio/api-utils';
 import {
-  Authorized,
   Get,
   HttpCode,
   JsonController,
@@ -24,7 +23,6 @@ export class GetPublishedCoursesPaginatedController {
   @Get()
   @HttpCode(StatusCode.OK)
   @OnUndefined(StatusCode.OK)
-  @Authorized()
   public async execute(
     @QueryParam('page') page = 0,
     @QueryParam('count') count = 0,
