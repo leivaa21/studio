@@ -5,7 +5,14 @@ import { Operator } from '../../domain/criteria/FilterOperator';
 import { Filters } from '../../domain/criteria/Filters';
 import { Order } from '../../domain/criteria/Order';
 
-type MongoFilterOperator = '$eq' | '$ne' | '$gt' | '$lt' | '$regex' | '$in';
+type MongoFilterOperator =
+  | '$eq'
+  | '$ne'
+  | '$gt'
+  | '$lt'
+  | '$regex'
+  | '$in'
+  | '$exists';
 type MongoFilterValue = boolean | string | number | string[] | RegExp;
 type MongoFilterOperation = {
   [operator in MongoFilterOperator]?: MongoFilterValue;
@@ -46,6 +53,7 @@ export class MongoCriteriaConverter {
       [Operator.CONTAINS, this.containsFilter],
       [Operator.NOT_CONTAINS, this.notContainsFilter],
       [Operator.INCLUDES, this.includesFilter],
+      [Operator.EXISTS, this.includesFilter],
     ]);
   }
 
@@ -112,6 +120,14 @@ export class MongoCriteriaConverter {
   }
 
   private includesFilter(filter: Filter): MongoFilter {
-    return { [filter.field.value]: { $in: [...filter.value.value] } };
+    return {
+      [filter.field.value]: { $in: [...(filter.value.value as string[])] },
+    };
+  }
+
+  private existsFilter(filter: Filter): MongoFilter {
+    return {
+      [filter.field.value]: { $exists: filter.value.value },
+    };
   }
 }

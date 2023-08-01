@@ -8,6 +8,7 @@ export enum Operator {
   CONTAINS = 'CONTAINS',
   NOT_CONTAINS = 'NOT_CONTAINS',
   INCLUDES = 'INCLUDES',
+  EXISTS = 'EXISTS',
 }
 
 export class FilterOperator extends ValueObject<Operator> {
