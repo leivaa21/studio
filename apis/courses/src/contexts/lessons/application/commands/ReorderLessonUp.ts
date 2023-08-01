@@ -73,6 +73,8 @@ export class ReorderLessonUp extends CommandHandler<ReorderLessonUpCommand> {
         this.lessonRepository.update(lesson)
       )
     );
+
+    this.publishAggregateRootEvents(lesson);
   }
 
   private getPreviousLessonFromArray(
