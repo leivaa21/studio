@@ -9,8 +9,16 @@ import {
   GetCourseById,
   GetCourseByIdQuery,
 } from '../../../../contexts/courses/application/queries/GetCourseById';
+import {
+  GetPublishedCoursesPaginated,
+  GetPublishedCoursesPaginatedQuery,
+} from '../../../../contexts/courses/application/queries/GetPublishedCoursesPaginated';
 
 const queryBus = DependencyContainer.get<QueryBus>(InMemoryQueryBus);
 
 queryBus.subscribe(GetMyCoursesPaginatedQuery, GetMyCoursesPaginated);
 queryBus.subscribe(GetCourseByIdQuery, GetCourseById);
+queryBus.subscribe(
+  GetPublishedCoursesPaginatedQuery,
+  GetPublishedCoursesPaginated
+);

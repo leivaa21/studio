@@ -6,7 +6,7 @@ import { InvalidFilterError } from './errors/InvalidFilterError';
 export interface FilterAsPrimitives {
   readonly field: string;
   readonly operator: Operator;
-  readonly value: string | string[];
+  readonly value: string | string[] | boolean;
 }
 
 export class Filter {

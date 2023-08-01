@@ -1,7 +1,5 @@
 import { StatusCode } from '@studio/api-utils';
 import {
-  Authorized,
-  CurrentUser,
   Get,
   HttpCode,
   JsonController,
@@ -9,39 +7,37 @@ import {
   QueryParam,
 } from 'routing-controllers';
 import { Injectable } from '@studio/dependency-injection';
-import { User } from '../../auth/user';
 import { InMemoryQueryBus } from '../../../contexts/shared/infrastructure/QueryBus/InMemoryQueryBus';
 import { QueryBus } from '../../../contexts/shared/domain/QueryBus';
-import { GetMyCoursesPaginatedQuery } from '../../../contexts/courses/application/queries/GetMyCoursesPaginated';
 import { Course } from '../../../contexts/courses/domain/Course';
 import { CourseInfoResponse } from '@studio/commons';
+import { GetPublishedCoursesPaginatedQuery } from '../../../contexts/courses/application/queries/GetPublishedCoursesPaginated';
 
 @Injectable({
   dependencies: [InMemoryQueryBus],
 })
-@JsonController('/courses/authored')
-export class GetMyCoursesPaginatedController {
+@JsonController('/courses')
+export class GetPublishedCoursesPaginatedController {
   constructor(private readonly queryBus: QueryBus) {}
 
   @Get()
   @HttpCode(StatusCode.OK)
   @OnUndefined(StatusCode.OK)
-  @Authorized()
   public async execute(
-    @CurrentUser({ required: true }) user: User,
     @QueryParam('page') page = 0,
     @QueryParam('count') count = 0,
     @QueryParam('title') title: string,
     @QueryParam('tags') tagsAsString: string
   ): Promise<CourseInfoResponse[]> {
-    const tags = tagsAsString.split(',').filter((tag) => tag !== '');
+    const tags = tagsAsString
+      ? tagsAsString.split(',').filter((tag) => tag !== '')
+      : [];
 
     const courses = await this.queryBus.dispatch<
-      GetMyCoursesPaginatedQuery,
+      GetPublishedCoursesPaginatedQuery,
       Course[]
     >(
-      new GetMyCoursesPaginatedQuery({
-        authorId: user.id,
+      new GetPublishedCoursesPaginatedQuery({
         pageSize: count,
         page,
         with: {

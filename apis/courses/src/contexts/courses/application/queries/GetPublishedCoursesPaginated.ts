@@ -1,13 +1,11 @@
 import { Injectable } from '@studio/dependency-injection';
 import { QueryHandler } from '../../../shared/application/QueryHandler';
-import { AuthorId } from '../../domain/AuthorId';
 import { Course } from '../../domain/Course';
 import { CourseRepository } from '../../domain/CourseRepository';
 import { CourseFinder } from '../services/CourseFinder';
 import { MongoCourseRepository } from '../../infrastructure/persistance/mongo/MongoCourseRepository';
 
-export class GetMyCoursesPaginatedQuery {
-  public readonly authorId: string;
+export class GetPublishedCoursesPaginatedQuery {
   public readonly with?: {
     title?: string;
     tags?: string[];
@@ -16,7 +14,6 @@ export class GetMyCoursesPaginatedQuery {
   public readonly page: number;
 
   public constructor(params: {
-    authorId: string;
     pageSize: number;
     page: number;
     with?: {
@@ -24,7 +21,6 @@ export class GetMyCoursesPaginatedQuery {
       tags?: string[];
     };
   }) {
-    this.authorId = params.authorId;
     this.pageSize = params.pageSize;
     this.page = params.page;
     this.with = params.with;
@@ -34,20 +30,20 @@ export class GetMyCoursesPaginatedQuery {
 @Injectable({
   dependencies: [MongoCourseRepository],
 })
-export class GetMyCoursesPaginated
-  implements QueryHandler<GetMyCoursesPaginatedQuery, Course[]>
+export class GetPublishedCoursesPaginated
+  implements QueryHandler<GetPublishedCoursesPaginatedQuery, Course[]>
 {
   private readonly courseFinder: CourseFinder;
 
   public constructor(courseRepository: CourseRepository) {
     this.courseFinder = new CourseFinder(courseRepository);
   }
-  public async execute(query: GetMyCoursesPaginatedQuery): Promise<Course[]> {
-    const authorId = AuthorId.of(query.authorId);
+  public async execute(
+    query: GetPublishedCoursesPaginatedQuery
+  ): Promise<Course[]> {
     const { pageSize, page, with: _with } = query;
 
-    const courses = await this.courseFinder.findAuthoredCoursesPaginated({
-      authorId,
+    const courses = await this.courseFinder.findPublishedCoursesPaginated({
       pageSize,
       page,
       with: _with,
