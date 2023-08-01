@@ -53,7 +53,7 @@ export class MongoCriteriaConverter {
       [Operator.CONTAINS, this.containsFilter],
       [Operator.NOT_CONTAINS, this.notContainsFilter],
       [Operator.INCLUDES, this.includesFilter],
-      [Operator.EXISTS, this.includesFilter],
+      [Operator.EXISTS, this.existsFilter],
     ]);
   }
 
@@ -128,6 +128,7 @@ export class MongoCriteriaConverter {
   private existsFilter(filter: Filter): MongoFilter {
     return {
       [filter.field.value]: { $exists: filter.value.value },
+      [filter.field.value]: { $ne: null as unknown as MongoFilterValue },
     };
   }
 }
