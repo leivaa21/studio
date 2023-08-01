@@ -108,7 +108,7 @@ export class Course extends AggregateRoot {
     if (this._title.equals(title)) return;
 
     this._title = title;
-    this._updatedAt = new Date();
+    this.hasBeenUpdated();
 
     const renamedEvent = CourseWasRenamedEvent.fromPrimitives({
       aggregateId: this.id.value,
@@ -124,14 +124,14 @@ export class Course extends AggregateRoot {
     if (this._description.equals(description)) return;
 
     this._description = description;
-    this._updatedAt = new Date();
+    this.hasBeenUpdated();
   }
 
   public updateTags(tags: CourseTags) {
     if (this._tags.equals(tags)) return;
 
     this._tags = tags;
-    this._updatedAt = new Date();
+    this.hasBeenUpdated();
   }
 
   public get title(): CourseTitle {
@@ -167,7 +167,7 @@ export class Course extends AggregateRoot {
       throw NotAbleToPublishCourseError.alreadyPublished(this.id.value);
     }
     this._publishedAt = new Date();
-    this._updatedAt = new Date();
+    this.hasBeenUpdated();
 
     const event = CourseWasPublishedEvent.fromPrimitives({
       aggregateId: this.id.value,
