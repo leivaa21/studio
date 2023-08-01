@@ -10,6 +10,7 @@ export class GetMyCoursesPaginatedQuery {
   public readonly authorId: string;
   public readonly with?: {
     title?: string;
+    tags?: string[];
   };
   public readonly pageSize: number;
   public readonly page: number;
