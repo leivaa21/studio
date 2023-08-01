@@ -53,7 +53,7 @@ export class CourseCriteria extends Criteria {
 
     return new CourseCriteria({
       filters: Filters.fromValues(criteriaFilters),
-      order: Order.asc('CreatedAt'),
+      order: Order.desc('updatedAt'),
       limit: pageSize,
       offset: pageSize * page,
     });

@@ -6,7 +6,7 @@ import { Filters } from '../../domain/criteria/Filters';
 import { Order } from '../../domain/criteria/Order';
 
 type MongoFilterOperator = '$eq' | '$ne' | '$gt' | '$lt' | '$regex' | '$in';
-type MongoFilterValue = boolean | string | number | string[];
+type MongoFilterValue = boolean | string | number | string[] | RegExp;
 type MongoFilterOperation = {
   [operator in MongoFilterOperator]?: MongoFilterValue;
 };
@@ -100,7 +100,11 @@ export class MongoCriteriaConverter {
   }
 
   private containsFilter(filter: Filter): MongoFilter {
-    return { [filter.field.value]: { $regex: filter.value.value } };
+    return {
+      [filter.field.value]: {
+        $regex: RegExp(filter.value.value as string, 'i'),
+      },
+    };
   }
 
   private notContainsFilter(filter: Filter): MongoFilter {
