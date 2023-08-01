@@ -8,7 +8,7 @@ import { InMemoryAsyncEventBus } from '../../../shared/infrastructure/EventBus/I
 import { CourseId } from '../../domain/CourseId';
 import { CourseFinder } from '../services/CourseFinder';
 
-export class UpdateCourseCommand {
+export class PublishCourseCommand {
   public readonly authorId: string;
   public readonly courseId: string;
   constructor(args: { authorId: string; courseId: string }) {
@@ -20,7 +20,7 @@ export class UpdateCourseCommand {
 @Injectable({
   dependencies: [MongoCourseRepository, InMemoryAsyncEventBus],
 })
-export class PublishCourse extends CommandHandler<UpdateCourseCommand> {
+export class PublishCourse extends CommandHandler<PublishCourseCommand> {
   private readonly courseFinder: CourseFinder;
   constructor(
     private readonly courseRepository: CourseRepository,
@@ -29,7 +29,7 @@ export class PublishCourse extends CommandHandler<UpdateCourseCommand> {
     super(eventBus);
     this.courseFinder = new CourseFinder(courseRepository);
   }
-  async execute(command: UpdateCourseCommand): Promise<void> {
+  async execute(command: PublishCourseCommand): Promise<void> {
     const authorId = AuthorId.of(command.authorId);
     const courseId = CourseId.of(command.courseId);
 
