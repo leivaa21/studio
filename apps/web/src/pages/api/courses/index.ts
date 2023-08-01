@@ -7,12 +7,18 @@ export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
-  if (req.method !== 'POST') {
-    return res
-      .status(404)
-      .json({ status: 404, message: `Cannot ${req.method} ${req.url}` });
+  switch (req.method) {
+    case 'POST':
+      await createCourse(req, res);
+      break;
+    default:
+      return res
+        .status(404)
+        .json({ status: 404, message: `Cannot ${req.method} ${req.url}` });
   }
+}
 
+async function createCourse(req: NextApiRequest, res: NextApiResponse) {
   const authToken = req.headers.authorization;
 
   const coursesApiService = new CoursesApiService();
