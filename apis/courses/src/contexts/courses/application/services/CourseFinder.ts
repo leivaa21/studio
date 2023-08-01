@@ -8,7 +8,7 @@ import { CourseNotFoundError } from '../../domain/errors/CourseNotFoundError';
 export class CourseFinder {
   constructor(private readonly repository: CourseRepository) {}
 
-  public async findCoursesPaginated(params: {
+  public async findAuthoredCoursesPaginated(params: {
     authorId: AuthorId;
     pageSize: number;
     page: number;

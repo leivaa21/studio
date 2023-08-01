@@ -46,7 +46,7 @@ export class GetMyCoursesPaginated
     const authorId = AuthorId.of(query.authorId);
     const { pageSize, page, with: _with } = query;
 
-    const courses = await this.courseFinder.findCoursesPaginated({
+    const courses = await this.courseFinder.findAuthoredCoursesPaginated({
       authorId,
       pageSize,
       page,
