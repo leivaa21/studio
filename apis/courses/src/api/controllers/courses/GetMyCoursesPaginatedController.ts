@@ -61,7 +61,5 @@ export class GetMyCoursesPaginatedController {
         publishedAt: course.publishedAt,
       };
     });
-
-    return [];
   }
 }
