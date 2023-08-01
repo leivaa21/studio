@@ -5,4 +5,5 @@ export interface CourseInfoResponse {
   description: string;
   isPublished: boolean;
   publishedAt: Date | null | undefined;
+  authorId: string;
 }
