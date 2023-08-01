@@ -30,6 +30,26 @@ export class CourseFinder {
     return this.repository.matching(criteria);
   }
 
+  public async findPublishedCoursesPaginated(params: {
+    pageSize: number;
+    page: number;
+    with?: {
+      title?: string;
+      tags?: string[];
+    };
+  }): Promise<Course[]> {
+    const criteria = CourseCriteria.paginatedPublishedWithFilters({
+      pageSize: params.pageSize,
+      page: params.page,
+      filters: {
+        includingOnTitle: params.with?.title,
+        havingTags: params.with?.tags,
+      },
+    });
+
+    return this.repository.matching(criteria);
+  }
+
   public async findByIdOrThrow(id: CourseId): Promise<Course> {
     const course = await this.repository.findById(id);
 

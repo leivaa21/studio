@@ -58,4 +58,41 @@ export class CourseCriteria extends Criteria {
       offset: pageSize * page,
     });
   }
+
+  static paginatedPublishedWithFilters({
+    pageSize,
+    page,
+    filters,
+  }: {
+    pageSize: number;
+    page: number;
+    filters: PossibleCourseFilters;
+  }): CourseCriteria {
+    const criteriaFilters: FilterAsPrimitives[] = [
+      { field: 'publishedAt', operator: Operator.EXISTS, value: true },
+    ];
+
+    if (filters.includingOnTitle) {
+      criteriaFilters.push({
+        field: 'title',
+        operator: Operator.CONTAINS,
+        value: filters.includingOnTitle,
+      });
+    }
+
+    if (filters.havingTags?.length) {
+      criteriaFilters.push({
+        field: 'tags',
+        operator: Operator.INCLUDES,
+        value: filters.havingTags,
+      });
+    }
+
+    return new CourseCriteria({
+      filters: Filters.fromValues(criteriaFilters),
+      order: Order.desc('publishedAt'),
+      limit: pageSize,
+      offset: pageSize * page,
+    });
+  }
 }
