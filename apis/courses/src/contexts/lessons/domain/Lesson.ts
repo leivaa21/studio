@@ -5,8 +5,11 @@ import { LessonId } from './LessonId';
 import { LessonOrder } from './LessonOrder';
 import { LessonTitle } from './LessonTitle';
 import { UnableToReorderLessonError } from './errors/UnableToReorderLessonError';
+import { LessonContentWasUpdatedEvent } from './events/LessonContentWasUpdated';
 import { LessonWasCreatedEvent } from './events/LessonWasCreated';
 import { LessonWasDeletedEvent } from './events/LessonWasDeleted';
+import { LessonWasRenamedEvent } from './events/LessonWasRenamed';
+import { LessonWasReorderedEvent } from './events/LessonWasReordered';
 
 export interface LessonParams {
   readonly id: LessonId;
@@ -110,28 +113,65 @@ export class Lesson extends AggregateRoot {
   }
 
   public moveUp(): void {
+    const lessonWasReorderedEvent = LessonWasReorderedEvent.fromPrimitives({
+      aggregateId: this.id.value,
+      attributes: {
+        courseId: this.courseId.value,
+      },
+    });
+
     if (this.order.isFirst) {
       throw UnableToReorderLessonError.lessonIsAlreadyFirst(this.id.value);
     }
     this._order = LessonOrder.previousOf(this.order);
+
+    this.commit(lessonWasReorderedEvent);
   }
 
   public moveDown(): void {
+    const lessonWasReorderedEvent = LessonWasReorderedEvent.fromPrimitives({
+      aggregateId: this.id.value,
+      attributes: {
+        courseId: this.courseId.value,
+      },
+    });
+
     this._order = LessonOrder.posteriorOf(this.order);
+
+    this.commit(lessonWasReorderedEvent);
   }
 
   public updateTitle(title: LessonTitle): void {
     if (this.title.equals(title)) return;
 
+    const lessonWasRenamedEvent = LessonWasRenamedEvent.fromPrimitives({
+      aggregateId: this.id.value,
+      attributes: {
+        courseId: this.courseId.value,
+      },
+    });
+
     this._title = title;
     this._updatedAt = new Date();
+
+    this.commit(lessonWasRenamedEvent);
   }
 
   public updateContent(content: LessonContent): void {
     if (this.content.equals(content)) return;
 
+    const lessonContentWasUpdatedEvent =
+      LessonContentWasUpdatedEvent.fromPrimitives({
+        aggregateId: this.id.value,
+        attributes: {
+          courseId: this.courseId.value,
+        },
+      });
+
     this._content = content;
     this._updatedAt = new Date();
+
+    this.commit(lessonContentWasUpdatedEvent);
   }
 
   public toPrimitives(): LessonPrimitives {

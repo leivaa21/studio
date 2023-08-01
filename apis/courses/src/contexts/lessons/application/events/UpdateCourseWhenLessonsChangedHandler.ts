@@ -7,10 +7,16 @@ import { CourseRepository } from '../../../courses/domain/CourseRepository';
 import { CourseFinder } from '../../../courses/application/services/CourseFinder';
 import { MongoCourseRepository } from '../../../courses/infrastructure/persistance/mongo/MongoCourseRepository';
 import { LessonWasDeletedEvent } from '../../domain/events/LessonWasDeleted';
+import { LessonContentWasUpdatedEvent } from '../../domain/events/LessonContentWasUpdated';
+import { LessonWasRenamedEvent } from '../../domain/events/LessonWasRenamed';
+import { LessonWasReorderedEvent } from '../../domain/events/LessonWasReordered';
 
 export type UpdateCourseWhenLessonsChangedHandlerSubscribedEvents =
   | LessonWasCreatedEvent
-  | LessonWasDeletedEvent;
+  | LessonWasDeletedEvent
+  | LessonContentWasUpdatedEvent
+  | LessonWasRenamedEvent
+  | LessonWasReorderedEvent;
 
 @Injectable({
   dependencies: [MongoCourseRepository],
@@ -25,7 +31,13 @@ export class UpdateCourseWhenLessonsChangedHandler
     this.courseFinder = new CourseFinder(courseRepository);
   }
   subscribedTo(): DomainEventClass[] {
-    return [LessonWasCreatedEvent, LessonWasDeletedEvent];
+    return [
+      LessonWasCreatedEvent,
+      LessonWasDeletedEvent,
+      LessonContentWasUpdatedEvent,
+      LessonWasRenamedEvent,
+      LessonWasReorderedEvent,
+    ];
   }
   async on(
     domainEvent: UpdateCourseWhenLessonsChangedHandlerSubscribedEvents
