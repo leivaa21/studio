@@ -7,9 +7,11 @@ import { CourseTag } from './CourseTag';
 import { CourseTags } from './CourseTags';
 import { CourseTitle } from './CourseTitle';
 import { NotAbleToPublishCourseError } from './errors/NotAbleToPublishCourseError';
+import { NotAbleToUnpublishCourseError } from './errors/NotAbleToUnpublishCourseError';
 import { CourseWasCreatedEvent } from './events/CourseWasCreated';
 import { CourseWasPublishedEvent } from './events/CourseWasPublished';
 import { CourseWasRenamedEvent } from './events/CourseWasRenamed';
+import { CourseWasUnpublishedEvent } from './events/CourseWasUnpublished';
 
 export interface CourseParams {
   readonly id: CourseId;
@@ -170,6 +172,19 @@ export class Course extends AggregateRoot {
     this.hasBeenUpdated();
 
     const event = CourseWasPublishedEvent.fromPrimitives({
+      aggregateId: this.id.value,
+    });
+    this.commit(event);
+  }
+
+  public unpublish() {
+    if (!this.isPublished) {
+      throw NotAbleToUnpublishCourseError.notPublished(this.id.value);
+    }
+    this._publishedAt = null;
+    this.hasBeenUpdated();
+
+    const event = CourseWasUnpublishedEvent.fromPrimitives({
       aggregateId: this.id.value,
     });
     this.commit(event);
