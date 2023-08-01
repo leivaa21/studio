@@ -6,12 +6,18 @@ import { CourseId } from '../../../courses/domain/CourseId';
 import { CourseRepository } from '../../../courses/domain/CourseRepository';
 import { CourseFinder } from '../../../courses/application/services/CourseFinder';
 import { MongoCourseRepository } from '../../../courses/infrastructure/persistance/mongo/MongoCourseRepository';
+import { LessonWasDeletedEvent } from '../../domain/events/LessonWasDeleted';
+
+export type UpdateCourseWhenLessonsChangedHandlerSubscribedEvents =
+  | LessonWasCreatedEvent
+  | LessonWasDeletedEvent;
 
 @Injectable({
   dependencies: [MongoCourseRepository],
 })
 export class UpdateCourseWhenLessonsChangedHandler
-  implements DomainEventSubscriber<LessonWasCreatedEvent>
+  implements
+    DomainEventSubscriber<UpdateCourseWhenLessonsChangedHandlerSubscribedEvents>
 {
   private readonly courseFinder: CourseFinder;
 
@@ -19,9 +25,11 @@ export class UpdateCourseWhenLessonsChangedHandler
     this.courseFinder = new CourseFinder(courseRepository);
   }
   subscribedTo(): DomainEventClass[] {
-    return [LessonWasCreatedEvent];
+    return [LessonWasCreatedEvent, LessonWasDeletedEvent];
   }
-  async on(domainEvent: LessonWasCreatedEvent): Promise<void> {
+  async on(
+    domainEvent: UpdateCourseWhenLessonsChangedHandlerSubscribedEvents
+  ): Promise<void> {
     const { attributes } = domainEvent;
 
     const courseId = CourseId.of(attributes.courseId);

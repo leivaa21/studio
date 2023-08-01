@@ -50,6 +50,10 @@ export class DeleteLesson extends CommandHandler<DeleteLessonCommand> {
 
     await this.courseFinder.findAuthoredByIdOrThrow(authorId, lesson.courseId);
 
+    lesson.delete();
+
     await this.lessonRepository.deleteById(lesson.id);
+
+    this.publishAggregateRootEvents(lesson);
   }
 }

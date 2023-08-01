@@ -6,6 +6,7 @@ import { LessonOrder } from './LessonOrder';
 import { LessonTitle } from './LessonTitle';
 import { UnableToReorderLessonError } from './errors/UnableToReorderLessonError';
 import { LessonWasCreatedEvent } from './events/LessonWasCreated';
+import { LessonWasDeletedEvent } from './events/LessonWasDeleted';
 
 export interface LessonParams {
   readonly id: LessonId;
@@ -80,6 +81,16 @@ export class Lesson extends AggregateRoot {
     lesson.commit(lessonWasCreatedEvent);
 
     return lesson;
+  }
+
+  public delete(): void {
+    const lessonWasDeletedEvent = LessonWasDeletedEvent.fromPrimitives({
+      aggregateId: this.id.value,
+      attributes: {
+        courseId: this.courseId.value,
+      },
+    });
+    this.commit(lessonWasDeletedEvent);
   }
 
   get order(): LessonOrder {
