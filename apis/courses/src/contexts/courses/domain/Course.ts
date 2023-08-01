@@ -148,6 +148,10 @@ export class Course extends AggregateRoot {
     return this._updatedAt;
   }
 
+  public hasBeenUpdated(): void {
+    this._updatedAt = new Date();
+  }
+
   public get publishedAt(): Nullable<Date> {
     return this._publishedAt;
   }
