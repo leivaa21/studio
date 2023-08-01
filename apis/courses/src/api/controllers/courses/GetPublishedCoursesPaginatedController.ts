@@ -31,7 +31,9 @@ export class GetPublishedCoursesPaginatedController {
     @QueryParam('title') title: string,
     @QueryParam('tags') tagsAsString: string
   ): Promise<CourseInfoResponse[]> {
-    const tags = tagsAsString.split(',').filter((tag) => tag !== '');
+    const tags = tagsAsString
+      ? tagsAsString.split(',').filter((tag) => tag !== '')
+      : [];
 
     const courses = await this.queryBus.dispatch<
       GetPublishedCoursesPaginatedQuery,
