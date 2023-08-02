@@ -31,7 +31,7 @@ export function CourseCard({ key, course }: CourseCardParams) {
           Size="Medium"
           Label="VIEW"
           Link
-          href={`/course/${course.id}/preview/`}
+          href={`/course/${course.id}/landing`}
         />
       </div>
     </div>
