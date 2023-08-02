@@ -28,21 +28,6 @@
         margin: 0;
         font-size: 1.5rem;
       }
-
-      .tags {
-        list-style: none;
-        display: flex;
-        flex-direction: row;
-        padding: 0;
-      
-        .tag {
-          margin: 1ch;
-          font-weight: 600;
-          background-color: $secondary;
-          border-radius: 5px;
-          padding: .4rem 1rem;
-        }
-      }
       
       .authorName {
         font-size: 1.2rem;
@@ -61,4 +46,46 @@
 
   }
 
+}
+
+.courseContentPreview {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  padding: 5vh 25vw;
+
+  .title {
+    margin: 0;
+    font-size: 2rem;
+  }
+  
+  .authorName {
+    font-size: 1.2rem;
+    font-weight: 500;
+  }
+
+  .courseControls {
+    display: flex;
+    flex-direction: row;
+    flex: 0 1 auto;
+  }
+
+  .tags, .courseControls {
+    justify-content: center;
+  }
+}
+
+.tags {
+  list-style: none;
+  display: flex;
+  flex-direction: row;
+  padding: 0;
+
+  .tag {
+    margin: 1ch;
+    font-weight: 600;
+    background-color: $secondary;
+    border-radius: 5px;
+    padding: .4rem 1rem;
+  }
 }
