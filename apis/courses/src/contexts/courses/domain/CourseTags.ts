@@ -1,16 +1,18 @@
-import { InvalidArgumentError } from '@studio/commons';
+import {
+  InvalidArgumentError,
+  validateCourseTagsBusinessRules,
+} from '@studio/commons';
 import { CourseTag } from './CourseTag';
 
 export class CourseTags {
   constructor(private readonly tags: CourseTag[]) {}
 
   static of(tags: CourseTag[]): CourseTags {
-    if (
-      tags.some(
-        (tag, index) =>
-          tags.findIndex((aux) => tag.value === aux.value) !== index
-      )
-    ) {
+    const { duplicatedTags, exceededCount } = validateCourseTagsBusinessRules(
+      tags.map((tag) => tag.value)
+    );
+
+    if (duplicatedTags || exceededCount) {
       throw new InvalidArgumentError(
         CourseTags.name,
         tags.map((tag) => tag.value).toString()
