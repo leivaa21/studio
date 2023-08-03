@@ -13,6 +13,7 @@ import { MongoCourseRepository } from '../../../courses/infrastructure/persistan
 import { InMemoryAsyncEventBus } from '../../../shared/infrastructure/EventBus/InMemoryAsyncEventBus';
 import { LessonFinder } from '../services/LessonFinder';
 import { LessonOrder } from '../../domain/LessonOrder';
+import { LessonContent } from '../../domain/LessonContent';
 
 export class CreateNewLessonCommand {
   public readonly authorId: string;
@@ -62,7 +63,7 @@ export class CreateNewLesson extends CommandHandler<CreateNewLessonCommand> {
 
     const order = LessonOrder.of(lessons.length);
     const title = LessonTitle.of(command.title);
-    const content = LessonTitle.of(command.content);
+    const content = LessonContent.of(command.content);
 
     const lesson = Lesson.new({ courseId, order, title, content });
 

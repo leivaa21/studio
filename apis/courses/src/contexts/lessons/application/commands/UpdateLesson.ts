@@ -11,6 +11,7 @@ import { MongoCourseRepository } from '../../../courses/infrastructure/persistan
 import { InMemoryAsyncEventBus } from '../../../shared/infrastructure/EventBus/InMemoryAsyncEventBus';
 import { LessonId } from '../../domain/LessonId';
 import { LessonFinder } from '../services/LessonFinder';
+import { LessonContent } from '../../domain/LessonContent';
 
 export class UpdateLessonCommand {
   public readonly authorId: string;
@@ -59,7 +60,7 @@ export class UpdateLesson extends CommandHandler<UpdateLessonCommand> {
     await this.courseFinder.findAuthoredByIdOrThrow(authorId, lesson.courseId);
 
     const title = LessonTitle.of(command.title);
-    const content = LessonTitle.of(command.content);
+    const content = LessonContent.of(command.content);
 
     lesson.updateTitle(title);
     lesson.updateContent(content);

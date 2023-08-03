@@ -1,12 +1,19 @@
-import { useEffect, useState } from 'react';
+import { ChangeEvent, useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 
-import { CourseTagsRecord } from '@studio/commons';
+import {
+  CourseTagsRecord,
+  MAX_COURSE_TITLE_LENGTH,
+  MAX_TAGS_COUNT,
+  isCourseTitleValid,
+  validateCourseTagsBusinessRules,
+} from '@studio/commons';
 import Button from '@studio/ui/components/interactivity/cta/button';
 import {
   FormSelectMultipleInput,
   FormTextInput,
 } from '@studio/ui/components/interactivity/form';
+import { ErrorMessage } from '@studio/ui/components/error/ErrorMessage';
 
 import { getAuthTokenCookie } from '../../../lib/cookieUtils';
 import { createCourse } from '../../../contexts/courses/application/CreateCourse';
@@ -32,6 +39,33 @@ export default function CreateNewCourseForm() {
     '# New Course \n - [x] Start with a brilliant idea \n - [ ] Use markdown to start creating!'
   );
 
+  const [errorMessage, setErrorMessage] = useState<string>('');
+
+  const handleTitleChange = (e: ChangeEvent<HTMLInputElement>) => {
+    const { value } = e.currentTarget;
+    if (!isCourseTitleValid(value)) {
+      setErrorMessage(
+        `Titles cant be longer than ${MAX_COURSE_TITLE_LENGTH} characters`
+      );
+
+      return;
+    }
+
+    setErrorMessage('');
+    setTitle(value);
+  };
+
+  const handleTagsChange = (values: string[]) => {
+    const { exceededCount } = validateCourseTagsBusinessRules(values);
+    if (exceededCount) {
+      setErrorMessage(`Courses can't have more than ${MAX_TAGS_COUNT} tags`);
+      setTags(values.slice(values.length - MAX_TAGS_COUNT, values.length));
+      return;
+    }
+    setErrorMessage('');
+    setTags(values);
+  };
+
   const onSubmitCreateCourse = async (e: React.MouseEvent<HTMLElement>) => {
     e.preventDefault();
 
@@ -56,11 +90,13 @@ export default function CreateNewCourseForm() {
 
   return (
     <div className={styles.newCourseForm}>
+      <ErrorMessage message={errorMessage} />
       <FormTextInput
         Name="Title"
         placeholder="Title"
         type="text"
-        onChange={(e) => setTitle(e.currentTarget.value)}
+        value={title}
+        onChange={handleTitleChange}
       />
       <div className={styles.field}>
         <span className={styles.label}>Description</span>
@@ -74,7 +110,8 @@ export default function CreateNewCourseForm() {
       <FormSelectMultipleInput
         Name="Tags"
         Values={CourseTagsRecord}
-        OnSelect={(values) => setTags(values)}
+        SelectedValues={tags}
+        OnSelect={handleTagsChange}
       />
 
       <Button

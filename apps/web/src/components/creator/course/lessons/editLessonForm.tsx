@@ -1,10 +1,11 @@
-import { useEffect, useState } from 'react';
+import { ChangeEvent, useEffect, useState } from 'react';
 import dynamic from 'next/dynamic';
 
 import '@uiw/react-md-editor/markdown-editor.css';
 import '@uiw/react-markdown-preview/markdown.css';
 
 import Button from '@studio/ui/components/interactivity/cta/button';
+import { ErrorMessage } from '@studio/ui/components/error/ErrorMessage';
 
 import styles from '../course.module.scss';
 
@@ -14,6 +15,7 @@ import { getAuthTokenCookie } from '../../../../lib/cookieUtils';
 import { FormTextInput } from '@studio/ui/components/interactivity/form';
 import { getLessonById } from '../../../../contexts/lessons/aplication/GetLessonById';
 import { updateLesson } from '../../../../contexts/lessons/aplication/UpdateLesson';
+import { MAX_LESSON_TITLE_LENGTH, isLessonTitleValid } from '@studio/commons';
 
 const MDEditor = dynamic(() => import('@uiw/react-md-editor'), { ssr: false });
 
@@ -35,6 +37,8 @@ export default function EditLessonForm({
     '# New Lesson \n - [x] Make awesome courses \n - [ ] Use markdown to start creating!'
   );
 
+  const [errorMessage, setErrorMessage] = useState<string>('');
+
   useEffect(() => {
     if (!courseId || !lessonId) return;
     getCourseById(courseId).then((course) => setCourseTitle(course.title));
@@ -43,6 +47,20 @@ export default function EditLessonForm({
       setContent(lesson.content);
     });
   }, []);
+
+  const handleTitleChange = (e: ChangeEvent<HTMLInputElement>) => {
+    const { value } = e.currentTarget;
+    if (!isLessonTitleValid(value)) {
+      setErrorMessage(
+        `Titles cant be longer than ${MAX_LESSON_TITLE_LENGTH} characters`
+      );
+
+      return;
+    }
+
+    setErrorMessage('');
+    setTitle(value);
+  };
 
   const onLessonSubmit = async () => {
     if (!title || !content) return;
@@ -59,13 +77,14 @@ export default function EditLessonForm({
   return (
     <div className={styles.newLessonForm}>
       <h2>Update lesson for {courseTitle}</h2>
+      <ErrorMessage message={errorMessage} />
       <FormTextInput
         id="lesson-title-input"
         Name="Lesson title"
         placeholder="Lesson title"
         type="text"
         value={title}
-        onChange={(e) => setTitle(e.currentTarget.value)}
+        onChange={handleTitleChange}
       />
       <div className={styles.field}>
         <span className={styles.label}>Content</span>
