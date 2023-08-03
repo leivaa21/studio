@@ -24,3 +24,5 @@ export * from './contracts/courses/CreateLessonContracts';
 export * from './contracts/courses/LessonContracts';
 
 export * from './errors/ErrorCodes';
+
+export * from './business/courses/isCourseTitleValid';
