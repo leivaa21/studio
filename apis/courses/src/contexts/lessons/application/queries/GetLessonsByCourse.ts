@@ -30,8 +30,6 @@ export class GetLessonsByCourse
 
     const lessons = await this.lessonFinder.findByCourseId(courseId);
 
-    console.log(lessons);
-
     return lessons;
   }
 }
