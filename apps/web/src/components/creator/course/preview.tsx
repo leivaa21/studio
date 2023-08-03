@@ -19,6 +19,7 @@ import {
   isCourseTitleValid,
   validateCourseTagsBusinessRules,
 } from '@studio/commons';
+import { ErrorMessage } from '@studio/ui/components/error/ErrorMessage';
 
 import styles from './course.module.scss';
 
@@ -236,7 +237,7 @@ export function CreatorCoursePreview({ courseId }: CreatorCoursePreviewParams) {
         }}
       >
         <div className={styles.modifyCourseModal}>
-          <span style={{ color: 'red', padding: '.5rem' }}>{errorMessage}</span>
+          <ErrorMessage message={errorMessage} />
           <FormTextInput
             Name="Course title"
             placeholder="Course title"
@@ -288,7 +289,7 @@ export function CreatorCoursePreview({ courseId }: CreatorCoursePreviewParams) {
         }}
       >
         <div className={styles.modifyCourseModal}>
-          <span style={{ color: 'red', padding: '.5rem' }}>{errorMessage}</span>
+          <ErrorMessage message={errorMessage} />
           <FormSelectMultipleInput
             className={styles.tagsSelect}
             Values={CourseTagsRecord}

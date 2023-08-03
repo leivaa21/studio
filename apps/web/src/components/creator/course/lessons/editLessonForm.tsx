@@ -5,6 +5,7 @@ import '@uiw/react-md-editor/markdown-editor.css';
 import '@uiw/react-markdown-preview/markdown.css';
 
 import Button from '@studio/ui/components/interactivity/cta/button';
+import { ErrorMessage } from '@studio/ui/components/error/ErrorMessage';
 
 import styles from '../course.module.scss';
 
@@ -76,7 +77,7 @@ export default function EditLessonForm({
   return (
     <div className={styles.newLessonForm}>
       <h2>Update lesson for {courseTitle}</h2>
-      <span style={{ color: 'red', padding: '.5rem' }}>{errorMessage}</span>
+      <ErrorMessage message={errorMessage} />
       <FormTextInput
         id="lesson-title-input"
         Name="Lesson title"

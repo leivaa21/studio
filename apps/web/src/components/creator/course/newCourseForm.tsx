@@ -13,6 +13,7 @@ import {
   FormSelectMultipleInput,
   FormTextInput,
 } from '@studio/ui/components/interactivity/form';
+import { ErrorMessage } from '@studio/ui/components/error/ErrorMessage';
 
 import { getAuthTokenCookie } from '../../../lib/cookieUtils';
 import { createCourse } from '../../../contexts/courses/application/CreateCourse';
@@ -89,7 +90,7 @@ export default function CreateNewCourseForm() {
 
   return (
     <div className={styles.newCourseForm}>
-      <span style={{ color: 'red', padding: '.5rem' }}>{errorMessage}</span>
+      <ErrorMessage message={errorMessage} />
       <FormTextInput
         Name="Title"
         placeholder="Title"
