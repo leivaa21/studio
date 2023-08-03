@@ -1,27 +1,32 @@
 import { useRouter } from 'next/router';
-import { useEffect, useState } from 'react';
+import { ChangeEvent, useEffect, useState } from 'react';
+import { serialize } from 'next-mdx-remote/serialize';
+import { MDXRemote, MDXRemoteSerializeResult } from 'next-mdx-remote';
+import '@uiw/react-md-editor/markdown-editor.css';
+import '@uiw/react-markdown-preview/markdown.css';
+import dynamic from 'next/dynamic';
 
-import styles from './course.module.scss';
-
-import { getCourseById } from '../../../contexts/courses/application/GetCourseById';
 import Button from '@studio/ui/components/interactivity/cta/button';
 import { Modal } from '@studio/ui/components/modal';
 import {
   FormSelectMultipleInput,
   FormTextInput,
 } from '@studio/ui/components/interactivity/form';
-import { CourseTagsRecord } from '@studio/commons';
+import {
+  CourseTagsRecord,
+  MAX_COURSE_TITLE_LENGTH,
+  MAX_TAGS_COUNT,
+  isCourseTitleValid,
+  validateCourseTagsBusinessRules,
+} from '@studio/commons';
+
+import styles from './course.module.scss';
+
+import { getCourseById } from '../../../contexts/courses/application/GetCourseById';
 import { renameCourse } from '../../../contexts/courses/application/RenameCourse';
 import { updateCourseDescription } from '../../../contexts/courses/application/UpdateCourseDescription';
 import { getAuthTokenCookie } from '../../../lib/cookieUtils';
 import { updateCourseTags } from '../../../contexts/courses/application/UpdateCourseTags';
-
-import '@uiw/react-md-editor/markdown-editor.css';
-import '@uiw/react-markdown-preview/markdown.css';
-import dynamic from 'next/dynamic';
-
-import { serialize } from 'next-mdx-remote/serialize';
-import { MDXRemote, MDXRemoteSerializeResult } from 'next-mdx-remote';
 import { publishCourse } from '../../../contexts/courses/application/PublishCourse';
 import { unpublishCourse } from '../../../contexts/courses/application/UnpublishCourse';
 
@@ -57,6 +62,8 @@ export function CreatorCoursePreview({ courseId }: CreatorCoursePreviewParams) {
 
   const [publishModalShown, setPublishModalShown] = useState<boolean>(false);
 
+  const [errorMessage, setErrorMessage] = useState<string>('');
+
   useEffect(() => {
     if (!courseId) return;
 
@@ -74,6 +81,31 @@ export function CreatorCoursePreview({ courseId }: CreatorCoursePreviewParams) {
       );
     });
   }, [router, courseId]);
+
+  const handleTitleChange = (e: ChangeEvent<HTMLInputElement>) => {
+    const { value } = e.currentTarget;
+    if (!isCourseTitleValid(value)) {
+      setErrorMessage(
+        `Titles cant be longer than ${MAX_COURSE_TITLE_LENGTH} characters`
+      );
+
+      return;
+    }
+
+    setErrorMessage('');
+    setNewTitle(value);
+  };
+
+  const handleTagsChange = (values: string[]) => {
+    const { exceededCount } = validateCourseTagsBusinessRules(values);
+    if (exceededCount) {
+      setErrorMessage(`Courses can't have more than ${MAX_TAGS_COUNT} tags`);
+      setNewTags(values.slice(values.length - MAX_TAGS_COUNT, values.length));
+      return;
+    }
+    setErrorMessage('');
+    setNewTags(values);
+  };
 
   const onSubmitRenameCourse = async () => {
     if (newTitle === title || !newTitle) {
@@ -198,18 +230,19 @@ export function CreatorCoursePreview({ courseId }: CreatorCoursePreviewParams) {
         isShown={renameModalShown}
         title={`Rename course`}
         closeFunction={() => {
+          setErrorMessage('');
           setRenameModalShown(false);
+          setNewTitle(title);
         }}
       >
         <div className={styles.modifyCourseModal}>
+          <span style={{ color: 'red', padding: '.5rem' }}>{errorMessage}</span>
           <FormTextInput
             Name="Course title"
             placeholder="Course title"
             type="text"
             value={newTitle}
-            onChange={(e) => {
-              setNewTitle(e.currentTarget.value);
-            }}
+            onChange={handleTitleChange}
           />
           <Button
             Type="Primary"
@@ -224,6 +257,7 @@ export function CreatorCoursePreview({ courseId }: CreatorCoursePreviewParams) {
         title={`Update course description`}
         closeFunction={() => {
           setUpdateDescriptionModalShown(false);
+          setNewDescription(description);
         }}
       >
         <div className={styles.modifyCourseModal}>
@@ -249,17 +283,18 @@ export function CreatorCoursePreview({ courseId }: CreatorCoursePreviewParams) {
         title={`Update course tags`}
         closeFunction={() => {
           setUpdateTagsModalShown(false);
+          setErrorMessage('');
+          setNewTags(tags);
         }}
       >
         <div className={styles.modifyCourseModal}>
+          <span style={{ color: 'red', padding: '.5rem' }}>{errorMessage}</span>
           <FormSelectMultipleInput
             className={styles.tagsSelect}
             Values={CourseTagsRecord}
             SelectedValues={newTags}
             Name="Tags"
-            OnSelect={(e) => {
-              setNewTags(e);
-            }}
+            OnSelect={handleTagsChange}
           />
           <Button
             Type="Primary"
