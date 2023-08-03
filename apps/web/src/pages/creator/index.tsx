@@ -2,7 +2,7 @@ import { useRouter } from 'next/router';
 import { CourseSearcher } from '@studio/ui/components/search/coursesSearcher';
 
 import { getAuthTokenCookie } from '../../lib/cookieUtils';
-import { Fragment, useEffect, useState } from 'react';
+import { Fragment, useCallback, useEffect, useState } from 'react';
 import { Header } from '../../components/header/header';
 import { CreatorHeader } from '../../components/creator/header';
 import { CreatorPanel } from '../../components/creator/panel';
@@ -18,7 +18,7 @@ export default function CreatorDashboard() {
     if (!getAuthTokenCookie()) router.push('/');
   }, [router]);
 
-  const onFetch = async (title: string, tags: string[]) => {
+  const onFetch = useCallback(async (title: string, tags: string[]) => {
     const courses = await getAuthoredCoursesPaginated(
       getAuthTokenCookie() || '',
       0,
@@ -27,7 +27,7 @@ export default function CreatorDashboard() {
       tags
     );
     setCoursesShown(courses);
-  };
+  }, []);
 
   return (
     <Fragment>
