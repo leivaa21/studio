@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { ChangeEvent, useEffect, useState } from 'react';
 import dynamic from 'next/dynamic';
 
 import '@uiw/react-md-editor/markdown-editor.css';
@@ -13,6 +13,7 @@ import { useRouter } from 'next/router';
 import { createLesson } from '../../../../contexts/lessons/aplication/CreateLesson';
 import { getAuthTokenCookie } from '../../../../lib/cookieUtils';
 import { FormTextInput } from '@studio/ui/components/interactivity/form';
+import { MAX_LESSON_TITLE_LENGTH, isLessonTitleValid } from '@studio/commons';
 
 const MDEditor = dynamic(() => import('@uiw/react-md-editor'), { ssr: false });
 
@@ -35,6 +36,22 @@ export default function NewLessonForm({ courseId }: NewLessonFormParams) {
     '# New Lesson \n - [x] Make awesome courses \n - [ ] Use markdown to start creating!'
   );
 
+  const [errorMessage, setErrorMessage] = useState<string>('');
+
+  const handleTitleChange = (e: ChangeEvent<HTMLInputElement>) => {
+    const { value } = e.currentTarget;
+    if (!isLessonTitleValid(value)) {
+      setErrorMessage(
+        `Titles cant be longer than ${MAX_LESSON_TITLE_LENGTH} characters`
+      );
+
+      return;
+    }
+
+    setErrorMessage('');
+    setTitle(value);
+  };
+
   const onLessonSubmit = async () => {
     if (!title || !content) return;
 
@@ -49,12 +66,14 @@ export default function NewLessonForm({ courseId }: NewLessonFormParams) {
   return (
     <div className={styles.newLessonForm}>
       <h2>New Lesson for {courseTitle}</h2>
+      <span style={{ color: 'red', padding: '.5rem' }}>{errorMessage}</span>
       <FormTextInput
         id="lesson-title-input"
         Name="Lesson title"
         placeholder="Lesson title"
         type="text"
-        onChange={(e) => setTitle(e.currentTarget.value)}
+        value={title}
+        onChange={handleTitleChange}
       />
       <div className={styles.field}>
         <span className={styles.label}>Content</span>
