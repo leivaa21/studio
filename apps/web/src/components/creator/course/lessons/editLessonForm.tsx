@@ -9,13 +9,13 @@ import { ErrorMessage } from '@studio/ui/components/error/ErrorMessage';
 
 import styles from '../course.module.scss';
 
-import { getCourseById } from '../../../../contexts/courses/application/GetCourseById';
 import { useRouter } from 'next/router';
 import { getAuthTokenCookie } from '../../../../lib/cookieUtils';
 import { FormTextInput } from '@studio/ui/components/interactivity/form';
-import { getLessonById } from '../../../../contexts/lessons/aplication/GetLessonById';
 import { updateLesson } from '../../../../contexts/lessons/aplication/UpdateLesson';
 import { MAX_LESSON_TITLE_LENGTH, isLessonTitleValid } from '@studio/commons';
+import { useCourse } from '../../../../hooks/course/useCourse';
+import { useLesson } from '../../../../hooks/course/useLesson';
 
 const MDEditor = dynamic(() => import('@uiw/react-md-editor'), { ssr: false });
 
@@ -30,7 +30,8 @@ export default function EditLessonForm({
 }: NewLessonFormParams) {
   const router = useRouter();
 
-  const [courseTitle, setCourseTitle] = useState<string>();
+  const course = useCourse(courseId);
+  const lesson = useLesson(lessonId);
 
   const [title, setTitle] = useState<string>('');
   const [content, setContent] = useState<string>(
@@ -40,13 +41,10 @@ export default function EditLessonForm({
   const [errorMessage, setErrorMessage] = useState<string>('');
 
   useEffect(() => {
-    if (!courseId || !lessonId) return;
-    getCourseById(courseId).then((course) => setCourseTitle(course.title));
-    getLessonById(lessonId).then((lesson) => {
-      setTitle(lesson.title);
-      setContent(lesson.content);
-    });
-  }, []);
+    if (!lesson) return;
+    setTitle(lesson.title);
+    setContent(lesson.content);
+  }, [lesson]);
 
   const handleTitleChange = (e: ChangeEvent<HTMLInputElement>) => {
     const { value } = e.currentTarget;
@@ -76,7 +74,7 @@ export default function EditLessonForm({
 
   return (
     <div className={styles.newLessonForm}>
-      <h2>Update lesson for {courseTitle}</h2>
+      <h2>Update lesson for {course?.title}</h2>
       <ErrorMessage message={errorMessage} />
       <FormTextInput
         id="lesson-title-input"

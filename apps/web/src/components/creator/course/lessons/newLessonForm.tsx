@@ -1,4 +1,4 @@
-import { ChangeEvent, useEffect, useState } from 'react';
+import { ChangeEvent, useState } from 'react';
 import dynamic from 'next/dynamic';
 
 import '@uiw/react-md-editor/markdown-editor.css';
@@ -9,12 +9,12 @@ import { ErrorMessage } from '@studio/ui/components/error/ErrorMessage';
 
 import styles from '../course.module.scss';
 
-import { getCourseById } from '../../../../contexts/courses/application/GetCourseById';
 import { useRouter } from 'next/router';
 import { createLesson } from '../../../../contexts/lessons/aplication/CreateLesson';
 import { getAuthTokenCookie } from '../../../../lib/cookieUtils';
 import { FormTextInput } from '@studio/ui/components/interactivity/form';
 import { MAX_LESSON_TITLE_LENGTH, isLessonTitleValid } from '@studio/commons';
+import { useCourse } from '../../../../hooks/course/useCourse';
 
 const MDEditor = dynamic(() => import('@uiw/react-md-editor'), { ssr: false });
 
@@ -24,13 +24,7 @@ export interface NewLessonFormParams {
 
 export default function NewLessonForm({ courseId }: NewLessonFormParams) {
   const router = useRouter();
-
-  const [courseTitle, setCourseTitle] = useState<string>();
-
-  useEffect(() => {
-    if (!courseId) return;
-    getCourseById(courseId).then((course) => setCourseTitle(course.title));
-  });
+  const course = useCourse(courseId);
 
   const [title, setTitle] = useState<string>('');
   const [content, setContent] = useState<string>(
@@ -66,7 +60,7 @@ export default function NewLessonForm({ courseId }: NewLessonFormParams) {
 
   return (
     <div className={styles.newLessonForm}>
-      <h2>New Lesson for {courseTitle}</h2>
+      <h2>New Lesson for {course?.title}</h2>
       <ErrorMessage message={errorMessage} />
       <FormTextInput
         id="lesson-title-input"
