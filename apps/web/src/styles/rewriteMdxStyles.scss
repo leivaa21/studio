@@ -1,0 +1,76 @@
+@import './colors';
+
+
+// Using always data-color-mode = dark for code styling
+// So its important to set background and color
+.markdown-preview {
+  background-color: transparent !important;
+  color: $dark-text-primary !important;
+
+  h1, h2, h3, h4, h5, h6 {
+    a.anchor svg {
+      color: $primary !important;
+      transition: all 250ms ease-in-out;
+      &:hover {
+        color: $primary-active !important;
+      }
+    }
+  }
+
+  pre {
+    code {
+      color: $bright-text-primary;
+     }
+     .copied:hover {
+      background-color: $primary !important;
+     }
+     .copied-active {
+      background-color: $primary-active !important;
+     }
+  }
+}
+
+// Checkboxes styling
+
+li.task-list-item {
+  display: flex;
+  flex-direction: row;
+
+  input[type="checkbox"] {
+    -webkit-appearance: none;
+    appearance: none;
+    margin: 0;
+  
+    --size: 1.15rem;
+
+    width: var(--size);
+    min-width: var(--size);
+    max-width: var(--size);
+    height: var(--size);
+    min-height: var(--size);
+    max-height: var(--size);
+    
+    border: calc(var(--size) * 0.15) solid $dark-text-primary;
+    border-radius: calc(var(--size) * 0.15);
+  
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  input[type="checkbox"]::before {
+    content: "";
+    width: 0.65em;
+    height: 0.65em;
+    clip-path: polygon(14% 44%, 0 65%, 50% 100%, 100% 16%, 80% 0%, 43% 62%);
+    transform: scale(0);
+    transform-origin: bottom left;
+    background-color: $primary;
+  }
+  
+  input[type="checkbox"]:checked::before {
+    transform: scale(1);
+  }
+  
+}

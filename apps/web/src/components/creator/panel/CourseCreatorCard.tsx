@@ -1,13 +1,11 @@
 import Link from 'next/link';
-
-import { serialize } from 'next-mdx-remote/serialize';
-import { MDXRemote, MDXRemoteSerializeResult } from 'next-mdx-remote';
+import { BiChevronRightCircle } from 'react-icons/bi';
 
 import { CourseInfoResponse } from '@studio/commons';
-import { BiChevronRightCircle } from 'react-icons/bi';
+
 import styles from './panel.module.scss';
 import { CourseTags } from './CourseTags';
-import { useEffect, useState } from 'react';
+import { MarkdownRenderer } from '../../markdown/renderer';
 
 export interface CourseParams {
   course: CourseInfoResponse;
@@ -15,16 +13,6 @@ export interface CourseParams {
 }
 
 export function CourseCreatorCard({ key, course }: CourseParams) {
-  const [descriptionMdx, setDescriptionMdx] =
-    useState<
-      MDXRemoteSerializeResult<Record<string, unknown>, Record<string, unknown>>
-    >();
-  useEffect(() => {
-    serialize(course.description, { mdxOptions: { development: true } }).then(
-      (mdxSource) => setDescriptionMdx(mdxSource)
-    );
-  });
-
   return (
     <div className={styles.card} key={key}>
       <div className={styles['card-header']}>
@@ -36,7 +24,7 @@ export function CourseCreatorCard({ key, course }: CourseParams) {
         </div>
       </div>
       <div className={styles['card-body']}>
-        {descriptionMdx ? <MDXRemote {...descriptionMdx} /> : undefined}
+        <MarkdownRenderer content={course.description} />
       </div>
       <div className={styles['card-footer']}>
         <CourseTags keyPrefix={key} tags={course.tags} />
