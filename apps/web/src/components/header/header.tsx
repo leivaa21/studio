@@ -1,16 +1,13 @@
 import Image from 'next/image';
 import Link from 'next/link';
+import { useRouter } from 'next/router';
 import { BsPersonFill, BsGearFill } from 'react-icons/bs';
-import React, { useEffect } from 'react';
 
 import styles from './header.module.scss';
 
-import {
-  clearAuthTokenCookie,
-  getAuthTokenCookieDecoded,
-} from '../../lib/cookieUtils';
 import { HeaderLinkType } from './types';
-import { useRouter } from 'next/router';
+import { clearAuthTokenCookie } from '../../lib/cookieUtils';
+import { useCurrentUser } from '../../hooks/user/useCurrentUser';
 
 const Links: HeaderLinkType[] = [
   {
@@ -72,20 +69,13 @@ export function HeaderLink(params: { link: HeaderLinkType; key: string }) {
 }
 
 export function Header() {
-  const [name, setName] = React.useState<string>();
-
   const router = useRouter();
+  const user = useCurrentUser();
 
   function logout() {
     clearAuthTokenCookie();
     router.push('/');
   }
-
-  useEffect(() => {
-    getAuthTokenCookieDecoded().then((response) => {
-      setName(response?.nickname);
-    });
-  }, []);
 
   return (
     <header className={styles.header}>
@@ -111,7 +101,7 @@ export function Header() {
           <li
             className={`${styles['header-settings']} ${styles['header-settings-profile']}`}
           >
-            {name}
+            {user?.nickname}
             <BsPersonFill className={styles['header-icon']} aria-hidden />
           </li>
           <ul

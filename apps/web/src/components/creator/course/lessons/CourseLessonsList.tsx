@@ -1,25 +1,15 @@
-import { useEffect, useState } from 'react';
 import styles from '../course.module.scss';
 
 import { CourseLessonCard } from './CourseLessonCard';
 import Button from '@studio/ui/components/interactivity/cta/button';
-import { LessonInfoResponse } from '@studio/commons';
-import { getLessonsByCourseId } from '../../../../contexts/lessons/aplication/GetLessonsByCourseId';
+import { useCourseLessons } from '../../../../hooks/course/useCourseLessons';
 
 export function CourseLessonsList({ courseId }: { courseId: string }) {
-  const [lessons, setLessons] = useState<LessonInfoResponse[]>([]);
-
-  useEffect(() => {
-    if (!courseId) return;
-
-    getLessonsByCourseId(courseId).then((lessons) => {
-      setLessons(lessons);
-    });
-  }, [courseId]);
+  const lessons = useCourseLessons(courseId);
 
   return (
     <div className={styles.lessonsList}>
-      {lessons.map((lesson, index) => (
+      {lessons?.map((lesson, index) => (
         <CourseLessonCard
           key={`lesson-${lesson.id}`}
           lesson={lesson}

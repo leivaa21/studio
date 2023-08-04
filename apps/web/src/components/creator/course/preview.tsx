@@ -23,13 +23,13 @@ import { ErrorMessage } from '@studio/ui/components/error/ErrorMessage';
 
 import styles from './course.module.scss';
 
-import { getCourseById } from '../../../contexts/courses/application/GetCourseById';
 import { renameCourse } from '../../../contexts/courses/application/RenameCourse';
 import { updateCourseDescription } from '../../../contexts/courses/application/UpdateCourseDescription';
 import { getAuthTokenCookie } from '../../../lib/cookieUtils';
 import { updateCourseTags } from '../../../contexts/courses/application/UpdateCourseTags';
 import { publishCourse } from '../../../contexts/courses/application/PublishCourse';
 import { unpublishCourse } from '../../../contexts/courses/application/UnpublishCourse';
+import { useCourse } from '../../../hooks/course/useCourse';
 
 const MDEditor = dynamic(() => import('@uiw/react-md-editor'), { ssr: false });
 
@@ -39,6 +39,8 @@ export interface CreatorCoursePreviewParams {
 
 export function CreatorCoursePreview({ courseId }: CreatorCoursePreviewParams) {
   const router = useRouter();
+
+  const course = useCourse(courseId);
 
   const [title, setTitle] = useState<string>();
   const [tags, setTags] = useState<string[]>([]);
@@ -66,22 +68,20 @@ export function CreatorCoursePreview({ courseId }: CreatorCoursePreviewParams) {
   const [errorMessage, setErrorMessage] = useState<string>('');
 
   useEffect(() => {
-    if (!courseId) return;
+    if (!course) return;
 
-    getCourseById(courseId).then((course) => {
-      setTitle(course.title);
-      setNewTitle(course.title);
-      setTags(course.tags);
-      setNewTags(course.tags);
-      setDescription(course.description);
-      setNewDescription(course.description);
-      setIsPublished(course.isPublished);
-      setPublishedAt(course.publishedAt);
-      serialize(course.description, { mdxOptions: { development: true } }).then(
-        (mdxSource) => setDescriptionMdx(mdxSource)
-      );
-    });
-  }, [router, courseId]);
+    setTitle(course.title);
+    setNewTitle(course.title);
+    setTags(course.tags);
+    setNewTags(course.tags);
+    setDescription(course.description);
+    setNewDescription(course.description);
+    setIsPublished(course.isPublished);
+    setPublishedAt(course.publishedAt);
+    serialize(course.description, { mdxOptions: { development: true } }).then(
+      (mdxSource) => setDescriptionMdx(mdxSource)
+    );
+  }, [course]);
 
   const handleTitleChange = (e: ChangeEvent<HTMLInputElement>) => {
     const { value } = e.currentTarget;
