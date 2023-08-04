@@ -1,35 +1,22 @@
-import { useCallback, useEffect, useState } from 'react';
-
 import Button from '@studio/ui/components/interactivity/cta/button';
 
-import { getUserNicknameById } from '../../contexts/users/application/getUserNicknameById';
 import styles from './courses.module.scss';
 import { useCourse } from '../../hooks/course/useCourse';
 import { MarkdownRenderer } from '../markdown/renderer';
+import { useCourseAuthor } from '../../hooks/course/useCourseAuthor';
 
 export interface CourseContentPreviewParams {
   courseId: string;
 }
 
 export function CourseContentPreview({ courseId }: CourseContentPreviewParams) {
-  const [authorName, setAuthorName] = useState<string>();
   const course = useCourse(courseId);
-
-  const fetchInfo = useCallback(async () => {
-    if (!course) return;
-    const { nickname } = await getUserNicknameById(course.authorId);
-
-    setAuthorName(nickname);
-  }, [course]);
-
-  useEffect(() => {
-    fetchInfo();
-  }, [fetchInfo]);
+  const author = useCourseAuthor(course?.authorId);
 
   return (
     <div className={styles.courseContentPreview}>
       <h2 className={styles.title}>{course?.title}</h2>
-      <span className={styles.authorName}>{authorName}</span>
+      <span className={styles.authorName}>{author?.nickname}</span>
       <MarkdownRenderer content={course?.description} />
       <CourseTags keyPrefix={`${course?.id}-tag`} tags={course?.tags || []} />
       <div className={styles.courseControls}>
