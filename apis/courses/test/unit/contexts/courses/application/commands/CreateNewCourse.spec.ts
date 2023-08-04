@@ -7,7 +7,9 @@ import {
 import { EventBus } from '../../../../../../src/contexts/shared/domain/EventBus';
 import { CourseBuilder } from '../../../../../helpers/builders/CourseBuilder';
 import { StringMother } from '../../../../../helpers/object-mother/StringMother';
-import { InvalidArgumentError, MAX_COURSE_TITLE_LENGTH } from '@studio/commons';
+import { MAX_COURSE_TITLE_LENGTH } from '@studio/commons';
+import { InvalidCourseTitleError } from '../../../../../../src/contexts/courses/domain/errors/InvalidCourseTitleError';
+import { InvalidCourseTagsError } from '../../../../../../src/contexts/courses/domain/errors/InvalidCourseTagsError';
 
 describe('Create new course', () => {
   const courseRepository = mock<CourseRepository>();
@@ -50,7 +52,7 @@ describe('Create new course', () => {
     const useCase = new CreateNewCourse(courseRepository, eventBus);
 
     await expect(useCase.execute(command)).rejects.toThrow(
-      InvalidArgumentError
+      InvalidCourseTitleError
     );
   });
 
@@ -67,7 +69,24 @@ describe('Create new course', () => {
     const useCase = new CreateNewCourse(courseRepository, eventBus);
 
     await expect(useCase.execute(command)).rejects.toThrow(
-      InvalidArgumentError
+      InvalidCourseTagsError
+    );
+  });
+
+  it('Should not create a course if there duplicated tags', async () => {
+    const { authorId, title, description } = new CourseBuilder().build();
+
+    const command = new CreateNewCourseCommand({
+      authorId: authorId.value,
+      title: title.value,
+      description: description.value,
+      tags: ['Backend', 'Frontend', 'Frontend'],
+    });
+
+    const useCase = new CreateNewCourse(courseRepository, eventBus);
+
+    await expect(useCase.execute(command)).rejects.toThrow(
+      InvalidCourseTagsError
     );
   });
 });

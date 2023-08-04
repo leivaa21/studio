@@ -18,4 +18,6 @@ export enum ErrorCodes {
   UnableToReorderLesson = 'courses.unable-to-reorder-lesson',
   UnableToPublishCourse = 'courses.course-already-published',
   UnableToUnpublishCourse = 'courses.course-not-published',
+  InvalidCourseTitle = 'courses.invalid-course-title',
+  InvalidCourseTags = 'courses.invalid-course-tags'
 }

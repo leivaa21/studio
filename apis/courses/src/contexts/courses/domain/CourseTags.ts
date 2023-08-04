@@ -1,22 +1,21 @@
-import {
-  InvalidArgumentError,
-  validateCourseTagsBusinessRules,
-} from '@studio/commons';
+import { validateCourseTagsBusinessRules } from '@studio/commons';
 import { CourseTag } from './CourseTag';
+import { InvalidCourseTagsError } from './errors/InvalidCourseTagsError';
 
 export class CourseTags {
   constructor(private readonly tags: CourseTag[]) {}
 
   static of(tags: CourseTag[]): CourseTags {
-    const { duplicatedTags, exceededCount } = validateCourseTagsBusinessRules(
-      tags.map((tag) => tag.value)
-    );
+    const tagsAsPrimitives = tags.map((tag) => tag.value);
+    const { duplicatedTags, exceededCount } =
+      validateCourseTagsBusinessRules(tagsAsPrimitives);
 
-    if (duplicatedTags || exceededCount) {
-      throw new InvalidArgumentError(
-        CourseTags.name,
-        tags.map((tag) => tag.value).toString()
-      );
+    if (duplicatedTags) {
+      throw InvalidCourseTagsError.hasDuplicatedTags(tagsAsPrimitives);
+    }
+
+    if (exceededCount) {
+      throw InvalidCourseTagsError.hasExceededTagCountLimit(tagsAsPrimitives);
     }
 
     return new CourseTags(tags);
