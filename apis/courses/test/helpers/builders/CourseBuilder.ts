@@ -1,3 +1,4 @@
+import { MAX_COURSE_TITLE_LENGTH } from '@studio/commons';
 import { AuthorId } from '../../../src/contexts/courses/domain/AuthorId';
 import { Course } from '../../../src/contexts/courses/domain/Course';
 import { CourseDescription } from '../../../src/contexts/courses/domain/CourseDescription';
@@ -10,13 +11,17 @@ import { Builder } from './builder';
 
 export class CourseBuilder implements Builder<Course> {
   private _id: CourseId = CourseId.random();
-  private _title: CourseTitle = CourseTitle.of(StringMother.random());
+  private _title: CourseTitle = CourseTitle.of(
+    StringMother.random({ minLength: 1, maxLength: MAX_COURSE_TITLE_LENGTH })
+  );
   private _tags: CourseTags = CourseTagMother.randomTags();
   private _description: CourseDescription = CourseDescription.of(
     StringMother.random()
   );
   private _authorId?: AuthorId;
   private _createdAt: Date = new Date();
+  private _updatedAt: Date = new Date();
+  private _publishedAt?: Date = undefined;
 
   public build(): Course {
     return new Course({
@@ -26,6 +31,8 @@ export class CourseBuilder implements Builder<Course> {
       description: this._description,
       authorId: this._authorId || AuthorId.random(),
       createdAt: this._createdAt,
+      updatedAt: this._updatedAt,
+      publishedAt: this._publishedAt,
     });
   }
 
