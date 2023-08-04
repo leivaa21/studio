@@ -5,7 +5,7 @@
   display: flex;
   flex-direction: column;
 
-  width: 25rem;
+  width: 27rem;
   height: 15rem;
 
   border: 0.8ch solid $primary;
@@ -62,6 +62,8 @@
     text-align: justify;
 
     max-height: 9rem;
+
+    overflow: hidden;
   }
 
   &-footer {
@@ -77,12 +79,15 @@
 .tags {
   list-style: none;
   display: flex;
+  flex: 1 0 auto;
   flex-direction: row;
   padding: 0;
 
+  justify-content: center;
   .tag {
     margin: 1ch;
     display: flex;
+    max-width: fit-content;
     flex: 1;
     background-color: $secondary-mask;
     border-radius: 5px;
