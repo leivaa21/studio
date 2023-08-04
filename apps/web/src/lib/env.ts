@@ -14,6 +14,7 @@ function getEnviromentVariableOrThrow(variableName: string): string {
 export const env = {
   app: {
     url: getEnviromentVariableOrThrow('appUrl'),
+    isDevelopment: getEnviromentVariableOrThrow('NODE_ENV') === 'development',
   },
   auth: {
     url: getEnviromentVariableOrThrow('authUrl'),
