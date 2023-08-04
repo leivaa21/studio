@@ -1,7 +1,6 @@
 import { useRouter } from 'next/router';
 import { ChangeEvent, useEffect, useState } from 'react';
-import { serialize } from 'next-mdx-remote/serialize';
-import { MDXRemote, MDXRemoteSerializeResult } from 'next-mdx-remote';
+import { MDXRemote } from 'next-mdx-remote';
 import '@uiw/react-md-editor/markdown-editor.css';
 import '@uiw/react-markdown-preview/markdown.css';
 import dynamic from 'next/dynamic';
@@ -30,6 +29,7 @@ import { updateCourseTags } from '../../../contexts/courses/application/UpdateCo
 import { publishCourse } from '../../../contexts/courses/application/PublishCourse';
 import { unpublishCourse } from '../../../contexts/courses/application/UnpublishCourse';
 import { useCourse } from '../../../hooks/course/useCourse';
+import { useSerializer } from '../../../hooks/markdown/useSerializer';
 
 const MDEditor = dynamic(() => import('@uiw/react-md-editor'), { ssr: false });
 
@@ -47,10 +47,7 @@ export function CreatorCoursePreview({ courseId }: CreatorCoursePreviewParams) {
   const [description, setDescription] = useState<string>();
   const [isPublished, setIsPublished] = useState<boolean>();
   const [publishedAt, setPublishedAt] = useState<Date | null>();
-  const [descriptionMdx, setDescriptionMdx] =
-    useState<
-      MDXRemoteSerializeResult<Record<string, unknown>, Record<string, unknown>>
-    >();
+  const descriptionMdx = useSerializer(course?.description);
 
   const [renameModalShown, setRenameModalShown] = useState<boolean>(false);
   const [newTitle, setNewTitle] = useState<string>();
@@ -78,9 +75,6 @@ export function CreatorCoursePreview({ courseId }: CreatorCoursePreviewParams) {
     setNewDescription(course.description);
     setIsPublished(course.isPublished);
     setPublishedAt(course.publishedAt);
-    serialize(course.description, { mdxOptions: { development: true } }).then(
-      (mdxSource) => setDescriptionMdx(mdxSource)
-    );
   }, [course]);
 
   const handleTitleChange = (e: ChangeEvent<HTMLInputElement>) => {
