@@ -1,8 +1,5 @@
 import { useRouter } from 'next/router';
 import { ChangeEvent, useEffect, useState } from 'react';
-import '@uiw/react-md-editor/markdown-editor.css';
-import '@uiw/react-markdown-preview/markdown.css';
-import dynamic from 'next/dynamic';
 
 import Button from '@studio/ui/components/interactivity/cta/button';
 import { Modal } from '@studio/ui/components/modal';
@@ -29,8 +26,7 @@ import { publishCourse } from '../../../contexts/courses/application/PublishCour
 import { unpublishCourse } from '../../../contexts/courses/application/UnpublishCourse';
 import { useCourse } from '../../../hooks/course/useCourse';
 import { MarkdownRenderer } from '../../markdown/renderer';
-
-const MDEditor = dynamic(() => import('@uiw/react-md-editor'), { ssr: false });
+import { MarkdownEditor } from '../../markdown/editor';
 
 export interface CreatorCoursePreviewParams {
   courseId: string;
@@ -252,10 +248,10 @@ export function CreatorCoursePreview({ courseId }: CreatorCoursePreviewParams) {
         <div className={styles.modifyCourseModal}>
           <div className={styles.field}>
             <span className={styles.label}>Description</span>
-            <MDEditor
+            <MarkdownEditor
               className={styles.markdownEditor}
-              value={newDescription}
-              onChange={(e) => setNewDescription(e || '')}
+              value={description}
+              onChange={(e) => setDescription(e || '')}
               enableScroll
             />
           </div>

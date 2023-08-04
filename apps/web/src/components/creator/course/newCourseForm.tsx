@@ -17,14 +17,8 @@ import { ErrorMessage } from '@studio/ui/components/error/ErrorMessage';
 
 import { getAuthTokenCookie } from '../../../lib/cookieUtils';
 import { createCourse } from '../../../contexts/courses/application/CreateCourse';
-
+import { MarkdownEditor } from '../../markdown/editor';
 import styles from './course.module.scss';
-import dynamic from 'next/dynamic';
-
-import '@uiw/react-md-editor/markdown-editor.css';
-import '@uiw/react-markdown-preview/markdown.css';
-
-const MDEditor = dynamic(() => import('@uiw/react-md-editor'), { ssr: false });
 
 export default function CreateNewCourseForm() {
   const router = useRouter();
@@ -100,7 +94,7 @@ export default function CreateNewCourseForm() {
       />
       <div className={styles.field}>
         <span className={styles.label}>Description</span>
-        <MDEditor
+        <MarkdownEditor
           className={styles.markdownEditor}
           value={description}
           onChange={(e) => setDescription(e || '')}

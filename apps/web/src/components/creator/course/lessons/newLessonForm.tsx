@@ -1,22 +1,17 @@
+import { useRouter } from 'next/router';
 import { ChangeEvent, useState } from 'react';
-import dynamic from 'next/dynamic';
-
-import '@uiw/react-md-editor/markdown-editor.css';
-import '@uiw/react-markdown-preview/markdown.css';
 
 import Button from '@studio/ui/components/interactivity/cta/button';
+import { FormTextInput } from '@studio/ui/components/interactivity/form';
 import { ErrorMessage } from '@studio/ui/components/error/ErrorMessage';
+import { MAX_LESSON_TITLE_LENGTH, isLessonTitleValid } from '@studio/commons';
 
 import styles from '../course.module.scss';
 
-import { useRouter } from 'next/router';
 import { createLesson } from '../../../../contexts/lessons/aplication/CreateLesson';
 import { getAuthTokenCookie } from '../../../../lib/cookieUtils';
-import { FormTextInput } from '@studio/ui/components/interactivity/form';
-import { MAX_LESSON_TITLE_LENGTH, isLessonTitleValid } from '@studio/commons';
 import { useCourse } from '../../../../hooks/course/useCourse';
-
-const MDEditor = dynamic(() => import('@uiw/react-md-editor'), { ssr: false });
+import { MarkdownEditor } from '../../../markdown/editor';
 
 export interface NewLessonFormParams {
   courseId: string;
@@ -72,7 +67,7 @@ export default function NewLessonForm({ courseId }: NewLessonFormParams) {
       />
       <div className={styles.field}>
         <span className={styles.label}>Content</span>
-        <MDEditor
+        <MarkdownEditor
           className={styles.markdownEditor}
           value={content}
           onChange={(e) => setContent(e || '')}
