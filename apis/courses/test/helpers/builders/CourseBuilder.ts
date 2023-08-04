@@ -40,4 +40,9 @@ export class CourseBuilder implements Builder<Course> {
     this._authorId = authorId;
     return this;
   }
+
+  public withPublishedAt(publishedAt: Date) {
+    this._publishedAt = publishedAt;
+    return this;
+  }
 }
