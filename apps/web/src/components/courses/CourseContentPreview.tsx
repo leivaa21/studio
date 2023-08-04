@@ -1,12 +1,12 @@
 import { useCallback, useEffect, useState } from 'react';
-import { MDXRemote, MDXRemoteSerializeResult } from 'next-mdx-remote';
-import { serialize } from 'next-mdx-remote/serialize';
+import { MDXRemote } from 'next-mdx-remote';
 
 import Button from '@studio/ui/components/interactivity/cta/button';
 
 import { getUserNicknameById } from '../../contexts/users/application/getUserNicknameById';
 import styles from './courses.module.scss';
 import { useCourse } from '../../hooks/course/useCourse';
+import { useSerializer } from '../../hooks/markdown/useSerializer';
 
 export interface CourseContentPreviewParams {
   courseId: string;
@@ -15,22 +15,13 @@ export interface CourseContentPreviewParams {
 export function CourseContentPreview({ courseId }: CourseContentPreviewParams) {
   const [authorName, setAuthorName] = useState<string>();
   const course = useCourse(courseId);
-
-  const [descriptionMdx, setDescriptionMdx] =
-    useState<
-      MDXRemoteSerializeResult<Record<string, unknown>, Record<string, unknown>>
-    >();
+  const descriptionMdx = useSerializer(course?.description);
 
   const fetchInfo = useCallback(async () => {
     if (!course) return;
     const { nickname } = await getUserNicknameById(course.authorId);
 
-    const mdxSource = await serialize(course.description, {
-      mdxOptions: { development: true },
-    });
-
     setAuthorName(nickname);
-    setDescriptionMdx(mdxSource);
   }, [course]);
 
   useEffect(() => {

@@ -8,7 +8,7 @@ type mdxSerialized = MDXRemoteSerializeResult<
   Record<string, unknown>
 >;
 
-export function useSerializer(content: string) {
+export function useSerializer(content?: string) {
   const [mdx, setMdx] = useState<mdxSerialized>();
 
   useEffect(() => {
