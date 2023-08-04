@@ -1,12 +1,11 @@
 import { useCallback, useEffect, useState } from 'react';
-import { MDXRemote } from 'next-mdx-remote';
 
 import Button from '@studio/ui/components/interactivity/cta/button';
 
 import { getUserNicknameById } from '../../contexts/users/application/getUserNicknameById';
 import styles from './courses.module.scss';
 import { useCourse } from '../../hooks/course/useCourse';
-import { useSerializer } from '../../hooks/markdown/useSerializer';
+import { MarkdownRenderer } from '../markdown/renderer';
 
 export interface CourseContentPreviewParams {
   courseId: string;
@@ -15,7 +14,6 @@ export interface CourseContentPreviewParams {
 export function CourseContentPreview({ courseId }: CourseContentPreviewParams) {
   const [authorName, setAuthorName] = useState<string>();
   const course = useCourse(courseId);
-  const descriptionMdx = useSerializer(course?.description);
 
   const fetchInfo = useCallback(async () => {
     if (!course) return;
@@ -32,7 +30,7 @@ export function CourseContentPreview({ courseId }: CourseContentPreviewParams) {
     <div className={styles.courseContentPreview}>
       <h2 className={styles.title}>{course?.title}</h2>
       <span className={styles.authorName}>{authorName}</span>
-      {descriptionMdx ? <MDXRemote {...descriptionMdx} /> : undefined}
+      <MarkdownRenderer content={course?.description} />
       <CourseTags keyPrefix={`${course?.id}-tag`} tags={course?.tags || []} />
       <div className={styles.courseControls}>
         <Button Type="Primary" Size="Medium" Label="Start Course" />
