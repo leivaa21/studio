@@ -1,7 +1,6 @@
 import { Injectable } from '@studio/dependency-injection';
 import {
   Authorized,
-  BadRequestError,
   Body,
   CurrentUser,
   HttpCode,
@@ -12,7 +11,7 @@ import {
 } from 'routing-controllers';
 import { InMemoryCommandBus } from '../../../contexts/shared/infrastructure/CommandBus/InMemoryCommandBus';
 import { CommandBus } from '../../../contexts/shared/domain/CommandBus';
-import { StatusCode } from '@studio/api-utils';
+import { BadRequestError, StatusCode } from '@studio/api-utils';
 import { User } from '../../auth/user';
 import { UpdateLessonCommand } from '../../../contexts/lessons/application/commands/UpdateLesson';
 import { UpdateLessonRequest } from '@studio/commons';
@@ -37,7 +36,7 @@ export class UpdateLessonController {
     const { title, content } = body;
 
     if (!title || !content) {
-      throw new BadRequestError(`Params title and content are required`);
+      throw new BadRequestError('Params title and content are required');
     }
 
     await this.commandBus.dispatch<UpdateLessonCommand>(
