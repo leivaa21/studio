@@ -29,6 +29,7 @@ describe(`POST ${route}`, () => {
     const body = {
       title: course.title.value,
       description: course.description.value,
+      tags: course.tags.values,
     };
     await request(app)
       .post(route)
@@ -47,4 +48,44 @@ describe(`POST ${route}`, () => {
     expect(authorCourses).toBeDefined();
     expect(authorCourses).toHaveLength(1);
   });
+
+  it.each([
+    { missingParam: 'title' },
+    { missingParam: 'description' },
+    { missingParam: 'tags' },
+  ])(
+    'should throw BadRequest Error if $missingParam is missing on body',
+    async ({ missingParam }) => {
+      const course = new CourseBuilder().build();
+      const body = {
+        title: missingParam === 'title' ? undefined : course.title.value,
+        description:
+          missingParam === 'description' ? undefined : course.description.value,
+        tags: missingParam === 'tags' ? undefined : course.tags.values,
+      };
+
+      const response = await request(app)
+        .post(route)
+        .set(
+          'Authorization',
+          new AuthorizationTokenBuilder()
+            .withUserId(course.authorId.value)
+            .build()
+        )
+        .send(body)
+        .expect('Content-Type', /json/)
+        .expect(400);
+
+      const authorCourses = await findByAuthorId(course.authorId);
+
+      expect(authorCourses).toHaveLength(0);
+
+      expect(response.body).toStrictEqual({
+        message:
+          'Title, description and tags are required parameters when creating a new course',
+        status: 400,
+        type: 'Bad Request Error',
+      });
+    }
+  );
 });
