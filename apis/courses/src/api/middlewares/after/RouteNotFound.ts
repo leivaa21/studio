@@ -1,4 +1,4 @@
-import { RouteNotFound } from '@studio/api-utils';
+import { RouteNotFoundError } from '@studio/api-utils';
 import { Injectable } from '@studio/dependency-injection';
 import { Request, Response } from 'express';
 import { Middleware, ExpressMiddlewareInterface } from 'routing-controllers';
@@ -8,7 +8,7 @@ import { Middleware, ExpressMiddlewareInterface } from 'routing-controllers';
 export class RouteNotFoundMiddleware implements ExpressMiddlewareInterface {
   use(request: Request, response: Response) {
     if (!response.writableFinished) {
-      throw new RouteNotFound(request.method, request.path);
+      throw new RouteNotFoundError(request.method, request.path);
     }
   }
 }
