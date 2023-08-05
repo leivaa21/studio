@@ -21,5 +21,6 @@ export enum ErrorCodes {
   UnableToPublishCourse = 'courses.course-already-published',
   UnableToUnpublishCourse = 'courses.course-not-published',
   InvalidCourseTitle = 'courses.invalid-course-title',
-  InvalidCourseTags = 'courses.invalid-course-tags'
+  InvalidCourseTags = 'courses.invalid-course-tags',
+  InvalidLessonTitle = 'courses.invalid-lesson-title',
 }
