@@ -10,12 +10,13 @@ import { LessonContent } from '../../../src/contexts/lessons/domain/LessonConten
 
 export class LessonBuilder implements Builder<Lesson> {
   private _courseId: CourseId = CourseId.random();
+  private _order: LessonOrder = LessonOrder.of(0);
 
   build(): Lesson {
     return new Lesson({
       id: LessonId.random(),
       courseId: this._courseId,
-      order: LessonOrder.of(0),
+      order: this._order,
       title: LessonTitle.of(
         StringMother.random({
           minLength: 1,
@@ -30,6 +31,11 @@ export class LessonBuilder implements Builder<Lesson> {
 
   public withCourseId(courseId: CourseId) {
     this._courseId = courseId;
+    return this;
+  }
+
+  public withOrder(order: LessonOrder) {
+    this._order = order;
     return this;
   }
 }
