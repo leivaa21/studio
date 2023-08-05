@@ -1,6 +1,7 @@
 export enum ErrorCodes {
   InvalidCredential = 'auth.invalid-credentials',
   BadRequest = 'general.bad_request',
+  Unauthorized = 'general.unauthorized',
   RouteNotFound = 'general.route_not_found',
   InvalidPassword = 'auth.invalid-password',
   InvalidNickname = 'auth.invalid-nickname',

@@ -1,6 +1,7 @@
 import passport from 'passport';
 import { Action } from 'routing-controllers';
 import { User } from './user';
+import { UnauthorizedError } from '@studio/api-utils';
 
 export const authorizationChecker = (action: Action) =>
   new Promise<boolean>((resolve, reject) => {
@@ -9,7 +10,9 @@ export const authorizationChecker = (action: Action) =>
         return reject(err);
       }
       if (!user) {
-        return resolve(false);
+        return reject(
+          new UnauthorizedError(action.request.method, action.request.path)
+        );
       }
       action.request.user = user;
       return resolve(true);
