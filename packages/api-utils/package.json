@@ -8,6 +8,7 @@
     "build": "rimraf dist && tsc"
   },
   "dependencies": {
+    "@studio/commons": "workspace:packages/commons",
     "express": "^4.18.2"
   },
   "devDependencies": {

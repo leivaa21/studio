@@ -1,19 +1,22 @@
 import { NextFunction, Request, Response } from "express";
 import { StatusCode } from "../http";
-import { HttpError } from "../interfaces";
+import { ApiError, ErrorCodes } from "@studio/commons";
 
 export function ErrorHandler(err: Error, req: Request, res: Response, next: NextFunction) {
 
   let data = {
     message: err.message,
     status: StatusCode.INTERNAL_ERROR,
-    type: 'Internal Server Error',
+    kind: 'Internal Server Error',
+    errorCode: ErrorCodes.InternalServerError as string
   }
 
-  if ((err as HttpError).statusCode) {
-    const httpErr = err as HttpError;
-    data.status = httpErr.statusCode;
-    data.type  = httpErr.constructor.name.split(/(?=[A-Z])/).join(' ');
+  if ((err as ApiError).apiStatus) {
+    const apiError = err as ApiError;
+    data.status = apiError.apiStatus;
+    data.kind = apiError.kind;
+    data.errorCode = apiError.errorCode;
+    data.message = apiError.message;
   }
 
   res.status(data.status).json(data).end();

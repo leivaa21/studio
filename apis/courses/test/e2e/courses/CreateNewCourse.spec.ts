@@ -9,6 +9,7 @@ import { CourseBuilder } from '../../helpers/builders/CourseBuilder';
 import { app } from '../../../src/api/app';
 import { AuthorizationTokenBuilder } from '../../helpers/builders/AuthorizationTokenBuilder';
 import { findByAuthorId } from '../../helpers/persistance/mongo/courses';
+import { ErrorCodes } from '@studio/commons';
 
 let mongoContainer: StartedTestContainer;
 const route = '/courses';
@@ -84,7 +85,8 @@ describe(`POST ${route}`, () => {
         message:
           'Title, description and tags are required parameters when creating a new course',
         status: 400,
-        type: 'Bad Request Error',
+        kind: 'BAD_REQUEST',
+        errorCode: ErrorCodes.BadRequest,
       });
     }
   );

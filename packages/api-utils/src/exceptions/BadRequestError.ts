@@ -1,10 +1,13 @@
+import { ApiError, ErrorCodes } from "@studio/commons";
 import { StatusCode } from "../http";
-import { HttpError } from "../interfaces/httpError";
 
-export class BadRequestError extends Error implements HttpError  {
-  public readonly statusCode: number;
+export class BadRequestError extends ApiError  {
   constructor(message: string) {
-    super(message);
-    this.statusCode = StatusCode.BAD_REQUEST;
+    super({
+      apiStatus: StatusCode.BAD_REQUEST,
+      kind: 'BAD_REQUEST',
+      errorCode: ErrorCodes.BadRequest,
+      message,
+    });
   }
 }
