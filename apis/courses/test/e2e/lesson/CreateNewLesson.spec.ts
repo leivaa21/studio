@@ -9,10 +9,7 @@ import { CourseBuilder } from '../../helpers/builders/CourseBuilder';
 import { LessonBuilder } from '../../helpers/builders/LessonBuilder';
 import { app } from '../../../src/api/app';
 import { AuthorizationTokenBuilder } from '../../helpers/builders/AuthorizationTokenBuilder';
-import {
-  createCourse,
-  findCoursesByAuthorId,
-} from '../../helpers/persistance/mongo/courses';
+import { createCourse } from '../../helpers/persistance/mongo/courses';
 import { ErrorCodes } from '@studio/commons';
 import { findLessonsByCourseId } from '../../helpers/persistance/mongo/lessons';
 
