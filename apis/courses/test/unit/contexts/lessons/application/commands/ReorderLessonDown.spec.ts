@@ -2,9 +2,9 @@ import { mock, mockReset } from 'jest-mock-extended';
 import { CourseRepository } from '../../../../../../src/contexts/courses/domain/CourseRepository';
 import { LessonRepository } from '../../../../../../src/contexts/lessons/domain/LessonRepository';
 import {
-  ReorderLessonUp,
-  ReorderLessonUpCommand,
-} from '../../../../../../src/contexts/lessons/application/commands/ReorderLessonUp';
+  ReorderLessonDown,
+  ReorderLessonDownCommand,
+} from '../../../../../../src/contexts/lessons/application/commands/ReorderLessonDown';
 import { EventBus } from '../../../../../../src/contexts/shared/domain/EventBus';
 import { CourseBuilder } from '../../../../../helpers/builders/CourseBuilder';
 import { LessonBuilder } from '../../../../../helpers/builders/LessonBuilder';
@@ -14,7 +14,7 @@ import { LessonOrder } from '../../../../../../src/contexts/lessons/domain/Lesso
 import { UnableToReorderLessonError } from '../../../../../../src/contexts/lessons/domain/errors/UnableToReorderLessonError';
 import { LessonNotFoundError } from '../../../../../../src/contexts/lessons/domain/errors/LessonNotFoundError';
 
-describe('Reorder Lesson up', () => {
+describe('Reorder Lesson Down', () => {
   const lessonRepository = mock<LessonRepository>();
   const courseRepository = mock<CourseRepository>();
   const eventBus = mock<EventBus>();
@@ -25,7 +25,7 @@ describe('Reorder Lesson up', () => {
     mockReset(eventBus);
   });
 
-  it('Should reorder an existant lesson up from an authored course', async () => {
+  it('Should reorder an existant lesson down from an authored course', async () => {
     const course = new CourseBuilder().build();
 
     const lesson = new LessonBuilder()
@@ -41,7 +41,7 @@ describe('Reorder Lesson up', () => {
       .withCourseId(course.id)
       .build();
 
-    const command = new ReorderLessonUpCommand({
+    const command = new ReorderLessonDownCommand({
       authorId: course.authorId.value,
       lessonId: lesson.id.value,
     });
@@ -54,7 +54,7 @@ describe('Reorder Lesson up', () => {
       lesson2,
     ]);
 
-    const useCase = new ReorderLessonUp(
+    const useCase = new ReorderLessonDown(
       lessonRepository,
       courseRepository,
       eventBus
@@ -64,23 +64,27 @@ describe('Reorder Lesson up', () => {
     expect(lessonRepository.update).toBeCalledTimes(2);
     expect(lessonRepository.update).toBeCalledWith(
       expect.objectContaining({
-        id: lesson0.id,
+        id: lesson2.id,
         order: LessonOrder.of(1),
       })
     );
     expect(lessonRepository.update).toBeCalledWith(
       expect.objectContaining({
         id: lesson.id,
-        order: LessonOrder.of(0),
+        order: LessonOrder.of(2),
       })
     );
     expect(eventBus.publish).toBeCalled();
   });
 
-  it('Should not reorder a lesson up if its already first', async () => {
+  it('Should not reorder a lesson down if its already last', async () => {
     const course = new CourseBuilder().build();
 
     const lesson = new LessonBuilder()
+      .withOrder(LessonOrder.of(2))
+      .withCourseId(course.id)
+      .build();
+    const lesson0 = new LessonBuilder()
       .withOrder(LessonOrder.of(0))
       .withCourseId(course.id)
       .build();
@@ -88,12 +92,8 @@ describe('Reorder Lesson up', () => {
       .withOrder(LessonOrder.of(1))
       .withCourseId(course.id)
       .build();
-    const lesson2 = new LessonBuilder()
-      .withOrder(LessonOrder.of(2))
-      .withCourseId(course.id)
-      .build();
 
-    const command = new ReorderLessonUpCommand({
+    const command = new ReorderLessonDownCommand({
       authorId: course.authorId.value,
       lessonId: lesson.id.value,
     });
@@ -101,12 +101,12 @@ describe('Reorder Lesson up', () => {
     lessonRepository.findById.mockResolvedValue(lesson);
     courseRepository.findById.mockResolvedValue(course);
     lessonRepository.findByCourseId.mockResolvedValue([
-      lesson,
+      lesson0,
       lesson1,
-      lesson2,
+      lesson,
     ]);
 
-    const useCase = new ReorderLessonUp(
+    const useCase = new ReorderLessonDown(
       lessonRepository,
       courseRepository,
       eventBus
@@ -118,12 +118,12 @@ describe('Reorder Lesson up', () => {
     expect(lessonRepository.update).not.toBeCalled();
   });
 
-  it('Should not reorder a lesson up if its the only lesson of a course', async () => {
+  it('Should not reorder a lesson down if its the only lesson of a course', async () => {
     const course = new CourseBuilder().build();
 
     const lesson = new LessonBuilder().withCourseId(course.id).build();
 
-    const command = new ReorderLessonUpCommand({
+    const command = new ReorderLessonDownCommand({
       authorId: course.authorId.value,
       lessonId: lesson.id.value,
     });
@@ -132,7 +132,7 @@ describe('Reorder Lesson up', () => {
     courseRepository.findById.mockResolvedValue(course);
     lessonRepository.findByCourseId.mockResolvedValue([lesson]);
 
-    const useCase = new ReorderLessonUp(
+    const useCase = new ReorderLessonDown(
       lessonRepository,
       courseRepository,
       eventBus
@@ -153,7 +153,7 @@ describe('Reorder Lesson up', () => {
       .build();
     const lesson = new LessonBuilder().withCourseId(course.id).build();
 
-    const command = new ReorderLessonUpCommand({
+    const command = new ReorderLessonDownCommand({
       authorId: AuthorId.random().value,
       lessonId: lesson.id.value,
     });
@@ -162,7 +162,7 @@ describe('Reorder Lesson up', () => {
     courseRepository.findById.mockResolvedValue(null);
     lessonRepository.findByCourseId.mockResolvedValueOnce([lesson0]);
 
-    const useCase = new ReorderLessonUp(
+    const useCase = new ReorderLessonDown(
       lessonRepository,
       courseRepository,
       eventBus
@@ -175,22 +175,22 @@ describe('Reorder Lesson up', () => {
   it('Should not reorder a lesson if course is not authored', async () => {
     const course = new CourseBuilder().build();
 
-    const lesson0 = new LessonBuilder()
-      .withOrder(LessonOrder.of(0))
+    const lesson1 = new LessonBuilder()
+      .withOrder(LessonOrder.of(1))
       .withCourseId(course.id)
       .build();
     const lesson = new LessonBuilder().withCourseId(course.id).build();
 
-    const command = new ReorderLessonUpCommand({
+    const command = new ReorderLessonDownCommand({
       authorId: AuthorId.random().value,
       lessonId: lesson.id.value,
     });
 
     lessonRepository.findById.mockResolvedValue(lesson);
     courseRepository.findById.mockResolvedValue(course);
-    lessonRepository.findByCourseId.mockResolvedValueOnce([lesson0, lesson]);
+    lessonRepository.findByCourseId.mockResolvedValueOnce([lesson, lesson1]);
 
-    const useCase = new ReorderLessonUp(
+    const useCase = new ReorderLessonDown(
       lessonRepository,
       courseRepository,
       eventBus
@@ -203,22 +203,22 @@ describe('Reorder Lesson up', () => {
   it('Should not reorder a lesson if course do not exist', async () => {
     const course = new CourseBuilder().build();
 
-    const lesson0 = new LessonBuilder()
-      .withOrder(LessonOrder.of(0))
+    const lesson1 = new LessonBuilder()
+      .withOrder(LessonOrder.of(1))
       .withCourseId(course.id)
       .build();
     const lesson = new LessonBuilder().withCourseId(course.id).build();
 
-    const command = new ReorderLessonUpCommand({
+    const command = new ReorderLessonDownCommand({
       authorId: AuthorId.random().value,
       lessonId: lesson.id.value,
     });
 
     lessonRepository.findById.mockResolvedValue(lesson);
     courseRepository.findById.mockResolvedValue(null);
-    lessonRepository.findByCourseId.mockResolvedValueOnce([lesson0, lesson]);
+    lessonRepository.findByCourseId.mockResolvedValueOnce([lesson, lesson1]);
 
-    const useCase = new ReorderLessonUp(
+    const useCase = new ReorderLessonDown(
       lessonRepository,
       courseRepository,
       eventBus
