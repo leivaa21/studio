@@ -72,6 +72,9 @@ jobs:
       - name: Check linter courses
         run: yarn lint:api:courses
 
+      - name: Check courses tests
+        run: yarn test:api:courses
+
   ProfilesQA:
     if: contains( github.event.pull_request.labels.*.name, 'Profiles')
     runs-on: ubuntu-latest
