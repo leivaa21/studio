@@ -41,8 +41,18 @@ export class CourseBuilder implements Builder<Course> {
     return this;
   }
 
+  public withUpdatedAt(updatedAt: Date) {
+    this._updatedAt = updatedAt;
+    return this;
+  }
+
   public withPublishedAt(publishedAt: Date) {
     this._publishedAt = publishedAt;
+    return this;
+  }
+
+  public withTags(tags: CourseTags) {
+    this._tags = tags;
     return this;
   }
 }
