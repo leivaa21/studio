@@ -8,7 +8,10 @@ import {
 import { CourseRepository } from '../../../src/contexts/courses/domain/CourseRepository';
 import { MongoCourseRepository } from '../../../src/contexts/courses/infrastructure/persistance/mongo/MongoCourseRepository';
 import { CourseSchemaFactory } from '../../../src/contexts/courses/infrastructure/persistance/mongo/CourseSchemaFactory';
-import { create, findById } from '../../helpers/persistance/mongo/courses';
+import {
+  createCourse,
+  findCourseById,
+} from '../../helpers/persistance/mongo/courses';
 import { CourseBuilder } from '../../helpers/builders/CourseBuilder';
 import { MongoCriteriaConverter } from '../../../src/contexts/shared/infrastructure/mongo/MongoCriteriaConverter';
 import { AuthorId } from '../../../src/contexts/courses/domain/AuthorId';
@@ -43,7 +46,7 @@ describe('Mongo Course Repository', () => {
       const course = new CourseBuilder().build();
       await repository.create(course);
 
-      const courseFound = await findById(course.id);
+      const courseFound = await findCourseById(course.id);
 
       expect(courseFound?.toPrimitives()).toStrictEqual(course.toPrimitives());
     });
@@ -53,7 +56,7 @@ describe('Mongo Course Repository', () => {
     describe('By id', () => {
       it('Should find a course by his id', async () => {
         const course = new CourseBuilder().build();
-        await create(course);
+        await createCourse(course);
 
         const foundCourse = await repository.findById(course.id);
 
@@ -64,7 +67,7 @@ describe('Mongo Course Repository', () => {
 
       it('Should not find a course if id is not equal', async () => {
         const course = new CourseBuilder().build();
-        await create(course);
+        await createCourse(course);
 
         const foundCourse = await repository.findById(CourseId.random());
 
@@ -128,7 +131,7 @@ describe('Mongo Course Repository', () => {
             authoredCourse4,
             nonAuthoredCourse1,
             nonAuthoredCourse2,
-          ].map((course) => create(course))
+          ].map((course) => createCourse(course))
         );
 
         const criteria = CourseCriteria.paginatedFromAuthorWithFilters({
@@ -194,7 +197,7 @@ describe('Mongo Course Repository', () => {
             publishedCourse4,
             nonPublishedCourse1,
             nonPublishedCourse2,
-          ].map((course) => create(course))
+          ].map((course) => createCourse(course))
         );
 
         const criteria = CourseCriteria.paginatedPublishedWithFilters({

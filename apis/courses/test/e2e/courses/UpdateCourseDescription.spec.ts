@@ -8,7 +8,10 @@ import {
 import { CourseBuilder } from '../../helpers/builders/CourseBuilder';
 import { app } from '../../../src/api/app';
 import { AuthorizationTokenBuilder } from '../../helpers/builders/AuthorizationTokenBuilder';
-import { create, findById } from '../../helpers/persistance/mongo/courses';
+import {
+  createCourse,
+  findCourseById,
+} from '../../helpers/persistance/mongo/courses';
 import { ErrorCodes } from '@studio/commons';
 import { AuthorId } from '../../../src/contexts/courses/domain/AuthorId';
 
@@ -29,7 +32,7 @@ afterAll(async () => {
 describe(`PUT ${route}`, () => {
   it('should change description of an existant course', async () => {
     const course = new CourseBuilder().build();
-    await create(course);
+    await createCourse(course);
 
     const body = {
       description: new CourseBuilder().build().description.value,
@@ -47,14 +50,14 @@ describe(`PUT ${route}`, () => {
       .expect('Content-Type', /json/)
       .expect(200);
 
-    const courseUpdated = await findById(course.id);
+    const courseUpdated = await findCourseById(course.id);
 
     expect(courseUpdated?.description.value).toStrictEqual(body.description);
   });
 
   it('should require description to change it on an existant course', async () => {
     const course = new CourseBuilder().build();
-    await create(course);
+    await createCourse(course);
 
     const body = {};
 
@@ -108,7 +111,7 @@ describe(`PUT ${route}`, () => {
   it('should not change description of an existant course if not authored', async () => {
     const course = new CourseBuilder().build();
 
-    await create(course);
+    await createCourse(course);
 
     const body = {
       description: new CourseBuilder().build().description.value,

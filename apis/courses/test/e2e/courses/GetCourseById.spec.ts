@@ -7,7 +7,7 @@ import {
 } from '../../helpers/test-containers/mongo';
 import { CourseBuilder } from '../../helpers/builders/CourseBuilder';
 import { app } from '../../../src/api/app';
-import { create } from '../../helpers/persistance/mongo/courses';
+import { createCourse } from '../../helpers/persistance/mongo/courses';
 import { ErrorCodes } from '@studio/commons';
 
 let mongoContainer: StartedTestContainer;
@@ -26,7 +26,7 @@ afterAll(async () => {
 describe(`GET ${route}/:id`, () => {
   it('should get the persisted course with id matching the path', async () => {
     const course = new CourseBuilder().build();
-    await create(course);
+    await createCourse(course);
 
     const response = await request(app)
       .get(`${route}/${course.id.value}`)
