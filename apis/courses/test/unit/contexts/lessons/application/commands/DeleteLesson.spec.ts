@@ -11,7 +11,7 @@ import { LessonBuilder } from '../../../../../helpers/builders/LessonBuilder';
 import { AuthorId } from '../../../../../../src/contexts/courses/domain/AuthorId';
 import { CourseNotFoundError } from '../../../../../../src/contexts/courses/domain/errors/CourseNotFoundError';
 
-describe('Create new Lesson', () => {
+describe('Delete new Lesson', () => {
   const lessonRepository = mock<LessonRepository>();
   const courseRepository = mock<CourseRepository>();
   const eventBus = mock<EventBus>();
