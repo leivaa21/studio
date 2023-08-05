@@ -9,7 +9,11 @@
     "dev": "NODE_ENV=dev ts-node-dev src",
     "prod": "yarn build && yarn start",
     "lint": "eslint './src/**' && prettier .",
-    "lint:fix": "eslint './src/**' --fix && prettier --write ."
+    "lint:fix": "eslint './src/**' --fix && prettier --write .",
+    "test:unit": "jest ./test/unit",
+    "test:integration": "jest ./test/integration",
+    "test:e2e": "jest ./test/e2e",
+    "test:coverage": "jest --coverage"
   },
   "dependencies": {
     "@studio/api-utils": "workspace:packages/api-utils",
