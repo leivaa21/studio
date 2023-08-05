@@ -8,7 +8,10 @@ import {
 import { CourseBuilder } from '../../helpers/builders/CourseBuilder';
 import { app } from '../../../src/api/app';
 import { AuthorizationTokenBuilder } from '../../helpers/builders/AuthorizationTokenBuilder';
-import { create, findById } from '../../helpers/persistance/mongo/courses';
+import {
+  createCourse,
+  findCourseById,
+} from '../../helpers/persistance/mongo/courses';
 import { ErrorCodes } from '@studio/commons';
 import { AuthorId } from '../../../src/contexts/courses/domain/AuthorId';
 
@@ -29,7 +32,7 @@ afterAll(async () => {
 describe(`PUT ${route}`, () => {
   it('should unpublish an existant published course', async () => {
     const course = new CourseBuilder().withPublishedAt(new Date()).build();
-    await create(course);
+    await createCourse(course);
 
     await request(app)
       .put(formatedRoute(course.id.value))
@@ -42,7 +45,7 @@ describe(`PUT ${route}`, () => {
       .expect('Content-Type', /json/)
       .expect(200);
 
-    const courseUpdated = await findById(course.id);
+    const courseUpdated = await findCourseById(course.id);
 
     expect(courseUpdated?.publishedAt).toBeNull();
   });
@@ -72,7 +75,7 @@ describe(`PUT ${route}`, () => {
   it('should not unpublish an existant course if not authored', async () => {
     const course = new CourseBuilder().withPublishedAt(new Date()).build();
 
-    await create(course);
+    await createCourse(course);
 
     const response = await request(app)
       .put(formatedRoute(course.id.value))

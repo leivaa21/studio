@@ -8,7 +8,7 @@ import {
 import { CourseBuilder } from '../../helpers/builders/CourseBuilder';
 import { app } from '../../../src/api/app';
 import { AuthorizationTokenBuilder } from '../../helpers/builders/AuthorizationTokenBuilder';
-import { findByAuthorId } from '../../helpers/persistance/mongo/courses';
+import { findCoursesByAuthorId } from '../../helpers/persistance/mongo/courses';
 import { ErrorCodes } from '@studio/commons';
 
 let mongoContainer: StartedTestContainer;
@@ -44,7 +44,7 @@ describe(`POST ${route}`, () => {
       .expect('Content-Type', /json/)
       .expect(201);
 
-    const authorCourses = await findByAuthorId(course.authorId);
+    const authorCourses = await findCoursesByAuthorId(course.authorId);
 
     expect(authorCourses).toBeDefined();
     expect(authorCourses).toHaveLength(1);
@@ -77,7 +77,7 @@ describe(`POST ${route}`, () => {
         .expect('Content-Type', /json/)
         .expect(400);
 
-      const authorCourses = await findByAuthorId(course.authorId);
+      const authorCourses = await findCoursesByAuthorId(course.authorId);
 
       expect(authorCourses).toHaveLength(0);
 
@@ -103,7 +103,7 @@ describe(`POST ${route}`, () => {
       .expect('Content-Type', /json/)
       .expect(401);
 
-    const authorCourses = await findByAuthorId(course.authorId);
+    const authorCourses = await findCoursesByAuthorId(course.authorId);
 
     expect(authorCourses).toBeDefined();
     expect(authorCourses).toHaveLength(0);

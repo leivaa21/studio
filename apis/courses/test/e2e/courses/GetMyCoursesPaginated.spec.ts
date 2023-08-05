@@ -7,7 +7,7 @@ import {
 } from '../../helpers/test-containers/mongo';
 import { CourseBuilder } from '../../helpers/builders/CourseBuilder';
 import { app } from '../../../src/api/app';
-import { create } from '../../helpers/persistance/mongo/courses';
+import { createCourse } from '../../helpers/persistance/mongo/courses';
 import { ErrorCodes } from '@studio/commons';
 import { AuthorizationTokenBuilder } from '../../helpers/builders/AuthorizationTokenBuilder';
 
@@ -27,7 +27,7 @@ afterAll(async () => {
 describe(`GET ${route}`, () => {
   it('should get the paginated courses', async () => {
     const course = new CourseBuilder().build();
-    await create(course);
+    await createCourse(course);
 
     const response = await request(app)
       .get(route)

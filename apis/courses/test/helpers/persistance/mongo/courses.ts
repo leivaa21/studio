@@ -6,18 +6,20 @@ import { CourseSchemaFactory } from '../../../../src/contexts/courses/infrastruc
 
 const schemaFactory = new CourseSchemaFactory();
 
-export async function create(course: Course): Promise<void> {
+export async function createCourse(course: Course): Promise<void> {
   const document = schemaFactory.createSchemaFromEntity(course);
   await CourseModel.create(document);
 }
 
-export async function findById(id: CourseId): Promise<Course | undefined> {
+export async function findCourseById(
+  id: CourseId
+): Promise<Course | undefined> {
   const document = await CourseModel.findById(id.value);
 
   return document ? schemaFactory.createEntityFromSchema(document) : undefined;
 }
 
-export async function findByAuthorId(
+export async function findCoursesByAuthorId(
   authorId: AuthorId
 ): Promise<Course[] | undefined> {
   const documents = await CourseModel.find({ authorId: authorId.value });
