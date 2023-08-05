@@ -33,7 +33,8 @@
     "lint:api:profiles": "yarn workspace @studio/profiles lint",
     "lint:api:courses": "yarn workspace @studio/courses lint",
     "lint:app:web": "yarn workspace @studio/web lint",
-    "lint:app:sb": "yarn workspace @studio/storybook lint"
+    "lint:app:sb": "yarn workspace @studio/storybook lint",
+    "test:api:courses": "yarn workspace @studio/courses test"
   },
   "repository": {
     "type": "git",

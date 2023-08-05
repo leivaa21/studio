@@ -10,16 +10,6 @@ function getEnvVariableOrUndefined<T>(varName: string): T | undefined {
   return getEnvVariableOrDefault<T | undefined>(varName, undefined);
 }
 
-function getEnvVariableOrThrow(varName: string): string {
-  const variable = process.env[varName];
-
-  if (!variable) {
-    throw new Error(`<${varName}> Should be defined in .env file`);
-  }
-
-  return variable;
-}
-
 export const env = {
   courses: {
     port: getEnvVariableOrDefault<number>('PORT', 5002),
@@ -33,6 +23,6 @@ export const env = {
     pass: getEnvVariableOrUndefined<string>('MONGO_PASS'),
   },
   jwt: {
-    secret: getEnvVariableOrThrow('JWT_SECRET'),
+    secret: getEnvVariableOrDefault<string>('JWT_SECRET', 'jwt-secret'),
   },
 };

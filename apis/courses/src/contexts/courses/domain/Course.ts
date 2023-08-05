@@ -63,7 +63,7 @@ export class Course extends AggregateRoot {
     this._description = description;
     this.createdAt = createdAt;
     this._updatedAt = updatedAt;
-    this._publishedAt = publishedAt;
+    this._publishedAt = publishedAt || null;
   }
 
   static new({

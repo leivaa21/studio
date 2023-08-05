@@ -1,5 +1,5 @@
 import { DomainError, DomainErrorParams } from "./DomainError";
-export type ErrorKind = 'BAD_REQUEST' | 'NOT_FOUND';
+export type ErrorKind = 'BAD_REQUEST' | 'NOT_FOUND' | 'UNAUTHORIZED';
 
 export interface ApiErrorParams extends DomainErrorParams {
   apiStatus: number,

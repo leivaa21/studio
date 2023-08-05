@@ -1,10 +1,13 @@
 import { StatusCode } from "../http";
-import { HttpError } from "../interfaces/httpError";
+import { ApiError, ErrorCodes } from "@studio/commons";
 
-export class RouteNotFound extends Error implements HttpError  {
-  public readonly statusCode: number;
+export class RouteNotFoundError extends ApiError  {
   constructor(method: string, path: string) {
-    super(`Cannot ${method} ${path}`);
-    this.statusCode = StatusCode.NOT_FOUND;
+    super({
+      apiStatus: StatusCode.NOT_FOUND,
+      kind: 'NOT_FOUND',
+      errorCode: ErrorCodes.RouteNotFound,
+      message: `Cannot ${method} ${path}`,
+    });
   }
 }

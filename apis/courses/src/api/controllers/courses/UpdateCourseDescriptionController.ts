@@ -1,7 +1,6 @@
 import { Injectable } from '@studio/dependency-injection';
 import {
   Authorized,
-  BadRequestError,
   Body,
   CurrentUser,
   HttpCode,
@@ -12,7 +11,7 @@ import {
 } from 'routing-controllers';
 import { InMemoryCommandBus } from '../../../contexts/shared/infrastructure/CommandBus/InMemoryCommandBus';
 import { CommandBus } from '../../../contexts/shared/domain/CommandBus';
-import { StatusCode } from '@studio/api-utils';
+import { BadRequestError, StatusCode } from '@studio/api-utils';
 import { User } from '../../auth/user';
 import { UpdateCourseDescriptionCommand } from '../../../contexts/courses/application/commands/UpdateCourseDescription';
 

@@ -31,8 +31,8 @@ export class GetMyCoursesPaginatedController {
     @CurrentUser({ required: true }) user: User,
     @QueryParam('page') page = 0,
     @QueryParam('count') count = 0,
-    @QueryParam('title') title: string,
-    @QueryParam('tags') tagsAsString: string
+    @QueryParam('title') title = '',
+    @QueryParam('tags') tagsAsString = ''
   ): Promise<CourseInfoResponse[]> {
     const tags = tagsAsString.split(',').filter((tag) => tag !== '');
 

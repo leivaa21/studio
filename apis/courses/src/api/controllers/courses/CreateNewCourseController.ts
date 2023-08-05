@@ -1,7 +1,6 @@
-import { StatusCode } from '@studio/api-utils';
+import { StatusCode, BadRequestError } from '@studio/api-utils';
 import {
   Authorized,
-  BadRequestError,
   Body,
   CurrentUser,
   HttpCode,
@@ -32,9 +31,9 @@ export class CreateNewCourseController {
   ) {
     const { title, tags, description } = body;
 
-    if (!title || !description) {
+    if (!title || !description || !tags) {
       throw new BadRequestError(
-        `Title and description are required parameters when creating a new course`
+        `Title, description and tags are required parameters when creating a new course`
       );
     }
 

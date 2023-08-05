@@ -1,6 +1,8 @@
 export enum ErrorCodes {
   InvalidCredential = 'auth.invalid-credentials',
   BadRequest = 'general.bad_request',
+  Unauthorized = 'general.unauthorized',
+  RouteNotFound = 'general.route_not_found',
   InvalidPassword = 'auth.invalid-password',
   InvalidNickname = 'auth.invalid-nickname',
   InvalidEmail = 'auth.invalid-email',
@@ -18,4 +20,6 @@ export enum ErrorCodes {
   UnableToReorderLesson = 'courses.unable-to-reorder-lesson',
   UnableToPublishCourse = 'courses.course-already-published',
   UnableToUnpublishCourse = 'courses.course-not-published',
+  InvalidCourseTitle = 'courses.invalid-course-title',
+  InvalidCourseTags = 'courses.invalid-course-tags'
 }

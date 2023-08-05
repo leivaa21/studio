@@ -72,6 +72,9 @@ jobs:
       - name: Check linter courses
         run: yarn lint:api:courses
 
+      - name: Check courses tests
+        run: yarn test:api:courses
+
   ProfilesQA:
     if: contains( github.event.pull_request.labels.*.name, 'Profiles')
     runs-on: ubuntu-latest
@@ -93,6 +96,8 @@ jobs:
 
       - name: Install & Make dependencies
         run: |
+          yarn workspaces focus @studio/commons
+          yarn m:dep:commons
           yarn workspaces focus @studio/api-utils
           yarn m:dep:apiutils
           yarn workspaces focus @studio/profiles

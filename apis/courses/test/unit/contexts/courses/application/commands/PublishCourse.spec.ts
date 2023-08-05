@@ -1,15 +1,16 @@
 import { mock, mockReset } from 'jest-mock-extended';
 import {
-  UpdateCourse,
-  UpdateCourseCommand,
-} from '../../../../../../src/contexts/courses/application/commands/UpdateCourse';
+  PublishCourse,
+  PublishCourseCommand,
+} from '../../../../../../src/contexts/courses/application/commands/PublishCourse';
 import { CourseRepository } from '../../../../../../src/contexts/courses/domain/CourseRepository';
 import { EventBus } from '../../../../../../src/contexts/shared/domain/EventBus';
 import { CourseBuilder } from '../../../../../helpers/builders/CourseBuilder';
 import { CourseNotFoundError } from '../../../../../../src/contexts/courses/domain/errors/CourseNotFoundError';
 import { AuthorId } from '../../../../../../src/contexts/courses/domain/AuthorId';
+import { NotAbleToPublishCourseError } from '../../../../../../src/contexts/courses/domain/errors/NotAbleToPublishCourseError';
 
-describe('Update an existant course', () => {
+describe('Publish an existant course', () => {
   const courseRepository = mock<CourseRepository>();
   const eventBus = mock<EventBus>();
 
@@ -18,21 +19,17 @@ describe('Update an existant course', () => {
     mockReset(eventBus);
   });
 
-  it('Should let author update an existant course', async () => {
+  it('Should let author publish an existant non-published course', async () => {
     const course = new CourseBuilder().build();
-    const { title, description, tags } = new CourseBuilder().build();
 
     courseRepository.findById.mockResolvedValue(course);
     courseRepository.update.mockResolvedValue();
 
-    const useCase = new UpdateCourse(courseRepository, eventBus);
+    const useCase = new PublishCourse(courseRepository, eventBus);
 
-    const command = new UpdateCourseCommand({
+    const command = new PublishCourseCommand({
       authorId: course.authorId.value,
       courseId: course.id.value,
-      title: title.value,
-      description: description.value,
-      tags: tags.values,
     });
 
     await expect(useCase.execute(command)).resolves.not.toThrow();
@@ -40,39 +37,50 @@ describe('Update an existant course', () => {
     expect(eventBus.publish).toBeCalled();
   });
 
-  it('Should not let update a course that not exist', async () => {
+  it('Should not let publish a course that not exist', async () => {
     const course = new CourseBuilder().build();
 
     courseRepository.findById.mockResolvedValue(null);
 
-    const useCase = new UpdateCourse(courseRepository, eventBus);
+    const useCase = new PublishCourse(courseRepository, eventBus);
 
-    const command = new UpdateCourseCommand({
+    const command = new PublishCourseCommand({
       authorId: course.authorId.value,
       courseId: course.id.value,
-      title: course.title.value,
-      description: course.description.value,
-      tags: course.tags.values,
     });
 
     await expect(useCase.execute(command)).rejects.toThrow(CourseNotFoundError);
   });
 
-  it('Should not update a course by an user thats not the author', async () => {
+  it('Should not let publish a course by an user thats not the author', async () => {
     const course = new CourseBuilder().build();
 
     courseRepository.findById.mockResolvedValue(course);
 
-    const useCase = new UpdateCourse(courseRepository, eventBus);
+    const useCase = new PublishCourse(courseRepository, eventBus);
 
-    const command = new UpdateCourseCommand({
+    const command = new PublishCourseCommand({
       authorId: AuthorId.random().value,
       courseId: course.id.value,
-      title: course.title.value,
-      description: course.description.value,
-      tags: course.tags.values,
     });
 
     await expect(useCase.execute(command)).rejects.toThrow(CourseNotFoundError);
+  });
+
+  it('Should not publish a course if its already published', async () => {
+    const course = new CourseBuilder().withPublishedAt(new Date()).build();
+
+    courseRepository.findById.mockResolvedValue(course);
+
+    const useCase = new PublishCourse(courseRepository, eventBus);
+
+    const command = new PublishCourseCommand({
+      authorId: course.authorId.value,
+      courseId: course.id.value,
+    });
+
+    await expect(useCase.execute(command)).rejects.toThrow(
+      NotAbleToPublishCourseError
+    );
   });
 });
