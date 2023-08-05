@@ -1,7 +1,6 @@
-import { StatusCode } from '@studio/api-utils';
+import { BadRequestError, StatusCode } from '@studio/api-utils';
 import {
   Authorized,
-  BadRequestError,
   Body,
   CurrentUser,
   HttpCode,
@@ -34,20 +33,16 @@ export class CreateNewLessonController {
 
     if (!title || !content || !courseId) {
       throw new BadRequestError(
-        `Title, content and courseId are required parameters when creating a new course`
+        `Title, content and courseId are required parameters when creating a new lesson`
       );
     }
-    try {
-      await this.commandBus.dispatch<CreateNewLessonCommand>(
-        new CreateNewLessonCommand({
-          courseId,
-          authorId: user.id,
-          title,
-          content,
-        })
-      );
-    } catch (err) {
-      console.error(err);
-    }
+    await this.commandBus.dispatch<CreateNewLessonCommand>(
+      new CreateNewLessonCommand({
+        courseId,
+        authorId: user.id,
+        title,
+        content,
+      })
+    );
   }
 }
