@@ -1,5 +1,6 @@
-name: Pull Request Labeler
-on: [pull_request]
+name: "Pull Request Auto QA"
+on:
+  - pull_request_target
 
 jobs:
   triage:
@@ -8,6 +9,17 @@ jobs:
       pull-requests: write
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/labeler@v4
-      with:
-        repo-token: "${{ secrets.GITHUB_TOKEN }}"
+      - id: label-the-PR
+        uses: actions/labeler@v4
+        with:
+          repo-token: "${{ secrets.GITHUB_TOKEN }}"
+      - id: run-frontend-tests
+        if: contains(steps.label-the-PR.outputs.all-labels, 'Courses')
+        run: |
+          echo "Running frontend tests..."
+
+      - id: run-backend-tests
+        if: contains(steps.label-the-PR.outputs.all-labels, 'backend')
+        run: |
+          echo "Running backend tests..."
+          # Put your commands for running backend tests here
