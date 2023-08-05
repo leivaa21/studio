@@ -18,7 +18,7 @@ import { CourseTags } from '../../../src/contexts/courses/domain/CourseTags';
 import { CourseTag } from '../../../src/contexts/courses/domain/CourseTag';
 import { CourseTag as CourseTagEnum } from '@studio/commons';
 
-describe('Mongo User Repository', () => {
+describe('Mongo Course Repository', () => {
   jest.setTimeout(9999999);
 
   let repository: CourseRepository;
