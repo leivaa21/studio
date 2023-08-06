@@ -40,7 +40,6 @@ export class ReorderLessonsOnLessonDeletedHandler extends EventHandler<LessonWas
       affectedLessons.map(async (lesson) => {
         lesson.moveUp();
         await this.lessonRepository.update(lesson);
-        this.publishAggregateRootEvents(lesson);
       })
     );
   }
