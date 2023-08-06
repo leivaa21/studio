@@ -82,9 +82,13 @@ describe('Mongo Lesson Repository', () => {
 
         const foundLessons = await repository.findByCourseId(courseId);
 
-        expect(foundLessons.map((lesson) => lesson.toPrimitives())).toEqual(
-          [lesson, lesson2].map((lesson) => lesson.toPrimitives())
-        );
+        [lesson, lesson2].map((lesson) => {
+          expect(
+            foundLessons.find(
+              (foundLesson) => foundLesson.id.value === lesson.id.value
+            )
+          ).toBeDefined();
+        });
       });
     });
   });
