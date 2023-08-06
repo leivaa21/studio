@@ -2,6 +2,7 @@ import { AggregateRoot } from '../../shared/domain/AggregateRoot';
 import { CourseId } from '../../courses/domain/CourseId';
 import { CourseSubscriptionId } from './CourseSubscriptionId';
 import { UserId } from './UserId';
+import { CourseSubscriptionWasCreatedEvent } from './events/CourseSubscriptionWasCreated';
 
 export interface CourseSubscriptionParams {
   readonly id: CourseSubscriptionId;
@@ -50,6 +51,15 @@ export class CourseSubscription extends AggregateRoot {
   }): CourseSubscription {
     const courseSubscriptionId = CourseSubscriptionId.random();
 
+    const courseSubscriptionWasCreatedEvent =
+      CourseSubscriptionWasCreatedEvent.fromPrimitives({
+        aggregateId: courseSubscriptionId.value,
+        attributes: {
+          userId: userId.value,
+          courseId: courseId.value,
+        },
+      });
+
     const courseSubscription = new CourseSubscription({
       id: courseSubscriptionId,
       userId,
@@ -57,6 +67,8 @@ export class CourseSubscription extends AggregateRoot {
       subscribedAt: new Date(),
       updatedAt: new Date(),
     });
+
+    courseSubscription.commit(courseSubscriptionWasCreatedEvent);
 
     return courseSubscription;
   }
