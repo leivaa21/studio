@@ -53,11 +53,7 @@ export function CourseContentPreview({ courseId }: CourseContentPreviewParams) {
               ? 'You are already subscribed to this course!'
               : 'Start Course'
           }
-          onClick={
-            userAlreadySubscribedToCourse
-              ? undefined
-              : () => setSubscribeToCourseModalShown(true)
-          }
+          onClick={() => setSubscribeToCourseModalShown(true)}
           disabled={userAlreadySubscribedToCourse}
         />
       </div>
