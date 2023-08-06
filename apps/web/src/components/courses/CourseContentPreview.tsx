@@ -9,6 +9,7 @@ import { Modal } from '@studio/ui/components/modal';
 import { createCourseSubscription } from '../../contexts/course-subscription/application/CreateCourseSubscription';
 import { getAuthTokenCookie } from '../../lib/cookieUtils';
 import { useRouter } from 'next/router';
+import { useCheckIfUserIsAlreadySubscribedToCourse } from '../../hooks/course/useCheckIfUserIsAlreadySubscribedToCourse';
 
 export interface CourseContentPreviewParams {
   courseId: string;
@@ -19,6 +20,9 @@ export function CourseContentPreview({ courseId }: CourseContentPreviewParams) {
 
   const course = useCourse(courseId);
   const author = useCourseAuthor(course?.authorId);
+
+  const userAlreadySubscribedToCourse =
+    useCheckIfUserIsAlreadySubscribedToCourse(courseId);
 
   const [subscribeToCourseModalShown, setSubscribeToCourseModalShown] =
     useState<boolean>(false);
@@ -44,8 +48,17 @@ export function CourseContentPreview({ courseId }: CourseContentPreviewParams) {
         <Button
           Type="Primary"
           Size="Medium"
-          Label="Start Course"
-          onClick={() => setSubscribeToCourseModalShown(true)}
+          Label={
+            userAlreadySubscribedToCourse
+              ? 'You are already subscribed to this course!'
+              : 'Start Course'
+          }
+          onClick={
+            userAlreadySubscribedToCourse
+              ? undefined
+              : () => setSubscribeToCourseModalShown(true)
+          }
+          disabled={userAlreadySubscribedToCourse}
         />
       </div>
 
