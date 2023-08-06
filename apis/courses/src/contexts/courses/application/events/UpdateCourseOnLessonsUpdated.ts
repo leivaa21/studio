@@ -1,6 +1,5 @@
 import { Injectable } from '@studio/dependency-injection';
 import { DomainEventClass } from '../../../shared/domain/DomainEvent';
-import { DomainEventSubscriber } from '../../../shared/domain/DomainEventSubscriber';
 import { CourseId } from '../../domain/CourseId';
 import { CourseRepository } from '../../domain/CourseRepository';
 import { CourseFinder } from '../../application/services/CourseFinder';
@@ -10,6 +9,9 @@ import { LessonWasDeletedEvent } from '../../../lessons/domain/events/LessonWasD
 import { LessonContentWasUpdatedEvent } from '../../../lessons/domain/events/LessonContentWasUpdated';
 import { LessonWasRenamedEvent } from '../../../lessons/domain/events/LessonWasRenamed';
 import { LessonWasReorderedEvent } from '../../../lessons/domain/events/LessonWasReordered';
+import { EventHandler } from '../../../shared/application/EventHandler';
+import { InMemoryAsyncEventBus } from '../../../shared/infrastructure/EventBus/InMemoryAsyncEventBus';
+import { EventBus } from '../../../shared/domain/EventBus';
 
 export type UpdateCourseOnLessonsUpdatedHandlerSubscribedEvents =
   | LessonWasCreatedEvent
@@ -19,15 +21,16 @@ export type UpdateCourseOnLessonsUpdatedHandlerSubscribedEvents =
   | LessonWasReorderedEvent;
 
 @Injectable({
-  dependencies: [MongoCourseRepository],
+  dependencies: [MongoCourseRepository, InMemoryAsyncEventBus],
 })
-export class UpdateCourseOnLessonsUpdatedHandler
-  implements
-    DomainEventSubscriber<UpdateCourseOnLessonsUpdatedHandlerSubscribedEvents>
-{
+export class UpdateCourseOnLessonsUpdatedHandler extends EventHandler<UpdateCourseOnLessonsUpdatedHandlerSubscribedEvents> {
   private readonly courseFinder: CourseFinder;
 
-  public constructor(private readonly courseRepository: CourseRepository) {
+  public constructor(
+    private readonly courseRepository: CourseRepository,
+    eventBus?: EventBus
+  ) {
+    super(eventBus);
     this.courseFinder = new CourseFinder(courseRepository);
   }
   subscribedTo(): DomainEventClass[] {
@@ -51,5 +54,7 @@ export class UpdateCourseOnLessonsUpdatedHandler
     course.hasBeenUpdated();
 
     this.courseRepository.update(course);
+
+    this.publishAggregateRootEvents(course);
   }
 }
