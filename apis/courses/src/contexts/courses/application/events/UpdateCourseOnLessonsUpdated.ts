@@ -1,17 +1,17 @@
 import { Injectable } from '@studio/dependency-injection';
 import { DomainEventClass } from '../../../shared/domain/DomainEvent';
 import { DomainEventSubscriber } from '../../../shared/domain/DomainEventSubscriber';
-import { LessonWasCreatedEvent } from '../../domain/events/LessonWasCreated';
-import { CourseId } from '../../../courses/domain/CourseId';
-import { CourseRepository } from '../../../courses/domain/CourseRepository';
-import { CourseFinder } from '../../../courses/application/services/CourseFinder';
-import { MongoCourseRepository } from '../../../courses/infrastructure/persistance/mongo/MongoCourseRepository';
-import { LessonWasDeletedEvent } from '../../domain/events/LessonWasDeleted';
-import { LessonContentWasUpdatedEvent } from '../../domain/events/LessonContentWasUpdated';
-import { LessonWasRenamedEvent } from '../../domain/events/LessonWasRenamed';
-import { LessonWasReorderedEvent } from '../../domain/events/LessonWasReordered';
+import { CourseId } from '../../domain/CourseId';
+import { CourseRepository } from '../../domain/CourseRepository';
+import { CourseFinder } from '../../application/services/CourseFinder';
+import { MongoCourseRepository } from '../../infrastructure/persistance/mongo/MongoCourseRepository';
+import { LessonWasCreatedEvent } from '../../../lessons/domain/events/LessonWasCreated';
+import { LessonWasDeletedEvent } from '../../../lessons/domain/events/LessonWasDeleted';
+import { LessonContentWasUpdatedEvent } from '../../../lessons/domain/events/LessonContentWasUpdated';
+import { LessonWasRenamedEvent } from '../../../lessons/domain/events/LessonWasRenamed';
+import { LessonWasReorderedEvent } from '../../../lessons/domain/events/LessonWasReordered';
 
-export type UpdateCourseWhenLessonsChangedHandlerSubscribedEvents =
+export type UpdateCourseOnLessonsUpdatedHandlerSubscribedEvents =
   | LessonWasCreatedEvent
   | LessonWasDeletedEvent
   | LessonContentWasUpdatedEvent
@@ -21,9 +21,9 @@ export type UpdateCourseWhenLessonsChangedHandlerSubscribedEvents =
 @Injectable({
   dependencies: [MongoCourseRepository],
 })
-export class UpdateCourseWhenLessonsChangedHandler
+export class UpdateCourseOnLessonsUpdatedHandler
   implements
-    DomainEventSubscriber<UpdateCourseWhenLessonsChangedHandlerSubscribedEvents>
+    DomainEventSubscriber<UpdateCourseOnLessonsUpdatedHandlerSubscribedEvents>
 {
   private readonly courseFinder: CourseFinder;
 
@@ -40,7 +40,7 @@ export class UpdateCourseWhenLessonsChangedHandler
     ];
   }
   async on(
-    domainEvent: UpdateCourseWhenLessonsChangedHandlerSubscribedEvents
+    domainEvent: UpdateCourseOnLessonsUpdatedHandlerSubscribedEvents
   ): Promise<void> {
     const { attributes } = domainEvent;
 
