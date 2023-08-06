@@ -47,7 +47,13 @@ export class CreateCourseSubscription extends CommandHandler<CreateCourseSubscri
   async execute(command: CreateCourseSubscriptionCommand): Promise<void> {
     const courseId = CourseId.of(command.courseId);
 
-    await this.courseFinder.findByIdOrThrow(courseId);
+    const course = await this.courseFinder.findByIdOrThrow(courseId);
+
+    if (!course.isPublished) {
+      throw InvalidCourseSubscriptionError.causeCourseIsNotPublished(
+        courseId.value
+      );
+    }
 
     const userId = UserId.of(command.userId);
 

@@ -28,7 +28,7 @@ afterAll(async () => {
 
 describe(`POST ${route}`, () => {
   it('should let create a course subscription', async () => {
-    const course = new CourseBuilder().build();
+    const course = new CourseBuilder().withPublishedAt(new Date()).build();
     const userId = UserId.random();
 
     await createCourse(course);

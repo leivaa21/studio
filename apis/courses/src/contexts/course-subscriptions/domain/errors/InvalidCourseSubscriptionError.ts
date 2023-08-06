@@ -17,4 +17,7 @@ export class InvalidCourseSubscriptionError extends ApiError {
       `User <${userId}> is already subscribed to course <${courseId}>`
     );
   }
+  public static causeCourseIsNotPublished(courseId: string) {
+    return new this(`Course <${courseId}> is not published`);
+  }
 }

@@ -24,7 +24,7 @@ describe('Create new course subscription', () => {
   });
 
   it('Should create a new course subscription', async () => {
-    const course = new CourseBuilder().build();
+    const course = new CourseBuilder().withPublishedAt(new Date()).build();
     const userId = UserId.random();
 
     const command = new CreateCourseSubscriptionCommand({
@@ -47,7 +47,8 @@ describe('Create new course subscription', () => {
   });
 
   it('Should not create a course subscription if course do not exist', async () => {
-    const course = new CourseBuilder().build();
+    const course = new CourseBuilder().withPublishedAt(new Date()).build();
+
     const userId = UserId.random();
 
     const command = new CreateCourseSubscriptionCommand({
@@ -68,7 +69,8 @@ describe('Create new course subscription', () => {
   });
 
   it('Should not create a course subscription if user is already subscribed to that course', async () => {
-    const course = new CourseBuilder().build();
+    const course = new CourseBuilder().withPublishedAt(new Date()).build();
+
     const courseSubscription = new CourseSubscriptionBuilder()
       .withCourseId(course.id)
       .build();
@@ -88,6 +90,32 @@ describe('Create new course subscription', () => {
     courseSubscriptionRepository.findByUserAndCourse.mockResolvedValue(
       courseSubscription
     );
+
+    await expect(useCase.execute(command)).rejects.toThrow(
+      InvalidCourseSubscriptionError
+    );
+  });
+
+  it('Should not create a course subscription if course is not published', async () => {
+    const course = new CourseBuilder().build();
+
+    const courseSubscription = new CourseSubscriptionBuilder()
+      .withCourseId(course.id)
+      .build();
+
+    const command = new CreateCourseSubscriptionCommand({
+      userId: courseSubscription.userId.value,
+      courseId: course.id.value,
+    });
+
+    const useCase = new CreateCourseSubscription(
+      courseSubscriptionRepository,
+      courseRepository,
+      eventBus
+    );
+
+    courseRepository.findById.mockResolvedValue(course);
+    courseSubscriptionRepository.findByUserAndCourse.mockResolvedValue(null);
 
     await expect(useCase.execute(command)).rejects.toThrow(
       InvalidCourseSubscriptionError
