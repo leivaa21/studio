@@ -81,6 +81,18 @@ export class CourseSubscription extends AggregateRoot {
     return this._updatedAt;
   }
 
+  public static fromPrimitives(
+    primitives: CourseSubscriptionPrimitives
+  ): CourseSubscription {
+    return new CourseSubscription({
+      id: CourseSubscriptionId.of(primitives.id),
+      userId: UserId.of(primitives.userId),
+      courseId: CourseId.of(primitives.courseId),
+      subscribedAt: primitives.subscribedAt,
+      updatedAt: primitives.updatedAt,
+    });
+  }
+
   public toPrimitives(): CourseSubscriptionPrimitives {
     return {
       id: this.id.value,

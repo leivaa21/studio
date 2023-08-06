@@ -11,6 +11,7 @@ import { CourseId } from '../../../courses/domain/CourseId';
 import { UserId } from '../../domain/UserId';
 import { CourseSubscription } from '../../domain/CourseSubscription';
 import { InvalidCourseSubscriptionError } from '../../domain/errors/InvalidCourseSubscriptionError';
+import { MongoCourseSubscriptionRepository } from '../../infrastructure/persistance/mongo/MongoCourseSubscriptionRepository';
 
 export class CreateCourseSubscriptionCommand {
   public readonly courseId: string;
@@ -22,7 +23,11 @@ export class CreateCourseSubscriptionCommand {
 }
 
 @Injectable({
-  dependencies: [MongoCourseRepository, InMemoryAsyncEventBus],
+  dependencies: [
+    MongoCourseSubscriptionRepository,
+    MongoCourseRepository,
+    InMemoryAsyncEventBus,
+  ],
 })
 export class CreateCourseSubscription extends CommandHandler<CreateCourseSubscriptionCommand> {
   private readonly courseSubscriptionFinder: CourseSubscriptionFinder;
