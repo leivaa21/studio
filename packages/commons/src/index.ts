@@ -23,7 +23,7 @@ export * from './contracts/courses/UpdateCourseContracts';
 export * from './contracts/courses/CreateLessonContracts';
 export * from './contracts/courses/LessonContracts';
 
-export * from './contracts/course-subscription/CourseSubscriptionContracts'
+export * from './contracts/course-subscriptions/CourseSubscriptionContracts';
 
 export * from './errors/ErrorCodes';
 

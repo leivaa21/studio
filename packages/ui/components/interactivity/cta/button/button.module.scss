@@ -33,18 +33,27 @@
   &.size-Large {
     font-size: 2rem;
   }
-}
 
-.base:hover {
-  cursor: pointer;
+  &:hover {
+    cursor: pointer;
 
-  &.type-Primary {
-    background-color: $primary-active;
+    &.type-Primary {
+      background-color: $primary-active;
+    }
+    &.type-Secondary {
+      background-color: $secondary-active;
+    }
+    &.type-Cancel {
+      background-color: $cancel-active;
+    }
   }
-  &.type-Secondary {
-    background-color: $secondary-active;
-  }
-  &.type-Cancel {
-    background-color: $cancel-active;
+
+  &:disabled {
+    cursor: not-allowed;
+    background-color: $disabled;
+
+    &:hover {
+      background-color: $disabled-active;
+    }
   }
 }

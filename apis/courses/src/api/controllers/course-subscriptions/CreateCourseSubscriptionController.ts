@@ -9,6 +9,7 @@ import {
 } from 'routing-controllers';
 import { StatusCode, BadRequestError } from '@studio/api-utils';
 import { Injectable } from '@studio/dependency-injection';
+import { CreateCourseSubscriptionRequest } from '@studio/commons';
 
 import { User } from '../../auth/user';
 import { InMemoryCommandBus } from '../../../contexts/shared/infrastructure/CommandBus/InMemoryCommandBus';
@@ -27,7 +28,7 @@ export class CreateCourseSubscriptionController {
   @OnUndefined(StatusCode.CREATED)
   @Authorized()
   public async execute(
-    @Body() body: { courseId: string },
+    @Body() body: CreateCourseSubscriptionRequest,
     @CurrentUser({ required: true }) user: User
   ) {
     const { courseId } = body;

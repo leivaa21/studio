@@ -4,14 +4,39 @@ import styles from './courses.module.scss';
 import { useCourse } from '../../hooks/course/useCourse';
 import { MarkdownRenderer } from '../markdown/renderer';
 import { useCourseAuthor } from '../../hooks/course/useCourseAuthor';
+import { useState } from 'react';
+import { Modal } from '@studio/ui/components/modal';
+import { createCourseSubscription } from '../../contexts/course-subscription/application/CreateCourseSubscription';
+import { getAuthTokenCookie } from '../../lib/cookieUtils';
+import { useRouter } from 'next/router';
+import { useCheckIfUserIsAlreadySubscribedToCourse } from '../../hooks/course/useCheckIfUserIsAlreadySubscribedToCourse';
 
 export interface CourseContentPreviewParams {
   courseId: string;
 }
 
 export function CourseContentPreview({ courseId }: CourseContentPreviewParams) {
+  const router = useRouter();
+
   const course = useCourse(courseId);
   const author = useCourseAuthor(course?.authorId);
+
+  const userAlreadySubscribedToCourse =
+    useCheckIfUserIsAlreadySubscribedToCourse(courseId);
+
+  const [subscribeToCourseModalShown, setSubscribeToCourseModalShown] =
+    useState<boolean>(false);
+
+  const onSubmitSubscribe = async () => {
+    if (!course) return;
+    await createCourseSubscription(
+      { courseId: course.id },
+      getAuthTokenCookie() || ''
+    );
+
+    // TO DO: MAKE THIS PUSH TO COURSE MAIN VIEW
+    router.reload();
+  };
 
   return (
     <div className={styles.courseContentPreview}>
@@ -20,8 +45,35 @@ export function CourseContentPreview({ courseId }: CourseContentPreviewParams) {
       <MarkdownRenderer content={course?.description} />
       <CourseTags keyPrefix={`${course?.id}-tag`} tags={course?.tags || []} />
       <div className={styles.courseControls}>
-        <Button Type="Primary" Size="Medium" Label="Start Course" />
+        <Button
+          Type="Primary"
+          Size="Medium"
+          Label={
+            userAlreadySubscribedToCourse
+              ? 'You are already subscribed to this course!'
+              : 'Start Course'
+          }
+          onClick={() => setSubscribeToCourseModalShown(true)}
+          disabled={userAlreadySubscribedToCourse}
+        />
       </div>
+
+      <Modal
+        isShown={subscribeToCourseModalShown}
+        title={"Subscribe to this course! It's free!"}
+        closeFunction={() => {
+          setSubscribeToCourseModalShown(false);
+        }}
+      >
+        <div className={styles.subscribeToCourseModal}>
+          <Button
+            Type="Primary"
+            Size="Small"
+            Label="Subscribe to this course!"
+            onClick={onSubmitSubscribe}
+          />
+        </div>
+      </Modal>
     </div>
   );
 }
