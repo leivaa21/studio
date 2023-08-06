@@ -31,10 +31,12 @@ export class GetMyCoursesPaginatedController {
     @CurrentUser({ required: true }) user: User,
     @QueryParam('page') page = 0,
     @QueryParam('count') count = 0,
-    @QueryParam('title') title = '',
-    @QueryParam('tags') tagsAsString = ''
+    @QueryParam('title') title?: string,
+    @QueryParam('tags') tagsAsString?: string
   ): Promise<CourseInfoResponse[]> {
-    const tags = tagsAsString.split(',').filter((tag) => tag !== '');
+    const tags = tagsAsString
+      ? tagsAsString.split(',').filter((tag) => tag !== '')
+      : [];
 
     const courses = await this.queryBus.dispatch<
       GetMyCoursesPaginatedQuery,
