@@ -45,4 +45,14 @@ export class MongoCourseSubscriptionRepository
   public async removeByCourseId(courseId: CourseId): Promise<void> {
     await this.model().deleteMany({ courseId: courseId.value });
   }
+
+  public async findByUser(userId: UserId): Promise<CourseSubscription[]> {
+    const documents = await this.model().find({
+      userId: userId.value,
+    });
+
+    return documents.map((document) =>
+      this.entitySchemaFactory.createEntityFromSchema(document)
+    );
+  }
 }
