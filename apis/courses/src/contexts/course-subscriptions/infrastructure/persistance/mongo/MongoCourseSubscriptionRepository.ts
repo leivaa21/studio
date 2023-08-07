@@ -41,4 +41,8 @@ export class MongoCourseSubscriptionRepository
       ? this.entitySchemaFactory.createEntityFromSchema(document)
       : null;
   }
+
+  public async removeByCourseId(courseId: CourseId): Promise<void> {
+    await this.model().deleteMany({ courseId: courseId.value });
+  }
 }
