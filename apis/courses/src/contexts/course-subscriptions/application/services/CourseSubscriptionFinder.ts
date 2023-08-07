@@ -13,4 +13,8 @@ export class CourseSubscriptionFinder {
   ): Promise<Nullable<CourseSubscription>> {
     return this.repository.findByUserAndCourse(userId, courseId);
   }
+
+  public async findByUser(userId: UserId): Promise<CourseSubscription[]> {
+    return this.repository.findByUser(userId);
+  }
 }

@@ -7,3 +7,11 @@ export interface CourseInfoResponse {
   publishedAt: Date | null | undefined;
   authorId: string;
 }
+
+export interface SubscribedCourseInfoResponse {
+  id: string;
+  title: string;
+  tags: string[];
+  description: string;
+  authorId: string;
+}

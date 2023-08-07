@@ -9,4 +9,5 @@ export interface CourseSubscriptionRepository {
     userId: UserId,
     courseId: CourseId
   ): Promise<Nullable<CourseSubscription>>;
+  findByUser(userId: UserId): Promise<CourseSubscription[]>;
 }
