@@ -218,5 +218,33 @@ describe('Mongo Course Repository', () => {
         );
       });
     });
+    it('with paginatedPublishedWithFilters criteria', async () => {
+      const subscribedCourses = [
+        new CourseBuilder().withPublishedAt(new Date()).build(),
+        new CourseBuilder().withPublishedAt(new Date()).build(),
+        new CourseBuilder().withPublishedAt(new Date()).build(),
+        new CourseBuilder().withPublishedAt(new Date()).build(),
+      ];
+      const nonSubscribedCourses = [
+        new CourseBuilder().build(),
+        new CourseBuilder().build(),
+        new CourseBuilder().build(),
+      ];
+
+      await Promise.all(
+        [...subscribedCourses, ...nonSubscribedCourses].map((course) =>
+          createCourse(course)
+        )
+      );
+
+      const criteria = CourseCriteria.subscribedCoursesFiltered({
+        courseIds: subscribedCourses.map((course) => course.id),
+        filters: {},
+      });
+
+      const foundCourses = await repository.matching(criteria);
+
+      expect(foundCourses).toHaveLength(subscribedCourses.length);
+    });
   });
 });

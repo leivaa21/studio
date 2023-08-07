@@ -5,7 +5,6 @@ import {
 } from '../../../../../../src/contexts/courses/application/queries/GetMySubscribedCourses';
 import { CourseRepository } from '../../../../../../src/contexts/courses/domain/CourseRepository';
 import { CourseBuilder } from '../../../../../helpers/builders/CourseBuilder';
-import { CourseNotFoundError } from '../../../../../../src/contexts/courses/domain/errors/CourseNotFoundError';
 import { QueryBus } from '../../../../../../src/contexts/shared/domain/QueryBus';
 import { UserId } from '../../../../../../src/contexts/course-subscriptions/domain/UserId';
 import { CourseSubscriptionBuilder } from '../../../../../helpers/builders/CourseSubscriptionBuilder';
@@ -29,31 +28,17 @@ describe('Get user subscribed courses', () => {
 
     const query = new GetMySubscribedCoursesQuery({
       userId: userId.value,
+      with: {
+        title: '',
+        tags: [],
+      },
     });
 
     queryBus.dispatch.mockResolvedValue([courseSubscription]);
-    courseRepository.findById.mockResolvedValue(course);
+    courseRepository.matching.mockResolvedValue([course]);
 
     const useCase = new GetMySubscribedCourses(queryBus, courseRepository);
 
     expect(useCase.execute(query)).resolves.toEqual([course]);
-  });
-
-  it('Should throw NotFoundError on course not found', async () => {
-    const userId = UserId.random();
-    const courseSubscription = new CourseSubscriptionBuilder()
-      .withUserId(userId)
-      .build();
-
-    const query = new GetMySubscribedCoursesQuery({
-      userId: userId.value,
-    });
-
-    queryBus.dispatch.mockResolvedValue([courseSubscription]);
-    courseRepository.findById.mockResolvedValue(null);
-
-    const useCase = new GetMySubscribedCourses(queryBus, courseRepository);
-
-    expect(useCase.execute(query)).rejects.toThrow(CourseNotFoundError);
   });
 });

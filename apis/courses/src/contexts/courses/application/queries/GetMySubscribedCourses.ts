@@ -11,9 +11,19 @@ import { CourseSubscription } from '../../../course-subscriptions/domain/CourseS
 
 export class GetMySubscribedCoursesQuery {
   public readonly userId: string;
-
-  public constructor(params: { userId: string }) {
+  public readonly with?: {
+    title?: string;
+    tags?: string[];
+  };
+  public constructor(params: {
+    userId: string;
+    with?: {
+      title?: string;
+      tags?: string[];
+    };
+  }) {
     this.userId = params.userId;
+    this.with = params.with;
   }
 }
 
@@ -37,11 +47,12 @@ export class GetMySubscribedCourses
       CourseSubscription[]
     >(new GetUserCourseSubscriptionsQuery({ userId: query.userId }));
 
-    const courses = await Promise.all(
-      userCourseSubscriptions.map((courseSubscription) =>
-        this.courseFinder.findByIdOrThrow(courseSubscription.courseId)
-      )
-    );
+    const courses = await this.courseFinder.findSubscribedWithFilters({
+      courseIds: userCourseSubscriptions.map(
+        (subscription) => subscription.courseId
+      ),
+      with: query.with,
+    });
 
     return courses;
   }

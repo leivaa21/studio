@@ -6,6 +6,7 @@ import {
   HttpCode,
   JsonController,
   OnUndefined,
+  QueryParam,
 } from 'routing-controllers';
 import { Injectable } from '@studio/dependency-injection';
 import { User } from '../../auth/user';
@@ -27,14 +28,21 @@ export class GetMySubscribedCoursesController {
   @OnUndefined(StatusCode.OK)
   @Authorized()
   public async execute(
-    @CurrentUser({ required: true }) user: User
+    @CurrentUser({ required: true }) user: User,
+    @QueryParam('title') title?: string,
+    @QueryParam('tags') tagsAsString?: string
   ): Promise<SubscribedCourseInfoResponse[]> {
+    const tags = tagsAsString
+      ? tagsAsString.split(',').filter((tag) => tag !== '')
+      : [];
+
     const courses = await this.queryBus.dispatch<
       GetMySubscribedCoursesQuery,
       Course[]
     >(
       new GetMySubscribedCoursesQuery({
         userId: user.id,
+        with: { title, tags },
       })
     );
 
