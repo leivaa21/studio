@@ -7,7 +7,7 @@ import { LessonWasDeletedEvent } from '../../../../../../src/contexts/lessons/do
 import { CourseId } from '../../../../../../src/contexts/courses/domain/CourseId';
 import { LessonOrder } from '../../../../../../src/contexts/lessons/domain/LessonOrder';
 
-describe('Update Course On Lessons Update', () => {
+describe('Reorder Lessons on lesson deleted', () => {
   const lessonRepository = mock<LessonRepository>();
   const eventBus = mock<EventBus>();
 
