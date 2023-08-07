@@ -14,6 +14,7 @@ import {
   findCourseSubscriptionById,
 } from '../../helpers/persistance/mongo/course-subscriptions';
 import { CourseId } from '../../../src/contexts/courses/domain/CourseId';
+import { UserId } from '../../../src/contexts/course-subscriptions/domain/UserId';
 
 describe('Mongo Course Subscription Repository', () => {
   jest.setTimeout(9999999);
@@ -75,6 +76,47 @@ describe('Mongo Course Subscription Repository', () => {
         );
 
         expect(courseSubscriptionFound).toBeNull();
+      });
+    });
+    describe('By user id', () => {
+      it('Should find all course subscription of a user', async () => {
+        const userId = UserId.random();
+        const courseSubscriptions = [
+          new CourseSubscriptionBuilder().withUserId(userId).build(),
+          new CourseSubscriptionBuilder().withUserId(userId).build(),
+          new CourseSubscriptionBuilder().withUserId(userId).build(),
+        ];
+
+        await Promise.all(
+          courseSubscriptions.map((courseSubscription) =>
+            createCourseSubscription(courseSubscription)
+          )
+        );
+
+        const courseSubscriptionsFound = await repository.findByUser(userId);
+
+        expect(courseSubscriptionsFound).toHaveLength(
+          courseSubscriptions.length
+        );
+      });
+
+      it('Should not find a course subscription if their user id dont match', async () => {
+        const userId = UserId.random();
+        const courseSubscriptions = [
+          new CourseSubscriptionBuilder().build(),
+          new CourseSubscriptionBuilder().build(),
+          new CourseSubscriptionBuilder().build(),
+        ];
+
+        await Promise.all(
+          courseSubscriptions.map((courseSubscription) =>
+            createCourseSubscription(courseSubscription)
+          )
+        );
+
+        const courseSubscriptionsFound = await repository.findByUser(userId);
+
+        expect(courseSubscriptionsFound).toHaveLength(0);
       });
     });
   });
