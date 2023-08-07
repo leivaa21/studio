@@ -50,6 +50,21 @@ export class CourseFinder {
     return this.repository.matching(criteria);
   }
 
+  public async findSubscribedWithFilters(params: {
+    courseIds: CourseId[];
+    with?: { title?: string; tags?: string[] };
+  }): Promise<Course[]> {
+    const criteria = CourseCriteria.subscribedCoursesFiltered({
+      courseIds: params.courseIds,
+      filters: {
+        includingOnTitle: params.with?.title,
+        havingTags: params.with?.tags,
+      },
+    });
+
+    return this.repository.matching(criteria);
+  }
+
   public async findByIdOrThrow(id: CourseId): Promise<Course> {
     const course = await this.repository.findById(id);
 

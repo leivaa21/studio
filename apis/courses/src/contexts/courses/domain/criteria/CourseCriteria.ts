@@ -4,6 +4,7 @@ import { Operator } from '../../../shared/domain/criteria/FilterOperator';
 import { Filters } from '../../../shared/domain/criteria/Filters';
 import { Order } from '../../../shared/domain/criteria/Order';
 import { AuthorId } from '../AuthorId';
+import { CourseId } from '../CourseId';
 
 interface PossibleCourseFilters {
   includingOnTitle?: string;
@@ -93,6 +94,43 @@ export class CourseCriteria extends Criteria {
       order: Order.desc('publishedAt'),
       limit: pageSize,
       offset: pageSize * page,
+    });
+  }
+
+  static subscribedCoursesFiltered({
+    courseIds,
+    filters,
+  }: {
+    courseIds: CourseId[];
+    filters: PossibleCourseFilters;
+  }) {
+    const criteriaFilters: FilterAsPrimitives[] = [
+      {
+        field: '_id',
+        operator: Operator.INCLUDES,
+        value: courseIds.map((courseId) => courseId.value),
+      },
+    ];
+
+    if (filters.includingOnTitle) {
+      criteriaFilters.push({
+        field: 'title',
+        operator: Operator.CONTAINS,
+        value: filters.includingOnTitle,
+      });
+    }
+
+    if (filters.havingTags?.length) {
+      criteriaFilters.push({
+        field: 'tags',
+        operator: Operator.INCLUDES,
+        value: filters.havingTags,
+      });
+    }
+
+    return new CourseCriteria({
+      filters: Filters.fromValues(criteriaFilters),
+      order: Order.desc('publishedAt'),
     });
   }
 }
