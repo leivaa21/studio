@@ -21,12 +21,17 @@ export default async function handler(
 async function getSubscribedCourses(req: NextApiRequest, res: NextApiResponse) {
   const authToken = req.headers.authorization;
 
+  const params = new Map([
+    ['title', (req.query.title as string) || ''],
+    ['tags', (req.query.tags as string) || ''],
+  ]);
+
   const coursesApiService = new CoursesApiService();
 
   await SafeControllerHandling(res, async () => {
     const courses = await coursesApiService.get<SubscribedCourseInfoResponse[]>(
       '/courses/subscribed',
-      undefined,
+      params,
       authToken
     );
     res.status(200).send(courses);

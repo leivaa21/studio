@@ -5,7 +5,13 @@ import { SubscribedCourseInfoResponse } from '@studio/commons';
 import { getSubscribedCourses } from '../../contexts/courses/application/GetSubscribedCourses';
 import { getAuthTokenCookie } from '../../lib/cookieUtils';
 
-export function useSubscribedCourses() {
+export function useSubscribedCourses({
+  title,
+  tags,
+}: {
+  title?: string;
+  tags?: string[];
+}) {
   const [courses, setCourses] = useState<SubscribedCourseInfoResponse[]>();
 
   useEffect(() => {
@@ -13,8 +19,10 @@ export function useSubscribedCourses() {
 
     if (!token) return;
 
-    getSubscribedCourses(token).then((courses) => setCourses(courses));
-  }, []);
+    getSubscribedCourses({ authorizationToken: token, title, tags }).then(
+      (courses) => setCourses(courses)
+    );
+  }, [title, tags]);
 
   return courses;
 }
