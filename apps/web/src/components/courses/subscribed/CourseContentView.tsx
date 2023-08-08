@@ -75,16 +75,20 @@ export function CourseLessons(args: {
 }
 
 export function CourseLesson({ lesson }: { lesson: DisplayLessonParameters }) {
+  const { completed } = lesson;
+  const takeLessonLabel = completed ? 'Retake lesson!' : 'Take lesson!';
+  const className = `${styles.lesson} ${
+    lesson.completed ? styles.completed : ''
+  }`;
+
   return (
-    <li
-      className={`${styles.lesson} ${lesson.completed ? styles.completed : ''}`}
-    >
+    <li className={className}>
       <div className={styles.icons}>
         <LessonAlreadyCompletedIcon isCompleted={lesson.completed} />
       </div>
       <h5 className={styles.lessonTitle}>{lesson.title}</h5>
       <div className={styles.controls}>
-        <Button Type="Primary" Label="Take lesson!" Size="Small" />
+        <Button Type="Primary" Label={takeLessonLabel} Size="Small" />
       </div>
     </li>
   );
