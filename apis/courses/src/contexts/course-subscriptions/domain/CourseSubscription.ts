@@ -88,6 +88,10 @@ export class CourseSubscription extends AggregateRoot {
     return this._updatedAt;
   }
 
+  public get completedLessons(): LessonId[] {
+    return this._completedLessons;
+  }
+
   public static fromPrimitives(
     primitives: CourseSubscriptionPrimitives
   ): CourseSubscription {
@@ -110,7 +114,7 @@ export class CourseSubscription extends AggregateRoot {
       courseId: this.courseId.value,
       subscribedAt: this.subscribedAt,
       updatedAt: this.updatedAt,
-      completedLessons: this._completedLessons.map((id) => id.value),
+      completedLessons: this.completedLessons.map((id) => id.value),
     };
   }
 }
