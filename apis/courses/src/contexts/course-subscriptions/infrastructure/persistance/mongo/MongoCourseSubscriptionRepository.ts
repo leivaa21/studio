@@ -8,6 +8,7 @@ import { CourseSubscription } from '../../../domain/CourseSubscription';
 import { CourseSubscriptionRepository } from '../../../domain/CourseSubscriptionRepository';
 import { CourseSubscriptionModel } from './CourseSubscriptionSchema';
 import { UserId } from '../../../domain/UserId';
+import { CourseSubscriptionId } from '../../../domain/CourseSubscriptionId';
 
 @Injectable({ dependencies: [CourseSubscriptionSchemaFactory] })
 export class MongoCourseSubscriptionRepository
@@ -54,5 +55,18 @@ export class MongoCourseSubscriptionRepository
     return documents.map((document) =>
       this.entitySchemaFactory.createEntityFromSchema(document)
     );
+  }
+  public async findById(
+    id: CourseSubscriptionId
+  ): Promise<Nullable<CourseSubscription>> {
+    const document = await this.model().findById(id.value);
+
+    return document
+      ? this.entitySchemaFactory.createEntityFromSchema(document)
+      : null;
+  }
+
+  public async removeById(id: CourseSubscriptionId): Promise<void> {
+    await this.model().findByIdAndDelete(id.value);
   }
 }

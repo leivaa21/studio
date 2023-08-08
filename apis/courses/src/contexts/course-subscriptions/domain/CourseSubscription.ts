@@ -4,6 +4,7 @@ import { CourseSubscriptionId } from './CourseSubscriptionId';
 import { UserId } from './UserId';
 import { CourseSubscriptionWasCreatedEvent } from './events/CourseSubscriptionWasCreated';
 import { LessonId } from '../../lessons/domain/LessonId';
+import { CourseSubscriptionWasDeletedEvent } from './events/CourseSubscriptionWasDeleted';
 
 export interface CourseSubscriptionParams {
   readonly id: CourseSubscriptionId;
@@ -90,6 +91,18 @@ export class CourseSubscription extends AggregateRoot {
 
   public get completedLessons(): LessonId[] {
     return this._completedLessons;
+  }
+
+  public delete(): void {
+    const event = CourseSubscriptionWasDeletedEvent.fromPrimitives({
+      aggregateId: this.id.value,
+      attributes: {
+        userId: this.userId.value,
+        courseId: this.courseId.value,
+      },
+    });
+
+    this.commit(event);
   }
 
   public static fromPrimitives(
