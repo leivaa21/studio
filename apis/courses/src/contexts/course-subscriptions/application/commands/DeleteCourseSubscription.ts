@@ -7,11 +7,15 @@ import { CourseSubscriptionRepository } from '../../domain/CourseSubscriptionRep
 import { CourseSubscriptionFinder } from '../services/CourseSubscriptionFinder';
 import { MongoCourseSubscriptionRepository } from '../../infrastructure/persistance/mongo/MongoCourseSubscriptionRepository';
 import { CourseSubscriptionId } from '../../domain/CourseSubscriptionId';
+import { UserId } from '../../domain/UserId';
+import { CourseSubscriptionNotFoundError } from '../../domain/errors/CourseSubscriptionNotFoundError';
 
 export class DeleteCourseSubscriptionCommand {
   public readonly id: string;
-  constructor(args: { id: string }) {
+  public readonly userId: string;
+  constructor(args: { id: string; userId: string }) {
     this.id = args.id;
+    this.userId = args.userId;
   }
 }
 
@@ -36,9 +40,16 @@ export class DeleteCourseSubscription extends CommandHandler<DeleteCourseSubscri
   }
   async execute(command: DeleteCourseSubscriptionCommand): Promise<void> {
     const courseSubscriptionId = CourseSubscriptionId.of(command.id);
+    const userId = UserId.of(command.userId);
 
     const courseSubscription =
       await this.courseSubscriptionFinder.findByIdOrThrow(courseSubscriptionId);
+
+    if (courseSubscription.userId.value !== userId.value) {
+      throw CourseSubscriptionNotFoundError.searchedById(
+        courseSubscriptionId.value
+      );
+    }
 
     courseSubscription.delete();
 

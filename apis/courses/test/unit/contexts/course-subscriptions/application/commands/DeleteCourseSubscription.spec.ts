@@ -7,6 +7,7 @@ import { EventBus } from '../../../../../../src/contexts/shared/domain/EventBus'
 import { CourseSubscriptionRepository } from '../../../../../../src/contexts/course-subscriptions/domain/CourseSubscriptionRepository';
 import { CourseSubscriptionBuilder } from '../../../../../helpers/builders/CourseSubscriptionBuilder';
 import { CourseSubscriptionNotFoundError } from '../../../../../../src/contexts/course-subscriptions/domain/errors/CourseSubscriptionNotFoundError';
+import { UserId } from '../../../../../../src/contexts/course-subscriptions/domain/UserId';
 
 describe('Delete course subscription', () => {
   const courseSubscriptionRepository = mock<CourseSubscriptionRepository>();
@@ -22,6 +23,7 @@ describe('Delete course subscription', () => {
 
     const command = new DeleteCourseSubscriptionCommand({
       id: courseSubscription.id.value,
+      userId: courseSubscription.userId.value,
     });
 
     const useCase = new DeleteCourseSubscription(
@@ -42,6 +44,7 @@ describe('Delete course subscription', () => {
     const courseSubscription = new CourseSubscriptionBuilder().build();
     const command = new DeleteCourseSubscriptionCommand({
       id: courseSubscription.id.value,
+      userId: courseSubscription.userId.value,
     });
 
     const useCase = new DeleteCourseSubscription(
@@ -50,6 +53,25 @@ describe('Delete course subscription', () => {
     );
 
     courseSubscriptionRepository.findById.mockResolvedValue(null);
+
+    await expect(useCase.execute(command)).rejects.toThrow(
+      CourseSubscriptionNotFoundError
+    );
+  });
+
+  it('Should not delete a course subscription if is not from user', async () => {
+    const courseSubscription = new CourseSubscriptionBuilder().build();
+    const command = new DeleteCourseSubscriptionCommand({
+      id: courseSubscription.id.value,
+      userId: UserId.random().value,
+    });
+
+    const useCase = new DeleteCourseSubscription(
+      courseSubscriptionRepository,
+      eventBus
+    );
+
+    courseSubscriptionRepository.findById.mockResolvedValue(courseSubscription);
 
     await expect(useCase.execute(command)).rejects.toThrow(
       CourseSubscriptionNotFoundError
