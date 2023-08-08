@@ -4,4 +4,5 @@ export interface CourseSubscriptionData {
   courseId: string;
   subscribedAt: Date;
   updatedAt: Date;
+  completedLessons: string[];
 }
