@@ -7,7 +7,7 @@ import { CourseId } from '../../../courses/domain/CourseId';
 import { UserId } from '../../domain/UserId';
 import { CourseSubscription } from '../../domain/CourseSubscription';
 
-export class CheckIfUserIsSubscribedToCourseQuery {
+export class GetCourseSubscriptionByUserAndCourseQuery {
   public readonly userId: string;
   public readonly courseId: string;
 
@@ -20,9 +20,9 @@ export class CheckIfUserIsSubscribedToCourseQuery {
 @Injectable({
   dependencies: [MongoCourseSubscriptionRepository],
 })
-export class CheckIfUserIsSubscribedToCourse
+export class GetCourseSubscriptionByUserAndCourse
   implements
-    QueryHandler<CheckIfUserIsSubscribedToCourseQuery, CourseSubscription>
+    QueryHandler<GetCourseSubscriptionByUserAndCourseQuery, CourseSubscription>
 {
   private readonly courseSubscriptionFinder: CourseSubscriptionFinder;
 
@@ -34,7 +34,7 @@ export class CheckIfUserIsSubscribedToCourse
     );
   }
   public async execute(
-    query: CheckIfUserIsSubscribedToCourseQuery
+    query: GetCourseSubscriptionByUserAndCourseQuery
   ): Promise<CourseSubscription> {
     const userId = UserId.of(query.userId);
     const courseId = CourseId.of(query.courseId);
