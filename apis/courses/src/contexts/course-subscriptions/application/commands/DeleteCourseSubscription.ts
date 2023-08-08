@@ -2,7 +2,6 @@ import { CommandHandler } from '../../../shared/application/CommandHandler';
 import { EventBus } from '../../../shared/domain/EventBus';
 import { Injectable } from '@studio/dependency-injection';
 import { InMemoryAsyncEventBus } from '../../../shared/infrastructure/EventBus/InMemoryAsyncEventBus';
-import { MongoCourseRepository } from '../../../courses/infrastructure/persistance/mongo/MongoCourseRepository';
 import { CourseSubscriptionRepository } from '../../domain/CourseSubscriptionRepository';
 import { CourseSubscriptionFinder } from '../services/CourseSubscriptionFinder';
 import { MongoCourseSubscriptionRepository } from '../../infrastructure/persistance/mongo/MongoCourseSubscriptionRepository';
@@ -20,11 +19,7 @@ export class DeleteCourseSubscriptionCommand {
 }
 
 @Injectable({
-  dependencies: [
-    MongoCourseSubscriptionRepository,
-    MongoCourseRepository,
-    InMemoryAsyncEventBus,
-  ],
+  dependencies: [MongoCourseSubscriptionRepository, InMemoryAsyncEventBus],
 })
 export class DeleteCourseSubscription extends CommandHandler<DeleteCourseSubscriptionCommand> {
   private readonly courseSubscriptionFinder: CourseSubscriptionFinder;

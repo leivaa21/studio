@@ -18,7 +18,7 @@ import { DeleteCourseSubscriptionCommand } from '../../../contexts/course-subscr
 @Injectable({
   dependencies: [InMemoryCommandBus],
 })
-@JsonController('/course-subscriptions')
+@JsonController('/course-subscription')
 export class DeleteCourseSubscriptionController {
   constructor(private readonly commandBus: CommandBus) {}
 
