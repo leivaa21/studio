@@ -1,6 +1,7 @@
 import { CourseId } from '../../courses/domain/CourseId';
 import { Nullable } from '../../shared/domain/Nullable';
 import { CourseSubscription } from './CourseSubscription';
+import { CourseSubscriptionId } from './CourseSubscriptionId';
 import { UserId } from './UserId';
 
 export interface CourseSubscriptionRepository {
@@ -11,4 +12,6 @@ export interface CourseSubscriptionRepository {
   ): Promise<Nullable<CourseSubscription>>;
   removeByCourseId(courseId: CourseId): Promise<void>;
   findByUser(userId: UserId): Promise<CourseSubscription[]>;
+  findById(id: CourseSubscriptionId): Promise<Nullable<CourseSubscription>>;
+  removeById(id: CourseSubscriptionId): Promise<void>;
 }

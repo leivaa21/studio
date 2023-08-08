@@ -5,7 +5,12 @@ import {
   CreateCourseSubscription,
   CreateCourseSubscriptionCommand,
 } from '../../../../contexts/course-subscriptions/application/commands/CreateCourseSubscription';
+import {
+  DeleteCourseSubscription,
+  DeleteCourseSubscriptionCommand,
+} from '../../../../contexts/course-subscriptions/application/commands/DeleteCourseSubscription';
 
 const commandBus = DependencyContainer.get<CommandBus>(InMemoryCommandBus);
 
 commandBus.subscribe(CreateCourseSubscriptionCommand, CreateCourseSubscription);
+commandBus.subscribe(DeleteCourseSubscriptionCommand, DeleteCourseSubscription);
