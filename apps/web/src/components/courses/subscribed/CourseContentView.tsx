@@ -3,9 +3,9 @@ import { useCourse } from '../../../hooks/course/useCourse';
 import { MarkdownRenderer } from '../../markdown/renderer';
 import { useCourseAuthor } from '../../../hooks/course/useCourseAuthor';
 import { useCourseLessons } from '../../../hooks/course/useCourseLessons';
-import { LessonInfoResponse } from '@studio/commons';
 import Button from '@studio/ui/components/interactivity/cta/button';
 import { BsCheck } from 'react-icons/bs';
+import { useOwnedCourseSubscriptionByCourseId } from '../../../hooks/course/useOwnedCourseSubscriptionByCourseId';
 
 export interface CourseContentViewParams {
   courseId: string;
@@ -14,7 +14,8 @@ export interface CourseContentViewParams {
 export function CourseContentView({ courseId }: CourseContentViewParams) {
   const course = useCourse(courseId);
   const author = useCourseAuthor(course?.authorId);
-  const lessons = useCourseLessons(courseId);
+  const lessons = useCourseLessons(courseId) || [];
+  const courseSubscription = useOwnedCourseSubscriptionByCourseId(courseId);
 
   return (
     <div className={styles.courseContentPreview}>
@@ -24,7 +25,14 @@ export function CourseContentView({ courseId }: CourseContentViewParams) {
       <CourseTags keyPrefix={`${course?.id}-tag`} tags={course?.tags || []} />
       <CourseLessons
         keyPrefix={`${course?.id}-lesson`}
-        lessons={lessons || []}
+        lessons={lessons.map((lesson) => {
+          return {
+            id: lesson.id,
+            title: lesson.title,
+            completed:
+              courseSubscription?.completedLessons.includes(lesson.id) || false,
+          };
+        })}
       />
     </div>
   );
@@ -44,9 +52,15 @@ export function CourseTag({ tag }: { tag: string }) {
   return <li className={styles.tag}>{tag}</li>;
 }
 
+type DisplayLessonParameters = {
+  id: string;
+  title: string;
+  completed: boolean;
+};
+
 export function CourseLessons(args: {
   keyPrefix: string;
-  lessons: LessonInfoResponse[];
+  lessons: DisplayLessonParameters[];
 }) {
   return (
     <section className={styles.lessonsSection}>
@@ -60,12 +74,13 @@ export function CourseLessons(args: {
   );
 }
 
-export function CourseLesson({ lesson }: { lesson: LessonInfoResponse }) {
-  const isCompleted = false;
+export function CourseLesson({ lesson }: { lesson: DisplayLessonParameters }) {
   return (
-    <li className={`${styles.lesson} ${isCompleted ? styles.completed : ''}`}>
+    <li
+      className={`${styles.lesson} ${lesson.completed ? styles.completed : ''}`}
+    >
       <div className={styles.icons}>
-        <LessonAlreadyCompletedIcon isCompleted={isCompleted} />
+        <LessonAlreadyCompletedIcon isCompleted={lesson.completed} />
       </div>
       <h5 className={styles.lessonTitle}>{lesson.title}</h5>
       <div className={styles.controls}>
