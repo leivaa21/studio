@@ -34,8 +34,7 @@ export function CourseContentPreview({ courseId }: CourseContentPreviewParams) {
       getAuthTokenCookie() || ''
     );
 
-    // TO DO: MAKE THIS PUSH TO COURSE MAIN VIEW
-    router.reload();
+    router.push(`/course/${course.id}`);
   };
 
   return (

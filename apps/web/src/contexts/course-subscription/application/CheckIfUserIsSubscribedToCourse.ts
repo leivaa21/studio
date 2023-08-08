@@ -7,7 +7,7 @@ export async function checkIfUserIsSubscribedToCourse(
 ): Promise<boolean> {
   const { isSubscribed } =
     await internalApiClient.get<CheckIfUserIsSubscribedToCourseResponse>(
-      `/api/course-subscription/${courseId}`,
+      `/api/course-subscription/${courseId}/check`,
       undefined,
       authorizationToken
     );

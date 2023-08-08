@@ -1,7 +1,7 @@
 import { NextApiRequest, NextApiResponse } from 'next';
 import { SafeControllerHandling } from '../../../../lib/controllers/SafeControllerHandling';
 import { CoursesApiService } from '../../../../contexts/shared/infrastructure/ApiClients/CoursesApiService';
-import { CourseSubscriptionInfoResponse } from '@studio/commons';
+import { CheckIfUserIsSubscribedToCourseResponse } from '@studio/commons';
 
 export default async function handler(
   req: NextApiRequest,
@@ -9,7 +9,7 @@ export default async function handler(
 ) {
   switch (req.method) {
     case 'GET':
-      await getOwnedCourseSubscriptionByCourseId(req, res);
+      await checkIfUserIsSubscribedToCourse(req, res);
       break;
     default:
       return res
@@ -18,7 +18,7 @@ export default async function handler(
   }
 }
 
-async function getOwnedCourseSubscriptionByCourseId(
+async function checkIfUserIsSubscribedToCourse(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
@@ -30,8 +30,8 @@ async function getOwnedCourseSubscriptionByCourseId(
 
   await SafeControllerHandling(res, async () => {
     const response =
-      await coursesApiService.get<CourseSubscriptionInfoResponse>(
-        `/course-subscription/${courseId}`,
+      await coursesApiService.get<CheckIfUserIsSubscribedToCourseResponse>(
+        `/course-subscription/${courseId}/check`,
         undefined,
         authToken
       );

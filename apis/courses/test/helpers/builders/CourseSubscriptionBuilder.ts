@@ -15,6 +15,7 @@ export class CourseSubscriptionBuilder implements Builder<CourseSubscription> {
       courseId: this._courseId,
       subscribedAt: new Date(),
       updatedAt: new Date(),
+      completedLessons: [],
     });
   }
 

@@ -9,6 +9,10 @@ import {
   GetUserCourseSubscriptions,
   GetUserCourseSubscriptionsQuery,
 } from '../../../../contexts/course-subscriptions/application/queries/GetUserCourseSubscriptions';
+import {
+  GetCourseSubscriptionByUserAndCourse,
+  GetCourseSubscriptionByUserAndCourseQuery,
+} from '../../../../contexts/course-subscriptions/application/queries/GetCourseSubscriptionByUserAndCourse';
 
 const queryBus = DependencyContainer.get<QueryBus>(InMemoryQueryBus);
 
@@ -17,3 +21,7 @@ queryBus.subscribe(
   CheckIfUserIsSubscribedToCourse
 );
 queryBus.subscribe(GetUserCourseSubscriptionsQuery, GetUserCourseSubscriptions);
+queryBus.subscribe(
+  GetCourseSubscriptionByUserAndCourseQuery,
+  GetCourseSubscriptionByUserAndCourse
+);

@@ -23,7 +23,7 @@ import { CheckIfUserIsSubscribedToCourseResponse } from '@studio/commons';
 export class GetUserCourseSubscriptionToCourseController {
   constructor(private readonly queryBus: QueryBus) {}
 
-  @Get('/:courseId')
+  @Get('/:courseId/check')
   @HttpCode(StatusCode.OK)
   @Authorized()
   public async execute(

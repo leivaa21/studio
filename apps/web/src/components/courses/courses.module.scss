@@ -97,3 +97,65 @@
     padding: .4rem 1rem;
   }
 }
+
+.lessonsSection {
+  .lessonsSectionTitle {
+    font-size: 1.5rem;
+  }
+}
+
+.lessons {
+
+  list-style: none;
+  padding: 0;
+  
+  .lesson {
+    display: flex;
+    flex-direction: row;
+    flex: 1;
+    align-items: center;
+    padding: 1rem;
+    margin: .5rem 0;
+
+    border-radius: 1rem;
+
+    &.completed {
+      background-color: $primary-mask;
+    }
+
+    .icons {
+      display: flex;
+      flex: 0 1 auto;
+      margin: 0 1rem;
+    }
+    .lessonTitle {
+      display: flex;
+      flex: 1;
+      font-size: 1.25rem;
+      margin: 0;
+    }
+    .controls {
+      margin: 0 1rem;
+    }
+  }
+
+}
+
+.completedIcon {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  width: 2rem;
+  height: 2rem;
+  border-radius: 1rem;
+  border: .25rem solid $dark-text-primary;
+  background-color: $sidebar-background;
+
+  &.completed {
+    background-color: $primary;
+    font-size: 2rem;
+    color: $dark-text-primary;
+  }
+}

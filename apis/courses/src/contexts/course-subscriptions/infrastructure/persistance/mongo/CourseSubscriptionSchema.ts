@@ -23,6 +23,10 @@ export const CourseSubscriptionSchema = new Schema(
       type: Date,
       required: true,
     },
+    completedLessons: {
+      type: [String],
+      required: true,
+    },
   },
   { versionKey: false, timestamps: false }
 );

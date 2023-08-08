@@ -15,9 +15,8 @@ import { createCourseSubscription } from '../../helpers/persistance/mongo/course
 import { CourseSubscriptionBuilder } from '../../helpers/builders/CourseSubscriptionBuilder';
 
 let mongoContainer: StartedTestContainer;
-const route = '/course-subscription/:courseId/check';
-const formatedRoute = (courseId: string) =>
-  `/course-subscription/${courseId}/check`;
+const route = '/course-subscription/:courseId';
+const formatedRoute = (courseId: string) => `/course-subscription/${courseId}`;
 
 beforeAll(async () => {
   mongoContainer = await initializeMongoContainer();
@@ -30,7 +29,7 @@ afterAll(async () => {
 });
 
 describe(`GET ${route}`, () => {
-  it('should let check if user is subscribed to a course', async () => {
+  it('should get subscription if user is subscribed to a course', async () => {
     const course = new CourseBuilder().withPublishedAt(new Date()).build();
     const userId = UserId.random();
     const courseSubscription = new CourseSubscriptionBuilder()
@@ -50,10 +49,10 @@ describe(`GET ${route}`, () => {
       .expect('Content-Type', /json/)
       .expect(200);
 
-    expect(response.body).toStrictEqual({ isSubscribed: true });
+    expect(response.body.id).toStrictEqual(courseSubscription.id.value);
   });
 
-  it('should not let create a new course if request is not authorized', async () => {
+  it('should not get subscription if request is not authorized', async () => {
     const course = new CourseBuilder().withPublishedAt(new Date()).build();
     const userId = UserId.random();
     const courseSubscription = new CourseSubscriptionBuilder()
