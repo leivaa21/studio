@@ -3,6 +3,7 @@ import { Nullable } from '../../../shared/domain/Nullable';
 import { CourseSubscription } from '../../domain/CourseSubscription';
 import { CourseSubscriptionRepository } from '../../domain/CourseSubscriptionRepository';
 import { UserId } from '../../domain/UserId';
+import { CourseSubscriptionNotFoundError } from '../../domain/errors/CourseSubscriptionNotFoundError';
 
 export class CourseSubscriptionFinder {
   constructor(private readonly repository: CourseSubscriptionRepository) {}
@@ -12,6 +13,24 @@ export class CourseSubscriptionFinder {
     courseId: CourseId
   ): Promise<Nullable<CourseSubscription>> {
     return this.repository.findByUserAndCourse(userId, courseId);
+  }
+
+  public async findByUserAndCourseOrThrow(
+    userId: UserId,
+    courseId: CourseId
+  ): Promise<CourseSubscription> {
+    const subscription = await this.repository.findByUserAndCourse(
+      userId,
+      courseId
+    );
+
+    if (!subscription) {
+      throw CourseSubscriptionNotFoundError.searchedByUserAndCourse(
+        userId.value,
+        courseId.value
+      );
+    }
+    return subscription;
   }
 
   public async findByUser(userId: UserId): Promise<CourseSubscription[]> {
