@@ -24,4 +24,5 @@ export enum ErrorCodes {
   InvalidCourseTags = 'courses.invalid-course-tags',
   InvalidLessonTitle = 'courses.invalid-lesson-title',
   InvalidCourseSubscription = 'courses.invalid-course-subscription',
+  CourseSubscriptionNotFound = 'courses.course-subscription-not-found',
 }

@@ -5,7 +5,7 @@ export class CourseSubscriptionNotFoundError extends ApiError {
     super({
       apiStatus: 404,
       kind: 'NOT_FOUND',
-      errorCode: ErrorCodes.CourseNotFound,
+      errorCode: ErrorCodes.CourseSubscriptionNotFound,
       message,
     });
   }
