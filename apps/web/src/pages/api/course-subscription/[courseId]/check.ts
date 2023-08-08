@@ -31,7 +31,7 @@ async function checkIfUserIsSubscribedToCourse(
   await SafeControllerHandling(res, async () => {
     const response =
       await coursesApiService.get<CheckIfUserIsSubscribedToCourseResponse>(
-        `/course-subscription/${courseId}`,
+        `/course-subscription/${courseId}/check`,
         undefined,
         authToken
       );
