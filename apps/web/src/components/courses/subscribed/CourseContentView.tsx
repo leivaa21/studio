@@ -49,6 +49,7 @@ export function CourseContentView({ courseId }: CourseContentViewParams) {
           return {
             id: lesson.id,
             title: lesson.title,
+            courseId: lesson.courseId,
             completed:
               courseSubscription?.completedLessons.includes(lesson.id) || false,
           };
@@ -101,6 +102,7 @@ type DisplayLessonParameters = {
   id: string;
   title: string;
   completed: boolean;
+  courseId: string;
 };
 
 export function CourseLessons(args: {
@@ -133,7 +135,13 @@ export function CourseLesson({ lesson }: { lesson: DisplayLessonParameters }) {
       </div>
       <h5 className={styles.lessonTitle}>{lesson.title}</h5>
       <div className={styles.controls}>
-        <Button Type="Primary" Label={takeLessonLabel} Size="Small" />
+        <Button
+          Type="Primary"
+          Label={takeLessonLabel}
+          Size="Small"
+          Link
+          href={`/course/${lesson.courseId}/lesson/${lesson.id}`}
+        />
       </div>
     </li>
   );

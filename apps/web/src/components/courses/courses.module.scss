@@ -48,7 +48,7 @@
 
 }
 
-.courseContentPreview {
+.courseContentPreview, .lessonContentPreview {
   display: flex;
   flex-direction: column;
   flex: 1;
@@ -58,19 +58,28 @@
     margin: 0;
     font-size: 2rem;
   }
+
+  .courseControls, .lessonControls {
+    margin: 1rem;
+    display: flex;
+    flex-direction: row;
+    flex: 0 1 auto;
+    justify-content: center;
+  }
+}
+
+.button {
+  margin: 1rem;
+}
+
+.courseContentPreview {
   
   .authorName {
     font-size: 1.2rem;
     font-weight: 500;
   }
 
-  .courseControls {
-    display: flex;
-    flex-direction: row;
-    flex: 0 1 auto;
-  }
-
-  .tags, .courseControls {
+  .tags {
     justify-content: center;
   }
 
