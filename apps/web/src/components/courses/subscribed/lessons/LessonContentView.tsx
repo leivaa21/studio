@@ -68,7 +68,7 @@ export function LessonContentView({
           setCompleteLessonModalShown(false);
         }}
       >
-        <div className={styles.subscribeToCourseModal}>
+        <div className={styles.controlsCourseModal}>
           <Button
             Type="Primary"
             Size="Small"
