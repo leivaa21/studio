@@ -9,6 +9,8 @@ import { useOwnedCourseSubscriptionByCourseId } from '../../../hooks/course/useO
 import { deleteOwnedCourseSubscription } from '../../../contexts/course-subscription/application/DeleteOwnedCourseSubscription';
 import { getAuthTokenCookie } from '../../../lib/cookieUtils';
 import { useRouter } from 'next/router';
+import { Modal } from '@studio/ui/components/modal';
+import { useState } from 'react';
 
 export interface CourseContentViewParams {
   courseId: string;
@@ -16,10 +18,24 @@ export interface CourseContentViewParams {
 
 export function CourseContentView({ courseId }: CourseContentViewParams) {
   const router = useRouter();
+
+  const [giveUpModalShown, setGiveUpModalShown] = useState<boolean>(false);
+
   const course = useCourse(courseId);
   const author = useCourseAuthor(course?.authorId);
   const lessons = useCourseLessons(courseId) || [];
   const courseSubscription = useOwnedCourseSubscriptionByCourseId(courseId);
+
+  const onGiveUpSubmit = async () => {
+    if (!courseSubscription) return;
+
+    await deleteOwnedCourseSubscription(
+      courseSubscription.id,
+      getAuthTokenCookie() || ''
+    );
+
+    router.push('/dashboard');
+  };
 
   return (
     <div className={styles.courseContentPreview}>
@@ -44,17 +60,25 @@ export function CourseContentView({ courseId }: CourseContentViewParams) {
           Type="Cancel"
           Label="Give up this course :("
           Size="Small"
-          onClick={() => {
-            if (!courseSubscription) return;
-
-            deleteOwnedCourseSubscription(
-              courseSubscription.id,
-              getAuthTokenCookie() || ''
-            );
-            router.push('/dashboard');
-          }}
+          onClick={() => setGiveUpModalShown(true)}
         />
       </div>
+      <Modal
+        isShown={giveUpModalShown}
+        title={'Are you sure you want to give up? :('}
+        closeFunction={() => {
+          setGiveUpModalShown(false);
+        }}
+      >
+        <div className={styles.subscribeToCourseModal}>
+          <Button
+            Type="Cancel"
+            Size="Small"
+            Label="Give up course"
+            onClick={onGiveUpSubmit}
+          />
+        </div>
+      </Modal>
     </div>
   );
 }
