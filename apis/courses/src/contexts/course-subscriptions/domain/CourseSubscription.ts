@@ -96,6 +96,7 @@ export class CourseSubscription extends AggregateRoot {
       );
     }
     this._completedLessons.push(lessonId);
+    this._updatedAt = new Date();
   }
 
   public get subscribedAt(): Date {
