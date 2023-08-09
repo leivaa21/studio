@@ -122,7 +122,7 @@ describe('Mongo Course Subscription Repository', () => {
     });
   });
 
-  describe('Updating couseSubscription', async () => {
+  describe('Updating couseSubscription', () => {
     it('should let update a course subscription', async () => {
       const courseSubscription = new CourseSubscriptionBuilder().build();
       await createCourseSubscription(courseSubscription);
