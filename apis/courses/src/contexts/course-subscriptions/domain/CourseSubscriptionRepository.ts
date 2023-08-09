@@ -14,4 +14,5 @@ export interface CourseSubscriptionRepository {
   findByUser(userId: UserId): Promise<CourseSubscription[]>;
   findById(id: CourseSubscriptionId): Promise<Nullable<CourseSubscription>>;
   removeById(id: CourseSubscriptionId): Promise<void>;
+  update(courseSubscription: CourseSubscription): Promise<void>;
 }

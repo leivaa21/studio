@@ -3,10 +3,12 @@ import { CourseSubscription } from '../../../src/contexts/course-subscriptions/d
 import { Builder } from './builder';
 import { UserId } from '../../../src/contexts/course-subscriptions/domain/UserId';
 import { CourseSubscriptionId } from '../../../src/contexts/course-subscriptions/domain/CourseSubscriptionId';
+import { LessonId } from '../../../src/contexts/lessons/domain/LessonId';
 
 export class CourseSubscriptionBuilder implements Builder<CourseSubscription> {
   private _userId: UserId = UserId.random();
   private _courseId: CourseId = CourseId.random();
+  private _completedLessons: LessonId[] = [];
 
   build(): CourseSubscription {
     return new CourseSubscription({
@@ -15,7 +17,7 @@ export class CourseSubscriptionBuilder implements Builder<CourseSubscription> {
       courseId: this._courseId,
       subscribedAt: new Date(),
       updatedAt: new Date(),
-      completedLessons: [],
+      completedLessons: this._completedLessons,
     });
   }
 
@@ -26,6 +28,11 @@ export class CourseSubscriptionBuilder implements Builder<CourseSubscription> {
 
   public withCourseId(courseId: CourseId) {
     this._courseId = courseId;
+    return this;
+  }
+
+  public withCompletedLessons(completedLessons: LessonId[]) {
+    this._completedLessons = completedLessons;
     return this;
   }
 }

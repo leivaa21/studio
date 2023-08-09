@@ -16,7 +16,7 @@ export class CourseSubscriptionNotFoundError extends ApiError {
 
   public static searchedByUserAndCourse(userId: string, courseId: string) {
     return new this(
-      `User <${userId}> is not subscribed to course <${courseId}> couldn't be found`
+      `User <${userId}> subscription to course <${courseId}> couldn't be found`
     );
   }
 }
