@@ -5,6 +5,7 @@ import { UserId } from './UserId';
 import { CourseSubscriptionWasCreatedEvent } from './events/CourseSubscriptionWasCreated';
 import { LessonId } from '../../lessons/domain/LessonId';
 import { CourseSubscriptionWasDeletedEvent } from './events/CourseSubscriptionWasDeleted';
+import { UnableToCompleteLessonError } from './errors/UnableToCompleteLessonError';
 
 export interface CourseSubscriptionParams {
   readonly id: CourseSubscriptionId;
@@ -79,6 +80,22 @@ export class CourseSubscription extends AggregateRoot {
     courseSubscription.commit(courseSubscriptionWasCreatedEvent);
 
     return courseSubscription;
+  }
+
+  public hasLessonCompleted(lessonId: LessonId): boolean {
+    return !!this.completedLessons.find(
+      (lesson) => lesson.value === lessonId.value
+    );
+  }
+
+  public markLessonAsCompleted(lessonId: LessonId): void {
+    if (this.hasLessonCompleted(lessonId)) {
+      throw UnableToCompleteLessonError.alreadyCompleted(
+        this.id.value,
+        lessonId.value
+      );
+    }
+    this._completedLessons.push(lessonId);
   }
 
   public get subscribedAt(): Date {
