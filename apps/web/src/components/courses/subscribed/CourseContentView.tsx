@@ -6,12 +6,16 @@ import { useCourseLessons } from '../../../hooks/course/useCourseLessons';
 import Button from '@studio/ui/components/interactivity/cta/button';
 import { BsCheck } from 'react-icons/bs';
 import { useOwnedCourseSubscriptionByCourseId } from '../../../hooks/course/useOwnedCourseSubscriptionByCourseId';
+import { deleteOwnedCourseSubscription } from '../../../contexts/course-subscription/application/DeleteOwnedCourseSubscription';
+import { getAuthTokenCookie } from '../../../lib/cookieUtils';
+import { useRouter } from 'next/router';
 
 export interface CourseContentViewParams {
   courseId: string;
 }
 
 export function CourseContentView({ courseId }: CourseContentViewParams) {
+  const router = useRouter();
   const course = useCourse(courseId);
   const author = useCourseAuthor(course?.authorId);
   const lessons = useCourseLessons(courseId) || [];
@@ -34,6 +38,23 @@ export function CourseContentView({ courseId }: CourseContentViewParams) {
           };
         })}
       />
+      <div className={styles.courseControls}>
+        <Button
+          className={styles.giveUpButton}
+          Type="Cancel"
+          Label="Give up this course :("
+          Size="Small"
+          onClick={() => {
+            if (!courseSubscription) return;
+
+            deleteOwnedCourseSubscription(
+              courseSubscription.id,
+              getAuthTokenCookie() || ''
+            );
+            router.push('/dashboard');
+          }}
+        />
+      </div>
     </div>
   );
 }

@@ -11,6 +11,9 @@ export default async function handler(
     case 'GET':
       await getOwnedCourseSubscriptionByCourseId(req, res);
       break;
+    case 'DELETE':
+      await deleteOwnedCourseSubcription(req, res);
+      break;
     default:
       return res
         .status(404)
@@ -37,5 +40,26 @@ async function getOwnedCourseSubscriptionByCourseId(
       );
 
     res.status(200).send(response);
+  });
+}
+
+async function deleteOwnedCourseSubcription(
+  req: NextApiRequest,
+  res: NextApiResponse
+) {
+  const authToken = req.headers.authorization;
+
+  const coursesApiService = new CoursesApiService();
+
+  const { courseId: id } = req.query;
+
+  await SafeControllerHandling(res, async () => {
+    await coursesApiService.delete<undefined, undefined>(
+      `/course-subscription/${id}`,
+      undefined,
+      authToken
+    );
+
+    res.status(200).end();
   });
 }
