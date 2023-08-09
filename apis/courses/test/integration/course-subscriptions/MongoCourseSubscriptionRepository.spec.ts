@@ -15,6 +15,7 @@ import {
 } from '../../helpers/persistance/mongo/course-subscriptions';
 import { CourseId } from '../../../src/contexts/courses/domain/CourseId';
 import { UserId } from '../../../src/contexts/course-subscriptions/domain/UserId';
+import { LessonId } from '../../../src/contexts/lessons/domain/LessonId';
 
 describe('Mongo Course Subscription Repository', () => {
   jest.setTimeout(9999999);
@@ -118,6 +119,25 @@ describe('Mongo Course Subscription Repository', () => {
 
         expect(courseSubscriptionsFound).toHaveLength(0);
       });
+    });
+  });
+
+  describe('Updating couseSubscription', async () => {
+    it('should let update a course subscription', async () => {
+      const courseSubscription = new CourseSubscriptionBuilder().build();
+      await createCourseSubscription(courseSubscription);
+
+      courseSubscription.markLessonAsCompleted(LessonId.random());
+
+      await repository.update(courseSubscription);
+
+      const courseSubscriptionFound = await findCourseSubscriptionById(
+        courseSubscription.id
+      );
+
+      expect(courseSubscriptionFound?.toPrimitives()).toStrictEqual(
+        courseSubscription.toPrimitives()
+      );
     });
   });
 });
