@@ -69,4 +69,11 @@ export class MongoCourseSubscriptionRepository
   public async removeById(id: CourseSubscriptionId): Promise<void> {
     await this.model().findByIdAndDelete(id.value);
   }
+
+  public async update(courseSubscription: CourseSubscription): Promise<void> {
+    await this.model().findByIdAndUpdate(
+      courseSubscription.id.value,
+      this.entitySchemaFactory.createSchemaFromEntity(courseSubscription)
+    );
+  }
 }
