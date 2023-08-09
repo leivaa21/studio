@@ -20,10 +20,11 @@ const Button = ({
   Label,
   Link,
   href,
+  className,
   ...defaultProps
 }: ButtonProps ) => {    
   
-  const classes = `${styles.base} ${styles[`type-${Type}`]} ${styles[`size-${Size}`]}`;
+  const classes = `${styles.base} ${styles[`type-${Type}`]} ${styles[`size-${Size}`]} ${className}`;
   
   if(Link) {
     if(!href) {

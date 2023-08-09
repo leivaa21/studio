@@ -1,15 +1,14 @@
 import { NextApiRequest, NextApiResponse } from 'next';
 import { SafeControllerHandling } from '../../../../lib/controllers/SafeControllerHandling';
 import { CoursesApiService } from '../../../../contexts/shared/infrastructure/ApiClients/CoursesApiService';
-import { CheckIfUserIsSubscribedToCourseResponse } from '@studio/commons';
 
 export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
   switch (req.method) {
-    case 'GET':
-      await checkIfUserIsSubscribedToCourse(req, res);
+    case 'DELETE':
+      await deleteOwnedCourseSubcription(req, res);
       break;
     default:
       return res
@@ -18,7 +17,7 @@ export default async function handler(
   }
 }
 
-async function checkIfUserIsSubscribedToCourse(
+async function deleteOwnedCourseSubcription(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
@@ -26,16 +25,15 @@ async function checkIfUserIsSubscribedToCourse(
 
   const coursesApiService = new CoursesApiService();
 
-  const { courseId } = req.query;
+  const { id } = req.query;
 
   await SafeControllerHandling(res, async () => {
-    const response =
-      await coursesApiService.get<CheckIfUserIsSubscribedToCourseResponse>(
-        `/course-subscription/${courseId}/check`,
-        undefined,
-        authToken
-      );
+    await coursesApiService.delete<undefined, undefined>(
+      `/course-subscription/${id}`,
+      undefined,
+      authToken
+    );
 
-    res.status(200).send(response);
+    res.status(200).end();
   });
 }

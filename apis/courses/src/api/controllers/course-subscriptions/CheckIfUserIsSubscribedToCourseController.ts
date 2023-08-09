@@ -19,7 +19,7 @@ import { CheckIfUserIsSubscribedToCourseResponse } from '@studio/commons';
 @Injectable({
   dependencies: [InMemoryQueryBus],
 })
-@JsonController('/course-subscription')
+@JsonController('/course-subscription/by-course')
 export class GetUserCourseSubscriptionToCourseController {
   constructor(private readonly queryBus: QueryBus) {}
 

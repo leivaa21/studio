@@ -6,7 +6,7 @@ export async function getOwnedCourseSubscriptionByCourseId(
   authorizationToken: string
 ): Promise<CourseSubscriptionInfoResponse> {
   return internalApiClient.get<CourseSubscriptionInfoResponse>(
-    `/api/course-subscription/${courseId}`,
+    `/api/course-subscription/by-course/${courseId}`,
     undefined,
     authorizationToken
   );

@@ -1,6 +1,6 @@
 import { NextApiRequest, NextApiResponse } from 'next';
-import { SafeControllerHandling } from '../../../../lib/controllers/SafeControllerHandling';
-import { CoursesApiService } from '../../../../contexts/shared/infrastructure/ApiClients/CoursesApiService';
+import { SafeControllerHandling } from '../../../../../lib/controllers/SafeControllerHandling';
+import { CoursesApiService } from '../../../../../contexts/shared/infrastructure/ApiClients/CoursesApiService';
 import { CourseSubscriptionInfoResponse } from '@studio/commons';
 
 export default async function handler(
@@ -31,7 +31,7 @@ async function getOwnedCourseSubscriptionByCourseId(
   await SafeControllerHandling(res, async () => {
     const response =
       await coursesApiService.get<CourseSubscriptionInfoResponse>(
-        `/course-subscription/${courseId}`,
+        `/course-subscription/by-course/${courseId}`,
         undefined,
         authToken
       );

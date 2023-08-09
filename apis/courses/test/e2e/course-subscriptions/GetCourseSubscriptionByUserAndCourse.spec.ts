@@ -15,8 +15,9 @@ import { createCourseSubscription } from '../../helpers/persistance/mongo/course
 import { CourseSubscriptionBuilder } from '../../helpers/builders/CourseSubscriptionBuilder';
 
 let mongoContainer: StartedTestContainer;
-const route = '/course-subscription/:courseId';
-const formatedRoute = (courseId: string) => `/course-subscription/${courseId}`;
+const route = '/course-subscription/by-course/:courseId';
+const formatedRoute = (courseId: string) =>
+  `/course-subscription/by-course/${courseId}`;
 
 beforeAll(async () => {
   mongoContainer = await initializeMongoContainer();

@@ -20,7 +20,7 @@ import { CourseSubscription } from '../../../contexts/course-subscriptions/domai
 @Injectable({
   dependencies: [InMemoryQueryBus],
 })
-@JsonController('/course-subscription')
+@JsonController('/course-subscription/by-course')
 export class GetCourseSubscriptionByUserAndCourseController {
   constructor(private readonly queryBus: QueryBus) {}
 
