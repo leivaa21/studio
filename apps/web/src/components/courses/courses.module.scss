@@ -66,6 +66,13 @@
     flex: 0 1 auto;
     justify-content: center;
   }
+
+  .subscribeToCourseModal {
+    display: flex;
+    flex-direction: column;
+  
+    min-width: 50vw;
+  }
 }
 
 .button {
@@ -81,13 +88,6 @@
 
   .tags {
     justify-content: center;
-  }
-
-  .subscribeToCourseModal {
-    display: flex;
-    flex-direction: column;
-  
-    min-width: 50vw;
   }
 
 }
