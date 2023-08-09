@@ -71,7 +71,7 @@ export function CourseContentView({ courseId }: CourseContentViewParams) {
           setGiveUpModalShown(false);
         }}
       >
-        <div className={styles.subscribeToCourseModal}>
+        <div className={styles.controlsCourseModal}>
           <Button
             Type="Cancel"
             Size="Small"

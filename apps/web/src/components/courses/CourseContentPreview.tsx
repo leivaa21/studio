@@ -64,7 +64,7 @@ export function CourseContentPreview({ courseId }: CourseContentPreviewParams) {
           setSubscribeToCourseModalShown(false);
         }}
       >
-        <div className={styles.subscribeToCourseModal}>
+        <div className={styles.controlsCourseModal}>
           <Button
             Type="Primary"
             Size="Small"
