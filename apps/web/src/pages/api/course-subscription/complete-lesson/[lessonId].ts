@@ -28,7 +28,7 @@ async function markLessonAsCompleted(
   const { lessonId } = req.query;
 
   await SafeControllerHandling(res, async () => {
-    await coursesApiService.delete<undefined, undefined>(
+    await coursesApiService.put<undefined, undefined>(
       `/course-subscription/complete-lesson/${lessonId}`,
       undefined,
       authToken
