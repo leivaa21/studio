@@ -18,6 +18,7 @@ export class CourseSubscriptionBuilder implements Builder<CourseSubscription> {
       subscribedAt: new Date(),
       updatedAt: new Date(),
       completedLessons: this._completedLessons,
+      completed: false,
     });
   }
 

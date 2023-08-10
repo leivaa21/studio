@@ -25,6 +25,7 @@ export class CourseSubscriptionSchemaFactory
       subscribedAt: schema.subscribedAt,
       updatedAt: schema.updatedAt,
       completedLessons: schema.completedLessons,
+      completed: schema.completed,
     });
   }
 }

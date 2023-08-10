@@ -7,6 +7,8 @@ import { LessonId } from '../../lessons/domain/LessonId';
 import { CourseSubscriptionWasDeletedEvent } from './events/CourseSubscriptionWasDeleted';
 import { UnableToCompleteLessonError } from './errors/UnableToCompleteLessonError';
 import { LessonWasCompletedOnCourseSubscriptionEvent } from './events/LessonWasCompletedOnCourseSubscription';
+import { UnableToCompleteError } from './errors/UnableToCompleteError';
+import { CourseSubscriptionWasCompletedEvent } from './events/CourseSubscriptionWasCompleted';
 
 export interface CourseSubscriptionParams {
   readonly id: CourseSubscriptionId;
@@ -15,6 +17,7 @@ export interface CourseSubscriptionParams {
   readonly subscribedAt: Date;
   readonly updatedAt: Date;
   readonly completedLessons: LessonId[];
+  readonly completed: boolean;
 }
 
 export interface CourseSubscriptionPrimitives {
@@ -24,6 +27,7 @@ export interface CourseSubscriptionPrimitives {
   readonly subscribedAt: Date;
   readonly updatedAt: Date;
   readonly completedLessons: string[];
+  readonly completed: boolean;
 }
 
 export class CourseSubscription extends AggregateRoot {
@@ -33,6 +37,7 @@ export class CourseSubscription extends AggregateRoot {
   private _subscribedAt: Date;
   private _updatedAt: Date;
   private _completedLessons: LessonId[];
+  private _completed: boolean;
 
   public constructor({
     id,
@@ -41,6 +46,7 @@ export class CourseSubscription extends AggregateRoot {
     subscribedAt,
     updatedAt,
     completedLessons,
+    completed,
   }: CourseSubscriptionParams) {
     super();
     this.id = id;
@@ -49,6 +55,7 @@ export class CourseSubscription extends AggregateRoot {
     this._subscribedAt = subscribedAt;
     this._updatedAt = updatedAt;
     this._completedLessons = completedLessons;
+    this._completed = completed;
   }
 
   public static new({
@@ -76,6 +83,7 @@ export class CourseSubscription extends AggregateRoot {
       subscribedAt: new Date(),
       updatedAt: new Date(),
       completedLessons: [],
+      completed: false,
     });
 
     courseSubscription.commit(courseSubscriptionWasCreatedEvent);
@@ -119,6 +127,10 @@ export class CourseSubscription extends AggregateRoot {
     return this._completedLessons;
   }
 
+  public get completed(): boolean {
+    return this._completed;
+  }
+
   public delete(): void {
     const event = CourseSubscriptionWasDeletedEvent.fromPrimitives({
       aggregateId: this.id.value,
@@ -126,6 +138,20 @@ export class CourseSubscription extends AggregateRoot {
         userId: this.userId.value,
         courseId: this.courseId.value,
       },
+    });
+
+    this.commit(event);
+  }
+
+  public markAsCompleted(): void {
+    if (this.completed) {
+      throw UnableToCompleteError.alreadyCompleted(this.id.value);
+    }
+    this._completed = true;
+    this._updatedAt = new Date();
+
+    const event = CourseSubscriptionWasCompletedEvent.fromPrimitives({
+      aggregateId: this.id.value,
     });
 
     this.commit(event);
@@ -143,6 +169,7 @@ export class CourseSubscription extends AggregateRoot {
       completedLessons: primitives.completedLessons.map((id) =>
         LessonId.of(id)
       ),
+      completed: primitives.completed,
     });
   }
 
@@ -154,6 +181,7 @@ export class CourseSubscription extends AggregateRoot {
       subscribedAt: this.subscribedAt,
       updatedAt: this.updatedAt,
       completedLessons: this.completedLessons.map((id) => id.value),
+      completed: this.completed,
     };
   }
 }
