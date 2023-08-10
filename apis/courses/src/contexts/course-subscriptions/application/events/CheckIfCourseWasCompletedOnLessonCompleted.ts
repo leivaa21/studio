@@ -5,7 +5,6 @@ import { InMemoryAsyncEventBus } from '../../../shared/infrastructure/EventBus/I
 import { EventBus } from '../../../shared/domain/EventBus';
 import { MongoCourseSubscriptionRepository } from '../../infrastructure/persistance/mongo/MongoCourseSubscriptionRepository';
 import { CourseSubscriptionRepository } from '../../domain/CourseSubscriptionRepository';
-import { CourseWasUnpublishedEvent } from '../../../courses/domain/events/CourseWasUnpublished';
 import { LessonWasCompletedOnCourseSubscriptionEvent } from '../../domain/events/LessonWasCompletedOnCourseSubscription';
 import { CourseSubscriptionId } from '../../domain/CourseSubscriptionId';
 import { CourseSubscriptionFinder } from '../services/CourseSubscriptionFinder';
@@ -35,7 +34,7 @@ export class CheckIfCourseWasCompletedOnLessonCompletedHandler extends EventHand
     this.lessonFinder = new LessonFinder(lessonRepository);
   }
   subscribedTo(): DomainEventClass[] {
-    return [CourseWasUnpublishedEvent];
+    return [LessonWasCompletedOnCourseSubscriptionEvent];
   }
   async on(
     domainEvent: LessonWasCompletedOnCourseSubscriptionEvent
