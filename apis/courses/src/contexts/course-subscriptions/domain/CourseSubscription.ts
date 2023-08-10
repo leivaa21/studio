@@ -6,6 +6,7 @@ import { CourseSubscriptionWasCreatedEvent } from './events/CourseSubscriptionWa
 import { LessonId } from '../../lessons/domain/LessonId';
 import { CourseSubscriptionWasDeletedEvent } from './events/CourseSubscriptionWasDeleted';
 import { UnableToCompleteLessonError } from './errors/UnableToCompleteLessonError';
+import { LessonWasCompletedOnCourseSubscriptionEvent } from './events/LessonWasCompletedOnCourseSubscription';
 
 export interface CourseSubscriptionParams {
   readonly id: CourseSubscriptionId;
@@ -96,6 +97,13 @@ export class CourseSubscription extends AggregateRoot {
       );
     }
     this._completedLessons.push(lessonId);
+    const event = LessonWasCompletedOnCourseSubscriptionEvent.fromPrimitives({
+      aggregateId: this.id.value,
+      attributes: {
+        lessonId: lessonId.value,
+      },
+    });
+    this.commit(event);
     this._updatedAt = new Date();
   }
 
