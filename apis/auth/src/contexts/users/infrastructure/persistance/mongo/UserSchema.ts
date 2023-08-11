@@ -24,10 +24,7 @@ const UserCredentialsSchema = new Schema(
 
 export const UserSchema = new Schema(
   {
-    _id: {
-      type: String,
-      required: true,
-    },
+    _id: String,
     nickname: {
       type: String,
       required: true,

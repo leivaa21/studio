@@ -2,11 +2,7 @@ import mongoose, { Schema } from 'mongoose';
 
 export const CourseSubscriptionSchema = new Schema(
   {
-    _id: {
-      type: String,
-      required: true,
-      unique: true,
-    },
+    _id: String,
     userId: {
       type: String,
       required: true,
