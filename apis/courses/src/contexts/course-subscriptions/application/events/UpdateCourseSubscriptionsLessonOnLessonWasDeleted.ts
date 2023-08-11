@@ -10,20 +10,30 @@ import { LessonId } from '../../../lessons/domain/LessonId';
 import { LessonWasDeletedEvent } from '../../../lessons/domain/events/LessonWasDeleted';
 import { CourseId } from '../../../courses/domain/CourseId';
 import { CourseSubscription } from '../../domain/CourseSubscription';
+import { LessonFinder } from '../../../lessons/application/services/LessonFinder';
+import { MongoLessonRepository } from '../../../lessons/infrastructure/persistance/mongo/MongoLessonRepository';
+import { LessonRepository } from '../../../lessons/domain/LessonRepository';
 
 @Injectable({
-  dependencies: [MongoCourseSubscriptionRepository, InMemoryAsyncEventBus],
+  dependencies: [
+    MongoCourseSubscriptionRepository,
+    MongoLessonRepository,
+    InMemoryAsyncEventBus,
+  ],
 })
 export class UpdateCourseSubscriptionsLessonOnLessonWasDeletedHandler extends EventHandler<LessonWasDeletedEvent> {
   private readonly courseSubscriptionFinder: CourseSubscriptionFinder;
+  private readonly lessonFinder: LessonFinder;
   public constructor(
     private readonly courseSubscriptionRepository: CourseSubscriptionRepository,
+    lessonRepository: LessonRepository,
     eventBus?: EventBus
   ) {
     super(eventBus);
     this.courseSubscriptionFinder = new CourseSubscriptionFinder(
       courseSubscriptionRepository
     );
+    this.lessonFinder = new LessonFinder(lessonRepository);
   }
   subscribedTo(): DomainEventClass[] {
     return [LessonWasDeletedEvent];
@@ -38,6 +48,11 @@ export class UpdateCourseSubscriptionsLessonOnLessonWasDeletedHandler extends Ev
 
     await this.deleteLessonFromCompletedLessonsOnCourseSubscriptions(
       lessonId,
+      courseSubscriptions
+    );
+
+    await this.markAsCompletedCoursesWithNoUncompletedLessonsRemaining(
+      courseId,
       courseSubscriptions
     );
   }
@@ -58,6 +73,36 @@ export class UpdateCourseSubscriptionsLessonOnLessonWasDeletedHandler extends Ev
           await this.courseSubscriptionRepository.update(courseSubscription);
         }
       )
+    );
+  }
+
+  private async markAsCompletedCoursesWithNoUncompletedLessonsRemaining(
+    courseId: CourseId,
+    courseSubscriptions: CourseSubscription[]
+  ): Promise<void> {
+    const uncompletedCourseSubscriptions = courseSubscriptions.filter(
+      (courseSubscription) => !!courseSubscription.completed
+    );
+
+    const lessonsFromCourse = await this.lessonFinder.findByCourseId(courseId);
+
+    await Promise.all(
+      uncompletedCourseSubscriptions.map(async (courseSubscription) => {
+        const nonCompletedLessons = lessonsFromCourse.filter((lesson) => {
+          const isCompleted = !!courseSubscription.completedLessons.find(
+            (completedLesson) => lesson.id.value === completedLesson.value
+          );
+
+          return !isCompleted;
+        });
+
+        if (nonCompletedLessons.length === 0) {
+          courseSubscription.markAsCompleted();
+          await this.courseSubscriptionRepository.update(courseSubscription);
+        }
+
+        this.publishAggregateRootEvents(courseSubscription);
+      })
     );
   }
 }
