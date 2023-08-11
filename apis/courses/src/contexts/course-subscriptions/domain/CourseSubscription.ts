@@ -9,6 +9,7 @@ import { UnableToCompleteLessonError } from './errors/UnableToCompleteLessonErro
 import { LessonWasCompletedOnCourseSubscriptionEvent } from './events/LessonWasCompletedOnCourseSubscription';
 import { UnableToCompleteError } from './errors/UnableToCompleteError';
 import { CourseSubscriptionWasCompletedEvent } from './events/CourseSubscriptionWasCompleted';
+import { UnableToUncompleteLessonError } from './errors/UnableToUncompleteLessonError';
 
 export interface CourseSubscriptionParams {
   readonly id: CourseSubscriptionId;
@@ -112,6 +113,17 @@ export class CourseSubscription extends AggregateRoot {
       },
     });
     this.commit(event);
+    this._updatedAt = new Date();
+  }
+
+  public removeLessonFromCompletedLessons(lessonId: LessonId): void {
+    if (!this.hasLessonCompleted(lessonId)) {
+      throw UnableToUncompleteLessonError.notCompleted(
+        this.id.value,
+        lessonId.value
+      );
+    }
+    this._completedLessons.push(lessonId);
     this._updatedAt = new Date();
   }
 
