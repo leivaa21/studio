@@ -123,7 +123,9 @@ export class CourseSubscription extends AggregateRoot {
         lessonId.value
       );
     }
-    this._completedLessons.push(lessonId);
+    this._completedLessons = this._completedLessons.filter(
+      (lesson) => lesson.value !== lessonId.value
+    );
     this._updatedAt = new Date();
   }
 
