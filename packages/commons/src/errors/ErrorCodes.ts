@@ -26,6 +26,7 @@ export enum ErrorCodes {
   InvalidCourseSubscription = 'courses.invalid-course-subscription',
   CourseSubscriptionNotFound = 'courses.course-subscription-not-found',
   UnableToCompleteLesson = 'courses.lesson-already-completed',
+  UnableToUncompleteLesson = 'courses.lesson-not-completed',
   UnableToCompleteCourseSubscription = 'courses.coursesubscription-already-completed',
   UnableToUncompleteCourseSubscription = 'courses.coursesubscription-not-completed',
 }
