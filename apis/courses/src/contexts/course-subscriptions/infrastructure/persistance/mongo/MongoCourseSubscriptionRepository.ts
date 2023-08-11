@@ -56,6 +56,17 @@ export class MongoCourseSubscriptionRepository
       this.entitySchemaFactory.createEntityFromSchema(document)
     );
   }
+
+  public async findByCourse(courseId: CourseId): Promise<CourseSubscription[]> {
+    const documents = await this.model().find({
+      courseId: courseId.value,
+    });
+
+    return documents.map((document) =>
+      this.entitySchemaFactory.createEntityFromSchema(document)
+    );
+  }
+
   public async findById(
     id: CourseSubscriptionId
   ): Promise<Nullable<CourseSubscription>> {

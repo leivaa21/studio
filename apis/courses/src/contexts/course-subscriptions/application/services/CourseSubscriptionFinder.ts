@@ -48,4 +48,8 @@ export class CourseSubscriptionFinder {
   public async findByUser(userId: UserId): Promise<CourseSubscription[]> {
     return this.repository.findByUser(userId);
   }
+
+  public async findByCourse(courseId: CourseId): Promise<CourseSubscription[]> {
+    return this.repository.findByCourse(courseId);
+  }
 }
