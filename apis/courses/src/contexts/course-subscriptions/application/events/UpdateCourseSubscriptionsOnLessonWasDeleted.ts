@@ -81,7 +81,7 @@ export class UpdateCourseSubscriptionsOnLessonWasDeletedHandler extends EventHan
     courseSubscriptions: CourseSubscription[]
   ): Promise<void> {
     const uncompletedCourseSubscriptions = courseSubscriptions.filter(
-      (courseSubscription) => !!courseSubscription.completed
+      (courseSubscription) => !courseSubscription.completed
     );
 
     const lessonsFromCourse = await this.lessonFinder.findByCourseId(courseId);
