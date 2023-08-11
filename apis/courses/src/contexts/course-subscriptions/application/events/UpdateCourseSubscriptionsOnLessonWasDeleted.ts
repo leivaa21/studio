@@ -21,7 +21,7 @@ import { LessonRepository } from '../../../lessons/domain/LessonRepository';
     InMemoryAsyncEventBus,
   ],
 })
-export class UpdateCourseSubscriptionsLessonOnLessonWasDeletedHandler extends EventHandler<LessonWasDeletedEvent> {
+export class UpdateCourseSubscriptionsOnLessonWasDeletedHandler extends EventHandler<LessonWasDeletedEvent> {
   private readonly courseSubscriptionFinder: CourseSubscriptionFinder;
   private readonly lessonFinder: LessonFinder;
   public constructor(
