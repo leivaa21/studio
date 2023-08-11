@@ -9,6 +9,7 @@ import { CourseSubscriptionFinder } from '../services/CourseSubscriptionFinder';
 import { LessonId } from '../../../lessons/domain/LessonId';
 import { LessonWasDeletedEvent } from '../../../lessons/domain/events/LessonWasDeleted';
 import { CourseId } from '../../../courses/domain/CourseId';
+import { CourseSubscription } from '../../domain/CourseSubscription';
 
 @Injectable({
   dependencies: [MongoCourseSubscriptionRepository, InMemoryAsyncEventBus],
@@ -35,6 +36,16 @@ export class UpdateCourseSubscriptionsLessonOnLessonWasDeletedHandler extends Ev
     const courseSubscriptions =
       await this.courseSubscriptionFinder.findByCourse(courseId);
 
+    await this.deleteLessonFromCompletedLessonsOnCourseSubscriptions(
+      lessonId,
+      courseSubscriptions
+    );
+  }
+
+  private async deleteLessonFromCompletedLessonsOnCourseSubscriptions(
+    lessonId: LessonId,
+    courseSubscriptions: CourseSubscription[]
+  ) {
     const courseSubscriptionWithLessonAlreadyCompleted =
       courseSubscriptions.filter((courseSubscription) =>
         courseSubscription.hasLessonCompleted(lessonId)
