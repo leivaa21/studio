@@ -5,7 +5,7 @@ export class UnableToUncompleteLessonError extends ApiError {
     super({
       apiStatus: 400,
       kind: 'BAD_REQUEST',
-      errorCode: ErrorCodes.UnableToCompleteLesson,
+      errorCode: ErrorCodes.UnableToUncompleteCourseSubscription,
       message,
     });
   }
