@@ -10,6 +10,8 @@ import { LessonWasCompletedOnCourseSubscriptionEvent } from './events/LessonWasC
 import { UnableToCompleteError } from './errors/UnableToCompleteError';
 import { CourseSubscriptionWasCompletedEvent } from './events/CourseSubscriptionWasCompleted';
 import { UnableToUncompleteLessonError } from './errors/UnableToUncompleteLessonError';
+import { UnableToUncompleteError } from './errors/UnableToUncompleteError';
+import { CourseSubscriptionWasUncompletedEvent } from './events/CourseSubscriptionWasUncompleted';
 
 export interface CourseSubscriptionParams {
   readonly id: CourseSubscriptionId;
@@ -165,6 +167,20 @@ export class CourseSubscription extends AggregateRoot {
     this._updatedAt = new Date();
 
     const event = CourseSubscriptionWasCompletedEvent.fromPrimitives({
+      aggregateId: this.id.value,
+    });
+
+    this.commit(event);
+  }
+
+  public markAsUncompleted(): void {
+    if (!this.completed) {
+      throw UnableToUncompleteError.notCompleted(this.id.value);
+    }
+    this._completed = false;
+    this._updatedAt = new Date();
+
+    const event = CourseSubscriptionWasUncompletedEvent.fromPrimitives({
       aggregateId: this.id.value,
     });
 
