@@ -43,7 +43,9 @@ export function CourseContentView({ courseId }: CourseContentViewParams) {
 
   return (
     <div className={styles.courseContentPreview}>
-      {courseSubscription?.completed ? <CompletedMark /> : undefined}
+      {courseSubscription?.completed ? (
+        <CompletedMark courseId={courseId} />
+      ) : undefined}
       <h2 className={styles.title}>{course?.title}</h2>
       <span className={styles.authorName}>{author?.nickname}</span>
       <MarkdownRenderer content={course?.description} />

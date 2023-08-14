@@ -23,7 +23,9 @@ export function SubscribedCourseCard({ key, course }: CourseCardParams) {
         <span className={styles.authorName}>{author?.nickname}</span>
       </div>
       <div className={styles.links}>
-        {courseSubscription?.completed ? <CompletedMark /> : undefined}
+        {courseSubscription?.completed ? (
+          <CompletedMark courseId={course.id} />
+        ) : undefined}
         <Button
           Type="Primary"
           Size="Medium"

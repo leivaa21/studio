@@ -183,12 +183,15 @@
   justify-content: center;
   justify-items: center;
 
+  transition: all .35s ease-in-out;
+
   svg {
     font-size: 1.5rem;
   }
 
   &:hover {
-    cursor: default;
+    cursor: pointer;
+    background-color: $primary-active;
   }
 
 }
