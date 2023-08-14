@@ -3,6 +3,8 @@ import Button from '@studio/ui/components/interactivity/cta/button';
 import styles from '../courses.module.scss';
 import { useCourseAuthor } from '../../../hooks/course/useCourseAuthor';
 import { SubscribedCourseInfoResponse } from '@studio/commons';
+import { useOwnedCourseSubscriptionByCourseId } from '../../../hooks/course/useOwnedCourseSubscriptionByCourseId';
+import { CompletedMark } from './CompletedMark';
 
 export interface CourseCardParams {
   course: SubscribedCourseInfoResponse;
@@ -11,6 +13,7 @@ export interface CourseCardParams {
 
 export function SubscribedCourseCard({ key, course }: CourseCardParams) {
   const author = useCourseAuthor(course.authorId);
+  const courseSubscription = useOwnedCourseSubscriptionByCourseId(course.id);
 
   return (
     <div className={styles.courseCard} key={key}>
@@ -20,6 +23,7 @@ export function SubscribedCourseCard({ key, course }: CourseCardParams) {
         <span className={styles.authorName}>{author?.nickname}</span>
       </div>
       <div className={styles.links}>
+        {courseSubscription?.completed ? <CompletedMark /> : undefined}
         <Button
           Type="Primary"
           Size="Medium"

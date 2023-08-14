@@ -14,6 +14,7 @@ import { useOwnedCourseSubscriptionByCourseId } from '../../../hooks/course/useO
 import { deleteOwnedCourseSubscription } from '../../../contexts/course-subscription/application/DeleteOwnedCourseSubscription';
 import { getAuthTokenCookie } from '../../../lib/cookieUtils';
 import { useSubscribedCourseLessons } from '../../../hooks/course/useSubscribedCourseLessons';
+import { CompletedMark } from './CompletedMark';
 
 export interface CourseContentViewParams {
   courseId: string;
@@ -42,6 +43,7 @@ export function CourseContentView({ courseId }: CourseContentViewParams) {
 
   return (
     <div className={styles.courseContentPreview}>
+      {courseSubscription?.completed ? <CompletedMark /> : undefined}
       <h2 className={styles.title}>{course?.title}</h2>
       <span className={styles.authorName}>{author?.nickname}</span>
       <MarkdownRenderer content={course?.description} />
