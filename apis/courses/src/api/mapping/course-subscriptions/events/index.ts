@@ -8,6 +8,8 @@ import { LessonWasCompletedOnCourseSubscriptionEvent } from '../../../../context
 import { CheckIfCourseWasCompletedOnLessonCompletedHandler } from '../../../../contexts/course-subscriptions/application/events/CheckIfCourseWasCompletedOnLessonCompleted';
 import { LessonWasDeletedEvent } from '../../../../contexts/lessons/domain/events/LessonWasDeleted';
 import { UpdateCourseSubscriptionsOnLessonWasDeletedHandler } from '../../../../contexts/course-subscriptions/application/events/UpdateCourseSubscriptionsOnLessonWasDeleted';
+import { LessonContentWasUpdatedEvent } from '../../../../contexts/lessons/domain/events/LessonContentWasUpdated';
+import { UpdateCourseSubscriptionOnLessonContentUpdatedHandler } from '../../../../contexts/course-subscriptions/application/events/UpdateCourseSubscriptionOnLessonContentUpdated';
 
 const eventBus = DependencyContainer.get<EventBus>(InMemoryAsyncEventBus);
 
@@ -24,9 +26,14 @@ const updateCourseSubscriptionsOnLessonWasDeletedHandler =
   DependencyContainer.get<DomainEventSubscriber<LessonWasDeletedEvent>>(
     UpdateCourseSubscriptionsOnLessonWasDeletedHandler
   );
+const updateCourseSubscriptionOnLessonContentUpdatedHandler =
+  DependencyContainer.get<DomainEventSubscriber<LessonContentWasUpdatedEvent>>(
+    UpdateCourseSubscriptionOnLessonContentUpdatedHandler
+  );
 
 eventBus.addSubscribers([
   removeCourseSubscriptionsOnUnpublishedHandler,
   checkIfCourseWasCompletedOnLessonCompletedHandler,
   updateCourseSubscriptionsOnLessonWasDeletedHandler,
+  updateCourseSubscriptionOnLessonContentUpdatedHandler,
 ]);
