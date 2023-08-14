@@ -57,7 +57,7 @@ export class MarkLessonAsCompleted extends CommandHandler<MarkLessonAsCompletedC
 
     courseSubscription.markLessonAsCompleted(lessonId);
 
-    this.courseSubscriptionRepository.update(courseSubscription);
+    await this.courseSubscriptionRepository.update(courseSubscription);
 
     this.publishAggregateRootEvents(courseSubscription);
 
