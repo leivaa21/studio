@@ -1,16 +1,19 @@
+import { useRouter } from 'next/router';
+import { useState } from 'react';
+import { BsCheck } from 'react-icons/bs';
+
+import { Modal } from '@studio/ui/components/modal';
+import Button from '@studio/ui/components/interactivity/cta/button';
+
 import styles from '../courses.module.scss';
+
 import { useCourse } from '../../../hooks/course/useCourse';
 import { MarkdownRenderer } from '../../markdown/renderer';
 import { useCourseAuthor } from '../../../hooks/course/useCourseAuthor';
-import { useCourseLessons } from '../../../hooks/course/useCourseLessons';
-import Button from '@studio/ui/components/interactivity/cta/button';
-import { BsCheck } from 'react-icons/bs';
 import { useOwnedCourseSubscriptionByCourseId } from '../../../hooks/course/useOwnedCourseSubscriptionByCourseId';
 import { deleteOwnedCourseSubscription } from '../../../contexts/course-subscription/application/DeleteOwnedCourseSubscription';
 import { getAuthTokenCookie } from '../../../lib/cookieUtils';
-import { useRouter } from 'next/router';
-import { Modal } from '@studio/ui/components/modal';
-import { useState } from 'react';
+import { useSubscribedCourseLessons } from '../../../hooks/course/useSubscribedCourseLessons';
 
 export interface CourseContentViewParams {
   courseId: string;
@@ -23,7 +26,7 @@ export function CourseContentView({ courseId }: CourseContentViewParams) {
 
   const course = useCourse(courseId);
   const author = useCourseAuthor(course?.authorId);
-  const lessons = useCourseLessons(courseId) || [];
+  const lessons = useSubscribedCourseLessons(courseId);
   const courseSubscription = useOwnedCourseSubscriptionByCourseId(courseId);
 
   const onGiveUpSubmit = async () => {
@@ -43,18 +46,7 @@ export function CourseContentView({ courseId }: CourseContentViewParams) {
       <span className={styles.authorName}>{author?.nickname}</span>
       <MarkdownRenderer content={course?.description} />
       <CourseTags keyPrefix={`${course?.id}-tag`} tags={course?.tags || []} />
-      <CourseLessons
-        keyPrefix={`${course?.id}-lesson`}
-        lessons={lessons.map((lesson) => {
-          return {
-            id: lesson.id,
-            title: lesson.title,
-            courseId: lesson.courseId,
-            completed:
-              courseSubscription?.completedLessons.includes(lesson.id) || false,
-          };
-        })}
-      />
+      <CourseLessons keyPrefix={`${course?.id}-lesson`} lessons={lessons} />
       <div className={styles.courseControls}>
         <Button
           className={styles.giveUpButton}
