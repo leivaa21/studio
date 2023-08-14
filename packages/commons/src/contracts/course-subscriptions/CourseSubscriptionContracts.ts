@@ -10,5 +10,6 @@ export interface CourseSubscriptionInfoResponse {
   id: string;
   userId: string;
   courseId: string;
-  completedLessons: string[]
+  completedLessons: string[];
+  completed: boolean;
 }
