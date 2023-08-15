@@ -1,0 +1,30 @@
+@import "../../styles/colors";
+
+.certificateDownloader {
+  display: flex;
+  padding: 1rem;
+  background-color: $primary;
+  width: max-content;
+  border-radius: 1rem;
+
+  font-weight: bolder;
+
+  align-items: center;
+  align-content: center;
+  justify-content: center;
+  justify-items: center;
+
+  transition: all .35s ease-in-out;
+  
+  border: none;
+
+  svg {
+    margin: 0 1rem;
+    font-size: 1.5rem;
+  }
+
+  &:hover {
+    cursor: pointer;
+    background-color: $primary-active;
+  }
+}

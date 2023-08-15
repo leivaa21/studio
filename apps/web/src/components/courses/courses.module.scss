@@ -183,12 +183,24 @@
   justify-content: center;
   justify-items: center;
 
+  transition: all .35s ease-in-out;
+  
+  border: none;
+
   svg {
     font-size: 1.5rem;
   }
 
   &:hover {
-    cursor: default;
+    cursor: pointer;
+    background-color: $primary-active;
   }
 
+}
+
+.downloadCertificateModal {
+  display: flex;
+  flex-direction: row;
+  flex: 1;
+  justify-content: center;
 }
