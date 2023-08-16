@@ -36,7 +36,7 @@ interface UserAsPrimitives {
 
 export class User extends AggregateRoot {
   private readonly _id: UserId;
-  private readonly _nickname: UserNickname;
+  private _nickname: UserNickname;
   private readonly _credentials: PossibleUserCredentials;
   private _verified: boolean;
   private readonly _createdAt: Date;
@@ -159,6 +159,10 @@ export class User extends AggregateRoot {
       return false;
     }
     return this._credentials.doMatch(credentials);
+  }
+
+  public rename(nickname: UserNickname) {
+    this._nickname = nickname;
   }
 
   public static fromPrimitives(args: UserAsPrimitives) {

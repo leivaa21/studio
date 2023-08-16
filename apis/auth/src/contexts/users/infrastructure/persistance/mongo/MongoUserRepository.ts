@@ -62,4 +62,11 @@ export class MongoUserRepository
     if (!document) return null;
     return this.entitySchemaFactory.createEntityFromSchema(document);
   }
+
+  async update(user: User): Promise<void> {
+    await this.model().findByIdAndUpdate(
+      user.id.value,
+      this.entitySchemaFactory.createSchemaFromEntity(user)
+    );
+  }
 }

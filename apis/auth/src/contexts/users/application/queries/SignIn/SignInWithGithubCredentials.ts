@@ -29,7 +29,7 @@ export class SignInWithGithubCredentialsHandler
   private readonly userFinder: UserFinder;
   constructor(
     private readonly commandBus: CommandBus,
-    userRepository: UserRepository
+    private readonly userRepository: UserRepository
   ) {
     this.userFinder = new UserFinder(userRepository);
   }
@@ -46,7 +46,12 @@ export class SignInWithGithubCredentialsHandler
     }
 
     if (!user.doGithubCredentialMatch({ githubId })) {
-      throw InvalidCredentialsError.causeGoogleCredentialsDoNotMatch();
+      throw InvalidCredentialsError.causeGithubCredentialsDoNotMatch();
+    }
+
+    if (!user.nickname.equals(name)) {
+      user.rename(name);
+      this.userRepository.update(user);
     }
 
     return user;

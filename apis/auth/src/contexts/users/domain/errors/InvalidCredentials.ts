@@ -23,4 +23,11 @@ export class InvalidCredentialsError extends ApiError {
       `The google credentials do not match`
     );
   }
+
+  public static causeGithubCredentialsDoNotMatch() {
+    return new this(
+      ErrorCodes.InvalidCredential,
+      `The github credentials do not match`
+    );
+  }
 }
