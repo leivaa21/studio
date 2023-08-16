@@ -102,7 +102,7 @@ export class GithubOauthController {
       });
       const data = await response.json();
       if (response.ok) {
-        return data;
+        return { id: data.id, name: data.login };
       }
       error(JSON.stringify({ ...data, status: response.status }));
     } catch (err) {
