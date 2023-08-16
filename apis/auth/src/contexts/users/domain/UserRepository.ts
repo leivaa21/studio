@@ -13,4 +13,5 @@ export interface UserRepository {
   findByGoogleId(googleId: GoogleId): Promise<Nullable<User>>;
   findByGithubId(githubId: GithubId): Promise<Nullable<User>>;
   findByNickname(nickname: UserNickname): Promise<Nullable<User>>;
+  update(user: User): Promise<void>;
 }
