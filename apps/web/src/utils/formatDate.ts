@@ -3,7 +3,7 @@ export function formatDate(date: Date): string {
   const month = getMonthName(date);
   const year = date.getFullYear();
 
-  return `${day}/${month}/${year}`;
+  return `${day} ${month} ${year}`;
 }
 
 function getMonthName(date: Date) {
