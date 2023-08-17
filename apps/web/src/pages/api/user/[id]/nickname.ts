@@ -1,6 +1,6 @@
 import { NextApiRequest, NextApiResponse } from 'next';
 
-import { GetUserInfoResponse } from '@studio/commons';
+import { GetUserNicknameResponse } from '@studio/commons';
 
 import { SafeControllerHandling } from '../../../../lib/controllers/SafeControllerHandling';
 import { AuthApiService } from '../../../../contexts/shared/infrastructure/ApiClients/AuthApiService';
@@ -11,7 +11,7 @@ export default async function handler(
 ) {
   switch (req.method) {
     case 'GET':
-      await getUserInfo(req, res);
+      await getUserNickname(req, res);
       break;
     default:
       return res
@@ -20,14 +20,14 @@ export default async function handler(
   }
 }
 
-async function getUserInfo(req: NextApiRequest, res: NextApiResponse) {
+async function getUserNickname(req: NextApiRequest, res: NextApiResponse) {
   const { id: userId } = req.query;
 
   const authApiService = new AuthApiService();
 
   await SafeControllerHandling(res, async () => {
-    const response = await authApiService.get<GetUserInfoResponse>(
-      `/user/${userId}`
+    const response = await authApiService.get<GetUserNicknameResponse>(
+      `/user/${userId}/nickname`
     );
 
     res.status(200).send(response);

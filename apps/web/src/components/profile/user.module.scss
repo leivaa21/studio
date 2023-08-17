@@ -1,0 +1,88 @@
+@import '../../styles/colors';
+
+.profileView {
+  display: flex;
+  flex-direction: column;
+
+  min-width: 50vw;
+  max-width: max-content;
+  background-color: $sidebar-background;
+
+  margin: 2rem auto;
+  padding: 1rem;
+
+  flex: 1 0 auto;
+
+  font-size: 20px;
+
+
+  .properties {
+    list-style: none;
+    padding: 0;
+
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+  }
+
+  .property {
+    display: flex;
+    flex-direction: row;
+    margin: 2rem;
+  }
+
+  
+  .field {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .propertyTitle {
+    font-weight: 600;
+  }
+
+  .propertyValue {
+    display: flex;
+    flex-direction: row;
+    width: max-content;
+    align-items: center;
+  }
+
+  .propertyControls {
+    display: flex;
+    flex: 1;
+    flex-direction: row-reverse;
+  }
+
+}
+
+.credentials {
+  display: flex;
+  flex: 0 1 auto;
+  flex-direction: column;
+}
+
+.credentialsType {
+  font-weight: 400;
+  font-style: oblique;
+  text-transform: capitalize;
+}
+
+.credentailsIcon {
+  position: relative;
+  display: block;
+  width: 2rem;
+  height: 2rem;
+  margin: 0 .75rem;
+}
+
+.userControls {
+  display: flex;
+  flex-direction: row-reverse;
+}
+
+.changePasswordRow {
+  display: flex;
+  flex: 1 0 auto;
+  flex-direction: row-reverse;
+}

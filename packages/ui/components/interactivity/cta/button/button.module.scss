@@ -9,6 +9,8 @@
   transition: all 0.25s ease-out;
   text-align: center;
 
+  height: max-content;
+
   &.type-Primary {
     background-color: $primary;
     color: $dark-text-primary;
