@@ -27,6 +27,7 @@ import { unpublishCourse } from '../../../contexts/courses/application/Unpublish
 import { useCourse } from '../../../hooks/course/useCourse';
 import { MarkdownRenderer } from '../../markdown/renderer';
 import { MarkdownEditor } from '../../markdown/editor';
+import { formatDate } from '../../../utils/formatDate';
 
 export interface CreatorCoursePreviewParams {
   courseId: string;
@@ -200,7 +201,9 @@ export function CreatorCoursePreview({ courseId }: CreatorCoursePreviewParams) {
       <div className={styles.propertyRow}>
         <h4 className={styles.propertyName}>Published</h4>
         <p className={styles.propertyValue}>
-          {publishedAt ? publishedAt.toString() : 'Not published yet'}
+          {publishedAt
+            ? formatDate(new Date(publishedAt))
+            : 'Not published yet'}
         </p>
         <div className={styles.propertyControls}>
           <Button
