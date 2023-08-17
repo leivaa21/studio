@@ -1,7 +1,7 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
-import { BsPersonFill, BsGearFill } from 'react-icons/bs';
+import { BsPersonFill } from 'react-icons/bs';
 
 import styles from './header.module.scss';
 
@@ -13,26 +13,12 @@ const Links: HeaderLinkType[] = [
   {
     page: 'All Courses 📚',
     href: '/courses',
-    subLinks: [
-      {
-        name: '# New Courses!',
-        href: '/courses?new=true',
-      },
-      {
-        name: '# Typescript',
-        href: '/courses?topic=typescript',
-      },
-    ],
+    subLinks: [],
   },
   {
     page: 'My table 📖',
     href: '/dashboard',
-    subLinks: [
-      {
-        name: 'recent',
-        href: '/courses?recent=true',
-      },
-    ],
+    subLinks: [],
   },
   {
     page: 'Creator Dashboard 🧩',
@@ -119,23 +105,6 @@ export function Header() {
               onClick={logout}
             >
               Logout
-            </li>
-          </ul>
-        </div>
-        <div className={styles.dropdown}>
-          <li
-            className={`${styles['header-settings']} ${styles['header-settings-preferences']}`}
-          >
-            <BsGearFill className={styles['header-icon']} aria-hidden />
-          </li>
-          <ul
-            className={`${styles['dropdown-content']} ${styles['header-settings-dropdown-content']}`}
-          >
-            <li className={styles['header-settings-dropdown-content-setting']}>
-              Dark mode Switch
-            </li>
-            <li className={styles['header-settings-dropdown-content-setting']}>
-              Lang Switch
             </li>
           </ul>
         </div>
