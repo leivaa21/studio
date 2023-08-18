@@ -15,7 +15,9 @@ export * from './contexts/courses/domain/CourseTag';
 export * from './contracts/auth/AuthorizationResponse';
 export * from './contracts/auth/SignInContracts';
 export * from './contracts/auth/SignUpContracts';
+
 export * from './contracts/user/GetUserContracts';
+export * from './contracts/user/RenameUserContracts';
 
 export * from './contracts/courses/CourseContracts';
 export * from './contracts/courses/CreateCourseContracts';
