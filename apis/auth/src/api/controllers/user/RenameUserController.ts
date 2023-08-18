@@ -1,5 +1,3 @@
-import { BadRequestError, StatusCode } from '@studio/api-utils';
-import { Injectable } from '@studio/dependency-injection';
 import {
   JsonController,
   HttpCode,
@@ -8,6 +6,11 @@ import {
   CurrentUser,
   OnUndefined,
 } from 'routing-controllers';
+
+import { BadRequestError, StatusCode } from '@studio/api-utils';
+import { Injectable } from '@studio/dependency-injection';
+import { RenameUserRequest } from '@studio/commons';
+
 import { AuthUser } from '../../auth/authUser';
 import { CommandBus } from '../../../contexts/shared/domain/CommandBus';
 import { InMemoryCommandBus } from '../../../contexts/shared/infrastructure/CommandBus/InMemoryCommandBus';
@@ -24,7 +27,7 @@ export class RenameUserController {
   @HttpCode(StatusCode.OK)
   @OnUndefined(StatusCode.OK)
   async GetUser(
-    @Body() body: { nickname: string },
+    @Body() body: RenameUserRequest,
     @CurrentUser({ required: true }) user: AuthUser
   ): Promise<void> {
     const { nickname } = body;
