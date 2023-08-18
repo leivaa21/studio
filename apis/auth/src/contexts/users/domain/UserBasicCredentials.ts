@@ -44,6 +44,10 @@ export class UserBasicCredentials {
     return doEmailMatch && doPasswordMatch;
   }
 
+  public doPasswordMatch(password: string) {
+    return this._password.doMatch(password);
+  }
+
   get type(): 'BASIC' {
     return this._type;
   }
@@ -56,5 +60,9 @@ export class UserBasicCredentials {
 
   public changeEmail(email: UserEmail) {
     this._email = email;
+  }
+
+  public changePassword(password: UserPassword) {
+    this._password = password;
   }
 }

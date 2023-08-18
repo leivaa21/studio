@@ -1,6 +1,8 @@
 import { AggregateRoot } from '../../shared/domain/AggregateRoot';
 import { Nullable } from '../../shared/domain/Nullable';
+import { InvalidCredentialsError } from './errors/InvalidCredentials';
 import { UnableToChangeEmail } from './errors/UnableToChangeEmail';
+import { UnableToChangePassword } from './errors/UnableToChangePassword';
 import { InvalidUserError } from './errors/UserInvalid';
 import { UserWasCreatedEvent } from './events/UserWasCreated';
 import { GithubId } from './GithubId';
@@ -183,6 +185,24 @@ export class User extends AggregateRoot {
       );
     }
     this._credentials.changeEmail(email);
+    this._updatedAt = new Date();
+  }
+
+  public changePassword(oldPassword: string, newPassword: string) {
+    if (this.credentials.type !== 'BASIC') {
+      throw UnableToChangePassword.causeHasWrongCredentialType(
+        this.id.value,
+        this.credentials.type
+      );
+    }
+
+    if (!this.credentials.doPasswordMatch(oldPassword)) {
+      throw InvalidCredentialsError.causePasswordDoNotMatch();
+    }
+
+    const password = UserPassword.new(newPassword);
+
+    this.credentials.changePassword(password);
     this._updatedAt = new Date();
   }
 
