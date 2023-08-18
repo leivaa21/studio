@@ -31,7 +31,7 @@ export function ChangeNicknameModal(props: ChangeNicknameModalParams) {
     };
     const token = getAuthTokenCookie();
 
-    if (!token) return;
+    if (!token || nickname === '') return;
 
     try {
       await renameUser(request, token);
