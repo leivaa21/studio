@@ -5,6 +5,7 @@ import {
   Body,
   CurrentUser,
   OnUndefined,
+  Authorized,
 } from 'routing-controllers';
 
 import { BadRequestError, StatusCode } from '@studio/api-utils';
@@ -26,6 +27,7 @@ export class RenameUserController {
   @Put()
   @HttpCode(StatusCode.OK)
   @OnUndefined(StatusCode.OK)
+  @Authorized()
   async GetUser(
     @Body() body: RenameUserRequest,
     @CurrentUser({ required: true }) user: AuthUser
