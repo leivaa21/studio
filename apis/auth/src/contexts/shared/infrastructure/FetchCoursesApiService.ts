@@ -16,13 +16,13 @@ export class FetchCoursesApiService implements CoursesApiService {
       ocurredOn: event.ocurredOn,
       attributes: event.attributes,
       eventId: event.eventId,
-      password: jwt.sign(env.internal.password, env.internal.secret),
     };
 
     const data = {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
+        Authorization: jwt.sign(env.internal.password, env.internal.secret),
       },
       body: JSON.stringify({ body }),
     };
