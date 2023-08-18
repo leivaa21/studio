@@ -43,7 +43,7 @@ export function CourseContentView({ courseId }: CourseContentViewParams) {
 
   return (
     <div className={styles.courseContentPreview}>
-      {courseSubscription?.completed ? (
+      {courseSubscription?.completedAt ? (
         <CompletedMark courseId={courseId} />
       ) : undefined}
       <h2 className={styles.title}>{course?.title}</h2>

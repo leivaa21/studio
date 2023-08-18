@@ -24,7 +24,7 @@ describe('Update Course Subscription On Lesson Content Updated', () => {
     const courseSubscription = new CourseSubscriptionBuilder()
       .withCourseId(courseId)
       .withCompletedLessons([completedLesson.id, updatedLesson.id])
-      .withCompleted(true)
+      .withCompletedAt(new Date())
       .build();
 
     const event = LessonContentWasUpdatedEvent.fromPrimitives({

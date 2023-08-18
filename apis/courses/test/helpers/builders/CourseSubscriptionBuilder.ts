@@ -9,7 +9,7 @@ export class CourseSubscriptionBuilder implements Builder<CourseSubscription> {
   private _userId: UserId = UserId.random();
   private _courseId: CourseId = CourseId.random();
   private _completedLessons: LessonId[] = [];
-  private _completed = false;
+  private _completedAt?: Date;
 
   build(): CourseSubscription {
     return new CourseSubscription({
@@ -19,7 +19,7 @@ export class CourseSubscriptionBuilder implements Builder<CourseSubscription> {
       subscribedAt: new Date(),
       updatedAt: new Date(),
       completedLessons: this._completedLessons,
-      completed: this._completed,
+      completedAt: this._completedAt,
     });
   }
 
@@ -38,8 +38,8 @@ export class CourseSubscriptionBuilder implements Builder<CourseSubscription> {
     return this;
   }
 
-  public withCompleted(completed: boolean) {
-    this._completed = completed;
+  public withCompletedAt(completedAt: Date) {
+    this._completedAt = completedAt;
     return this;
   }
 }

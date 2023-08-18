@@ -5,5 +5,5 @@ export interface CourseSubscriptionData {
   subscribedAt: Date;
   updatedAt: Date;
   completedLessons: string[];
-  completed: boolean;
+  completedAt?: Date;
 }
