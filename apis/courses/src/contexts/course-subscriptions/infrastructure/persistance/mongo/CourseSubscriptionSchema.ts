@@ -23,9 +23,8 @@ export const CourseSubscriptionSchema = new Schema(
       type: [String],
       required: true,
     },
-    completed: {
-      type: Boolean,
-      required: true,
+    completedAt: {
+      type: Date,
     },
   },
   { versionKey: false, timestamps: false }

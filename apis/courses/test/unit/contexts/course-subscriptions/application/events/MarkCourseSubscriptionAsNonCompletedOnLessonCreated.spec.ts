@@ -24,7 +24,7 @@ describe('Mark CourseSubscription As Non Completed On Lesson Created Handler', (
     const courseSubscription = new CourseSubscriptionBuilder()
       .withCourseId(courseId)
       .withCompletedLessons([completedLesson.id])
-      .withCompleted(true)
+      .withCompletedAt(new Date())
       .build();
 
     const event = LessonWasCreatedEvent.fromPrimitives({
