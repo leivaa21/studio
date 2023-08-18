@@ -1,11 +1,12 @@
 import styles from './user.module.scss';
 import { useUserInfo } from '../../hooks/user/useUserInfo';
-import { Fragment } from 'react';
+import { Fragment, useState } from 'react';
 import Image from 'next/image';
 import { BsPersonFill } from 'react-icons/bs';
 import { GetUserInfoResponse } from '@studio/commons';
 import Button from '@studio/ui/components/interactivity/cta/button';
 import { formatDate } from '../../utils/formatDate';
+import { ChangeNicknameModal } from './changeNicknameModal';
 
 export interface UserProfileViewParams {
   userId: string;
@@ -13,6 +14,8 @@ export interface UserProfileViewParams {
 
 export function UserProfileView({ userId }: UserProfileViewParams) {
   const userInfo = useUserInfo(userId);
+  const [changeNicknameModalShown, setChangeNicknameShown] =
+    useState<boolean>(false);
 
   if (!userInfo) return <Fragment />;
 
@@ -28,7 +31,12 @@ export function UserProfileView({ userId }: UserProfileViewParams) {
           </div>
           {canModifyNickname ? (
             <div className={styles.propertyControls}>
-              <Button Label="Change Nickname" Size="Small" Type="Primary" />
+              <Button
+                Label="Change Nickname"
+                Size="Small"
+                Type="Primary"
+                onClick={() => setChangeNicknameShown(true)}
+              />
             </div>
           ) : (
             <Fragment />
@@ -47,6 +55,11 @@ export function UserProfileView({ userId }: UserProfileViewParams) {
       <div className={styles.userControls}>
         <Button Label="Delete My Account" Type="Cancel" Size="Small" />
       </div>
+      <ChangeNicknameModal
+        isShown={changeNicknameModalShown}
+        closeFunciton={() => setChangeNicknameShown(false)}
+        currentNickname={userInfo.nickname}
+      />
     </div>
   );
 }

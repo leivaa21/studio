@@ -86,3 +86,11 @@
   flex: 1 0 auto;
   flex-direction: row-reverse;
 }
+
+.modifyUserModal {
+  display: flex;
+  flex-direction: column;
+
+  min-width: 50vw;
+
+}
