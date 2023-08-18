@@ -17,7 +17,7 @@ export class GetUserInfoController {
 
   @Get()
   @HttpCode(StatusCode.OK)
-  async GetUser(@Param('id') userId: string): Promise<GetUserInfoResponse> {
+  async execute(@Param('id') userId: string): Promise<GetUserInfoResponse> {
     const user = await this.queryBus.dispatch<GetUserByIdQuery, User>(
       new GetUserByIdQuery({ id: userId })
     );
