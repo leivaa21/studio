@@ -13,6 +13,10 @@ import {
   RegisterNewUserGithubCredentials,
   RegisterNewUserGithubCredentialsCommand,
 } from '../../../../contexts/users/application/commands/RegisterNewUser/RegisterNewUserGithubCredentials';
+import {
+  RenameUser,
+  RenameUserCommand,
+} from '../../../../contexts/users/application/commands/RenameUser';
 
 const commandBus = DependencyContainer.get<CommandBus>(InMemoryCommandBus);
 
@@ -29,3 +33,5 @@ commandBus.subscribe(
   RegisterNewUserGithubCredentialsCommand,
   RegisterNewUserGithubCredentials
 );
+
+commandBus.subscribe(RenameUserCommand, RenameUser);
