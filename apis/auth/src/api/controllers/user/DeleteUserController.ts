@@ -16,7 +16,7 @@ import { DeleteUserCommand } from '../../../contexts/users/application/commands/
 @Injectable({
   dependencies: [InMemoryQueryBus],
 })
-@JsonController('/user/:id')
+@JsonController('/delete-account')
 export class DeleteUserController {
   constructor(private readonly commandBus: CommandBus) {}
 
