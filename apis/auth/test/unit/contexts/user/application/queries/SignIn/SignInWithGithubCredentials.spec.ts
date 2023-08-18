@@ -2,7 +2,6 @@ import { mock } from 'jest-mock-extended';
 
 import { InMemoryUserRepository } from '../../../../../../../src/contexts/users/infrastructure/persistance/InMemoryUserRepository';
 import { UserBuilder } from '../../../../../../helpers/builders/user/UserBuilder';
-import { InvalidCredentialsError } from '../../../../../../../src/contexts/users/domain/errors/InvalidCredentials';
 import { InMemoryCommandBus } from '../../../../../../../src/contexts/shared/infrastructure/CommandBus/InMemoryCommandBus';
 import { UserRepository } from '../../../../../../../src/contexts/users/domain/UserRepository';
 import { NumberMother } from '../../../../../../helpers/object-mother/NumberMother';
@@ -15,7 +14,8 @@ const commandBus = mock<InMemoryCommandBus>();
 describe('Sign In User with Github Credentials', () => {
   it('Should validate a valid user', async () => {
     const githubId = GithubId.of(NumberMother.random());
-    const user = UserBuilder.aGithubCredentialsUser()
+    const user = new UserBuilder()
+      .aGithubCredentialsUser()
       .withGithubId(githubId)
       .build();
 
@@ -38,7 +38,8 @@ describe('Sign In User with Github Credentials', () => {
 
   it('Should call commandBus if non-persisted user', async () => {
     const githubId = GithubId.of(NumberMother.random());
-    const user = UserBuilder.aGithubCredentialsUser()
+    const user = new UserBuilder()
+      .aGithubCredentialsUser()
       .withGithubId(githubId)
       .build();
 

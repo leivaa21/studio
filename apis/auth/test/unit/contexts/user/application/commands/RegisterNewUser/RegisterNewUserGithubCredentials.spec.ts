@@ -29,7 +29,8 @@ describe('Register New User with Github Credentials', () => {
   it('Should not create a user that is already registered', async () => {
     const githubId = GithubId.of(NumberMother.random());
 
-    const alreadyPersistedUser = UserBuilder.aGithubCredentialsUser()
+    const alreadyPersistedUser = new UserBuilder()
+      .aGithubCredentialsUser()
       .withGithubId(githubId)
       .build();
 

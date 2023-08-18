@@ -26,19 +26,6 @@ export class UserBuilder implements Builder<User> {
   public credentials?: PossibleUserCredentials;
   public plainPassword?: string;
 
-  private constructor({
-    nickname,
-    credentials,
-  }: {
-    nickname?: UserNickname;
-    credentials?: PossibleUserCredentials;
-  }) {
-    this.nickname = nickname;
-    this.credentails = credentials;
-  }
-
-  public credentails?: PossibleUserCredentials;
-
   public build(): User {
     const createdAt = DateMother.now();
     return new User({
@@ -47,7 +34,7 @@ export class UserBuilder implements Builder<User> {
         this.nickname ||
         UserNickname.of(StringMother.random({ minLength: 8, maxLength: 10 })),
       credentials:
-        this.credentails ||
+        this.credentials ||
         UserBasicCredentials.of({
           email: EmailMother.random(),
           password: UserPassword.new(generateValidPassword()),
@@ -58,39 +45,39 @@ export class UserBuilder implements Builder<User> {
     });
   }
 
-  public static aBasicCredentialsUser() {
-    return new this({
-      credentials: UserBasicCredentials.of({
-        email: EmailMother.random(),
-        password: UserPassword.new(generateValidPassword()),
-      }),
+  public aBasicCredentialsUser(): UserBuilder {
+    this.credentials = UserBasicCredentials.of({
+      email: EmailMother.random(),
+      password: UserPassword.new(generateValidPassword()),
     });
+
+    return this;
   }
 
-  public static aGoogleCredentialsUser() {
-    return new this({
-      credentials: UserGoogleCredentials.of({
-        googleId: GoogleId.of(StringMother.random()),
-        email: EmailMother.random(),
-      }),
+  public aGoogleCredentialsUser(): UserBuilder {
+    this.credentials = UserGoogleCredentials.of({
+      googleId: GoogleId.of(StringMother.random()),
+      email: EmailMother.random(),
     });
+
+    return this;
   }
 
-  public static aGithubCredentialsUser() {
-    return new this({
-      credentials: UserGithubCredentials.of({
-        githubId: GithubId.of(NumberMother.random()),
-      }),
+  public aGithubCredentialsUser(): UserBuilder {
+    this.credentials = UserGithubCredentials.of({
+      githubId: GithubId.of(NumberMother.random()),
     });
+
+    return this;
   }
 
   withGoogleId(googleId: GoogleId) {
-    if (this.credentails?.type !== 'GOOGLE') {
+    if (this.credentials?.type !== 'GOOGLE') {
       throw new Error('Invalid use of builder');
     }
 
-    this.credentails = UserGoogleCredentials.of({
-      email: this.credentails.email,
+    this.credentials = UserGoogleCredentials.of({
+      email: this.credentials.email,
       googleId,
     });
 
@@ -98,11 +85,11 @@ export class UserBuilder implements Builder<User> {
   }
 
   withGithubId(githubId: GithubId) {
-    if (this.credentails?.type !== 'GITHUB') {
+    if (this.credentials?.type !== 'GITHUB') {
       throw new Error('Invalid use of builder');
     }
 
-    this.credentails = UserGithubCredentials.of({
+    this.credentials = UserGithubCredentials.of({
       githubId,
     });
 
@@ -110,12 +97,12 @@ export class UserBuilder implements Builder<User> {
   }
 
   withPlainPassword(plainPassword: string) {
-    if (this.credentails?.type !== 'BASIC') {
+    if (this.credentials?.type !== 'BASIC') {
       throw new Error('Invalid use of builder');
     }
 
-    this.credentails = UserBasicCredentials.of({
-      email: this.credentails.email,
+    this.credentials = UserBasicCredentials.of({
+      email: this.credentials.email,
       password: UserPassword.new(plainPassword),
     });
 
@@ -123,7 +110,7 @@ export class UserBuilder implements Builder<User> {
   }
 
   public withCredentials(credentails: PossibleUserCredentials) {
-    this.credentails = credentails;
+    this.credentials = credentails;
 
     return this;
   }

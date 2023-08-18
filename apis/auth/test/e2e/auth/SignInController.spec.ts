@@ -33,7 +33,8 @@ afterAll(async () => {
 describe(`POST ${route}`, () => {
   it('should return user & token if credentials match', async () => {
     const password = generateValidPassword();
-    const persistedUser = UserBuilder.aBasicCredentialsUser()
+    const persistedUser = new UserBuilder()
+      .aBasicCredentialsUser()
       .withPlainPassword(password)
       .build();
     await repository.create(persistedUser);
@@ -58,7 +59,8 @@ describe(`POST ${route}`, () => {
 
   it('should return with 400 and expected error code if password is wrong', async () => {
     const password = generateValidPassword();
-    const persistedUser = UserBuilder.aBasicCredentialsUser()
+    const persistedUser = new UserBuilder()
+      .aBasicCredentialsUser()
       .withPlainPassword(password)
       .build();
     await repository.create(persistedUser);
@@ -79,7 +81,8 @@ describe(`POST ${route}`, () => {
 
   it('should return with 400 and expected error code if email is wrong', async () => {
     const password = generateValidPassword();
-    const persistedUser = UserBuilder.aBasicCredentialsUser()
+    const persistedUser = new UserBuilder()
+      .aBasicCredentialsUser()
       .withPlainPassword(password)
       .build();
     await repository.create(persistedUser);
@@ -100,7 +103,8 @@ describe(`POST ${route}`, () => {
 
   it('should return with 400 and expected error code any params missing', async () => {
     const password = generateValidPassword();
-    const persistedUser = UserBuilder.aBasicCredentialsUser()
+    const persistedUser = new UserBuilder()
+      .aBasicCredentialsUser()
       .withPlainPassword(password)
       .build();
     await repository.create(persistedUser);

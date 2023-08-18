@@ -67,7 +67,8 @@ describe('Register New User with Basic Credentials', () => {
       password: generateValidPassword(),
     };
 
-    const alreadyPersistedUser = UserBuilder.aBasicCredentialsUser()
+    const alreadyPersistedUser = new UserBuilder()
+      .aBasicCredentialsUser()
       .withNickname(UserNickname.of(command.nickname))
       .build();
 
@@ -86,7 +87,8 @@ describe('Register New User with Basic Credentials', () => {
       password: generateValidPassword(),
     };
 
-    const alreadyPersistedUser = UserBuilder.aBasicCredentialsUser()
+    const alreadyPersistedUser = new UserBuilder()
+      .aBasicCredentialsUser()
       .withCredentials(
         UserBasicCredentials.of({
           email: UserEmail.of(command.email),
