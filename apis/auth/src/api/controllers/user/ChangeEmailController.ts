@@ -28,7 +28,7 @@ export class ChangeEmailController {
   @HttpCode(StatusCode.OK)
   @OnUndefined(StatusCode.OK)
   @Authorized()
-  async GetUser(
+  async execute(
     @Body() body: ChangeEmailRequest,
     @CurrentUser({ required: true }) user: AuthUser
   ): Promise<void> {

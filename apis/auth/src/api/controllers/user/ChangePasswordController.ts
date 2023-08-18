@@ -28,7 +28,7 @@ export class ChangePasswordController {
   @HttpCode(StatusCode.OK)
   @OnUndefined(StatusCode.OK)
   @Authorized()
-  async GetUser(
+  async execute(
     @Body() body: ChangePasswordRequest,
     @CurrentUser({ required: true }) user: AuthUser
   ): Promise<void> {

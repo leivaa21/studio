@@ -5,6 +5,7 @@ import { UnableToChangeEmail } from './errors/UnableToChangeEmail';
 import { UnableToChangePassword } from './errors/UnableToChangePassword';
 import { InvalidUserError } from './errors/UserInvalid';
 import { UserWasCreatedEvent } from './events/UserWasCreated';
+import { UserWasDeletedEvent } from './events/UserWasDeleted';
 import { GithubId } from './GithubId';
 import { GoogleId } from './GoogleId';
 import {
@@ -284,5 +285,12 @@ export class User extends AggregateRoot {
   }
   get updatedAt(): Date {
     return this._updatedAt;
+  }
+
+  public delete(): void {
+    const event = UserWasDeletedEvent.fromPrimitives({
+      aggregateId: this.id.value,
+    });
+    this.commit(event);
   }
 }

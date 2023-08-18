@@ -16,7 +16,7 @@ export class GetUserNicknameController {
 
   @Get('/nickname')
   @HttpCode(StatusCode.OK)
-  async GetUser(@Param('id') userId: string): Promise<GetUserNicknameResponse> {
+  async execute(@Param('id') userId: string): Promise<GetUserNicknameResponse> {
     const user = await this.queryBus.dispatch<GetUserByIdQuery, User>(
       new GetUserByIdQuery({ id: userId })
     );

@@ -28,7 +28,7 @@ export class RenameUserController {
   @HttpCode(StatusCode.OK)
   @OnUndefined(StatusCode.OK)
   @Authorized()
-  async GetUser(
+  async execute(
     @Body() body: RenameUserRequest,
     @CurrentUser({ required: true }) user: AuthUser
   ): Promise<void> {

@@ -20,6 +20,19 @@ export class AuthApiService extends ApiService {
     return this.fetch<Response>(path, request);
   }
 
+  async delete<Data, Response>(
+    path: string,
+    data: Data,
+    authorizationToken?: string
+  ): Promise<Response> {
+    const request = this.formatRequest<Data>(
+      'DELETE',
+      data,
+      authorizationToken
+    );
+    return this.fetch<Response>(path, request);
+  }
+
   async get<Response>(
     path: string,
     params: Map<string, string> = new Map<string, string>(),
