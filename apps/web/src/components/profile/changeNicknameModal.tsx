@@ -52,8 +52,8 @@ export function ChangeNicknameModal(props: ChangeNicknameModalParams) {
       <div className={styles.modifyUserModal}>
         <ErrorMessage message={errorMessage} />
         <FormTextInput
-          Name="Course title"
-          placeholder="Course title"
+          Name="User nickname"
+          placeholder="Nickname"
           type="text"
           value={nickname}
           onChange={(e) => {
