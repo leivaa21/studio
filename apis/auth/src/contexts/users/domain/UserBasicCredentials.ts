@@ -53,4 +53,8 @@ export class UserBasicCredentials {
   get password(): UserPassword {
     return this._password;
   }
+
+  public changeEmail(email: UserEmail) {
+    this._email = email;
+  }
 }
