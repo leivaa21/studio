@@ -8,6 +8,7 @@ import Button from '@studio/ui/components/interactivity/cta/button';
 import { formatDate } from '../../utils/formatDate';
 import { ChangeNicknameModal } from './changeNicknameModal';
 import { ChangeEmailModal } from './changeEmailModal';
+import { ChangePasswordModal } from './changePasswordModal';
 
 export interface UserProfileViewParams {
   userId: string;
@@ -72,6 +73,8 @@ function GenericUserCredentials({
 }) {
   const [changeEmailModalShown, setChangeEmailModalShown] =
     useState<boolean>(false);
+  const [changePasswordModalShown, setChangePasswordModalShown] =
+    useState<boolean>(false);
 
   const renderCrendentialsIdentifier = () => {
     switch (userInfo.credentials.type) {
@@ -83,6 +86,10 @@ function GenericUserCredentials({
               isShown={changeEmailModalShown}
               closeFunciton={() => setChangeEmailModalShown(false)}
               currentEmail={userInfo.credentials.email}
+            />
+            <ChangePasswordModal
+              isShown={changePasswordModalShown}
+              closeFunciton={() => setChangePasswordModalShown(false)}
             />
           </Fragment>
         );
@@ -125,7 +132,12 @@ function GenericUserCredentials({
       {isBasicCredentials ? (
         <li className={styles.property}>
           <div className={styles.changePasswordRow}>
-            <Button Label="Change Password" Size="Small" Type="Primary" />
+            <Button
+              Label="Change Password"
+              Size="Small"
+              Type="Primary"
+              onClick={() => setChangePasswordModalShown(true)}
+            />
           </div>
         </li>
       ) : (
