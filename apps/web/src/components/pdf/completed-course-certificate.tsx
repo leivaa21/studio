@@ -14,6 +14,8 @@ import styles from './pdf.module.scss';
 import { useCurrentUser } from '../../hooks/user/useCurrentUser';
 import { Fragment } from 'react';
 import { useCourse } from '../../hooks/course/useCourse';
+import { useOwnedCourseSubscriptionByCourseId } from '../../hooks/course/useOwnedCourseSubscriptionByCourseId';
+import { formatDate } from '../../utils/formatDate';
 
 const styleSheet = StyleSheet.create({
   page: {
@@ -49,8 +51,7 @@ function CompletedCourseCertificate({
   courseTitle,
   date,
 }: CompletedCourseCertificateParams) {
-  const month = date.getMonth() + 1;
-  const year = date.getFullYear();
+  const dateFormated = formatDate(date);
 
   return (
     <Document>
@@ -67,7 +68,7 @@ function CompletedCourseCertificate({
           <Text style={styleSheet.important}>{userName}</Text>
           <Text>Has succesfully completed the course</Text>
           <Text style={styleSheet.important}>{courseTitle}</Text>
-          <Text>Finished {`${month}/${year}`}</Text>
+          <Text>Finished {dateFormated}</Text>
         </View>
         <Svg viewBox="0 0 1440 320">
           <Path
@@ -91,7 +92,10 @@ export default function CompletedCourseCertificateLink({
   const user = useCurrentUser();
   const course = useCourse(courseId);
 
-  if (!user || !course) return <Fragment />;
+  const subscription = useOwnedCourseSubscriptionByCourseId(courseId);
+
+  if (!user || !course || !subscription || !subscription.completedAt)
+    return <Fragment />;
 
   return (
     <PDFDownloadLink
@@ -100,7 +104,7 @@ export default function CompletedCourseCertificateLink({
         <CompletedCourseCertificate
           userName={user.nickname}
           courseTitle={course.title}
-          date={new Date()}
+          date={new Date(subscription.completedAt)}
         />
       }
       onClick={onClick}
