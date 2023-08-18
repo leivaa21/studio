@@ -10,7 +10,7 @@ import { UserEmail } from '../../../../../../src/contexts/users/domain/UserEmail
 describe('User Finder', () => {
   it('Should be able to find user by id', async () => {
     // Given
-    const user = UserBuilder.aBasicCredentialsUser().build();
+    const user = new UserBuilder().aBasicCredentialsUser().build();
     const repository = new InMemoryUserRepository([user]);
     const userFinder = new UserFinder(repository);
 
@@ -23,7 +23,7 @@ describe('User Finder', () => {
 
   it('Should throw if user not found by id', async () => {
     // Given
-    const user = UserBuilder.aBasicCredentialsUser().build();
+    const user = new UserBuilder().aBasicCredentialsUser().build();
     const repository = new InMemoryUserRepository([]);
     const userFinder = new UserFinder(repository);
 
@@ -34,7 +34,7 @@ describe('User Finder', () => {
   });
 
   it('Should be able to find user by email basic credentials', async () => {
-    const user = UserBuilder.aBasicCredentialsUser().build();
+    const user = new UserBuilder().aBasicCredentialsUser().build();
     const repository = new InMemoryUserRepository([user]);
     const userFinder = new UserFinder(repository);
 
@@ -46,7 +46,7 @@ describe('User Finder', () => {
   });
 
   it('Should be able to find user by email google credentials', async () => {
-    const user = UserBuilder.aGoogleCredentialsUser().build();
+    const user = new UserBuilder().aGoogleCredentialsUser().build();
     const repository = new InMemoryUserRepository([user]);
     const userFinder = new UserFinder(repository);
 
@@ -67,7 +67,7 @@ describe('User Finder', () => {
   });
 
   it('Should be able to find user by nickname', async () => {
-    const user = UserBuilder.aBasicCredentialsUser().build();
+    const user = new UserBuilder().aBasicCredentialsUser().build();
 
     const repository = new InMemoryUserRepository([user]);
     const userFinder = new UserFinder(repository);
@@ -78,7 +78,7 @@ describe('User Finder', () => {
   });
 
   it('Should return null if user by nickname was not found', async () => {
-    const user = UserBuilder.aBasicCredentialsUser().build();
+    const user = new UserBuilder().aBasicCredentialsUser().build();
 
     const repository = new InMemoryUserRepository([]);
     const userFinder = new UserFinder(repository);
@@ -90,7 +90,8 @@ describe('User Finder', () => {
 
   it('Should be able to find user by googleId', async () => {
     const googleId = GoogleId.of(StringMother.random());
-    const user = UserBuilder.aGoogleCredentialsUser()
+    const user = new UserBuilder()
+      .aGoogleCredentialsUser()
       .withGoogleId(googleId)
       .build();
 

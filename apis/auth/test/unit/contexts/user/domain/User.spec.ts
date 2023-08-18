@@ -95,7 +95,8 @@ describe('Verify credentials', () => {
     it('should let verify basic credentials', () => {
       const password = generateValidPassword();
 
-      const user = UserBuilder.aBasicCredentialsUser()
+      const user = new UserBuilder()
+        .aBasicCredentialsUser()
         .withPlainPassword(password)
         .build();
 
@@ -107,7 +108,8 @@ describe('Verify credentials', () => {
     it('should not verify if email is not correct with basic credentials', () => {
       const password = generateValidPassword();
 
-      const user = UserBuilder.aBasicCredentialsUser()
+      const user = new UserBuilder()
+        .aBasicCredentialsUser()
         .withPlainPassword(password)
         .build();
 
@@ -119,7 +121,7 @@ describe('Verify credentials', () => {
     it('should not verify if password is not correct with basic credentials', () => {
       const password = generateValidPassword();
 
-      const user = UserBuilder.aBasicCredentialsUser().build();
+      const user = new UserBuilder().aBasicCredentialsUser().build();
 
       expect(
         user.doBasicCredentialMatch((user.email as UserEmail).value, password)
@@ -130,7 +132,8 @@ describe('Verify credentials', () => {
   describe('Google Credentials', () => {
     it('Should let verify google credentials', () => {
       const id = GoogleId.of(StringMother.random());
-      const user = UserBuilder.aGoogleCredentialsUser()
+      const user = new UserBuilder()
+        .aGoogleCredentialsUser()
         .withGoogleId(id)
         .build();
 
@@ -144,7 +147,7 @@ describe('Verify credentials', () => {
 
     it('Should not verify if googleId is wrong', () => {
       const id = GoogleId.of(StringMother.random());
-      const user = UserBuilder.aGoogleCredentialsUser().build();
+      const user = new UserBuilder().aGoogleCredentialsUser().build();
 
       expect(
         user.doGoogleCredentialMatch({
@@ -156,7 +159,8 @@ describe('Verify credentials', () => {
 
     it('Should not verify if email is wrong', () => {
       const id = GoogleId.of(StringMother.random());
-      const user = UserBuilder.aGoogleCredentialsUser()
+      const user = new UserBuilder()
+        .aGoogleCredentialsUser()
         .withGoogleId(id)
         .build();
 
@@ -172,7 +176,8 @@ describe('Verify credentials', () => {
   describe('Github Credentials', () => {
     it('Should let verify github credentials', () => {
       const id = GithubId.of(NumberMother.random());
-      const user = UserBuilder.aGithubCredentialsUser()
+      const user = new UserBuilder()
+        .aGithubCredentialsUser()
         .withGithubId(id)
         .build();
 
@@ -186,7 +191,7 @@ describe('Verify credentials', () => {
     it('Should not verify if github id is wrong', () => {
       const id = GithubId.of(NumberMother.random());
 
-      const user = UserBuilder.aGithubCredentialsUser().build();
+      const user = new UserBuilder().aGithubCredentialsUser().build();
 
       expect(
         user.doGithubCredentialMatch({
