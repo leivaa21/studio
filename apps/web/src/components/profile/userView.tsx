@@ -9,6 +9,7 @@ import { formatDate } from '../../utils/formatDate';
 import { ChangeNicknameModal } from './changeNicknameModal';
 import { ChangeEmailModal } from './changeEmailModal';
 import { ChangePasswordModal } from './changePasswordModal';
+import { DeleteAccountModal } from './deleteAccountModal';
 
 export interface UserProfileViewParams {
   userId: string;
@@ -17,6 +18,8 @@ export interface UserProfileViewParams {
 export function UserProfileView({ userId }: UserProfileViewParams) {
   const userInfo = useUserInfo(userId);
   const [changeNicknameModalShown, setChangeNicknameShown] =
+    useState<boolean>(false);
+  const [deleteAccountModalShown, setDeleteAccountModalShown] =
     useState<boolean>(false);
 
   if (!userInfo) return <Fragment />;
@@ -55,12 +58,21 @@ export function UserProfileView({ userId }: UserProfileViewParams) {
         <GenericUserCredentials userInfo={userInfo} />
       </ul>
       <div className={styles.userControls}>
-        <Button Label="Delete My Account" Type="Cancel" Size="Small" />
+        <Button
+          Label="Delete My Account"
+          Type="Cancel"
+          Size="Small"
+          onClick={() => setDeleteAccountModalShown(true)}
+        />
       </div>
       <ChangeNicknameModal
         isShown={changeNicknameModalShown}
         closeFunciton={() => setChangeNicknameShown(false)}
         currentNickname={userInfo.nickname}
+      />
+      <DeleteAccountModal
+        isShown={deleteAccountModalShown}
+        closeFunciton={() => setDeleteAccountModalShown(false)}
       />
     </div>
   );
