@@ -21,6 +21,10 @@ import {
   ChangeEmail,
   ChangeEmailCommand,
 } from '../../../../contexts/users/application/commands/ChangeEmail';
+import {
+  ChangePassword,
+  ChangePasswordCommand,
+} from '../../../../contexts/users/application/commands/ChangePassword';
 
 const commandBus = DependencyContainer.get<CommandBus>(InMemoryCommandBus);
 
@@ -40,3 +44,4 @@ commandBus.subscribe(
 
 commandBus.subscribe(RenameUserCommand, RenameUser);
 commandBus.subscribe(ChangeEmailCommand, ChangeEmail);
+commandBus.subscribe(ChangePasswordCommand, ChangePassword);
