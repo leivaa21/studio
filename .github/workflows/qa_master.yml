@@ -44,11 +44,6 @@ jobs:
       - name: Check courses tests
         run: yarn test:api:courses
 
-      - name: Build profiles
-        run: yarn build:api:profiles
-      - name: Check linter profiles
-        run: yarn lint:api:profiles
-
       - name: Build web
         run: yarn build:app:web
       - name: Check linter web

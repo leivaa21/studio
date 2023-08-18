@@ -75,39 +75,6 @@ jobs:
       - name: Check courses tests
         run: yarn test:api:courses
 
-  ProfilesQA:
-    if: contains( github.event.pull_request.labels.*.name, 'Profiles')
-    runs-on: ubuntu-latest
-
-    steps:
-      - uses: actions/checkout@v3
-
-      - name: Set Node.js 18.x
-        uses: actions/setup-node@v3
-        with:
-          node-version: 18.x
-
-      - name: Update Yarn
-        run: |
-          corepack enable
-          corepack prepare yarn@stable --activate
-          yarn plugin import workspace-tools
-          yarn --version
-
-      - name: Install & Make dependencies
-        run: |
-          yarn workspaces focus @studio/commons
-          yarn m:dep:commons
-          yarn workspaces focus @studio/api-utils
-          yarn m:dep:apiutils
-          yarn workspaces focus @studio/profiles
-
-      - name: Build profiles
-        run: yarn build:api:profiles
-
-      - name: Check linter profiles
-        run: yarn lint:api:profiles
-
   WebQA:
     if: contains( github.event.pull_request.labels.*.name, 'Web')
     runs-on: ubuntu-latest

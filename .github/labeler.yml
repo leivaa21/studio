@@ -18,16 +18,6 @@ Courses:
   - packages/dependency-injection/**/*
   - packages/dependency-injection/*
 
-Profiles:
-  - apis/profiles/**/*
-  - apis/profiles/*
-  - packages/api-utils/**/*
-  - packages/api-utils/*
-  - packages/commons/**/*
-  - packages/commons/*
-  - packages/dependency-injection/**/*
-  - packages/dependency-injection/*
-
 Web:
   - apps/web/**/*
   - apps/web/*
