@@ -24,7 +24,7 @@ export class FetchCoursesApiService implements CoursesApiService {
         'Content-Type': 'application/json',
         Authorization: jwt.sign(env.internal.password, env.internal.secret),
       },
-      body: JSON.stringify({ body }),
+      body: JSON.stringify(body),
     };
 
     void fetch(url, data);
