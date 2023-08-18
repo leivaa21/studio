@@ -16,6 +16,7 @@ export enum ErrorCodes {
   PasswordShouldContainNumber = 'auth.password-number',
   PasswordShouldContainSymbol = 'auth.password-symbol',
   UnableToRenameUser = 'auth.unable-to-rename',
+  UnableToChangeEmail = 'auth.unable-to-change-email',
   CourseNotFound = 'courses.course-not-found',
   LessonNotFound = 'courses.lesson-not-found',
   UnableToReorderLesson = 'courses.unable-to-reorder-lesson',

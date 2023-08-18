@@ -1,5 +1,6 @@
 import { AggregateRoot } from '../../shared/domain/AggregateRoot';
 import { Nullable } from '../../shared/domain/Nullable';
+import { UnableToChangeEmail } from './errors/UnableToChangeEmail';
 import { InvalidUserError } from './errors/UserInvalid';
 import { UserWasCreatedEvent } from './events/UserWasCreated';
 import { GithubId } from './GithubId';
@@ -167,6 +168,22 @@ export class User extends AggregateRoot {
 
   public rename(nickname: UserNickname) {
     this._nickname = nickname;
+    this._updatedAt = new Date();
+  }
+
+  get canChangeEmail(): boolean {
+    return this.credentials.type === 'BASIC';
+  }
+
+  public changeEmail(email: UserEmail) {
+    if (this._credentials.type !== 'BASIC') {
+      throw UnableToChangeEmail.causeHasWrongCredentialType(
+        this.id.value,
+        this.credentials.type
+      );
+    }
+    this._credentials.changeEmail(email);
+    this._updatedAt = new Date();
   }
 
   public static fromPrimitives(args: UserAsPrimitives) {

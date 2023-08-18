@@ -17,6 +17,10 @@ import {
   RenameUser,
   RenameUserCommand,
 } from '../../../../contexts/users/application/commands/RenameUser';
+import {
+  ChangeEmail,
+  ChangeEmailCommand,
+} from '../../../../contexts/users/application/commands/ChangeEmail';
 
 const commandBus = DependencyContainer.get<CommandBus>(InMemoryCommandBus);
 
@@ -35,3 +39,4 @@ commandBus.subscribe(
 );
 
 commandBus.subscribe(RenameUserCommand, RenameUser);
+commandBus.subscribe(ChangeEmailCommand, ChangeEmail);

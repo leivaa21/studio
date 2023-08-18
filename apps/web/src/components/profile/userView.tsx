@@ -7,6 +7,7 @@ import { GetUserInfoResponse } from '@studio/commons';
 import Button from '@studio/ui/components/interactivity/cta/button';
 import { formatDate } from '../../utils/formatDate';
 import { ChangeNicknameModal } from './changeNicknameModal';
+import { ChangeEmailModal } from './changeEmailModal';
 
 export interface UserProfileViewParams {
   userId: string;
@@ -69,11 +70,21 @@ function GenericUserCredentials({
 }: {
   userInfo: GetUserInfoResponse;
 }) {
+  const [changeEmailModalShown, setChangeEmailModalShown] =
+    useState<boolean>(false);
+
   const renderCrendentialsIdentifier = () => {
     switch (userInfo.credentials.type) {
       case 'BASIC':
         return (
-          <BasicCredentialsIdentifier email={userInfo.credentials.email} />
+          <Fragment>
+            <BasicCredentialsIdentifier email={userInfo.credentials.email} />
+            <ChangeEmailModal
+              isShown={changeEmailModalShown}
+              closeFunciton={() => setChangeEmailModalShown(false)}
+              currentEmail={userInfo.credentials.email}
+            />
+          </Fragment>
         );
       case 'GITHUB':
         return <GithubCredentialsIdentifier nickname={userInfo.nickname} />;
@@ -100,7 +111,12 @@ function GenericUserCredentials({
         </div>
         {isBasicCredentials ? (
           <div className={styles.propertyControls}>
-            <Button Label="Change Email" Size="Small" Type="Primary" />
+            <Button
+              Label="Change Email"
+              Size="Small"
+              Type="Primary"
+              onClick={() => setChangeEmailModalShown(true)}
+            />
           </div>
         ) : (
           <Fragment />
