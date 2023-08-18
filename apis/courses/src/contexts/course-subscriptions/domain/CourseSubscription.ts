@@ -146,6 +146,10 @@ export class CourseSubscription extends AggregateRoot {
     return !!this._completedAt;
   }
 
+  public get completedAt(): Date | undefined {
+    return this._completedAt;
+  }
+
   public delete(): void {
     const event = CourseSubscriptionWasDeletedEvent.fromPrimitives({
       aggregateId: this.id.value,

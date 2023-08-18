@@ -11,5 +11,5 @@ export interface CourseSubscriptionInfoResponse {
   userId: string;
   courseId: string;
   completedLessons: string[];
-  completed: boolean;
+  completedAt?: Date;
 }
