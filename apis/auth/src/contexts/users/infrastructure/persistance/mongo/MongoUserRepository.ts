@@ -69,4 +69,8 @@ export class MongoUserRepository
       this.entitySchemaFactory.createSchemaFromEntity(user)
     );
   }
+
+  async delete(user: User): Promise<void> {
+    await this.model().findByIdAndDelete(user.id.value);
+  }
 }

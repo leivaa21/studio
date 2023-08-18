@@ -14,4 +14,5 @@ export interface UserRepository {
   findByGithubId(githubId: GithubId): Promise<Nullable<User>>;
   findByNickname(nickname: UserNickname): Promise<Nullable<User>>;
   update(user: User): Promise<void>;
+  delete(user: User): Promise<void>;
 }

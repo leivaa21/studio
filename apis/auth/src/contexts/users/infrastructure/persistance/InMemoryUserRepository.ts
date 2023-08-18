@@ -8,7 +8,7 @@ import { UserNickname } from '../../domain/UserNickname';
 import { UserRepository } from '../../domain/UserRepository';
 
 export class InMemoryUserRepository implements UserRepository {
-  constructor(public readonly users: User[] = []) {}
+  constructor(public users: User[] = []) {}
 
   async create(user: User): Promise<void> {
     this.users.push(user);
@@ -54,5 +54,11 @@ export class InMemoryUserRepository implements UserRepository {
     );
     if (index === -1) return;
     this.users[index] = user;
+  }
+
+  async delete(user: User): Promise<void> {
+    this.users = this.users.filter(
+      (userFound) => userFound.id.value !== user.id.value
+    );
   }
 }
