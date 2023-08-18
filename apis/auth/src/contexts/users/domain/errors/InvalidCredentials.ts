@@ -17,6 +17,10 @@ export class InvalidCredentialsError extends ApiError {
     );
   }
 
+  public static causePasswordDoNotMatch() {
+    return new this(ErrorCodes.InvalidCredential, `The password do not match`);
+  }
+
   public static causeGoogleCredentialsDoNotMatch() {
     return new this(
       ErrorCodes.InvalidCredential,
