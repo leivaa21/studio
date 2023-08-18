@@ -161,6 +161,10 @@ export class User extends AggregateRoot {
     return this._credentials.doMatch(credentials);
   }
 
+  get canBeRenamed(): boolean {
+    return this.credentials.type !== 'GITHUB';
+  }
+
   public rename(nickname: UserNickname) {
     this._nickname = nickname;
   }

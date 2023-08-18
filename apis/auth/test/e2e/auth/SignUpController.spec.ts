@@ -128,7 +128,7 @@ describe(`POST ${route}`, () => {
   });
 
   it('should return with 400 and expected error code if email is already on use', async () => {
-    const persistedUser = UserBuilder.aBasicCredentialsUser().build();
+    const persistedUser = new UserBuilder().aBasicCredentialsUser().build();
     await repository.create(persistedUser);
 
     const password = generateValidPassword();
@@ -154,7 +154,8 @@ describe(`POST ${route}`, () => {
   it('should return with 400 and expected error code if nickname is already on use', async () => {
     const nickname = UserNickname.of(generateValidNickname());
 
-    const persistedUser = UserBuilder.aBasicCredentialsUser()
+    const persistedUser = new UserBuilder()
+      .aBasicCredentialsUser()
       .withNickname(nickname)
       .build();
     await repository.create(persistedUser);

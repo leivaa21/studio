@@ -17,7 +17,8 @@ const commandBus = mock<InMemoryCommandBus>();
 describe('Sign In User with Google Credentials', () => {
   it('Should validate a valid user', async () => {
     const googleId = GoogleId.of(StringMother.random());
-    const user = UserBuilder.aGoogleCredentialsUser()
+    const user = new UserBuilder()
+      .aGoogleCredentialsUser()
       .withGoogleId(googleId)
       .build();
 
@@ -40,7 +41,8 @@ describe('Sign In User with Google Credentials', () => {
 
   it('Should call commandBus if non-persisted user', async () => {
     const googleId = GoogleId.of(StringMother.random());
-    const user = UserBuilder.aGoogleCredentialsUser()
+    const user = new UserBuilder()
+      .aGoogleCredentialsUser()
       .withGoogleId(googleId)
       .build();
 
@@ -70,7 +72,8 @@ describe('Sign In User with Google Credentials', () => {
 
   it('Should not validate a invalid user', async () => {
     const googleId = GoogleId.of(StringMother.random());
-    const user = UserBuilder.aGoogleCredentialsUser()
+    const user = new UserBuilder()
+      .aGoogleCredentialsUser()
       .withGoogleId(googleId)
       .build();
 

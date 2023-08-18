@@ -9,7 +9,8 @@ import { UserEmail } from '../../../../../../../src/contexts/users/domain/UserEm
 describe('Sign In User with Basic Credentials', () => {
   it('Should validate a valid user', async () => {
     const password = generateValidPassword();
-    const user = UserBuilder.aBasicCredentialsUser()
+    const user = new UserBuilder()
+      .aBasicCredentialsUser()
       .withPlainPassword(password)
       .build();
 
@@ -29,7 +30,8 @@ describe('Sign In User with Basic Credentials', () => {
 
   it('Should throw invalid credentials error if non-existant user', async () => {
     const password = generateValidPassword();
-    const user = UserBuilder.aBasicCredentialsUser()
+    const user = new UserBuilder()
+      .aBasicCredentialsUser()
       .withPlainPassword(password)
       .build();
 
@@ -49,7 +51,8 @@ describe('Sign In User with Basic Credentials', () => {
 
   it('Should throw invalid credentials error if password do not match', async () => {
     const password = generateValidPassword();
-    const user = UserBuilder.aBasicCredentialsUser()
+    const user = new UserBuilder()
+      .aBasicCredentialsUser()
       .withPlainPassword(password)
       .build();
 

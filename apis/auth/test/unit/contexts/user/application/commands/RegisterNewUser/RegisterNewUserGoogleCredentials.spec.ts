@@ -28,7 +28,8 @@ describe('Register New User with Google Credentials', () => {
   it('Should not create a user that is already registered', async () => {
     const googleId = GoogleId.of(StringMother.random());
 
-    const alreadyPersistedUser = UserBuilder.aGoogleCredentialsUser()
+    const alreadyPersistedUser = new UserBuilder()
+      .aGoogleCredentialsUser()
       .withGoogleId(googleId)
       .build();
 

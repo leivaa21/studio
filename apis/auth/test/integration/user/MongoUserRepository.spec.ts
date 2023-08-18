@@ -33,7 +33,7 @@ describe('Mongo User Repository', () => {
 
   describe('Persisting User', () => {
     it('should let persist a basic credentials user and be able to find it', async () => {
-      const user = UserBuilder.aBasicCredentialsUser().build();
+      const user = new UserBuilder().aBasicCredentialsUser().build();
       await repository.create(user);
 
       const userFound = await repository.findById(user.id);
@@ -42,7 +42,7 @@ describe('Mongo User Repository', () => {
     });
 
     it('should let persist a Google Credentials user and be able to find it', async () => {
-      const user = UserBuilder.aGoogleCredentialsUser().build();
+      const user = new UserBuilder().aGoogleCredentialsUser().build();
       await repository.create(user);
 
       const userFound = await repository.findById(user.id);
@@ -52,9 +52,12 @@ describe('Mongo User Repository', () => {
   });
 
   describe('Find a user', () => {
-    const basicCredentialsUser = UserBuilder.aBasicCredentialsUser().build();
+    const basicCredentialsUser = new UserBuilder()
+      .aBasicCredentialsUser()
+      .build();
     const googleId = GoogleId.of(StringMother.random());
-    const googleCredentialsUser = UserBuilder.aGoogleCredentialsUser()
+    const googleCredentialsUser = new UserBuilder()
+      .aGoogleCredentialsUser()
       .withGoogleId(googleId)
       .build();
 
