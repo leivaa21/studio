@@ -1,5 +1,5 @@
 import { useRouter } from 'next/router';
-import { useState } from 'react';
+import { Fragment, useCallback, useEffect, useState } from 'react';
 import { BsCheck } from 'react-icons/bs';
 
 import { Modal } from '@studio/ui/components/modal';
@@ -7,28 +7,80 @@ import Button from '@studio/ui/components/interactivity/cta/button';
 
 import styles from '../courses.module.scss';
 
-import { useCourse } from '../../../hooks/course/useCourse';
 import { MarkdownRenderer } from '../../markdown/renderer';
-import { useCourseAuthor } from '../../../hooks/course/useCourseAuthor';
-import { useOwnedCourseSubscriptionByCourseId } from '../../../hooks/course/useOwnedCourseSubscriptionByCourseId';
 import { deleteOwnedCourseSubscription } from '../../../contexts/course-subscription/application/DeleteOwnedCourseSubscription';
 import { getAuthTokenCookie } from '../../../lib/cookieUtils';
-import { useSubscribedCourseLessons } from '../../../hooks/course/useSubscribedCourseLessons';
 import { CompletedMark } from './CompletedMark';
+import { getCourseById } from '../../../contexts/courses/application/GetCourseById';
+import { getUserNicknameById } from '../../../contexts/users/application/getUserNicknameById';
+import { getLessonsByCourseId } from '../../../contexts/lessons/aplication/GetLessonsByCourseId';
+import { getOwnedCourseSubscriptionByCourseId } from '../../../contexts/course-subscription/application/GetOwnedCourseSubscriptionByCourseId';
+import { useErrorBoundary } from 'react-error-boundary';
+import {
+  CourseInfoResponse,
+  CourseSubscriptionInfoResponse,
+} from '@studio/commons';
 
 export interface CourseContentViewParams {
   courseId: string;
 }
 
+type SubscribedCourseLessonsParams = {
+  id: string;
+  title: string;
+  completed: boolean;
+  courseId: string;
+};
+
 export function CourseContentView({ courseId }: CourseContentViewParams) {
   const router = useRouter();
 
+  const { showBoundary } = useErrorBoundary();
+
+  const fetchSubscribedCourse = useCallback(async () => {
+    try {
+      const token = getAuthTokenCookie();
+      if (!courseId || !token) return;
+
+      const subscription = await getOwnedCourseSubscriptionByCourseId(
+        courseId,
+        token
+      );
+      const course = await getCourseById(courseId);
+      const author = await getUserNicknameById(course.authorId);
+      const courseLessons = await getLessonsByCourseId(courseId);
+
+      const lessons = courseLessons.map((lesson) => ({
+        id: lesson.id,
+        title: lesson.title,
+        courseId: lesson.courseId,
+        completed: subscription.completedLessons.includes(lesson.id) || false,
+      }));
+
+      setCourse(course);
+      setAuthor(author);
+      setLessons(lessons);
+      setCourseSubscription(subscription);
+    } catch (error) {
+      showBoundary(error);
+    }
+  }, [courseId, showBoundary]);
+
   const [giveUpModalShown, setGiveUpModalShown] = useState<boolean>(false);
 
-  const course = useCourse(courseId);
-  const author = useCourseAuthor(course?.authorId);
-  const lessons = useSubscribedCourseLessons(courseId);
-  const courseSubscription = useOwnedCourseSubscriptionByCourseId(courseId);
+  const [course, setCourse] = useState<CourseInfoResponse>();
+  const [author, setAuthor] = useState<{ nickname: string }>();
+  const [lessons, setLessons] = useState<SubscribedCourseLessonsParams[]>();
+  const [courseSubscription, setCourseSubscription] =
+    useState<CourseSubscriptionInfoResponse>();
+
+  useEffect(() => {
+    fetchSubscribedCourse();
+  }, [courseId, fetchSubscribedCourse]);
+
+  if (!course || !author || !lessons || !courseSubscription) {
+    return <Fragment />;
+  }
 
   const onGiveUpSubmit = async () => {
     if (!courseSubscription) return;
