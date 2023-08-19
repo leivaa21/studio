@@ -1,5 +1,6 @@
 import { useRouter } from 'next/router';
 import { CourseSearcher } from '@studio/ui/components/search/coursesSearcher';
+import { useErrorBoundary } from 'react-error-boundary';
 
 import { getAuthTokenCookie } from '../../lib/cookieUtils';
 import { Fragment, useCallback, useEffect, useState } from 'react';
@@ -19,16 +20,27 @@ export default function CreatorDashboard() {
     if (!getAuthTokenCookie()) router.push('/');
   }, [router]);
 
-  const onFetch = useCallback(async (title: string, tags: string[]) => {
-    const courses = await getAuthoredCoursesPaginated(
-      getAuthTokenCookie() || '',
-      0,
-      25,
-      title,
-      tags
-    );
-    setCoursesShown(courses);
-  }, []);
+  const { showBoundary } = useErrorBoundary();
+
+  const onFetch = useCallback(
+    async (title: string, tags: string[]) => {
+      const token = getAuthTokenCookie();
+      if (!token) return;
+      try {
+        const courses = await getAuthoredCoursesPaginated(
+          token,
+          0,
+          25,
+          title,
+          tags
+        );
+        setCoursesShown(courses);
+      } catch (err) {
+        showBoundary(err);
+      }
+    },
+    [showBoundary]
+  );
 
   return (
     <PageMetadata title="Studio | Creator Dashboard">
