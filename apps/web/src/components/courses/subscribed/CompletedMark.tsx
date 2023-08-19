@@ -1,7 +1,6 @@
 import { BsCheck } from 'react-icons/bs';
 
 import styles from '../courses.module.scss';
-import Link from 'next/link';
 import { Fragment, useState } from 'react';
 import { Modal } from '@studio/ui/components/modal';
 import dynamic from 'next/dynamic';
@@ -37,15 +36,5 @@ export function CompletedMark({ courseId }: { courseId: string }) {
         </div>
       </Modal>
     </Fragment>
-  );
-}
-
-export function OldCompletedMark({ courseId }: { courseId: string }) {
-  return (
-    <Link href={`/pdf/${courseId}`}>
-      <span className={styles.completedMark}>
-        Completed! <BsCheck />{' '}
-      </span>
-    </Link>
   );
 }
