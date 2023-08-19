@@ -1,9 +1,32 @@
+import { useErrorBoundary } from 'react-error-boundary';
+import { Fragment, useCallback, useEffect, useState } from 'react';
+
+import { LessonResponse } from '@studio/commons';
+
 import styles from '../course.module.scss';
-import { useLesson } from '../../../../hooks/course/useLesson';
 import { MarkdownRenderer } from '../../../markdown/renderer';
+import { getLessonById } from '../../../../contexts/lessons/aplication/GetLessonById';
 
 export function PreviewLesson({ lessonId }: { lessonId: string }) {
-  const lesson = useLesson(lessonId);
+  const [lesson, setLesson] = useState<LessonResponse>();
+  const { showBoundary } = useErrorBoundary();
+
+  const fetchData = useCallback(async () => {
+    if (!lessonId) return;
+
+    try {
+      const lesson = await getLessonById(lessonId);
+      setLesson(lesson);
+    } catch (err) {
+      showBoundary(err);
+    }
+  }, [lessonId, showBoundary]);
+
+  useEffect(() => {
+    fetchData();
+  }, [fetchData]);
+
+  if (!lesson) return <Fragment />;
 
   return (
     <div className={styles.lessonPreview}>
