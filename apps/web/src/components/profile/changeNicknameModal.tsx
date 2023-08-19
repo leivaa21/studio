@@ -1,5 +1,4 @@
 import { useState } from 'react';
-import { useRouter } from 'next/router';
 
 import { ErrorMessage } from '@studio/ui/components/error/ErrorMessage';
 import Button from '@studio/ui/components/interactivity/cta/button';
@@ -16,10 +15,10 @@ export interface ChangeNicknameModalParams {
   isShown: boolean;
   closeFunciton: () => void;
   currentNickname: string;
+  fetchFunction: () => Promise<void>;
 }
 
 export function ChangeNicknameModal(props: ChangeNicknameModalParams) {
-  const router = useRouter();
   const [nickname, setNickname] = useState<string>(props.currentNickname);
   const [errorMessage, setErrorMessage] = useState<string>('');
 
@@ -35,8 +34,8 @@ export function ChangeNicknameModal(props: ChangeNicknameModalParams) {
 
     try {
       await renameUser(request, token);
+      await props.fetchFunction();
       props.closeFunciton();
-      router.reload();
     } catch (err) {
       const errMessage = decodeError((err as { errorCode: string }).errorCode);
       setErrorMessage(errMessage);
