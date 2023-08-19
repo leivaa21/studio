@@ -28,7 +28,7 @@ export function CourseCard({ key, course }: CourseCardParams) {
 
   useEffect(() => {
     fetchData();
-  });
+  }, [fetchData]);
 
   if (!author || !course) return <Fragment />;
 

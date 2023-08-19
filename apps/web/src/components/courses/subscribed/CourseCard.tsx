@@ -43,7 +43,7 @@ export function SubscribedCourseCard({ key, course }: CourseCardParams) {
 
   useEffect(() => {
     fetchData();
-  });
+  }, [course, fetchData]);
 
   if (!course || !author || !courseSubscription) return <Fragment />;
 
