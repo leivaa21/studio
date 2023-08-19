@@ -3,7 +3,7 @@ import { NextApiResponse } from 'next';
 
 export async function SafeControllerHandling(
   res: NextApiResponse,
-  handler: () => Promise<any>
+  handler: () => Promise<void>
 ) {
   try {
     await handler();
