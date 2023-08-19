@@ -1,3 +1,5 @@
+import { useErrorBoundary } from 'react-error-boundary';
+import { Fragment, useCallback, useEffect, useState } from 'react';
 import {
   Document,
   PDFDownloadLink,
@@ -10,12 +12,18 @@ import {
 } from '@react-pdf/renderer';
 import { BsDownload } from 'react-icons/bs';
 
+import {
+  CourseInfoResponse,
+  CourseSubscriptionInfoResponse,
+  GetUserResponse,
+} from '@studio/commons';
+
 import styles from './pdf.module.scss';
-import { useCurrentUser } from '../../hooks/user/useCurrentUser';
-import { Fragment } from 'react';
-import { useCourse } from '../../hooks/course/useCourse';
-import { useOwnedCourseSubscriptionByCourseId } from '../../hooks/course/useOwnedCourseSubscriptionByCourseId';
 import { formatDate } from '../../utils/formatDate';
+import { getAuthTokenCookie } from '../../lib/cookieUtils';
+import { internalApiClient } from '../../lib/InternalApiClient';
+import { getCourseById } from '../../contexts/courses/application/GetCourseById';
+import { getOwnedCourseSubscriptionByCourseId } from '../../contexts/course-subscription/application/GetOwnedCourseSubscriptionByCourseId';
 
 const styleSheet = StyleSheet.create({
   page: {
@@ -89,10 +97,36 @@ export default function CompletedCourseCertificateLink({
   onClick: () => void;
   courseId: string;
 }) {
-  const user = useCurrentUser();
-  const course = useCourse(courseId);
+  const [user, setUser] = useState<GetUserResponse>();
+  const [course, setCourse] = useState<CourseInfoResponse>();
+  const [subscription, setSubscription] =
+    useState<CourseSubscriptionInfoResponse>();
 
-  const subscription = useOwnedCourseSubscriptionByCourseId(courseId);
+  const { showBoundary } = useErrorBoundary();
+
+  const fetchData = useCallback(async () => {
+    const token = getAuthTokenCookie();
+    if (!courseId || !token) return;
+
+    try {
+      const user = await internalApiClient.getCurrentUser(token);
+      const course = await getCourseById(courseId);
+      const subscription = await getOwnedCourseSubscriptionByCourseId(
+        courseId,
+        token
+      );
+
+      setUser(user);
+      setCourse(course);
+      setSubscription(subscription);
+    } catch (err) {
+      showBoundary(err);
+    }
+  }, [courseId, showBoundary]);
+
+  useEffect(() => {
+    fetchData();
+  }, [fetchData]);
 
   if (!user || !course || !subscription || !subscription.completedAt)
     return <Fragment />;
