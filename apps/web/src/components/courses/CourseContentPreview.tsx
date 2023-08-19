@@ -50,7 +50,7 @@ export function CourseContentPreview({ courseId }: CourseContentPreviewParams) {
 
   useEffect(() => {
     fetchData();
-  });
+  }, [fetchData]);
 
   if (!token || !course || !author) return <Fragment />;
 
