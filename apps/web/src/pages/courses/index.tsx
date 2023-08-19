@@ -8,6 +8,7 @@ import { CreatorHeader } from '../../components/creator/header';
 import { CourseInfoResponse, CourseTagsRecord } from '@studio/commons';
 import { CourseList } from '../../components/courses/CoursesList';
 import { getPublishedCoursesPaginated } from '../../contexts/courses/application/GetPublishedCoursesPaginated';
+import { PageMetadata } from '../../components/PageMetadata';
 
 export default function AllCourses() {
   const router = useRouter();
@@ -23,20 +24,22 @@ export default function AllCourses() {
   };
 
   return (
-    <Fragment>
-      <Header />
-      <CreatorHeader title="All Courses" />
-      <div className="row">
-        <div className="sidebar">
-          <CourseSearcher
-            onFetch={onFetch}
-            tags={Object.keys(CourseTagsRecord)}
-          />
+    <PageMetadata title="Studio | Course Searcher">
+      <Fragment>
+        <Header />
+        <CreatorHeader title="All Courses" />
+        <div className="row">
+          <div className="sidebar">
+            <CourseSearcher
+              onFetch={onFetch}
+              tags={Object.keys(CourseTagsRecord)}
+            />
+          </div>
+          <div className="column">
+            <CourseList courses={coursesShown} />
+          </div>
         </div>
-        <div className="column">
-          <CourseList courses={coursesShown} />
-        </div>
-      </div>
-    </Fragment>
+      </Fragment>
+    </PageMetadata>
   );
 }

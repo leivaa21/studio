@@ -9,6 +9,7 @@ import { Header } from '../../components/header/header';
 import { CreatorHeader } from '../../components/creator/header';
 import { useSubscribedCourses } from '../../hooks/course/useSubscribedCourses';
 import { SubscribedCoursesList } from '../../components/courses/subscribed/CoursesList';
+import { PageMetadata } from '../../components/PageMetadata';
 
 export default function AllCourses() {
   const router = useRouter();
@@ -27,20 +28,22 @@ export default function AllCourses() {
   }, []);
 
   return (
-    <Fragment>
-      <Header />
-      <CreatorHeader title="My Subscribed Courses" />
-      <div className="row">
-        <div className="sidebar">
-          <CourseSearcher
-            onFetch={onFetch}
-            tags={Object.keys(CourseTagsRecord)}
-          />
+    <PageMetadata title="Studio | Dashboard">
+      <Fragment>
+        <Header />
+        <CreatorHeader title="My Subscribed Courses" />
+        <div className="row">
+          <div className="sidebar">
+            <CourseSearcher
+              onFetch={onFetch}
+              tags={Object.keys(CourseTagsRecord)}
+            />
+          </div>
+          <div className="column">
+            <SubscribedCoursesList courses={coursesShown} />
+          </div>
         </div>
-        <div className="column">
-          <SubscribedCoursesList courses={coursesShown} />
-        </div>
-      </div>
-    </Fragment>
+      </Fragment>
+    </PageMetadata>
   );
 }
