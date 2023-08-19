@@ -1,13 +1,20 @@
+import { useRouter } from 'next/router';
+import { Fragment, useCallback, useEffect, useState } from 'react';
+import { useErrorBoundary } from 'react-error-boundary';
+
+import Button from '@studio/ui/components/interactivity/cta/button';
+import { Modal } from '@studio/ui/components/modal';
+import {
+  CourseSubscriptionInfoResponse,
+  LessonResponse,
+} from '@studio/commons';
+
 import styles from '../../courses.module.scss';
 import { MarkdownRenderer } from '../../../markdown/renderer';
-import { useLesson } from '../../../../hooks/course/useLesson';
-import Button from '@studio/ui/components/interactivity/cta/button';
-import { useOwnedCourseSubscriptionByCourseId } from '../../../../hooks/course/useOwnedCourseSubscriptionByCourseId';
-import { useState } from 'react';
-import { Modal } from '@studio/ui/components/modal';
 import { markLessonAsCompleted } from '../../../../contexts/course-subscription/application/MarkLessonAsCompleted';
 import { getAuthTokenCookie } from '../../../../lib/cookieUtils';
-import { useRouter } from 'next/router';
+import { getLessonById } from '../../../../contexts/lessons/aplication/GetLessonById';
+import { getOwnedCourseSubscriptionByCourseId } from '../../../../contexts/course-subscription/application/GetOwnedCourseSubscriptionByCourseId';
 
 export interface LessonContentViewParams {
   courseId: string;
@@ -19,18 +26,47 @@ export function LessonContentView({
   lessonId,
 }: LessonContentViewParams) {
   const router = useRouter();
-  const lesson = useLesson(lessonId);
-  const courseSubscription = useOwnedCourseSubscriptionByCourseId(courseId);
 
-  const lessonAlreadyCompleted = !!courseSubscription?.completedLessons.find(
-    (lesson) => lesson === lessonId
-  );
+  const [lesson, setLesson] = useState<LessonResponse>();
+  const [courseSubscription, setCourseSubscription] =
+    useState<CourseSubscriptionInfoResponse>();
+
+  const [token] = useState(getAuthTokenCookie());
 
   const [completeLessonModalShown, setCompleteLessonModalShown] =
     useState<boolean>(false);
 
+  const { showBoundary } = useErrorBoundary();
+
+  const fetchData = useCallback(async () => {
+    if (!token || !courseId || !lessonId) return;
+
+    try {
+      const lesson = await getLessonById(lessonId);
+      const subscription = await getOwnedCourseSubscriptionByCourseId(
+        courseId,
+        token
+      );
+      setLesson(lesson);
+      setCourseSubscription(subscription);
+    } catch (err) {
+      showBoundary(err);
+    }
+  }, [token, courseId, lessonId, showBoundary]);
+
+  useEffect(() => {
+    fetchData();
+  }, [fetchData]);
+
+  if (!lesson || !courseSubscription) return <Fragment />;
+
+  const lessonAlreadyCompleted = !!courseSubscription.completedLessons.find(
+    (lesson) => lesson === lessonId
+  );
+
   const onSubmitCompleteLesson = async () => {
-    await markLessonAsCompleted(lessonId, getAuthTokenCookie() || '');
+    if (!token) return;
+    await markLessonAsCompleted(lessonId, token);
 
     router.push(`/course/${courseId}`);
   };
