@@ -1,0 +1,25 @@
+.info {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+}
+
+
+.title {
+  font-size: 2rem;
+  font-weight: 600;
+  text-align: center;
+}
+
+.errorMessage {
+  font-size: 1.5rem;
+  font-weight: 400;
+  text-align: center;
+}
+
+.errorPageControls {
+  display: flex;
+  flex: 0 1 auto;
+  justify-content: center;
+  padding: 5vh 0;
+}

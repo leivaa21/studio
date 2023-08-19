@@ -1,5 +1,5 @@
 import { ErrorBoundary } from 'react-error-boundary';
-import { ShowErrorBoundary } from '../components/ErrorBoundary';
+import { ShowErrorBoundary } from '../components/errors/ErrorBoundary';
 import '../styles/globals.scss';
 import '../styles/rewriteMdxStyles.scss';
 import type { AppProps } from 'next/app';
