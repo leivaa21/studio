@@ -5,6 +5,7 @@ import { getAuthTokenCookie } from '../../../lib/cookieUtils';
 import { CreatorHeader } from '../../../components/creator/header';
 import { Header } from '../../../components/header/header';
 import { CourseContentPreview } from '../../../components/courses/CourseContentPreview';
+import { PageMetadata } from '../../../components/PageMetadata';
 
 export default function CoursePreview() {
   const router = useRouter();
@@ -16,12 +17,14 @@ export default function CoursePreview() {
   }, [router, courseId]);
 
   return (
-    <Fragment>
-      <Header />
-      <CreatorHeader title="Course Preview" />
-      <div className="row">
-        <CourseContentPreview courseId={courseId} />
-      </div>
-    </Fragment>
+    <PageMetadata title="Studio | Course">
+      <Fragment>
+        <Header />
+        <CreatorHeader title="Course Preview" />
+        <div className="row">
+          <CourseContentPreview courseId={courseId} />
+        </div>
+      </Fragment>
+    </PageMetadata>
   );
 }

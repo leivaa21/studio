@@ -5,6 +5,7 @@ import { CreatorHeader } from '../../../../../../components/creator/header';
 import { Header } from '../../../../../../components/header/header';
 import { PreviewLesson } from '../../../../../../components/creator/course/lessons/PreviewLesson';
 import { CoursePreviewNavigator } from '../../../../../../components/creator/course/previewNavigator';
+import { PageMetadata } from '../../../../../../components/PageMetadata';
 
 export default function CreatorCoursePreviewPage() {
   const router = useRouter();
@@ -18,17 +19,19 @@ export default function CreatorCoursePreviewPage() {
   }, [router, courseId, lessonId]);
 
   return (
-    <Fragment>
-      <Header />
-      <CreatorHeader title="Creator Course View" />
-      <div className="row">
-        <div className="sidebar">
-          <CoursePreviewNavigator courseId={courseId} />
+    <PageMetadata title="Studio | Creator Dashboard">
+      <Fragment>
+        <Header />
+        <CreatorHeader title="Creator Course View" />
+        <div className="row">
+          <div className="sidebar">
+            <CoursePreviewNavigator courseId={courseId} />
+          </div>
+          <div className="column">
+            <PreviewLesson lessonId={lessonId} />
+          </div>
         </div>
-        <div className="column">
-          <PreviewLesson lessonId={lessonId} />
-        </div>
-      </div>
-    </Fragment>
+      </Fragment>
+    </PageMetadata>
   );
 }

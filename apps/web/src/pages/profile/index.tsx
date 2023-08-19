@@ -6,6 +6,7 @@ import { getAuthTokenCookie } from '../../lib/cookieUtils';
 import { CreatorHeader } from '../../components/creator/header';
 import { useCurrentUser } from '../../hooks/user/useCurrentUser';
 import { UserProfileView } from '../../components/profile/userView';
+import { PageMetadata } from '../../components/PageMetadata';
 
 export default function Panel() {
   const router = useRouter();
@@ -17,14 +18,16 @@ export default function Panel() {
   }, [router]);
 
   return (
-    <Fragment>
-      <Header />
-      <CreatorHeader title="Profile" />
-      <div className="row">
-        <div className="column">
-          <UserProfileView userId={user?.id || ''} />
+    <PageMetadata title="Studio | Profile">
+      <Fragment>
+        <Header />
+        <CreatorHeader title="Profile" />
+        <div className="row">
+          <div className="column">
+            <UserProfileView userId={user?.id || ''} />
+          </div>
         </div>
-      </div>
-    </Fragment>
+      </Fragment>
+    </PageMetadata>
   );
 }

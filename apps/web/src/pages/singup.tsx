@@ -1,8 +1,8 @@
-import Head from 'next/head';
 import { useRouter } from 'next/router';
-import { Fragment, useEffect } from 'react';
+import { useEffect } from 'react';
 import { SignUpForm } from '../components/forms/singup';
 import { getAuthTokenCookie } from '../lib/cookieUtils';
+import { PageMetadata } from '../components/PageMetadata';
 
 export default function SingUp() {
   const router = useRouter();
@@ -13,13 +13,8 @@ export default function SingUp() {
   });
 
   return (
-    <Fragment>
-      <Head>
-        <title>Sign Up now!</title>
-      </Head>
-      <main>
-        <SignUpForm />
-      </main>
-    </Fragment>
+    <PageMetadata title="Studio | Sign up now!">
+      <SignUpForm />
+    </PageMetadata>
   );
 }

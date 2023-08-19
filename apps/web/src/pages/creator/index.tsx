@@ -9,6 +9,7 @@ import { CreatorPanel } from '../../components/creator/panel';
 import Button from '@studio/ui/components/interactivity/cta/button';
 import { getAuthoredCoursesPaginated } from '../../contexts/courses/application/GetAuthoredCoursesPaginated';
 import { CourseInfoResponse, CourseTagsRecord } from '@studio/commons';
+import { PageMetadata } from '../../components/PageMetadata';
 
 export default function CreatorDashboard() {
   const router = useRouter();
@@ -30,27 +31,29 @@ export default function CreatorDashboard() {
   }, []);
 
   return (
-    <Fragment>
-      <Header />
-      <CreatorHeader title="Creator Dashboard" />
-      <div className="row">
-        <div className="sidebar">
-          <Button
-            Type="Primary"
-            Size="Small"
-            Label="Create new course"
-            Link
-            href="/creator/course/new"
-          />
-          <CourseSearcher
-            onFetch={onFetch}
-            tags={Object.keys(CourseTagsRecord)}
-          />
+    <PageMetadata title="Studio | Creator Dashboard">
+      <Fragment>
+        <Header />
+        <CreatorHeader title="Creator Dashboard" />
+        <div className="row">
+          <div className="sidebar">
+            <Button
+              Type="Primary"
+              Size="Small"
+              Label="Create new course"
+              Link
+              href="/creator/course/new"
+            />
+            <CourseSearcher
+              onFetch={onFetch}
+              tags={Object.keys(CourseTagsRecord)}
+            />
+          </div>
+          <div className="column">
+            <CreatorPanel courses={coursesShown} />
+          </div>
         </div>
-        <div className="column">
-          <CreatorPanel courses={coursesShown} />
-        </div>
-      </div>
-    </Fragment>
+      </Fragment>
+    </PageMetadata>
   );
 }
