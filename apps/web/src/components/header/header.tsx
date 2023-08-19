@@ -6,8 +6,14 @@ import { BsPersonFill } from 'react-icons/bs';
 import styles from './header.module.scss';
 
 import { HeaderLinkType } from './types';
-import { clearAuthTokenCookie } from '../../lib/cookieUtils';
-import { useCurrentUser } from '../../hooks/user/useCurrentUser';
+import {
+  clearAuthTokenCookie,
+  getAuthTokenCookie,
+} from '../../lib/cookieUtils';
+import { Fragment, useCallback, useEffect, useState } from 'react';
+import { GetUserResponse } from '@studio/commons';
+import { useErrorBoundary } from 'react-error-boundary';
+import { internalApiClient } from '../../lib/InternalApiClient';
 
 const Links: HeaderLinkType[] = [
   {
@@ -56,7 +62,28 @@ export function HeaderLink(params: { link: HeaderLinkType; key: string }) {
 
 export function Header() {
   const router = useRouter();
-  const user = useCurrentUser();
+
+  const [user, setUser] = useState<GetUserResponse>();
+
+  const { showBoundary } = useErrorBoundary();
+
+  const fetchData = useCallback(async () => {
+    const token = getAuthTokenCookie();
+    if (!token) return;
+    try {
+      const user = await internalApiClient.getCurrentUser(token);
+      setUser(user);
+    } catch (err) {
+      showBoundary(err);
+    }
+  }, [showBoundary]);
+
+  useEffect(() => {
+    if (!getAuthTokenCookie()) router.push('/');
+    fetchData();
+  }, [router, fetchData]);
+
+  if (!user) return <Fragment />;
 
   function logout() {
     clearAuthTokenCookie();
