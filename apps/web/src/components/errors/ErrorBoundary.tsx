@@ -17,7 +17,7 @@ export function ShowErrorBoundary(props: FallbackProps) {
 
   useEffect(() => {
     if (!error.errorCode) {
-      setErrorMessage(error.message);
+      setErrorMessage('Unknown Error | Try later!');
       return;
     }
 
