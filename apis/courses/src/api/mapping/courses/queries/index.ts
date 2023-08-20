@@ -10,9 +10,9 @@ import {
   GetCourseByIdQuery,
 } from '../../../../contexts/courses/application/queries/GetCourseById';
 import {
-  GetPublishedCoursesPaginated,
-  GetPublishedCoursesPaginatedQuery,
-} from '../../../../contexts/courses/application/queries/GetPublishedCoursesPaginated';
+  GetPublishedCoursesFiltered,
+  GetPublishedCoursesFilteredQuery,
+} from '../../../../contexts/courses/application/queries/GetPublishedCoursesFiltered';
 import {
   GetMySubscribedCourses,
   GetMySubscribedCoursesQuery,
@@ -23,7 +23,7 @@ const queryBus = DependencyContainer.get<QueryBus>(InMemoryQueryBus);
 queryBus.subscribe(GetMyCoursesFilteredQuery, GetMyCoursesFiltered);
 queryBus.subscribe(GetCourseByIdQuery, GetCourseById);
 queryBus.subscribe(
-  GetPublishedCoursesPaginatedQuery,
-  GetPublishedCoursesPaginated
+  GetPublishedCoursesFilteredQuery,
+  GetPublishedCoursesFiltered
 );
 queryBus.subscribe(GetMySubscribedCoursesQuery, GetMySubscribedCourses);

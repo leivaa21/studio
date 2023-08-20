@@ -54,13 +54,9 @@ export class CourseCriteria extends Criteria {
     });
   }
 
-  static paginatedPublishedWithFilters({
-    pageSize,
-    page,
+  static publishedCoursesFiltered({
     filters,
   }: {
-    pageSize: number;
-    page: number;
     filters: PossibleCourseFilters;
   }): CourseCriteria {
     const criteriaFilters: FilterAsPrimitives[] = [
@@ -86,8 +82,6 @@ export class CourseCriteria extends Criteria {
     return new CourseCriteria({
       filters: Filters.fromValues(criteriaFilters),
       order: Order.desc('publishedAt'),
-      limit: pageSize,
-      offset: pageSize * page,
     });
   }
 

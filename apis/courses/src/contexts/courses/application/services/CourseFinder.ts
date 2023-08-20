@@ -26,17 +26,13 @@ export class CourseFinder {
     return this.repository.matching(criteria);
   }
 
-  public async findPublishedCoursesPaginated(params: {
-    pageSize: number;
-    page: number;
+  public async findPublishedCoursesFiltered(params: {
     with?: {
       title?: string;
       tags?: string[];
     };
   }): Promise<Course[]> {
-    const criteria = CourseCriteria.paginatedPublishedWithFilters({
-      pageSize: params.pageSize,
-      page: params.page,
+    const criteria = CourseCriteria.publishedCoursesFiltered({
       filters: {
         includingOnTitle: params.with?.title,
         havingTags: params.with?.tags,

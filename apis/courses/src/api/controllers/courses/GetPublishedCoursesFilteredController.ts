@@ -11,7 +11,7 @@ import { InMemoryQueryBus } from '../../../contexts/shared/infrastructure/QueryB
 import { QueryBus } from '../../../contexts/shared/domain/QueryBus';
 import { Course } from '../../../contexts/courses/domain/Course';
 import { CourseInfoResponse } from '@studio/commons';
-import { GetPublishedCoursesPaginatedQuery } from '../../../contexts/courses/application/queries/GetPublishedCoursesPaginated';
+import { GetPublishedCoursesFilteredQuery } from '../../../contexts/courses/application/queries/GetPublishedCoursesFiltered';
 
 @Injectable({
   dependencies: [InMemoryQueryBus],
@@ -24,8 +24,6 @@ export class GetPublishedCoursesPaginatedController {
   @HttpCode(StatusCode.OK)
   @OnUndefined(StatusCode.OK)
   public async execute(
-    @QueryParam('page') page = 0,
-    @QueryParam('count') count = 0,
     @QueryParam('title') title?: string,
     @QueryParam('tags') tagsAsString?: string
   ): Promise<CourseInfoResponse[]> {
@@ -34,12 +32,10 @@ export class GetPublishedCoursesPaginatedController {
       : [];
 
     const courses = await this.queryBus.dispatch<
-      GetPublishedCoursesPaginatedQuery,
+      GetPublishedCoursesFilteredQuery,
       Course[]
     >(
-      new GetPublishedCoursesPaginatedQuery({
-        pageSize: count,
-        page,
+      new GetPublishedCoursesFilteredQuery({
         with: {
           title,
           tags,
