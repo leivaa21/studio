@@ -162,7 +162,10 @@ export function CourseLessons(args: {
       <h4 className={styles.lessonsSectionTitle}>Lessons</h4>
       <ul className={styles.lessons}>
         {args.lessons.map((lesson) => (
-          <CourseLesson key={`${args.keyPrefix}-${lesson}`} lesson={lesson} />
+          <CourseLesson
+            key={`${args.keyPrefix}-${lesson.id}`}
+            lesson={lesson}
+          />
         ))}
       </ul>
     </section>

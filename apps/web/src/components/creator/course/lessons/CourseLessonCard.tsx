@@ -13,11 +13,9 @@ export interface LessonCardParams {
   lesson: { title: string; id: string; courseId: string };
   lessonIndex: number;
   lessonCount: number;
-  key: string;
 }
 
 export function CourseLessonCard({
-  key,
   lesson,
   lessonIndex,
   lessonCount,
@@ -46,7 +44,7 @@ export function CourseLessonCard({
   };
 
   return (
-    <div className={styles.lessonCard} key={key}>
+    <div className={styles.lessonCard}>
       <div className={styles.lessonOrderControls}>
         <BsArrowUpShort
           className={lessonIndex === 0 ? styles.hide : ''}

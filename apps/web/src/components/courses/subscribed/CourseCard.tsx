@@ -15,10 +15,10 @@ import { getAuthTokenCookie } from '../../../lib/cookieUtils';
 
 export interface CourseCardParams {
   course: SubscribedCourseInfoResponse;
-  key: string;
+  keyPrefix: string;
 }
 
-export function SubscribedCourseCard({ key, course }: CourseCardParams) {
+export function SubscribedCourseCard({ keyPrefix, course }: CourseCardParams) {
   const [author, setAuthor] = useState<{ nickname: string }>();
   const [courseSubscription, setCourseSubscription] =
     useState<CourseSubscriptionInfoResponse>();
@@ -48,10 +48,10 @@ export function SubscribedCourseCard({ key, course }: CourseCardParams) {
   if (!course || !author || !courseSubscription) return <Fragment />;
 
   return (
-    <div className={styles.courseCard} key={key}>
+    <div className={styles.courseCard}>
       <div className={styles.courseInfo}>
         <h4 className={styles.title}>{course.title}</h4>
-        <CourseTags keyPrefix={key} tags={course.tags} />
+        <CourseTags keyPrefix={keyPrefix} tags={course.tags} />
         <span className={styles.authorName}>{author.nickname}</span>
       </div>
       <div className={styles.links}>

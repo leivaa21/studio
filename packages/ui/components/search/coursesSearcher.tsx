@@ -51,7 +51,7 @@ export function CourseSearcher({tags, onFetch}: CourseSearcherProps ) {
             {
               tagsState.map((tag, index) => {
                   return (
-                    <li key={`checkableTag-${tag}`}>
+                    <li key={`checkableTag-${tag.label}`}>
                       <CheckableTag
                         checked={tagsState[index].checked}
                         tag={tag.label}

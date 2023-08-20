@@ -9,12 +9,12 @@ import { MarkdownRenderer } from '../../markdown/renderer';
 
 export interface CourseParams {
   course: CourseInfoResponse;
-  key: string;
+  keyPrefix: string;
 }
 
-export function CourseCreatorCard({ key, course }: CourseParams) {
+export function CourseCreatorCard({ keyPrefix, course }: CourseParams) {
   return (
-    <div className={styles.card} key={key}>
+    <div className={styles.card}>
       <div className={styles['card-header']}>
         <h4 className={styles['card-header-title']}>{course.title}</h4>
         <div className={styles['card-header-buttons']}>
@@ -27,7 +27,7 @@ export function CourseCreatorCard({ key, course }: CourseParams) {
         <MarkdownRenderer content={course.description} />
       </div>
       <div className={styles['card-footer']}>
-        <CourseTags keyPrefix={key} tags={course.tags} />
+        <CourseTags keyPrefix={keyPrefix} tags={course.tags} />
       </div>
     </div>
   );
