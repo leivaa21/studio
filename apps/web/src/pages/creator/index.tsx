@@ -8,7 +8,7 @@ import { Header } from '../../components/header/header';
 import { CreatorHeader } from '../../components/creator/header';
 import { CreatorPanel } from '../../components/creator/panel';
 import Button from '@studio/ui/components/interactivity/cta/button';
-import { getAuthoredCoursesPaginated } from '../../contexts/courses/application/GetAuthoredCoursesPaginated';
+import { getAuthoredCoursesFiltered } from '../../contexts/courses/application/GetAuthoredCoursesFiltered';
 import { CourseInfoResponse, CourseTagsRecord } from '@studio/commons';
 import { PageMetadata } from '../../components/PageMetadata';
 
@@ -27,13 +27,7 @@ export default function CreatorDashboard() {
       const token = getAuthTokenCookie();
       if (!token) return;
       try {
-        const courses = await getAuthoredCoursesPaginated(
-          token,
-          0,
-          25,
-          title,
-          tags
-        );
+        const courses = await getAuthoredCoursesFiltered(token, title, tags);
         setCoursesShown(courses);
       } catch (err) {
         showBoundary(err);

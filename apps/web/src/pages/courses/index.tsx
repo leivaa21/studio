@@ -8,7 +8,7 @@ import { Header } from '../../components/header/header';
 import { CreatorHeader } from '../../components/creator/header';
 import { CourseInfoResponse, CourseTagsRecord } from '@studio/commons';
 import { CourseList } from '../../components/courses/CoursesList';
-import { getPublishedCoursesPaginated } from '../../contexts/courses/application/GetPublishedCoursesPaginated';
+import { getPublishedCoursesFiltered } from '../../contexts/courses/application/GetPublishedCoursesFiltered';
 import { PageMetadata } from '../../components/PageMetadata';
 
 export default function AllCourses() {
@@ -23,7 +23,7 @@ export default function AllCourses() {
 
   const onFetch = async (title: string, tags: string[]) => {
     try {
-      const courses = await getPublishedCoursesPaginated(0, 25, title, tags);
+      const courses = await getPublishedCoursesFiltered(title, tags);
       setCoursesShown(courses);
     } catch (err) {
       showBoundary(err);

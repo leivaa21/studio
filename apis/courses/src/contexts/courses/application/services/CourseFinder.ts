@@ -8,19 +8,15 @@ import { CourseNotFoundError } from '../../domain/errors/CourseNotFoundError';
 export class CourseFinder {
   constructor(private readonly repository: CourseRepository) {}
 
-  public async findAuthoredCoursesPaginated(params: {
+  public async findAuthoredCoursesFiltered(params: {
     authorId: AuthorId;
-    pageSize: number;
-    page: number;
     with?: {
       title?: string;
       tags?: string[];
     };
   }): Promise<Course[]> {
-    const criteria = CourseCriteria.paginatedFromAuthorWithFilters({
+    const criteria = CourseCriteria.fromAuthorWithFilters({
       authorId: params.authorId,
-      pageSize: params.pageSize,
-      page: params.page,
       filters: {
         includingOnTitle: params.with?.title,
         havingTags: params.with?.tags,
@@ -30,17 +26,13 @@ export class CourseFinder {
     return this.repository.matching(criteria);
   }
 
-  public async findPublishedCoursesPaginated(params: {
-    pageSize: number;
-    page: number;
+  public async findPublishedCoursesFiltered(params: {
     with?: {
       title?: string;
       tags?: string[];
     };
   }): Promise<Course[]> {
-    const criteria = CourseCriteria.paginatedPublishedWithFilters({
-      pageSize: params.pageSize,
-      page: params.page,
+    const criteria = CourseCriteria.publishedCoursesFiltered({
       filters: {
         includingOnTitle: params.with?.title,
         havingTags: params.with?.tags,

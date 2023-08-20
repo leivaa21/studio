@@ -47,8 +47,6 @@ async function createCourse(req: NextApiRequest, res: NextApiResponse) {
 
 async function getPublishedCourses(req: NextApiRequest, res: NextApiResponse) {
   const params = new Map([
-    ['page', req.query.page as string],
-    ['count', req.query.pageSize as string],
     ['title', (req.query.title as string) || ''],
     ['tags', (req.query.tags as string) || ''],
   ]);
