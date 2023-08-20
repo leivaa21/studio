@@ -8,10 +8,10 @@ import { getUserNicknameById } from '../../contexts/users/application/getUserNic
 
 export interface CourseCardParams {
   course: { id: string; title: string; authorId: string; tags: string[] };
-  key: string;
+  keyPrefix: string;
 }
 
-export function CourseCard({ key, course }: CourseCardParams) {
+export function CourseCard({ keyPrefix, course }: CourseCardParams) {
   const [author, setAuthor] = useState<{ nickname: string }>();
   const { showBoundary } = useErrorBoundary();
 
@@ -33,10 +33,10 @@ export function CourseCard({ key, course }: CourseCardParams) {
   if (!author || !course) return <Fragment />;
 
   return (
-    <div className={styles.courseCard} key={key}>
+    <div className={styles.courseCard}>
       <div className={styles.courseInfo}>
         <h4 className={styles.title}>{course.title}</h4>
-        <CourseTags keyPrefix={key} tags={course.tags} />
+        <CourseTags keyPrefix={keyPrefix} tags={course.tags} />
         <span className={styles.authorName}>{author?.nickname}</span>
       </div>
       <div className={styles.links}>

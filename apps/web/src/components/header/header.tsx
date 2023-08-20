@@ -38,11 +38,10 @@ const Links: HeaderLinkType[] = [
   },
 ];
 
-export function HeaderLink(params: { link: HeaderLinkType; key: string }) {
-  const { link, key } = params;
+export function HeaderLink({ link }: { link: HeaderLinkType }) {
   return (
     <div className={styles.dropdown}>
-      <Link href={link.href} className={styles['header-link']} key={key}>
+      <Link href={link.href} className={styles['header-link']}>
         <li>{link.page}</li>
       </Link>
       <div className={styles['dropdown-content']}>
@@ -104,7 +103,7 @@ export function Header() {
         className={`${styles['header-section']} ${styles['header-section--left']}`}
       >
         {Links.map((link) => (
-          <HeaderLink link={link} key={`Header link for ${link.page}`} />
+          <HeaderLink link={link} key={`HeaderLink-${link.page}`} />
         ))}
       </ul>
       <ul

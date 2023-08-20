@@ -10,9 +10,12 @@ export function SubscribedCoursesList({
 }) {
   return (
     <div className={styles.courseList}>
-      {courses.map((course) => (
-        <SubscribedCourseCard key={`course-${course.id}`} course={course} />
-      ))}
+      {courses.map((course) => {
+        const key = `course-${course.id}`;
+        return (
+          <SubscribedCourseCard keyPrefix={key} key={key} course={course} />
+        );
+      })}
     </div>
   );
 }

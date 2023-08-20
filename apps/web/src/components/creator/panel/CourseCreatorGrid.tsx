@@ -11,9 +11,10 @@ export interface CourseCreatorGridParams {
 export function CourseCreatorGrid({ courses }: CourseCreatorGridParams) {
   return (
     <div className={styles.grid}>
-      {courses.map((course) => (
-        <CourseCreatorCard key={`course-${course.id}`} course={course} />
-      ))}
+      {courses.map((course) => {
+        const key = `course-${course.id}`;
+        return <CourseCreatorCard key={key} keyPrefix={key} course={course} />;
+      })}
     </div>
   );
 }
