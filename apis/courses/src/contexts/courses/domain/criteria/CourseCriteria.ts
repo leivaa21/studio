@@ -21,15 +21,11 @@ export class CourseCriteria extends Criteria {
     super(args.filters, args.order, args.limit, args.offset);
   }
 
-  static paginatedFromAuthorWithFilters({
+  static fromAuthorWithFilters({
     authorId,
-    pageSize,
-    page,
     filters,
   }: {
     authorId: AuthorId;
-    pageSize: number;
-    page: number;
     filters: PossibleCourseFilters;
   }): CourseCriteria {
     const criteriaFilters: FilterAsPrimitives[] = [
@@ -55,8 +51,6 @@ export class CourseCriteria extends Criteria {
     return new CourseCriteria({
       filters: Filters.fromValues(criteriaFilters),
       order: Order.desc('updatedAt'),
-      limit: pageSize,
-      offset: pageSize * page,
     });
   }
 

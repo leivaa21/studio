@@ -2,9 +2,9 @@ import { DependencyContainer } from '@studio/dependency-injection';
 import { QueryBus } from '../../../../contexts/shared/domain/QueryBus';
 import { InMemoryQueryBus } from '../../../../contexts/shared/infrastructure/QueryBus/InMemoryQueryBus';
 import {
-  GetMyCoursesPaginated,
-  GetMyCoursesPaginatedQuery,
-} from '../../../../contexts/courses/application/queries/GetMyCoursesPaginated';
+  GetMyCoursesFiltered,
+  GetMyCoursesFilteredQuery,
+} from '../../../../contexts/courses/application/queries/GetMyCoursesFiltered';
 import {
   GetCourseById,
   GetCourseByIdQuery,
@@ -20,7 +20,7 @@ import {
 
 const queryBus = DependencyContainer.get<QueryBus>(InMemoryQueryBus);
 
-queryBus.subscribe(GetMyCoursesPaginatedQuery, GetMyCoursesPaginated);
+queryBus.subscribe(GetMyCoursesFilteredQuery, GetMyCoursesFiltered);
 queryBus.subscribe(GetCourseByIdQuery, GetCourseById);
 queryBus.subscribe(
   GetPublishedCoursesPaginatedQuery,

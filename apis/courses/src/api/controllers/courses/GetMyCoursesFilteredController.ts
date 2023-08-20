@@ -12,7 +12,7 @@ import { Injectable } from '@studio/dependency-injection';
 import { User } from '../../auth/user';
 import { InMemoryQueryBus } from '../../../contexts/shared/infrastructure/QueryBus/InMemoryQueryBus';
 import { QueryBus } from '../../../contexts/shared/domain/QueryBus';
-import { GetMyCoursesPaginatedQuery } from '../../../contexts/courses/application/queries/GetMyCoursesPaginated';
+import { GetMyCoursesFilteredQuery } from '../../../contexts/courses/application/queries/GetMyCoursesFiltered';
 import { Course } from '../../../contexts/courses/domain/Course';
 import { CourseInfoResponse } from '@studio/commons';
 
@@ -20,7 +20,7 @@ import { CourseInfoResponse } from '@studio/commons';
   dependencies: [InMemoryQueryBus],
 })
 @JsonController('/courses/authored')
-export class GetMyCoursesPaginatedController {
+export class GetMyCoursesFilteredController {
   constructor(private readonly queryBus: QueryBus) {}
 
   @Get()
@@ -29,8 +29,6 @@ export class GetMyCoursesPaginatedController {
   @Authorized()
   public async execute(
     @CurrentUser({ required: true }) user: User,
-    @QueryParam('page') page = 0,
-    @QueryParam('count') count = 0,
     @QueryParam('title') title?: string,
     @QueryParam('tags') tagsAsString?: string
   ): Promise<CourseInfoResponse[]> {
@@ -39,13 +37,11 @@ export class GetMyCoursesPaginatedController {
       : [];
 
     const courses = await this.queryBus.dispatch<
-      GetMyCoursesPaginatedQuery,
+      GetMyCoursesFilteredQuery,
       Course[]
     >(
-      new GetMyCoursesPaginatedQuery({
+      new GetMyCoursesFilteredQuery({
         authorId: user.id,
-        pageSize: count,
-        page,
         with: {
           title,
           tags,

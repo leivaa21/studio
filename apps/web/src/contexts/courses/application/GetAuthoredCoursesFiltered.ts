@@ -1,16 +1,12 @@
 import { CourseInfoResponse } from '@studio/commons';
 import { internalApiClient } from '../../../lib/InternalApiClient';
 
-export async function getAuthoredCoursesPaginated(
+export async function getAuthoredCoursesFiltered(
   authorizationToken: string,
-  page: number,
-  pageSize: number,
   title: string,
   tags: string[]
 ): Promise<CourseInfoResponse[]> {
   const params = new Map([
-    ['page', page.toString()],
-    ['pageSize', pageSize.toString()],
     ['title', title],
     ['tags', tags.join(',')],
   ]);
