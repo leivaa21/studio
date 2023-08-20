@@ -76,7 +76,7 @@ describe('Mongo Course Repository', () => {
     });
 
     describe('By a matching criteria', () => {
-      it('with paginatedFromAuthorWithFilters criteria', async () => {
+      it('with fromAuthorWithFilters criteria', async () => {
         const authorId = AuthorId.random();
 
         const timestamp = new Date().getTime();
@@ -134,25 +134,23 @@ describe('Mongo Course Repository', () => {
           ].map((course) => createCourse(course))
         );
 
-        const criteria = CourseCriteria.paginatedFromAuthorWithFilters({
+        const criteria = CourseCriteria.fromAuthorWithFilters({
           authorId,
-          page: 0,
-          pageSize: 2,
           filters: { havingTags: ['Backend', 'Frontend'] },
         });
 
         const foundCourses = await repository.matching(criteria);
 
-        expect(foundCourses).toHaveLength(2);
+        expect(foundCourses).toHaveLength(3);
         expect(
           foundCourses.map((course) => course.toPrimitives())
         ).toStrictEqual(
-          [authoredCourse4, authoredCourse2].map((course) =>
+          [authoredCourse4, authoredCourse2, authoredCourse1].map((course) =>
             course.toPrimitives()
           )
         );
       });
-      it('with paginatedPublishedWithFilters criteria', async () => {
+      it('with publishedCoursesFiltered criteria', async () => {
         const timestamp = new Date().getTime();
 
         const publishedCourse1 = new CourseBuilder()
@@ -200,19 +198,17 @@ describe('Mongo Course Repository', () => {
           ].map((course) => createCourse(course))
         );
 
-        const criteria = CourseCriteria.paginatedPublishedWithFilters({
-          page: 0,
-          pageSize: 2,
+        const criteria = CourseCriteria.publishedCoursesFiltered({
           filters: { havingTags: ['Backend', 'Frontend'] },
         });
 
         const foundCourses = await repository.matching(criteria);
 
-        expect(foundCourses).toHaveLength(2);
+        expect(foundCourses).toHaveLength(3);
         expect(
           foundCourses.map((course) => course.toPrimitives())
         ).toStrictEqual(
-          [publishedCourse4, publishedCourse2].map((course) =>
+          [publishedCourse4, publishedCourse2, publishedCourse1].map((course) =>
             course.toPrimitives()
           )
         );
