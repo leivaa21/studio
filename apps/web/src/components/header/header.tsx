@@ -39,9 +39,16 @@ const Links: HeaderLinkType[] = [
 ];
 
 export function HeaderLink({ link }: { link: HeaderLinkType }) {
+  const router = useRouter();
+
   return (
     <div className={styles.dropdown}>
-      <Link href={link.href} className={styles['header-link']}>
+      <Link
+        href={link.href}
+        className={`${styles['header-link']} ${
+          router.route === link.href ? styles['header-link-active'] : undefined
+        }`}
+      >
         <li>{link.page}</li>
       </Link>
       <div className={styles['dropdown-content']}>

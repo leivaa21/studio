@@ -45,7 +45,7 @@
     transition: all .25s ease-in-out;
   }
 
-  &-link:hover {
+  &-link-active, &-link:hover {
     color: $primary;
   }
 
