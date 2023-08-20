@@ -1,18 +1,24 @@
+import { useErrorBoundary } from 'react-error-boundary';
 import { useRouter } from 'next/router';
-import { ChangeEvent, useEffect, useState } from 'react';
+import { ChangeEvent, Fragment, useCallback, useEffect, useState } from 'react';
 
 import Button from '@studio/ui/components/interactivity/cta/button';
 import { FormTextInput } from '@studio/ui/components/interactivity/form';
 import { ErrorMessage } from '@studio/ui/components/error/ErrorMessage';
-import { MAX_LESSON_TITLE_LENGTH, isLessonTitleValid } from '@studio/commons';
+import {
+  CourseInfoResponse,
+  LessonResponse,
+  MAX_LESSON_TITLE_LENGTH,
+  isLessonTitleValid,
+} from '@studio/commons';
 
 import styles from '../course.module.scss';
 
 import { getAuthTokenCookie } from '../../../../lib/cookieUtils';
 import { updateLesson } from '../../../../contexts/lessons/aplication/UpdateLesson';
-import { useCourse } from '../../../../hooks/course/useCourse';
-import { useLesson } from '../../../../hooks/course/useLesson';
 import { MarkdownEditor } from '../../../markdown/editor';
+import { getLessonById } from '../../../../contexts/lessons/aplication/GetLessonById';
+import { getCourseById } from '../../../../contexts/courses/application/GetCourseById';
 
 export interface NewLessonFormParams {
   courseId: string;
@@ -25,8 +31,8 @@ export default function EditLessonForm({
 }: NewLessonFormParams) {
   const router = useRouter();
 
-  const course = useCourse(courseId);
-  const lesson = useLesson(lessonId);
+  const [course, setCourse] = useState<CourseInfoResponse>();
+  const [lesson, setLesson] = useState<LessonResponse>();
 
   const [title, setTitle] = useState<string>('');
   const [content, setContent] = useState<string>(
@@ -34,12 +40,27 @@ export default function EditLessonForm({
   );
 
   const [errorMessage, setErrorMessage] = useState<string>('');
+  const { showBoundary } = useErrorBoundary();
+
+  const fetchData = useCallback(async () => {
+    if (!lessonId || !courseId) return;
+
+    try {
+      const lesson = await getLessonById(lessonId);
+      const course = await getCourseById(courseId);
+
+      setLesson(lesson);
+      setCourse(course);
+    } catch (err) {
+      showBoundary(err);
+    }
+  }, [lessonId, courseId, showBoundary]);
 
   useEffect(() => {
-    if (!lesson) return;
-    setTitle(lesson.title);
-    setContent(lesson.content);
-  }, [lesson]);
+    fetchData();
+  }, [fetchData]);
+
+  if (!course || !lesson) return <Fragment />;
 
   const handleTitleChange = (e: ChangeEvent<HTMLInputElement>) => {
     const { value } = e.currentTarget;
@@ -56,13 +77,10 @@ export default function EditLessonForm({
   };
 
   const onLessonSubmit = async () => {
-    if (!title || !content) return;
+    const token = getAuthTokenCookie();
+    if (!token || !title || !content) return;
 
-    await updateLesson(
-      { title, content },
-      lessonId,
-      getAuthTokenCookie() || ''
-    );
+    await updateLesson({ title, content }, lessonId, token);
 
     router.push(`/creator/course/${courseId}/lessons`);
   };

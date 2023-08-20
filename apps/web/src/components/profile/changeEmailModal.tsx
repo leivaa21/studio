@@ -1,5 +1,4 @@
 import { useState } from 'react';
-import { useRouter } from 'next/router';
 
 import { ErrorMessage } from '@studio/ui/components/error/ErrorMessage';
 import Button from '@studio/ui/components/interactivity/cta/button';
@@ -16,10 +15,10 @@ export interface ChangeEmailModalParams {
   isShown: boolean;
   closeFunciton: () => void;
   currentEmail: string;
+  fetchFunction: () => Promise<void>;
 }
 
 export function ChangeEmailModal(props: ChangeEmailModalParams) {
-  const router = useRouter();
   const [email, setEmail] = useState<string>(props.currentEmail);
   const [errorMessage, setErrorMessage] = useState<string>('');
 
@@ -35,8 +34,8 @@ export function ChangeEmailModal(props: ChangeEmailModalParams) {
 
     try {
       await changeEmail(request, token);
+      await props.fetchFunction();
       props.closeFunciton();
-      router.reload();
     } catch (err) {
       const errMessage = decodeError((err as { errorCode: string }).errorCode);
       setErrorMessage(errMessage);

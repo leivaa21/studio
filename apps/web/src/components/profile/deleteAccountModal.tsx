@@ -14,12 +14,12 @@ import { decodeError } from '../../lib/decodeError';
 import styles from './user.module.scss';
 import { deleteAccount } from '../../contexts/users/application/DeleteAccount';
 
-export interface ChangeNicknameModalParams {
+export interface DeleteAccountModalParams {
   isShown: boolean;
   closeFunciton: () => void;
 }
 
-export function DeleteAccountModal(props: ChangeNicknameModalParams) {
+export function DeleteAccountModal(props: DeleteAccountModalParams) {
   const router = useRouter();
   const [errorMessage, setErrorMessage] = useState<string>('');
 

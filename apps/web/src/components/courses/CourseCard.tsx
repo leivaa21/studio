@@ -1,7 +1,10 @@
+import { Fragment, useCallback, useEffect, useState } from 'react';
+import { useErrorBoundary } from 'react-error-boundary';
+
 import Button from '@studio/ui/components/interactivity/cta/button';
 
 import styles from './courses.module.scss';
-import { useCourseAuthor } from '../../hooks/course/useCourseAuthor';
+import { getUserNicknameById } from '../../contexts/users/application/getUserNicknameById';
 
 export interface CourseCardParams {
   course: { id: string; title: string; authorId: string; tags: string[] };
@@ -9,7 +12,25 @@ export interface CourseCardParams {
 }
 
 export function CourseCard({ key, course }: CourseCardParams) {
-  const author = useCourseAuthor(course.authorId);
+  const [author, setAuthor] = useState<{ nickname: string }>();
+  const { showBoundary } = useErrorBoundary();
+
+  const fetchData = useCallback(async () => {
+    if (!course) return;
+
+    try {
+      const author = await getUserNicknameById(course.authorId);
+      setAuthor(author);
+    } catch (err) {
+      showBoundary(err);
+    }
+  }, [course, showBoundary]);
+
+  useEffect(() => {
+    fetchData();
+  }, [fetchData]);
+
+  if (!author || !course) return <Fragment />;
 
   return (
     <div className={styles.courseCard} key={key}>

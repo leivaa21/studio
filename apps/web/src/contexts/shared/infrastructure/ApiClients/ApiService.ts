@@ -58,9 +58,22 @@ export abstract class ApiService {
         return responseJson;
       }
 
-      if (responseJson.apiStatus) {
+      console.log(responseJson);
+
+      if (
+        responseJson.status &&
+        responseJson.kind &&
+        responseJson.errorCode &&
+        responseJson.message
+      ) {
         // Then is a ApiError
-        throw new ApiError(responseJson);
+        const { status: apiStatus, kind, errorCode, message } = responseJson;
+        throw new ApiError({
+          apiStatus,
+          kind,
+          errorCode,
+          message,
+        });
       }
       throw new Error(responseJson.message);
     } catch (SomeError) {

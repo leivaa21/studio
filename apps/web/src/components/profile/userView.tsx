@@ -1,6 +1,5 @@
 import styles from './user.module.scss';
-import { useUserInfo } from '../../hooks/user/useUserInfo';
-import { Fragment, useState } from 'react';
+import { Fragment, useCallback, useEffect, useState } from 'react';
 import Image from 'next/image';
 import { BsPersonFill } from 'react-icons/bs';
 import { GetUserInfoResponse } from '@studio/commons';
@@ -10,17 +9,37 @@ import { ChangeNicknameModal } from './changeNicknameModal';
 import { ChangeEmailModal } from './changeEmailModal';
 import { ChangePasswordModal } from './changePasswordModal';
 import { DeleteAccountModal } from './deleteAccountModal';
+import { useErrorBoundary } from 'react-error-boundary';
+import { getUserInfoById } from '../../contexts/users/application/getUserInfoById';
 
 export interface UserProfileViewParams {
   userId: string;
 }
 
 export function UserProfileView({ userId }: UserProfileViewParams) {
-  const userInfo = useUserInfo(userId);
+  const [userInfo, setUserInfo] = useState<GetUserInfoResponse>();
+
+  const { showBoundary } = useErrorBoundary();
+
   const [changeNicknameModalShown, setChangeNicknameShown] =
     useState<boolean>(false);
   const [deleteAccountModalShown, setDeleteAccountModalShown] =
     useState<boolean>(false);
+
+  const fetchData = useCallback(async () => {
+    if (!userId) return;
+
+    try {
+      const userInfo = await getUserInfoById(userId);
+      setUserInfo(userInfo);
+    } catch (err) {
+      showBoundary(err);
+    }
+  }, [userId, showBoundary]);
+
+  useEffect(() => {
+    fetchData();
+  }, [fetchData]);
 
   if (!userInfo) return <Fragment />;
 
@@ -55,7 +74,7 @@ export function UserProfileView({ userId }: UserProfileViewParams) {
             </span>
           </div>
         </li>
-        <GenericUserCredentials userInfo={userInfo} />
+        <GenericUserCredentials userInfo={userInfo} fetchData={fetchData} />
       </ul>
       <div className={styles.userControls}>
         <Button
@@ -69,6 +88,7 @@ export function UserProfileView({ userId }: UserProfileViewParams) {
         isShown={changeNicknameModalShown}
         closeFunciton={() => setChangeNicknameShown(false)}
         currentNickname={userInfo.nickname}
+        fetchFunction={fetchData}
       />
       <DeleteAccountModal
         isShown={deleteAccountModalShown}
@@ -80,8 +100,10 @@ export function UserProfileView({ userId }: UserProfileViewParams) {
 
 function GenericUserCredentials({
   userInfo,
+  fetchData,
 }: {
   userInfo: GetUserInfoResponse;
+  fetchData: () => Promise<void>;
 }) {
   const [changeEmailModalShown, setChangeEmailModalShown] =
     useState<boolean>(false);
@@ -98,6 +120,7 @@ function GenericUserCredentials({
               isShown={changeEmailModalShown}
               closeFunciton={() => setChangeEmailModalShown(false)}
               currentEmail={userInfo.credentials.email}
+              fetchFunction={fetchData}
             />
             <ChangePasswordModal
               isShown={changePasswordModalShown}

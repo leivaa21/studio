@@ -1,3 +1,4 @@
+import { useErrorBoundary } from 'react-error-boundary';
 import { useRouter } from 'next/router';
 import { CourseSearcher } from '@studio/ui/components/search/coursesSearcher';
 
@@ -14,13 +15,19 @@ export default function AllCourses() {
   const router = useRouter();
   const [coursesShown, setCoursesShown] = useState<CourseInfoResponse[]>([]);
 
+  const { showBoundary } = useErrorBoundary();
+
   useEffect(() => {
     if (!getAuthTokenCookie()) router.push('/');
   }, [router]);
 
   const onFetch = async (title: string, tags: string[]) => {
-    const courses = await getPublishedCoursesPaginated(0, 25, title, tags);
-    setCoursesShown(courses);
+    try {
+      const courses = await getPublishedCoursesPaginated(0, 25, title, tags);
+      setCoursesShown(courses);
+    } catch (err) {
+      showBoundary(err);
+    }
   };
 
   return (

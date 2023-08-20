@@ -1,17 +1,22 @@
 import { useRouter } from 'next/router';
-import { ChangeEvent, useState } from 'react';
+import { ChangeEvent, Fragment, useCallback, useEffect, useState } from 'react';
+import { useErrorBoundary } from 'react-error-boundary';
 
 import Button from '@studio/ui/components/interactivity/cta/button';
 import { FormTextInput } from '@studio/ui/components/interactivity/form';
 import { ErrorMessage } from '@studio/ui/components/error/ErrorMessage';
-import { MAX_LESSON_TITLE_LENGTH, isLessonTitleValid } from '@studio/commons';
+import {
+  CourseInfoResponse,
+  MAX_LESSON_TITLE_LENGTH,
+  isLessonTitleValid,
+} from '@studio/commons';
 
 import styles from '../course.module.scss';
 
 import { createLesson } from '../../../../contexts/lessons/aplication/CreateLesson';
 import { getAuthTokenCookie } from '../../../../lib/cookieUtils';
-import { useCourse } from '../../../../hooks/course/useCourse';
 import { MarkdownEditor } from '../../../markdown/editor';
+import { getCourseById } from '../../../../contexts/courses/application/GetCourseById';
 
 export interface NewLessonFormParams {
   courseId: string;
@@ -19,7 +24,7 @@ export interface NewLessonFormParams {
 
 export default function NewLessonForm({ courseId }: NewLessonFormParams) {
   const router = useRouter();
-  const course = useCourse(courseId);
+  const [course, setCourse] = useState<CourseInfoResponse>();
 
   const [title, setTitle] = useState<string>('');
   const [content, setContent] = useState<string>(
@@ -27,6 +32,25 @@ export default function NewLessonForm({ courseId }: NewLessonFormParams) {
   );
 
   const [errorMessage, setErrorMessage] = useState<string>('');
+  const { showBoundary } = useErrorBoundary();
+
+  const fetchData = useCallback(async () => {
+    if (!courseId) return;
+
+    try {
+      const course = await getCourseById(courseId);
+
+      setCourse(course);
+    } catch (err) {
+      showBoundary(err);
+    }
+  }, [courseId, showBoundary]);
+
+  useEffect(() => {
+    fetchData();
+  }, [fetchData]);
+
+  if (!course) return <Fragment />;
 
   const handleTitleChange = (e: ChangeEvent<HTMLInputElement>) => {
     const { value } = e.currentTarget;
@@ -55,7 +79,7 @@ export default function NewLessonForm({ courseId }: NewLessonFormParams) {
 
   return (
     <div className={styles.newLessonForm}>
-      <h2>New Lesson for {course?.title}</h2>
+      <h2>New Lesson for {course.title}</h2>
       <ErrorMessage message={errorMessage} />
       <FormTextInput
         id="lesson-title-input"

@@ -1,5 +1,5 @@
-import { useRouter } from 'next/router';
-import { ChangeEvent, useEffect, useState } from 'react';
+import { useErrorBoundary } from 'react-error-boundary';
+import { ChangeEvent, Fragment, useCallback, useEffect, useState } from 'react';
 
 import Button from '@studio/ui/components/interactivity/cta/button';
 import { Modal } from '@studio/ui/components/modal';
@@ -8,6 +8,7 @@ import {
   FormTextInput,
 } from '@studio/ui/components/interactivity/form';
 import {
+  CourseInfoResponse,
   CourseTagsRecord,
   MAX_COURSE_TITLE_LENGTH,
   MAX_TAGS_COUNT,
@@ -24,25 +25,17 @@ import { getAuthTokenCookie } from '../../../lib/cookieUtils';
 import { updateCourseTags } from '../../../contexts/courses/application/UpdateCourseTags';
 import { publishCourse } from '../../../contexts/courses/application/PublishCourse';
 import { unpublishCourse } from '../../../contexts/courses/application/UnpublishCourse';
-import { useCourse } from '../../../hooks/course/useCourse';
 import { MarkdownRenderer } from '../../markdown/renderer';
 import { MarkdownEditor } from '../../markdown/editor';
 import { formatDate } from '../../../utils/formatDate';
+import { getCourseById } from '../../../contexts/courses/application/GetCourseById';
 
 export interface CreatorCoursePreviewParams {
   courseId: string;
 }
 
 export function CreatorCoursePreview({ courseId }: CreatorCoursePreviewParams) {
-  const router = useRouter();
-
-  const course = useCourse(courseId);
-
-  const [title, setTitle] = useState<string>();
-  const [tags, setTags] = useState<string[]>([]);
-  const [description, setDescription] = useState<string>();
-  const [isPublished, setIsPublished] = useState<boolean>();
-  const [publishedAt, setPublishedAt] = useState<Date | null>();
+  const [course, setCourse] = useState<CourseInfoResponse>();
 
   const [renameModalShown, setRenameModalShown] = useState<boolean>(false);
   const [newTitle, setNewTitle] = useState<string>();
@@ -58,19 +51,28 @@ export function CreatorCoursePreview({ courseId }: CreatorCoursePreviewParams) {
   const [publishModalShown, setPublishModalShown] = useState<boolean>(false);
 
   const [errorMessage, setErrorMessage] = useState<string>('');
+  const { showBoundary } = useErrorBoundary();
+
+  const fetchData = useCallback(async () => {
+    if (!courseId) return;
+
+    try {
+      const course = await getCourseById(courseId);
+      setCourse(course);
+
+      setNewTitle(course.title);
+      setNewTags(course.tags);
+      setNewDescription(course.description);
+    } catch (err) {
+      showBoundary(err);
+    }
+  }, [courseId, showBoundary]);
 
   useEffect(() => {
-    if (!course) return;
+    fetchData();
+  }, [fetchData]);
 
-    setTitle(course.title);
-    setNewTitle(course.title);
-    setTags(course.tags);
-    setNewTags(course.tags);
-    setDescription(course.description);
-    setNewDescription(course.description);
-    setIsPublished(course.isPublished);
-    setPublishedAt(course.publishedAt);
-  }, [course]);
+  if (!course) return <Fragment />;
 
   const handleTitleChange = (e: ChangeEvent<HTMLInputElement>) => {
     const { value } = e.currentTarget;
@@ -98,7 +100,7 @@ export function CreatorCoursePreview({ courseId }: CreatorCoursePreviewParams) {
   };
 
   const onSubmitRenameCourse = async () => {
-    if (newTitle === title || !newTitle) {
+    if (newTitle === course.title || !newTitle) {
       setRenameModalShown(false);
       return;
     }
@@ -108,11 +110,12 @@ export function CreatorCoursePreview({ courseId }: CreatorCoursePreviewParams) {
       courseId,
       getAuthTokenCookie() || ''
     );
-    router.reload();
+    await fetchData();
+    setRenameModalShown(false);
   };
 
   const onSubmitUpdateDescription = async () => {
-    if (newDescription === description || !newDescription) {
+    if (newDescription === course.description || !newDescription) {
       setUpdateDescriptionModalShown(false);
       return;
     }
@@ -122,7 +125,8 @@ export function CreatorCoursePreview({ courseId }: CreatorCoursePreviewParams) {
       courseId,
       getAuthTokenCookie() || ''
     );
-    router.reload();
+    await fetchData();
+    setUpdateDescriptionModalShown(false);
   };
 
   const onSubmitUpdateTags = async () => {
@@ -136,24 +140,27 @@ export function CreatorCoursePreview({ courseId }: CreatorCoursePreviewParams) {
       courseId,
       getAuthTokenCookie() || ''
     );
-    router.reload();
+    await fetchData();
+    setUpdateTagsModalShown(false);
   };
 
   const onSubmitPublish = async () => {
     await publishCourse(courseId, getAuthTokenCookie() || '');
-    router.reload();
+    await fetchData();
+    setPublishModalShown(false);
   };
 
   const onSubmitUnpublish = async () => {
     await unpublishCourse(courseId, getAuthTokenCookie() || '');
-    router.reload();
+    await fetchData();
+    setPublishModalShown(false);
   };
 
   return (
     <div className={styles.coursePreview}>
       <div className={styles.propertyRow}>
         <h4 className={styles.propertyName}>Title</h4>
-        <span className={styles.propertyValue}>{title}</span>
+        <span className={styles.propertyValue}>{course.title}</span>
         <div className={styles.propertyControls}>
           <Button
             Type="Primary"
@@ -183,7 +190,7 @@ export function CreatorCoursePreview({ courseId }: CreatorCoursePreviewParams) {
       <div className={`${styles.propertyRow} ${styles.tagsSection}`}>
         <h4 className={styles.propertyName}>Tags</h4>
         <ul className={`${styles.tags} ${styles.propertyValue}`}>
-          {tags.map((tag) => (
+          {course.tags.map((tag) => (
             <li className={styles.tag} key={`Course<${courseId}>${tag}`}>
               {tag}
             </li>
@@ -201,15 +208,15 @@ export function CreatorCoursePreview({ courseId }: CreatorCoursePreviewParams) {
       <div className={styles.propertyRow}>
         <h4 className={styles.propertyName}>Published</h4>
         <p className={styles.propertyValue}>
-          {publishedAt
-            ? formatDate(new Date(publishedAt))
+          {course.publishedAt
+            ? formatDate(new Date(course.publishedAt))
             : 'Not published yet'}
         </p>
         <div className={styles.propertyControls}>
           <Button
-            Type={isPublished ? 'Cancel' : 'Primary'}
+            Type={course.isPublished ? 'Cancel' : 'Primary'}
             Size="Small"
-            Label={isPublished ? 'Unpublish' : 'Publish'}
+            Label={course.isPublished ? 'Unpublish' : 'Publish'}
             onClick={() => setPublishModalShown(true)}
           />
         </div>
@@ -220,7 +227,7 @@ export function CreatorCoursePreview({ courseId }: CreatorCoursePreviewParams) {
         closeFunction={() => {
           setErrorMessage('');
           setRenameModalShown(false);
-          setNewTitle(title);
+          setNewTitle(course.title);
         }}
       >
         <div className={styles.modifyCourseModal}>
@@ -245,7 +252,7 @@ export function CreatorCoursePreview({ courseId }: CreatorCoursePreviewParams) {
         title={`Update course description`}
         closeFunction={() => {
           setUpdateDescriptionModalShown(false);
-          setNewDescription(description);
+          setNewDescription(course.description);
         }}
       >
         <div className={styles.modifyCourseModal}>
@@ -253,8 +260,8 @@ export function CreatorCoursePreview({ courseId }: CreatorCoursePreviewParams) {
             <span className={styles.label}>Description</span>
             <MarkdownEditor
               className={styles.markdownEditor}
-              value={description}
-              onChange={(e) => setDescription(e || '')}
+              value={course.description}
+              onChange={(e) => setNewDescription(e || '')}
               enableScroll
             />
           </div>
@@ -272,7 +279,7 @@ export function CreatorCoursePreview({ courseId }: CreatorCoursePreviewParams) {
         closeFunction={() => {
           setUpdateTagsModalShown(false);
           setErrorMessage('');
-          setNewTags(tags);
+          setNewTags(course.tags);
         }}
       >
         <div className={styles.modifyCourseModal}>
@@ -294,17 +301,17 @@ export function CreatorCoursePreview({ courseId }: CreatorCoursePreviewParams) {
       </Modal>
       <Modal
         isShown={publishModalShown}
-        title={isPublished ? 'Unpublish course' : 'Publish course'}
+        title={course.isPublished ? 'Unpublish course' : 'Publish course'}
         closeFunction={() => {
           setPublishModalShown(false);
         }}
       >
         <div className={styles.modifyCourseModal}>
           <Button
-            Type={isPublished ? 'Cancel' : 'Primary'}
+            Type={course.isPublished ? 'Cancel' : 'Primary'}
             Size="Small"
-            Label={isPublished ? 'Unpublish' : 'Publish'}
-            onClick={isPublished ? onSubmitUnpublish : onSubmitPublish}
+            Label={course.isPublished ? 'Unpublish' : 'Publish'}
+            onClick={course.isPublished ? onSubmitUnpublish : onSubmitPublish}
           />
         </div>
       </Modal>
