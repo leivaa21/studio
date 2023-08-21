@@ -48,7 +48,7 @@ export const AuthorStatsSchema = new Schema(
       default: 0,
     },
   },
-  { versionKey: false, timestamps: false, _id: false }
+  { versionKey: false, timestamps: false }
 );
 
 const AuthorStatsModel = mongoose.model('AuthorStats', AuthorStatsSchema);
