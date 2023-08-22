@@ -9,6 +9,7 @@ import { CourseCriteria } from '../../../domain/criteria/CourseCriteria';
 import { MongoCriteriaConverter } from '../../../../shared/infrastructure/mongo/MongoCriteriaConverter';
 import { Nullable } from '../../../../shared/domain/Nullable';
 import { CourseId } from '../../../domain/CourseId';
+import { AuthorId } from '../../../domain/AuthorId';
 
 @Injectable({ dependencies: [CourseSchemaFactory, MongoCriteriaConverter] })
 export class MongoCourseRepository
@@ -51,8 +52,19 @@ export class MongoCourseRepository
       : null;
   }
 
+  public async findByAuthor(authorId: AuthorId): Promise<Course[]> {
+    const documents = await this.model().find({ authorId: authorId.value });
+    return documents.map((document) =>
+      this.entitySchemaFactory.createEntityFromSchema(document)
+    );
+  }
+
   public async update(course: Course): Promise<void> {
     const document = this.entitySchemaFactory.createSchemaFromEntity(course);
     await this.model().findByIdAndUpdate(document._id, document);
+  }
+
+  public async deleteByAuthor(authorId: AuthorId): Promise<void> {
+    await this.model().deleteMany({ authorId: authorId.value });
   }
 }
