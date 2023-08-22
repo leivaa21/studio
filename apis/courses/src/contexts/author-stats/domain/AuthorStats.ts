@@ -79,6 +79,11 @@ export class AuthorStats extends AggregateRoot {
     this._currentCourses = this._currentCourses.increase();
   }
 
+  public increaseLessonsCreated() {
+    this._lessonsCreated = this._lessonsCreated.increase();
+    this._currentLessons = this._currentLessons.increase();
+  }
+
   static fromPrimitives(primitives: AuthorStatsPrimitives): AuthorStats {
     return new AuthorStats({
       authorId: AuthorId.of(primitives.authorId),
