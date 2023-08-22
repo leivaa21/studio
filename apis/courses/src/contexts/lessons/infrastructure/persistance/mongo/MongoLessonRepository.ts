@@ -52,4 +52,8 @@ export class MongoLessonRepository
   public async deleteById(lessonId: LessonId): Promise<void> {
     await this.model().findByIdAndDelete(lessonId.value);
   }
+
+  public async deleteByCourse(courseId: CourseId): Promise<void> {
+    await this.model().deleteMany({ courseId: courseId.value });
+  }
 }

@@ -19,6 +19,13 @@ export const env = {
     url: getEnvVariableOrThrow('WEB_URL'),
     api_url: `${getEnvVariableOrThrow('WEB_URL')}/api`,
   },
+  courses: {
+    url: getEnvVariableOrThrow('COURSES_URL'),
+  },
+  internal: {
+    secret: getEnvVariableOrThrow('INTERNAL_SECRET'),
+    password: getEnvVariableOrThrow('INTERNAL_PASSWORD'),
+  },
   jwt: {
     secret: getEnvVariableOrThrow('JWT_SECRET'),
   },

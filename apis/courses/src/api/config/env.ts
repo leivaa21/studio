@@ -25,4 +25,14 @@ export const env = {
   jwt: {
     secret: getEnvVariableOrDefault<string>('JWT_SECRET', 'jwt-secret'),
   },
+  internal: {
+    secret: getEnvVariableOrDefault<string>(
+      'INTERNAL_SECRET',
+      'internal-secret'
+    ),
+    password: getEnvVariableOrDefault<string>(
+      'INTERNAL_PASSWORD',
+      'internal-password'
+    ),
+  },
 };

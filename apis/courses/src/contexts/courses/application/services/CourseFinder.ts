@@ -79,4 +79,8 @@ export class CourseFinder {
 
     return course;
   }
+
+  public async findByAuthor(authorId: AuthorId): Promise<Array<Course>> {
+    return this.repository.findByAuthor(authorId);
+  }
 }
