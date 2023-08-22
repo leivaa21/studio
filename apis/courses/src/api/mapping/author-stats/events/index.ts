@@ -10,6 +10,8 @@ import { LessonWasDeletedEvent } from '../../../../contexts/lessons/domain/event
 import { DecreaseLessonCounterOnLessonDeletedHandler } from '../../../../contexts/author-stats/application/events/DecreaseLessonCounterOnLessonDeleted';
 import { CourseWasPublishedEvent } from '../../../../contexts/courses/domain/events/CourseWasPublished';
 import { IncreaseCoursePublishedCounterOnCoursePublishedHandler } from '../../../../contexts/author-stats/application/events/IncreaseCoursePublishedCounterOnCoursePublished';
+import { CourseWasUnpublishedEvent } from '../../../../contexts/courses/domain/events/CourseWasUnpublished';
+import { DecreaseCoursePublishedCounterOnCourseUnpublishedHandler } from '../../../../contexts/author-stats/application/events/DecreaseCoursePublishedCounterOnCourseUnpublished';
 
 const eventBus = DependencyContainer.get<EventBus>(InMemoryAsyncEventBus);
 
@@ -29,9 +31,15 @@ const increaseCoursePublishedCounterOnCoursePublished = DependencyContainer.get<
   DomainEventSubscriber<CourseWasPublishedEvent>
 >(IncreaseCoursePublishedCounterOnCoursePublishedHandler);
 
+const decreaseCoursePublishedCounterOnCourseUnpublished =
+  DependencyContainer.get<DomainEventSubscriber<CourseWasUnpublishedEvent>>(
+    DecreaseCoursePublishedCounterOnCourseUnpublishedHandler
+  );
+
 eventBus.addSubscribers([
   increaseCourseCounterOnCourseCreated,
   increaseLessonsCounterOnLessonCreated,
   decreaseLessonsCounterOnLessonDeleted,
   increaseCoursePublishedCounterOnCoursePublished,
+  decreaseCoursePublishedCounterOnCourseUnpublished,
 ]);
