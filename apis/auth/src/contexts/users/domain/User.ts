@@ -24,7 +24,6 @@ interface UserArgs {
   id: UserId;
   nickname: UserNickname;
   credentials: PossibleUserCredentials;
-  verified: boolean;
   createdAt: Date;
   updatedAt: Date;
 }
@@ -33,7 +32,6 @@ interface UserAsPrimitives {
   id: string;
   nickname: string;
   credentials: PossibleUserCredentialsAsPrimitives;
-  verified: boolean;
   createdAt: Date;
   updatedAt: Date;
 }
@@ -42,17 +40,15 @@ export class User extends AggregateRoot {
   private readonly _id: UserId;
   private _nickname: UserNickname;
   private readonly _credentials: PossibleUserCredentials;
-  private _verified: boolean;
   private readonly _createdAt: Date;
   private _updatedAt: Date;
 
   public constructor(args: UserArgs) {
     super();
-    const { id, nickname, credentials, verified, createdAt, updatedAt } = args;
+    const { id, nickname, credentials, createdAt, updatedAt } = args;
     this._id = id;
     this._nickname = nickname;
     this._credentials = credentials;
-    this._verified = verified;
     this._createdAt = createdAt;
     this._updatedAt = updatedAt;
   }
@@ -75,7 +71,6 @@ export class User extends AggregateRoot {
       id: userId,
       nickname,
       credentials,
-      verified: false,
       createdAt: new Date(),
       updatedAt: new Date(),
     });
@@ -103,7 +98,6 @@ export class User extends AggregateRoot {
       id: userId,
       nickname,
       credentials,
-      verified: false,
       createdAt: new Date(),
       updatedAt: new Date(),
     });
@@ -131,7 +125,6 @@ export class User extends AggregateRoot {
       id: userId,
       nickname,
       credentials,
-      verified: false,
       createdAt: new Date(),
       updatedAt: new Date(),
     });
@@ -239,7 +232,6 @@ export class User extends AggregateRoot {
           ? UserNickname.fromEmail(args.nickname)
           : UserNickname.of(args.nickname),
       credentials,
-      verified: args.verified,
       createdAt: args.createdAt,
       updatedAt: args.updatedAt,
     });
@@ -249,22 +241,15 @@ export class User extends AggregateRoot {
       id: this._id.value,
       nickname: this._nickname.value,
       credentials: this._credentials.toPrimitives(),
-      verified: this._verified,
       createdAt: this._createdAt,
       updatedAt: this._updatedAt,
     };
   }
 
-  public verify(): void {
-    if (!this._verified) {
-      this._verified = true;
-      this._updatedAt = new Date();
-    }
-  }
-
   get id(): UserId {
     return this._id;
   }
+
   get nickname(): UserNickname {
     return this._nickname;
   }
@@ -277,9 +262,7 @@ export class User extends AggregateRoot {
   get credentials(): PossibleUserCredentials {
     return this._credentials;
   }
-  get isVerified(): boolean {
-    return this._verified;
-  }
+
   get createdAt(): Date {
     return this._createdAt;
   }

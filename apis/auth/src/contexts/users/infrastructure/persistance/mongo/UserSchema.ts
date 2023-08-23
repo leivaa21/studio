@@ -33,10 +33,6 @@ export const UserSchema = new Schema(
       type: UserCredentialsSchema,
       required: true,
     },
-    verified: {
-      type: Boolean,
-      required: true,
-    },
     createdAt: {
       type: Date,
       required: true,
