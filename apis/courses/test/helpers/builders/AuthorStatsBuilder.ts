@@ -31,7 +31,7 @@ export class AuthorStatsBuilder implements Builder<AuthorStats> {
   }
 
   withLessonsCreated(stat: AuthorStatNumber): AuthorStatsBuilder {
-    this.coursesPublished = stat;
+    this.lessonsCreated = stat;
     return this;
   }
 
