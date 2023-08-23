@@ -6,12 +6,14 @@ import {
   initializeMongoContainer,
 } from '../../helpers/test-containers/mongo';
 import { CourseBuilder } from '../../helpers/builders/CourseBuilder';
+import { AuthorStatsBuilder } from '../../helpers/builders/AuthorStatsBuilder';
 import { app } from '../../../src/api/app';
 import { AuthorizationTokenBuilder } from '../../helpers/builders/AuthorizationTokenBuilder';
 import {
   createCourse,
   findCourseById,
 } from '../../helpers/persistance/mongo/courses';
+import { createAuthorStats } from '../../helpers/persistance/mongo/author-stats';
 import { ErrorCodes } from '@studio/commons';
 import { AuthorId } from '../../../src/contexts/courses/domain/AuthorId';
 
@@ -32,7 +34,12 @@ afterAll(async () => {
 describe(`PUT ${route}`, () => {
   it('should publish an existant course', async () => {
     const course = new CourseBuilder().build();
+    const authorStats = new AuthorStatsBuilder()
+      .withAuthorId(course.authorId)
+      .build();
+
     await createCourse(course);
+    await createAuthorStats(authorStats);
 
     await request(app)
       .put(formatedRoute(course.id.value))

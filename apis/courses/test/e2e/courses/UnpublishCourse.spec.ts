@@ -14,6 +14,9 @@ import {
 } from '../../helpers/persistance/mongo/courses';
 import { ErrorCodes } from '@studio/commons';
 import { AuthorId } from '../../../src/contexts/courses/domain/AuthorId';
+import { AuthorStatsBuilder } from '../../helpers/builders/AuthorStatsBuilder';
+import { createAuthorStats } from '../../helpers/persistance/mongo/author-stats';
+import { AuthorStatNumber } from '../../../src/contexts/author-stats/domain/AuthorStatNumber';
 
 let mongoContainer: StartedTestContainer;
 const route = '/course/:id/unpublish';
@@ -32,7 +35,13 @@ afterAll(async () => {
 describe(`PUT ${route}`, () => {
   it('should unpublish an existant published course', async () => {
     const course = new CourseBuilder().withPublishedAt(new Date()).build();
+    const authorStats = new AuthorStatsBuilder()
+      .withAuthorId(course.authorId)
+      .withCoursesPublished(AuthorStatNumber.of(1))
+      .build();
+
     await createCourse(course);
+    await createAuthorStats(authorStats);
 
     await request(app)
       .put(formatedRoute(course.id.value))
