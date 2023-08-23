@@ -15,6 +15,9 @@ import {
   createLesson,
   findLessonById,
 } from '../../helpers/persistance/mongo/lessons';
+import { AuthorStatsBuilder } from '../../helpers/builders/AuthorStatsBuilder';
+import { createAuthorStats } from '../../helpers/persistance/mongo/author-stats';
+import { AuthorStatNumber } from '../../../src/contexts/author-stats/domain/AuthorStatNumber';
 
 let mongoContainer: StartedTestContainer;
 const route = '/lesson/:id';
@@ -34,9 +37,14 @@ describe(`DELETE ${route}`, () => {
   it('should let delete an existant lesson', async () => {
     const course = new CourseBuilder().build();
     const lesson = new LessonBuilder().withCourseId(course.id).build();
+    const authorStats = new AuthorStatsBuilder()
+      .withAuthorId(course.authorId)
+      .withLessonsCreated(AuthorStatNumber.of(1))
+      .build();
 
     await createCourse(course);
     await createLesson(lesson);
+    await createAuthorStats(authorStats);
 
     await request(app)
       .delete(formatedRoute(lesson.id.value))

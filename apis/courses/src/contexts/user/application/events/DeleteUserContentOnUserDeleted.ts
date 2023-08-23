@@ -12,12 +12,15 @@ import { LessonRepository } from '../../../lessons/domain/LessonRepository';
 import { MongoCourseRepository } from '../../../courses/infrastructure/persistance/mongo/MongoCourseRepository';
 import { MongoLessonRepository } from '../../../lessons/infrastructure/persistance/mongo/MongoLessonRepository';
 import { MongoCourseSubscriptionRepository } from '../../../course-subscriptions/infrastructure/persistance/mongo/MongoCourseSubscriptionRepository';
+import { MongoAuthorStatsRepository } from '../../../author-stats/infrastructure/persistance/mongo/MongoAuthorStatsRepository';
+import { AuthorStatsRepository } from '../../../author-stats/domain/AuthorStatsRepository';
 
 @Injectable({
   dependencies: [
     MongoCourseRepository,
     MongoLessonRepository,
     MongoCourseSubscriptionRepository,
+    MongoAuthorStatsRepository,
     InMemoryAsyncEventBus,
   ],
 })
@@ -28,6 +31,7 @@ export class DeleteUserContentOnUserDeletedHandler extends EventHandler<UserWasD
     private readonly courseRepository: CourseRepository,
     private readonly lessonRepository: LessonRepository,
     private readonly courseSubscriptionRepository: CourseSubscriptionRepository,
+    private readonly authorStatsRepository: AuthorStatsRepository,
     eventBus?: EventBus
   ) {
     super(eventBus);
@@ -49,5 +53,6 @@ export class DeleteUserContentOnUserDeletedHandler extends EventHandler<UserWasD
 
     void this.courseRepository.deleteByAuthor(userId);
     void this.courseSubscriptionRepository.removeByUser(userId);
+    void this.authorStatsRepository.delete(userId);
   }
 }

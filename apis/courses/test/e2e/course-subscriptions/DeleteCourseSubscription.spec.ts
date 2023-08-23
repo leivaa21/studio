@@ -13,6 +13,11 @@ import {
   findCourseSubscriptionsByUserId,
 } from '../../helpers/persistance/mongo/course-subscriptions';
 import { CourseSubscriptionBuilder } from '../../helpers/builders/CourseSubscriptionBuilder';
+import { AuthorStatsBuilder } from '../../helpers/builders/AuthorStatsBuilder';
+import { CourseBuilder } from '../../helpers/builders/CourseBuilder';
+import { createAuthorStats } from '../../helpers/persistance/mongo/author-stats';
+import { createCourse } from '../../helpers/persistance/mongo/courses';
+import { AuthorStatNumber } from '../../../src/contexts/author-stats/domain/AuthorStatNumber';
 
 let mongoContainer: StartedTestContainer;
 const route = '/course-subscription/:id';
@@ -30,8 +35,17 @@ afterAll(async () => {
 
 describe(`DELETE ${route}`, () => {
   it('should let delete an existant course subscription', async () => {
-    const courseSubscription = new CourseSubscriptionBuilder().build();
+    const course = new CourseBuilder().build();
+    const courseSubscription = new CourseSubscriptionBuilder()
+      .withCourseId(course.id)
+      .build();
+    const authorStats = new AuthorStatsBuilder()
+      .withAuthorId(course.authorId)
+      .withSubscriptionsToOwnCourses(AuthorStatNumber.of(1))
+      .build();
 
+    await createCourse(course);
+    await createAuthorStats(authorStats);
     await createCourseSubscription(courseSubscription);
 
     await request(app)

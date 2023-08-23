@@ -9,7 +9,7 @@ export class AuthorStatNumber extends ValueObject<number> {
     return new AuthorStatNumber(value);
   }
 
-  public reduce(): AuthorStatNumber {
+  public decrease(): AuthorStatNumber {
     return AuthorStatNumber.of(this.value - 1);
   }
 

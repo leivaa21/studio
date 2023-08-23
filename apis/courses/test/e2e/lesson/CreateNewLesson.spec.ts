@@ -12,6 +12,8 @@ import { AuthorizationTokenBuilder } from '../../helpers/builders/AuthorizationT
 import { createCourse } from '../../helpers/persistance/mongo/courses';
 import { ErrorCodes } from '@studio/commons';
 import { findLessonsByCourseId } from '../../helpers/persistance/mongo/lessons';
+import { AuthorStatsBuilder } from '../../helpers/builders/AuthorStatsBuilder';
+import { createAuthorStats } from '../../helpers/persistance/mongo/author-stats';
 
 let mongoContainer: StartedTestContainer;
 const route = '/lessons';
@@ -29,9 +31,14 @@ afterAll(async () => {
 describe(`POST ${route}`, () => {
   it('should let create a new lesson', async () => {
     const course = new CourseBuilder().build();
-    const { title, content } = new LessonBuilder().build();
+    const authorStats = new AuthorStatsBuilder()
+      .withAuthorId(course.authorId)
+      .build();
 
+    await createAuthorStats(authorStats);
     await createCourse(course);
+
+    const { title, content } = new LessonBuilder().build();
 
     const body = {
       courseId: course.id.value,

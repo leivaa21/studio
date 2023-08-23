@@ -12,6 +12,8 @@ import { createCourse } from '../../helpers/persistance/mongo/courses';
 import { ErrorCodes } from '@studio/commons';
 import { UserId } from '../../../src/contexts/course-subscriptions/domain/UserId';
 import { findCourseSubscriptionsByUserId } from '../../helpers/persistance/mongo/course-subscriptions';
+import { AuthorStatsBuilder } from '../../helpers/builders/AuthorStatsBuilder';
+import { createAuthorStats } from '../../helpers/persistance/mongo/author-stats';
 
 let mongoContainer: StartedTestContainer;
 const route = '/course-subscriptions';
@@ -30,7 +32,11 @@ describe(`POST ${route}`, () => {
   it('should let create a course subscription', async () => {
     const course = new CourseBuilder().withPublishedAt(new Date()).build();
     const userId = UserId.random();
+    const authorStats = new AuthorStatsBuilder()
+      .withAuthorId(course.authorId)
+      .build();
 
+    await createAuthorStats(authorStats);
     await createCourse(course);
 
     const body = {

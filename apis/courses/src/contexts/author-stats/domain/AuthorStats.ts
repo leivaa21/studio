@@ -79,6 +79,36 @@ export class AuthorStats extends AggregateRoot {
     this._currentCourses = this._currentCourses.increase();
   }
 
+  public increaseLessonsCreated() {
+    this._lessonsCreated = this._lessonsCreated.increase();
+    this._currentLessons = this._currentLessons.increase();
+  }
+
+  public decreaseCurrentLessons() {
+    this._currentLessons = this._currentLessons.decrease();
+  }
+
+  public increaseCoursesPublished() {
+    this._coursesPublished = this._coursesPublished.increase();
+    this._currentCoursesPublished = this._currentCoursesPublished.increase();
+  }
+
+  public decreaseCurrentCoursesPublished() {
+    this._currentCoursesPublished = this._currentCoursesPublished.decrease();
+  }
+
+  public increaseCourseSubscriptionsForOwnCourses() {
+    this._subscriptionsToOwnCourses =
+      this._subscriptionsToOwnCourses.increase();
+    this._currentSubscriptionsToOwnCourses =
+      this._currentSubscriptionsToOwnCourses.increase();
+  }
+
+  public decreaseCurrentCourseSubscriptionsForOwnCourses() {
+    this._currentSubscriptionsToOwnCourses =
+      this._currentSubscriptionsToOwnCourses.decrease();
+  }
+
   static fromPrimitives(primitives: AuthorStatsPrimitives): AuthorStats {
     return new AuthorStats({
       authorId: AuthorId.of(primitives.authorId),
