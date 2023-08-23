@@ -39,7 +39,6 @@ export class UserBuilder implements Builder<User> {
           email: EmailMother.random(),
           password: UserPassword.new(generateValidPassword()),
         }),
-      verified: false,
       createdAt: createdAt,
       updatedAt: createdAt,
     });

@@ -74,7 +74,6 @@ export class UserSchemaFactory implements EntitySchemaFactory<UserData, User> {
       id: schema._id,
       nickname: schema.nickname,
       credentials,
-      verified: schema.verified,
       createdAt: schema.createdAt,
       updatedAt: schema.updatedAt,
     });
