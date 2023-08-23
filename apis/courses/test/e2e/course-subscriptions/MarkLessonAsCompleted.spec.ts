@@ -15,6 +15,8 @@ import {
 import { createLesson } from '../../helpers/persistance/mongo/lessons';
 import { CourseSubscriptionBuilder } from '../../helpers/builders/CourseSubscriptionBuilder';
 import { LessonBuilder } from '../../helpers/builders/LessonBuilder';
+import { ConsumerStatsBuilder } from '../../helpers/builders/ConsumerStatsBuilder';
+import { createConsumerStats } from '../../helpers/persistance/mongo/consumer-stats';
 
 let mongoContainer: StartedTestContainer;
 const route = '/course-subscription/complete-lesson/:lessonId';
@@ -37,9 +39,13 @@ describe(`PUT ${route}`, () => {
     const courseSubscription = new CourseSubscriptionBuilder()
       .withCourseId(lesson.courseId)
       .build();
+    const consumerStats = new ConsumerStatsBuilder()
+      .withUserId(courseSubscription.userId)
+      .build();
 
     await createCourseSubscription(courseSubscription);
     await createLesson(lesson);
+    await createConsumerStats(consumerStats);
 
     await request(app)
       .put(formatedRoute(lesson.id.value))

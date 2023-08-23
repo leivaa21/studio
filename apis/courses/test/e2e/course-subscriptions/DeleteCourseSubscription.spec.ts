@@ -18,6 +18,9 @@ import { CourseBuilder } from '../../helpers/builders/CourseBuilder';
 import { createAuthorStats } from '../../helpers/persistance/mongo/author-stats';
 import { createCourse } from '../../helpers/persistance/mongo/courses';
 import { AuthorStatNumber } from '../../../src/contexts/author-stats/domain/AuthorStatNumber';
+import { ConsumerStatsBuilder } from '../../helpers/builders/ConsumerStatsBuilder';
+import { createConsumerStats } from '../../helpers/persistance/mongo/consumer-stats';
+import { ConsumerStatNumber } from '../../../src/contexts/consumer-stats/domain/ConsumerStatNumber';
 
 let mongoContainer: StartedTestContainer;
 const route = '/course-subscription/:id';
@@ -44,9 +47,15 @@ describe(`DELETE ${route}`, () => {
       .withSubscriptionsToOwnCourses(AuthorStatNumber.of(1))
       .build();
 
+    const consumerStats = new ConsumerStatsBuilder()
+      .withUserId(courseSubscription.userId)
+      .withSubcribedCourses(ConsumerStatNumber.of(1))
+      .build();
+
     await createCourse(course);
     await createAuthorStats(authorStats);
     await createCourseSubscription(courseSubscription);
+    await createConsumerStats(consumerStats);
 
     await request(app)
       .delete(formatedRoute(courseSubscription.id.value))
