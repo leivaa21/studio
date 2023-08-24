@@ -68,6 +68,14 @@ export class ConsumerStats extends AggregateRoot {
     this._currentCompletedCourses = this._currentCompletedCourses.decrease();
   }
 
+  get currentSubscribedCourses() {
+    return this._currentSubscribedCourses;
+  }
+
+  get currentCompletedCourses() {
+    return this._currentCompletedCourses;
+  }
+
   static fromPrimitives(primitives: ConsumerStatsPrimitives): ConsumerStats {
     return new ConsumerStats({
       userId: UserId.of(primitives.userId),
