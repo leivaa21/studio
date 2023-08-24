@@ -29,6 +29,8 @@ export * from './contracts/courses/LessonContracts';
 
 export * from './contracts/course-subscriptions/CourseSubscriptionContracts';
 
+export * from './contracts/author-stats/CurrentAuthorStatsContracts';
+
 export * from './contracts/shared/EventsContracts';
 
 export * from './errors/ErrorCodes';
