@@ -20,7 +20,7 @@ import { AuthorStats } from '../../../contexts/author-stats/domain/AuthorStats';
   dependencies: [InMemoryQueryBus],
 })
 @JsonController('/author-stats')
-export class GetLessonByIdController {
+export class GetCurrentAuthorStatsController {
   constructor(private readonly queryBus: QueryBus) {}
 
   @Get()
