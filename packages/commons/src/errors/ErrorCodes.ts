@@ -33,5 +33,6 @@ export enum ErrorCodes {
   UnableToCompleteCourseSubscription = 'courses.coursesubscription-already-completed',
   UnableToUncompleteCourseSubscription = 'courses.coursesubscription-not-completed',
   AuthorStatsNotFound = 'courses.author-stats-not-found',
-  ConsumerStatsNotFound = 'courses.consumer-stats-not-found'
+  ConsumerStatsNotFound = 'courses.consumer-stats-not-found',
+  CourseStatsNotFound = 'courses.course-stats-not-found',
 }
