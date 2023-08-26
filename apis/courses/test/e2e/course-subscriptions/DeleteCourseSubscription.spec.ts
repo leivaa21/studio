@@ -21,6 +21,9 @@ import { AuthorStatNumber } from '../../../src/contexts/author-stats/domain/Auth
 import { ConsumerStatsBuilder } from '../../helpers/builders/ConsumerStatsBuilder';
 import { createConsumerStats } from '../../helpers/persistance/mongo/consumer-stats';
 import { ConsumerStatNumber } from '../../../src/contexts/consumer-stats/domain/ConsumerStatNumber';
+import { CourseStatsBuilder } from '../../helpers/builders/CourseStatsBuilder';
+import { createCourseStats } from '../../helpers/persistance/mongo/course-stats';
+import { CourseStatNumber } from '../../../src/contexts/course-stats/domain/CourseStatNumber';
 
 let mongoContainer: StartedTestContainer;
 const route = '/course-subscription/:id';
@@ -52,7 +55,13 @@ describe(`DELETE ${route}`, () => {
       .withSubcribedCourses(ConsumerStatNumber.of(1))
       .build();
 
+    const courseStats = new CourseStatsBuilder()
+      .withCourseId(course.id)
+      .withSubscriptions(CourseStatNumber.of(1))
+      .build();
+
     await createCourse(course);
+    await createCourseStats(courseStats);
     await createAuthorStats(authorStats);
     await createCourseSubscription(courseSubscription);
     await createConsumerStats(consumerStats);

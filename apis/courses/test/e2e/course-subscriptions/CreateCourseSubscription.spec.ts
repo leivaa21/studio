@@ -13,7 +13,9 @@ import { ErrorCodes } from '@studio/commons';
 import { UserId } from '../../../src/contexts/course-subscriptions/domain/UserId';
 import { findCourseSubscriptionsByUserId } from '../../helpers/persistance/mongo/course-subscriptions';
 import { AuthorStatsBuilder } from '../../helpers/builders/AuthorStatsBuilder';
+import { CourseStatsBuilder } from '../../helpers/builders/CourseStatsBuilder';
 import { createAuthorStats } from '../../helpers/persistance/mongo/author-stats';
+import { createCourseStats } from '../../helpers/persistance/mongo/course-stats';
 
 let mongoContainer: StartedTestContainer;
 const route = '/course-subscriptions';
@@ -35,8 +37,12 @@ describe(`POST ${route}`, () => {
     const authorStats = new AuthorStatsBuilder()
       .withAuthorId(course.authorId)
       .build();
+    const courseStats = new CourseStatsBuilder()
+      .withCourseId(course.id)
+      .build();
 
     await createAuthorStats(authorStats);
+    await createCourseStats(courseStats);
     await createCourse(course);
 
     const body = {
