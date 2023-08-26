@@ -55,6 +55,10 @@ export class CourseStats extends AggregateRoot {
     this._currentSubscriptions = this._currentSubscriptions.increase();
   }
 
+  public decreaseCurrentSubscriptions() {
+    this._currentSubscriptions = this._currentSubscriptions.decrease();
+  }
+
   public increaseTimesCompleted() {
     this._timesCompleted = this._timesCompleted.increase();
     this._currentTimesCompleted = this._currentTimesCompleted.increase();
