@@ -42,6 +42,7 @@ const errorCodeToErrorMessage: Record<ErrorCodes, string> = {
   [ErrorCodes.UnableToUncompleteCourseSubscription]: '',
   [ErrorCodes.AuthorStatsNotFound]: 'Author stats could not be found!',
   [ErrorCodes.ConsumerStatsNotFound]: 'Consumer stats could not be found!',
+  [ErrorCodes.CourseStatsNotFound]: 'Course stats could not be found!',
 };
 
 export function decodeError(errorCode: string): string {
