@@ -14,6 +14,8 @@ import { MongoLessonRepository } from '../../../lessons/infrastructure/persistan
 import { MongoCourseSubscriptionRepository } from '../../../course-subscriptions/infrastructure/persistance/mongo/MongoCourseSubscriptionRepository';
 import { MongoAuthorStatsRepository } from '../../../author-stats/infrastructure/persistance/mongo/MongoAuthorStatsRepository';
 import { AuthorStatsRepository } from '../../../author-stats/domain/AuthorStatsRepository';
+import { MongoConsumerStatsRepository } from '../../../consumer-stats/infrastructure/persistance/mongo/MongoConsumerStatsRepository';
+import { ConsumerStatsRepository } from '../../../consumer-stats/domain/ConsumerStatsRepository';
 
 @Injectable({
   dependencies: [
@@ -21,6 +23,7 @@ import { AuthorStatsRepository } from '../../../author-stats/domain/AuthorStatsR
     MongoLessonRepository,
     MongoCourseSubscriptionRepository,
     MongoAuthorStatsRepository,
+    MongoConsumerStatsRepository,
     InMemoryAsyncEventBus,
   ],
 })
@@ -32,6 +35,7 @@ export class DeleteUserContentOnUserDeletedHandler extends EventHandler<UserWasD
     private readonly lessonRepository: LessonRepository,
     private readonly courseSubscriptionRepository: CourseSubscriptionRepository,
     private readonly authorStatsRepository: AuthorStatsRepository,
+    private readonly consumerStatsRepository: ConsumerStatsRepository,
     eventBus?: EventBus
   ) {
     super(eventBus);
@@ -54,5 +58,6 @@ export class DeleteUserContentOnUserDeletedHandler extends EventHandler<UserWasD
     void this.courseRepository.deleteByAuthor(userId);
     void this.courseSubscriptionRepository.removeByUser(userId);
     void this.authorStatsRepository.delete(userId);
+    void this.consumerStatsRepository.delete(userId);
   }
 }
