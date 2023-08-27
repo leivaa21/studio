@@ -5,6 +5,7 @@ import { Header } from '../../../../components/header/header';
 import { CreatorHeader } from '../../../../components/creator/header';
 import { CoursePreviewNavigator } from '../../../../components/creator/course/previewNavigator';
 import { PageMetadata } from '../../../../components/PageMetadata';
+import { CurrentCourseStatsView } from '../../../../components/creator/course/CurrentCourseStatsView';
 
 export default function CreatorCoursePreviewPage() {
   const router = useRouter();
@@ -25,7 +26,9 @@ export default function CreatorCoursePreviewPage() {
           <div className="sidebar">
             <CoursePreviewNavigator courseId={courseId} />
           </div>
-          <div className="column"></div>
+          <div className="column">
+            <CurrentCourseStatsView courseId={courseId} />
+          </div>
         </div>
       </Fragment>
     </PageMetadata>
