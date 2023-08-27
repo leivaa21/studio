@@ -31,6 +31,7 @@ export * from './contracts/course-subscriptions/CourseSubscriptionContracts';
 
 export * from './contracts/author-stats/CurrentAuthorStatsContracts';
 export * from './contracts/consumer-stats/CurrentConsumerStatsContracts';
+export * from './contracts/course-stats/CurrentCourseStatsContracts';
 
 export * from './contracts/shared/EventsContracts';
 
