@@ -10,8 +10,14 @@ import { IncreaseSubscriptionsCounterOnCourseSubscriptionCreatedHandler } from '
 import { DecreaseSubscriptionsCounterOnCourseSubscriptionDeletedHandler } from '../../../../contexts/course-stats/application/events/DecreaseSubscriptionsCounterOnCourseSubscriptionDeleted';
 import { IncreaseTimesCompletedCounterOnCourseSubscriptionCompletedHandler } from '../../../../contexts/course-stats/application/events/IncreaseTimesCompletedCounterOnCourseSubscriptionCompleted';
 import { DecreaseTimesCompletedCounterOnCourseSubscriptionUncompletedHandler } from '../../../../contexts/course-stats/application/events/DecreaseTimesCompletedCounterOnCourseSubscriptionUncompleted';
+import { CourseWasCreatedEvent } from '../../../../contexts/courses/domain/events/CourseWasCreated';
+import { CreateCourseStatsOnCourseCreatedHandler } from '../../../../contexts/course-stats/application/events/CreateCourseStatsOnCourseCreated';
 
 const eventBus = DependencyContainer.get<EventBus>(InMemoryAsyncEventBus);
+
+const createCourseStatsOnCourseCreated = DependencyContainer.get<
+  DomainEventSubscriber<CourseWasCreatedEvent>
+>(CreateCourseStatsOnCourseCreatedHandler);
 
 const increaseSubscriptionsCounterOnCourseSubscriptionCreated =
   DependencyContainer.get<
@@ -34,6 +40,7 @@ const decreaseTimesCompletedCounterOnCourseSubscriptionUncompleted =
   >(DecreaseTimesCompletedCounterOnCourseSubscriptionUncompletedHandler);
 
 eventBus.addSubscribers([
+  createCourseStatsOnCourseCreated,
   increaseSubscriptionsCounterOnCourseSubscriptionCreated,
   decreaseSubscriptionsCounterOnCourseSubscriptionDeleted,
   increaseTimesCompletedCounterOnCourseSubscriptionCompleted,
