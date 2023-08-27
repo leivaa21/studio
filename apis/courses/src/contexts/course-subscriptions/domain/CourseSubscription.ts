@@ -185,6 +185,9 @@ export class CourseSubscription extends AggregateRoot {
 
     const event = CourseSubscriptionWasUncompletedEvent.fromPrimitives({
       aggregateId: this.id.value,
+      attributes: {
+        courseId: this.courseId.value,
+      },
     });
 
     this.commit(event);

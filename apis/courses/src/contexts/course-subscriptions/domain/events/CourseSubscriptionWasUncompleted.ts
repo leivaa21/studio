@@ -3,9 +3,12 @@ import {
   DomainEvent,
 } from '../../../shared/domain/DomainEvent';
 
-type CourseSubscriptionWasUncompletedEventArgs = BaseDomainEventArgs;
+type CourseSubscriptionWasUncompletedEventArgs = BaseDomainEventArgs & {
+  attributes: { courseId: string };
+};
+
 export class CourseSubscriptionWasUncompletedEvent extends DomainEvent {
-  public readonly attributes: undefined;
+  public readonly attributes: { courseId: string };
   public static EVENT_NAME = 'COURSES.COURSE_SUBSCRIPTION_WAS_UNCOMPLETED';
 
   public static fromPrimitives(
@@ -21,6 +24,7 @@ export class CourseSubscriptionWasUncompletedEvent extends DomainEvent {
       ocurredOn: args.ocurredOn,
       eventName: CourseSubscriptionWasUncompletedEvent.EVENT_NAME,
     });
+    this.attributes = args.attributes;
   }
 
   public toPrimitives(): {
