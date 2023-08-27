@@ -48,7 +48,7 @@ export class GetCourseSubscriptionByUserAndCourseController {
       completedLessons: subscription.completedLessons.map(
         (lesson) => lesson.value
       ),
-      completedAt: subscription.completedAt,
+      completedAt: subscription.completedAt || undefined,
     };
   }
 }
