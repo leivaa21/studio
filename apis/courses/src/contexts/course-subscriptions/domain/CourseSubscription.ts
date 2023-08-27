@@ -12,6 +12,7 @@ import { CourseSubscriptionWasCompletedEvent } from './events/CourseSubscription
 import { UnableToUncompleteLessonError } from './errors/UnableToUncompleteLessonError';
 import { UnableToUncompleteError } from './errors/UnableToUncompleteError';
 import { CourseSubscriptionWasUncompletedEvent } from './events/CourseSubscriptionWasUncompleted';
+import { Nullable } from '../../shared/domain/Nullable';
 
 export interface CourseSubscriptionParams {
   readonly id: CourseSubscriptionId;
@@ -20,7 +21,7 @@ export interface CourseSubscriptionParams {
   readonly subscribedAt: Date;
   readonly updatedAt: Date;
   readonly completedLessons: LessonId[];
-  readonly completedAt?: Date;
+  readonly completedAt: Nullable<Date>;
 }
 
 export interface CourseSubscriptionPrimitives {
@@ -30,7 +31,7 @@ export interface CourseSubscriptionPrimitives {
   readonly subscribedAt: Date;
   readonly updatedAt: Date;
   readonly completedLessons: string[];
-  readonly completedAt?: Date;
+  readonly completedAt: Nullable<Date>;
 }
 
 export class CourseSubscription extends AggregateRoot {
@@ -40,7 +41,7 @@ export class CourseSubscription extends AggregateRoot {
   private _subscribedAt: Date;
   private _updatedAt: Date;
   private _completedLessons: LessonId[];
-  private _completedAt?: Date;
+  private _completedAt: Nullable<Date>;
 
   public constructor({
     id,
@@ -86,6 +87,7 @@ export class CourseSubscription extends AggregateRoot {
       subscribedAt: new Date(),
       updatedAt: new Date(),
       completedLessons: [],
+      completedAt: null,
     });
 
     courseSubscription.commit(courseSubscriptionWasCreatedEvent);
@@ -146,7 +148,7 @@ export class CourseSubscription extends AggregateRoot {
     return !!this._completedAt;
   }
 
-  public get completedAt(): Date | undefined {
+  public get completedAt(): Nullable<Date> {
     return this._completedAt;
   }
 
@@ -180,7 +182,7 @@ export class CourseSubscription extends AggregateRoot {
     if (!this.completed) {
       throw UnableToUncompleteError.notCompleted(this.id.value);
     }
-    this._completedAt = undefined;
+    this._completedAt = null;
     this._updatedAt = new Date();
 
     const event = CourseSubscriptionWasUncompletedEvent.fromPrimitives({

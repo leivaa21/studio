@@ -10,8 +10,15 @@ import { LessonWasDeletedEvent } from '../../../../contexts/lessons/domain/event
 import { UpdateCourseSubscriptionsOnLessonWasDeletedHandler } from '../../../../contexts/course-subscriptions/application/events/UpdateCourseSubscriptionsOnLessonWasDeleted';
 import { LessonContentWasUpdatedEvent } from '../../../../contexts/lessons/domain/events/LessonContentWasUpdated';
 import { UpdateCourseSubscriptionOnLessonContentUpdatedHandler } from '../../../../contexts/course-subscriptions/application/events/UpdateCourseSubscriptionOnLessonContentUpdated';
+import { LessonWasCreatedEvent } from '../../../../contexts/lessons/domain/events/LessonWasCreated';
+import { MarkCourseSubscriptionAsNonCompletedOnLessonCreatedHandler } from '../../../../contexts/course-subscriptions/application/events/MarkCourseSubscriptionAsNonCompletedOnLessonCreated';
 
 const eventBus = DependencyContainer.get<EventBus>(InMemoryAsyncEventBus);
+
+const markCourseSubscriptionAsNonCompletedOnLessonCreated =
+  DependencyContainer.get<DomainEventSubscriber<LessonWasCreatedEvent>>(
+    MarkCourseSubscriptionAsNonCompletedOnLessonCreatedHandler
+  );
 
 const removeCourseSubscriptionsOnUnpublishedHandler = DependencyContainer.get<
   DomainEventSubscriber<CourseWasUnpublishedEvent>
@@ -32,6 +39,7 @@ const updateCourseSubscriptionOnLessonContentUpdatedHandler =
   );
 
 eventBus.addSubscribers([
+  markCourseSubscriptionAsNonCompletedOnLessonCreated,
   removeCourseSubscriptionsOnUnpublishedHandler,
   checkIfCourseWasCompletedOnLessonCompletedHandler,
   updateCourseSubscriptionsOnLessonWasDeletedHandler,
