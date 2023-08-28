@@ -73,7 +73,7 @@ export class CourseStats extends AggregateRoot {
   }
 
   get currentTimesCompleted() {
-    return this._timesCompleted;
+    return this._currentTimesCompleted;
   }
 
   static fromPrimitives(primitives: CourseStatsPrimitives): CourseStats {
