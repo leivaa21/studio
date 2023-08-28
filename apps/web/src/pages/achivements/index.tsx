@@ -9,6 +9,8 @@ import {
   GetUserStatsResponse,
   getUserStats,
 } from '../../contexts/users/application/GetUserStats';
+import { CurrentConsumerStatsView } from '../../components/stats/ConsumerStats';
+import { CurrentAuthorStatsView } from '../../components/stats/AuthorStats';
 
 export default function AchivementsPage() {
   const router = useRouter();
@@ -49,14 +51,14 @@ export default function AchivementsPage() {
       <div className="row">
         <div className="column">
           {stats.consumerStats ? (
-            <span>Consumer stats</span>
+            <CurrentConsumerStatsView stats={stats.consumerStats} />
           ) : (
             <span>Nothing to show as Consumer</span>
           )}
         </div>
         <div className="column">
           {stats.authorStats ? (
-            <span>Author stats</span>
+            <CurrentAuthorStatsView stats={stats.authorStats} />
           ) : (
             <span>Nothing to show as Author</span>
           )}

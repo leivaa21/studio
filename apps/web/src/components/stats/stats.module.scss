@@ -28,3 +28,14 @@
 
 }
 
+
+.stats {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  padding: 2rem;
+
+  width: 100%;
+  align-items: center;
+
+}
