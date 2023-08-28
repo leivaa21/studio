@@ -1,0 +1,30 @@
+.StatField {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  max-width: 600px;
+  flex: 0 1 auto;
+
+  align-items: center;
+
+  padding: 1rem;
+  
+  .Icon {
+    font-size: 2rem;
+    padding: .25rem;
+  }
+
+  .field {
+    width: 100%;
+    font-size: 1.2rem;
+    margin: 0 .5rem;
+    font-weight: 500;
+  }
+  
+  .value {
+    font-size: 1.5rem;
+    margin: 0 .5rem;
+  }
+
+}
+
