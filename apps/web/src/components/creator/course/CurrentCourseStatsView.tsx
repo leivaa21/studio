@@ -6,6 +6,7 @@ import { CurrentCourseStatsResponse } from '@studio/commons';
 import styles from './course.module.scss';
 
 import { getCourseStats } from '../../../contexts/course-stats/application/GetCourseStats';
+import { StatField, StatFieldIcons } from '../../stats/StatField';
 
 export interface CurrentCourseStatsParams {
   courseId: string;
@@ -34,19 +35,17 @@ export function CurrentCourseStatsView({ courseId }: CurrentCourseStatsParams) {
   if (!courseStats) return <Fragment />;
 
   return (
-    <div className={styles.coursePreview}>
-      <div className={styles.propertyRow}>
-        <h4 className={styles.propertyName}>Subscriptions</h4>
-        <span className={styles.propertyValue}>
-          {courseStats.currentSubscriptions}
-        </span>
-      </div>
-      <div className={styles.propertyRow}>
-        <h4 className={styles.propertyName}>Times completed</h4>
-        <span className={styles.propertyValue}>
-          {courseStats.currentTimesCompleted}
-        </span>
-      </div>
+    <div className={styles.stats}>
+      <StatField
+        Icon={StatFieldIcons.Subscriptions}
+        field="Subscriptions"
+        value={courseStats.currentSubscriptions.toString()}
+      />
+      <StatField
+        Icon={StatFieldIcons.Check}
+        field="Times Completed"
+        value={courseStats.currentTimesCompleted.toString()}
+      />
     </div>
   );
 }
