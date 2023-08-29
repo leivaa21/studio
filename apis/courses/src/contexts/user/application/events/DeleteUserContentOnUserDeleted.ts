@@ -54,8 +54,10 @@ export class DeleteUserContentOnUserDeletedHandler extends EventHandler<UserWasD
     const coursesToDelete = await this.courseFinder.findByAuthor(userId);
 
     coursesToDelete.forEach((course) => {
-      course.unpublish();
-      this.publishAggregateRootEvents(course);
+      if (course.isPublished) {
+        course.unpublish();
+        this.publishAggregateRootEvents(course);
+      }
       void this.lessonRepository.deleteByCourse(course.id);
       void this.courseStatsRepository.delete(course.id);
     });
