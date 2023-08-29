@@ -1,12 +1,15 @@
 import React from 'react';
 
 import styles from './stats.module.scss';
-import { BiCheck } from 'react-icons/bi';
-import { BsFillMortarboardFill } from 'react-icons/bs';
+import { BiBookAdd, BiCheck, BiWorld } from 'react-icons/bi';
+import { BsFileTextFill, BsFillMortarboardFill } from 'react-icons/bs';
 
 export const StatFieldIcons = {
   Check: <BiCheck className={styles.Icon} />,
   Subscriptions: <BsFillMortarboardFill className={styles.Icon} />,
+  CreatedCourses: <BiBookAdd className={styles.Icon} />,
+  CreatedLessons: <BsFileTextFill className={styles.Icon} />,
+  Published: <BiWorld className={styles.Icon} />,
 };
 
 export interface StatFieldParams {
