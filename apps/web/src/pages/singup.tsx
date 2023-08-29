@@ -8,7 +8,7 @@ export default function SingUp() {
   const router = useRouter();
   useEffect(() => {
     if (getAuthTokenCookie()) {
-      router.push('/panel');
+      router.push('/courses');
     }
   });
 

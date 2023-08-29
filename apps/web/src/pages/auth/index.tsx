@@ -12,7 +12,7 @@ export default function Auth() {
     clearAuthTokenCookie();
     setAuthTokenCookie(router.query.token as string);
 
-    router.push('/panel');
+    router.push('/courses');
   }, [router, router.query.token]);
 
   return <Fragment></Fragment>;

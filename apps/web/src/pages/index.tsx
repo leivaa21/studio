@@ -19,7 +19,7 @@ export default function Home() {
 
   useEffect(() => {
     if (getAuthTokenCookie()) {
-      router.push('/panel');
+      router.push('/courses');
     }
   });
 
