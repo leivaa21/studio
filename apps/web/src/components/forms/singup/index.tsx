@@ -38,7 +38,7 @@ export const SignUpForm = () => {
     try {
       const response = await internalApiClient.post(`/api/auth/signup`, body);
       setAuthTokenCookie((response as { token: string }).token);
-      router.push('/panel');
+      router.push('/courses');
     } catch (err) {
       console.error(err);
       const errorMessage = decodeError(

@@ -31,7 +31,7 @@ export const SignInForm = () => {
     try {
       const response = await internalApiClient.post(`/api/auth/signin`, body);
       setAuthTokenCookie((response as { token: string }).token);
-      router.push('/panel');
+      router.push('/courses');
     } catch (err) {
       console.error(err);
       const errorMessage = decodeError(
