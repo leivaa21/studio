@@ -9,6 +9,7 @@ import { CourseRepository } from '../../../courses/domain/CourseRepository';
 import { MongoCourseRepository } from '../../../courses/infrastructure/persistance/mongo/MongoCourseRepository';
 import { CourseFinder } from '../../../courses/application/services/CourseFinder';
 import { CourseWasUnpublishedEvent } from '../../../courses/domain/events/CourseWasUnpublished';
+import { ApiError, ErrorCodes } from '@studio/commons';
 
 @Injectable({
   dependencies: [MongoAuthorStatsRepository, MongoCourseRepository],
@@ -30,14 +31,27 @@ export class DecreaseCoursePublishedCounterOnCourseUnpublishedHandler extends Ev
   }
   async on(domainEvent: CourseWasUnpublishedEvent): Promise<void> {
     const courseId = CourseId.of(domainEvent.aggregateId);
-    const course = await this.courseFinder.findByIdOrThrow(courseId);
+    try {
+      const course = await this.courseFinder.findByIdOrThrow(courseId);
 
-    const authorStats = await this.authorStatsFinder.findOrThrow(
-      course.authorId
-    );
+      const authorStats = await this.authorStatsFinder.findOrThrow(
+        course.authorId
+      );
 
-    authorStats.decreaseCurrentCoursesPublished();
+      authorStats.decreaseCurrentCoursesPublished();
 
-    await this.authorStatsRepository.update(authorStats);
+      await this.authorStatsRepository.update(authorStats);
+    } catch (err) {
+      if ((err as ApiError).errorCode === ErrorCodes.CourseNotFound) {
+        // If Course do not exist user is being deleted!!
+        return Promise.resolve();
+      }
+
+      if ((err as ApiError).errorCode === ErrorCodes.AuthorStatsNotFound) {
+        // If Author stats do not exist user is being deleted!!
+        return Promise.resolve();
+      }
+      throw err;
+    }
   }
 }
