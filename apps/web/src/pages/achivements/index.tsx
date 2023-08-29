@@ -11,6 +11,7 @@ import {
 } from '../../contexts/users/application/GetUserStats';
 import { CurrentConsumerStatsView } from '../../components/stats/ConsumerStats';
 import { CurrentAuthorStatsView } from '../../components/stats/AuthorStats';
+import { NoStatsToShow } from '../../components/stats/NoStatsToShow';
 
 export default function AchivementsPage() {
   const router = useRouter();
@@ -42,7 +43,7 @@ export default function AchivementsPage() {
     if (!stats.authorStats && !stats.consumerStats) {
       return (
         <div className="row">
-          <h1>No Stats to show</h1>
+          <NoStatsToShow message="No Stats to Show" />
         </div>
       );
     }
@@ -53,14 +54,14 @@ export default function AchivementsPage() {
           {stats.consumerStats ? (
             <CurrentConsumerStatsView stats={stats.consumerStats} />
           ) : (
-            <span>Nothing to show as Consumer</span>
+            <NoStatsToShow message="Nothing to show as Consumer" />
           )}
         </div>
         <div className="column">
           {stats.authorStats ? (
             <CurrentAuthorStatsView stats={stats.authorStats} />
           ) : (
-            <span>Nothing to show as Author</span>
+            <NoStatsToShow message="Nothing to show as Author" />
           )}
         </div>
       </div>
