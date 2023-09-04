@@ -260,7 +260,7 @@ export function CreatorCoursePreview({ courseId }: CreatorCoursePreviewParams) {
             <span className={styles.label}>Description</span>
             <MarkdownEditor
               className={styles.markdownEditor}
-              value={course.description}
+              value={newDescription}
               onChange={(e) => setNewDescription(e || '')}
               enableScroll
             />
