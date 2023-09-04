@@ -11,6 +11,7 @@
     "lint": "eslint './src/**' && prettier .",
     "lint:fix": "eslint './src/**' --fix && prettier --write .",
     "test": "jest .",
+    "test:coverage": "jest --coverage",
     "test:e2e": "jest test/e2e"
   },
   "dependencies": {
