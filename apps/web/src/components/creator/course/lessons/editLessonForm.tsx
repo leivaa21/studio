@@ -51,6 +51,8 @@ export default function EditLessonForm({
 
       setLesson(lesson);
       setCourse(course);
+      setTitle(lesson.title);
+      setContent(lesson.content);
     } catch (err) {
       showBoundary(err);
     }
