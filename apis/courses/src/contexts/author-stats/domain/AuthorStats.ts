@@ -114,7 +114,7 @@ export class AuthorStats extends AggregateRoot {
   }
 
   get currentPublishedCourses() {
-    return this._coursesPublished;
+    return this._currentCoursesPublished;
   }
 
   get currentLessons() {
