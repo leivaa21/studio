@@ -1,8 +1,55 @@
 version: '3.8'
 
 services:
-  base:
-    container_name: base
+
+  mongo:
+    image: mongo
+    container_name: mongo
+    ports:
+      - 27017:27017
+    volumes: 
+      - .volumes/mongo/data:/data/db
+
+  auth:
+    container_name: auth-dev
+    depends_on: [mongo]
     build:
       context: .
-      target: base
+      target: auth-dev
+    ports:
+      - 5000:5000
+    volumes:
+      - .:/usr/src/app
+
+  courses:
+    container_name: courses-dev
+    depends_on: [mongo]
+    build:
+      context: .
+      target: courses-dev
+    ports:
+      - 5002:5002
+    volumes:
+      - .:/usr/src/app
+
+  web:
+    container_name: web-dev
+    depends_on: [auth, courses]
+    build:
+      context: .
+      target: web-dev
+    ports:
+      - 3000:3000
+    volumes:
+      - .:/usr/src/app
+
+  desing-system:
+    container_name: desing-system-dev
+    build:
+      context: .
+      target: desing-system-dev
+    ports:
+      - 6006:6006
+    volumes:
+      - .:/usr/src/app
+
