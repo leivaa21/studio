@@ -40,5 +40,8 @@
     "url": "https://github.com/leivaa21/mono-studio/issues"
   },
   "homepage": "https://github.com/leivaa21/mono-studio#readme",
-  "packageManager": "yarn@3.3.0"
+  "packageManager": "yarn@3.3.0",
+  "dependencies": {
+    "turbo": "^1.10.15"
+  }
 }
