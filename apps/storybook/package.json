@@ -3,9 +3,9 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "start-storybook -p 6006",
+    "dev": "start-storybook -p 8000",
     "build": "build-storybook",
-    "start": "http-server storybook-static -p 6006",
+    "start": "http-server storybook-static -p 8000",
     "prod": "yarn build && yarn start",
     "lint": "next lint"
   },

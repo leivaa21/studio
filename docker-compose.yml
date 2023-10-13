@@ -17,7 +17,7 @@ services:
       context: .
       target: auth-dev
     ports:
-      - 5000:5000
+      - 3000:3000
     volumes:
       - .:/usr/src/app
 
@@ -28,7 +28,7 @@ services:
       context: .
       target: courses-dev
     ports:
-      - 5002:5002
+      - 3001:3001
     volumes:
       - .:/usr/src/app
 
@@ -39,7 +39,7 @@ services:
       context: .
       target: web-dev
     ports:
-      - 3000:3000
+      - 80:3000
     volumes:
       - .:/usr/src/app
 
@@ -49,7 +49,7 @@ services:
       context: .
       target: desing-system-dev
     ports:
-      - 6006:6006
+      - 8000:8000
     volumes:
       - .:/usr/src/app
 
