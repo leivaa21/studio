@@ -28,22 +28,22 @@ RUN yarn install
 FROM base as auth-dev
 
 RUN yarn turbo run build --filter="@studio/api-auth"
-CMD yarn d:api:auth
+CMD yarn auth
 
 # || #### Courses-dev ##### ||
 FROM base as courses-dev
 
 RUN yarn turbo run build --filter="@studio/courses"
-CMD yarn d:api:courses
+CMD yarn courses
 
 # || #### Web-dev ##### ||
 FROM base as Web-dev
 
 RUN yarn turbo run build --filter="@studio/web"
-CMD yarn d:app:web
+CMD yarn web
 
 # || #### Desing-system-dev ##### ||
 FROM base as desing-system-dev
 
 RUN yarn turbo run build --filter="@studio/storybook"
-CMD yarn d:app:sb
+CMD yarn ds
