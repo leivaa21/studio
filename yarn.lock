@@ -4790,9 +4790,22 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@studio/api-auth@workspace:apis/auth":
+"@studio/api-utils@workspace:packages/api-utils":
   version: 0.0.0-use.local
-  resolution: "@studio/api-auth@workspace:apis/auth"
+  resolution: "@studio/api-utils@workspace:packages/api-utils"
+  dependencies:
+    "@studio/commons": "workspace:packages/commons"
+    "@types/express": ^4.17.14
+    "@types/node": ^18.11.9
+    express: ^4.18.2
+    rimraf: ^4.4.1
+    typescript: ^4.9.3
+  languageName: unknown
+  linkType: soft
+
+"@studio/auth@workspace:apis/auth":
+  version: 0.0.0-use.local
+  resolution: "@studio/auth@workspace:apis/auth"
   dependencies:
     "@faker-js/faker": ^7.6.0
     "@studio/api-utils": "workspace:packages/api-utils"
@@ -4838,19 +4851,6 @@ __metadata:
     typescript: ^4.9.3
     uuid: ^9.0.0
     uuid-validate: ^0.0.3
-  languageName: unknown
-  linkType: soft
-
-"@studio/api-utils@workspace:packages/api-utils":
-  version: 0.0.0-use.local
-  resolution: "@studio/api-utils@workspace:packages/api-utils"
-  dependencies:
-    "@studio/commons": "workspace:packages/commons"
-    "@types/express": ^4.17.14
-    "@types/node": ^18.11.9
-    express: ^4.18.2
-    rimraf: ^4.4.1
-    typescript: ^4.9.3
   languageName: unknown
   linkType: soft
 
@@ -4929,9 +4929,9 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@studio/storybook@workspace:apps/storybook":
+"@studio/desing-system@workspace:apps/desing-system":
   version: 0.0.0-use.local
-  resolution: "@studio/storybook@workspace:apps/storybook"
+  resolution: "@studio/desing-system@workspace:apps/desing-system"
   dependencies:
     "@babel/core": ^7.20.5
     "@mdx-js/react": ^1.6.22
