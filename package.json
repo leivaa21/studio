@@ -10,6 +10,9 @@
     "apps/**",
     "apis/**"
   ],
+  "dependencies": {
+    "turbo": "^1.10.15"
+  },
   "scripts": {
     "p:api:auth": "yarn workspace @studio/api-auth prod",
     "p:api:courses": "yarn workspace @studio/courses prod",
@@ -40,8 +43,5 @@
     "url": "https://github.com/leivaa21/mono-studio/issues"
   },
   "homepage": "https://github.com/leivaa21/mono-studio#readme",
-  "packageManager": "yarn@3.3.0",
-  "dependencies": {
-    "turbo": "^1.10.15"
-  }
+  "packageManager": "yarn@3.3.0"
 }
