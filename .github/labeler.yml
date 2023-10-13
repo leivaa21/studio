@@ -28,8 +28,8 @@ Web:
   - packages/commons/**/*
   - packages/commons/*
 
-Storybook:
-  - apps/storybook/**/*
-  - apps/storybook/*
+Desing-System:
+  - apps/desing-system/**/*
+  - apps/desing-system/*
   - packages/ui/**/*
   - packages/ui/*

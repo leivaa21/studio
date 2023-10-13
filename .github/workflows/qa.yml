@@ -17,25 +17,18 @@ jobs:
       - name: Update Yarn
         run: |
           corepack enable
-          corepack prepare yarn@stable --activate
-          yarn plugin import workspace-tools
-          yarn --version
+          corepack prepare yarn@3.3.0 --activate
 
       - name: Install & Make dependencies
         run: |
-          yarn workspaces focus @studio/commons
-          yarn m:dep:commons
-          yarn workspaces focus @studio/api-utils
-          yarn m:dep:apiutils
-          yarn workspaces focus @studio/dependency-injection
-          yarn m:dep:di
-          yarn workspaces focus @studio/api-auth
+          yarn install
+          yarn turbo run build --filter="@studio/auth"
 
       - name: Build auth
-        run: yarn build:api:auth
+        run: yarn b:auth
 
       - name: Check linter auth
-        run: yarn lint:api:auth
+        run: yarn lint:auth
 
   CoursesQA:
     if: contains( github.event.pull_request.labels.*.name, 'Courses')
@@ -53,27 +46,20 @@ jobs:
         run: |
           corepack enable
           corepack prepare yarn@stable --activate
-          yarn plugin import workspace-tools
-          yarn --version
 
       - name: Install & Make dependencies
         run: |
-          yarn workspaces focus @studio/commons
-          yarn m:dep:commons
-          yarn workspaces focus @studio/api-utils
-          yarn m:dep:apiutils
-          yarn workspaces focus @studio/dependency-injection
-          yarn m:dep:di
-          yarn workspaces focus @studio/courses
+          yarn install
+          yarn turbo run build --filter="@studio/courses"
 
       - name: Build courses
-        run: yarn build:api:courses
+        run: yarn b:courses
 
       - name: Check linter courses
-        run: yarn lint:api:courses
+        run: yarn lint:courses
 
       - name: Check courses tests
-        run: yarn test:api:courses
+        run: yarn test:courses
 
   WebQA:
     if: contains( github.event.pull_request.labels.*.name, 'Web')
@@ -91,25 +77,20 @@ jobs:
         run: |
           corepack enable
           corepack prepare yarn@stable --activate
-          yarn plugin import workspace-tools
-          yarn --version
 
       - name: Install & Make dependencies
         run: |
-          yarn workspaces focus @studio/commons
-          yarn m:dep:commons
-          yarn workspaces focus @studio/api-utils
-          yarn m:dep:apiutils
-          yarn workspaces focus @studio/web
+          yarn install
+          yarn turbo run build --filter="@studio/web"
 
       - name: Build web
-        run: yarn build:app:web
+        run: yarn b:web
 
       - name: Check linter web
-        run: yarn lint:app:web
+        run: yarn lint:web
 
-  StorybookQA:
-    if: contains( github.event.pull_request.labels.*.name, 'Storybook')
+  DesingSystemQA:
+    if: contains( github.event.pull_request.labels.*.name, 'Desing-System')
     runs-on: ubuntu-latest
 
     steps:
@@ -124,14 +105,14 @@ jobs:
         run: |
           corepack enable
           corepack prepare yarn@stable --activate
-          yarn plugin import workspace-tools
-          yarn --version
 
       - name: Install & Make dependencies
-        run: yarn workspaces focus @studio/storybook
+        run: |
+          yarn install
+          yarn turbo run build --filter="@studio/desing-system"
 
-      - name: Build storybook
-        run: yarn build:app:sb
+      - name: Build Design System
+        run: yarn b:ds
 
-      - name: Check linter storybook
-        run: yarn lint:app:sb
+      - name: Check linter Design System
+        run: yarn lint:ds

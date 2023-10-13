@@ -4790,9 +4790,22 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@studio/api-auth@workspace:apis/auth":
+"@studio/api-utils@workspace:packages/api-utils":
   version: 0.0.0-use.local
-  resolution: "@studio/api-auth@workspace:apis/auth"
+  resolution: "@studio/api-utils@workspace:packages/api-utils"
+  dependencies:
+    "@studio/commons": "workspace:packages/commons"
+    "@types/express": ^4.17.14
+    "@types/node": ^18.11.9
+    express: ^4.18.2
+    rimraf: ^4.4.1
+    typescript: ^4.9.3
+  languageName: unknown
+  linkType: soft
+
+"@studio/auth@workspace:apis/auth":
+  version: 0.0.0-use.local
+  resolution: "@studio/auth@workspace:apis/auth"
   dependencies:
     "@faker-js/faker": ^7.6.0
     "@studio/api-utils": "workspace:packages/api-utils"
@@ -4838,19 +4851,6 @@ __metadata:
     typescript: ^4.9.3
     uuid: ^9.0.0
     uuid-validate: ^0.0.3
-  languageName: unknown
-  linkType: soft
-
-"@studio/api-utils@workspace:packages/api-utils":
-  version: 0.0.0-use.local
-  resolution: "@studio/api-utils@workspace:packages/api-utils"
-  dependencies:
-    "@studio/commons": "workspace:packages/commons"
-    "@types/express": ^4.17.14
-    "@types/node": ^18.11.9
-    express: ^4.18.2
-    rimraf: ^4.4.1
-    typescript: ^4.9.3
   languageName: unknown
   linkType: soft
 
@@ -4929,9 +4929,9 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@studio/storybook@workspace:apps/storybook":
+"@studio/desing-system@workspace:apps/desing-system":
   version: 0.0.0-use.local
-  resolution: "@studio/storybook@workspace:apps/storybook"
+  resolution: "@studio/desing-system@workspace:apps/desing-system"
   dependencies:
     "@babel/core": ^7.20.5
     "@mdx-js/react": ^1.6.22
@@ -4978,7 +4978,6 @@ __metadata:
     react: 18.2.0
     react-dom: 18.2.0
     react-icons: ^4.10.1
-    sass: ^1.69.3
     typescript: 4.9.3
   languageName: unknown
   linkType: soft
@@ -19679,19 +19678,6 @@ __metadata:
   bin:
     sass: sass.js
   checksum: 78e693e5992b149574c95d5adfe39ca3e5b97d80befa11191a20d1daa41fe201a98ac099beab726cd3095e2d2e7991a2c408ba0fcc3fa9f525879de7eee18dad
-  languageName: node
-  linkType: hard
-
-"sass@npm:^1.69.3":
-  version: 1.69.3
-  resolution: "sass@npm:1.69.3"
-  dependencies:
-    chokidar: ">=3.0.0 <4.0.0"
-    immutable: ^4.0.0
-    source-map-js: ">=0.6.2 <2.0.0"
-  bin:
-    sass: sass.js
-  checksum: b89a3370c7ede462b344e2136bf1407bf375855c1ec54f73b6257b18fe59dae5377eb9f7b25f21ae4a25d8f0bc41a165d8d7e5f693d8285b1aa51ac6056c4d19
   languageName: node
   linkType: hard
 

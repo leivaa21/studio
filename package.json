@@ -10,27 +10,30 @@
     "apps/**",
     "apis/**"
   ],
+  "dependencies": {
+    "turbo": "^1.10.15"
+  },
   "scripts": {
-    "p:api:auth": "yarn workspace @studio/api-auth prod",
-    "p:api:courses": "yarn workspace @studio/courses prod",
-    "p:app:web": "yarn workspace @studio/web prod",
-    "p:app:sb": "yarn workspace @studio/storybook prod",
-    "d:api:auth": "yarn workspace @studio/api-auth dev",
-    "d:api:courses": "yarn workspace @studio/courses dev",
-    "d:app:web": "yarn workspace @studio/web dev",
-    "d:app:sb": "yarn workspace @studio/storybook dev",
-    "m:dep:commons": "yarn workspace @studio/commons build",
-    "m:dep:apiutils": "yarn workspace @studio/api-utils build",
-    "m:dep:di": "yarn workspace @studio/dependency-injection build",
-    "build:api:auth": "yarn workspace @studio/api-auth build",
-    "build:api:courses": "yarn workspace @studio/courses build",
-    "build:app:web": "yarn workspace @studio/web build",
-    "build:app:sb": "yarn workspace @studio/storybook build",
-    "lint:api:auth": "yarn workspace @studio/api-auth lint",
-    "lint:api:courses": "yarn workspace @studio/courses lint",
-    "lint:app:web": "yarn workspace @studio/web lint",
-    "lint:app:sb": "yarn workspace @studio/storybook lint",
-    "test:api:courses": "yarn workspace @studio/courses test"
+    "s:auth": "yarn workspace @studio/auth prod",
+    "s:courses": "yarn workspace @studio/courses prod",
+    "s:web": "yarn workspace @studio/web prod",
+    "s:ds": "yarn workspace @studio/desing-system prod",
+    "auth": "yarn workspace @studio/auth dev",
+    "courses": "yarn workspace @studio/courses dev",
+    "web": "yarn workspace @studio/web dev",
+    "ds": "yarn workspace @studio/desing-system dev",
+    "b:commons": "yarn workspace @studio/commons build",
+    "b:apiutils": "yarn workspace @studio/api-utils build",
+    "b:di": "yarn workspace @studio/dependency-injection build",
+    "b:auth": "yarn workspace @studio/auth build",
+    "b:courses": "yarn workspace @studio/courses build",
+    "b:web": "yarn workspace @studio/web build",
+    "b:ds": "yarn workspace @studio/desing-system build",
+    "lint:auth": "yarn workspace @studio/auth lint",
+    "lint:courses": "yarn workspace @studio/courses lint",
+    "lint:web": "yarn workspace @studio/web lint",
+    "lint:ds": "yarn workspace @studio/desing-system lint",
+    "test:courses": "yarn workspace @studio/courses test"
   },
   "repository": {
     "type": "git",
@@ -40,8 +43,5 @@
     "url": "https://github.com/leivaa21/mono-studio/issues"
   },
   "homepage": "https://github.com/leivaa21/mono-studio#readme",
-  "packageManager": "yarn@3.3.0",
-  "dependencies": {
-    "turbo": "^1.10.15"
-  }
+  "packageManager": "yarn@3.3.0"
 }

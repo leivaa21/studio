@@ -19,37 +19,36 @@ jobs:
         run: |
           corepack enable
           corepack prepare yarn@stable --activate
-          yarn plugin import workspace-tools
-          yarn --version
-      - name: Build Packages
-        run: |
-          yarn workspaces focus @studio/commons
-          yarn m:dep:commons
-          yarn workspaces focus @studio/api-utils
-          yarn m:dep:apiutils
-          yarn workspaces focus @studio/dependency-injection
-          yarn m:dep:di
+
       - name: Install dependencies
         run: yarn install
 
       - name: Build auth
-        run: yarn build:api:auth
+        run: |
+          yarn turbo run build --filter="@studio/auth"
+          yarn b:auth
       - name: Check linter auth
-        run: yarn lint:api:auth
+        run: yarn lint:auth
 
       - name: Build courses
-        run: yarn build:api:courses
+        run: |
+          yarn turbo run build --filter="@studio/courses"
+          yarn b:courses
       - name: Check linter courses
-        run: yarn lint:api:courses
+        run: yarn lint:courses
       - name: Check courses tests
-        run: yarn test:api:courses
+        run: yarn test:courses
 
       - name: Build web
-        run: yarn build:app:web
+        run: |
+          yarn turbo run build --filter="@studio/web"
+          yarn b:web
       - name: Check linter web
-        run: yarn lint:app:web
+        run: yarn lint:web
 
-      - name: Build storybook
-        run: yarn build:app:sb
-      - name: Check linter storybook
-        run: yarn lint:app:sb
+      - name: Build desing-system
+        run: |
+          yarn turbo run build --filter="@studio/desing-system"
+          yarn b:ds
+      - name: Check linter desing-system
+        run: yarn lint:ds
