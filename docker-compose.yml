@@ -1,40 +1,8 @@
 version: '3.8'
 
 services:
-  auth:
-    container_name: studio-api-auth
+  base:
+    container_name: base
     build:
       context: .
-      target: api-auth
-    ports:
-      - 5000:5000
-
-  profiles:
-    container_name: studio-api-profiles
-    build:
-      context: .
-      target: api-profiles
-    ports:
-      - 5001:5001
-
-  courses:
-    container_name: studio-api-courses
-    build:
-      context: .
-      target: api-courses
-    ports:
-      - 5002:5002
-  web:
-    container_name: studio-app-web
-    build:
-      context: .
-      target: app-web
-    ports:
-      - 3000:3000
-  storybook:
-    container_name: studio-app-storybook
-    build:
-      context: .
-      target: app-sb
-    ports:
-      - 6006:6006
+      target: base
