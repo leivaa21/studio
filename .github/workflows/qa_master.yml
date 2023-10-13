@@ -25,7 +25,7 @@ jobs:
 
       - name: Build auth
         run: |
-          yarn turbo run build --filter="@studio/api-auth"
+          yarn turbo run build --filter="@studio/auth"
           yarn b:auth
       - name: Check linter auth
         run: yarn lint:auth
@@ -46,9 +46,9 @@ jobs:
       - name: Check linter web
         run: yarn lint:web
 
-      - name: Build storybook
+      - name: Build desing-system
         run: |
-          yarn turbo run build --filter="@studio/storybook"
+          yarn turbo run build --filter="@studio/desing-system"
           yarn b:ds
-      - name: Check linter storybook
+      - name: Check linter desing-system
         run: yarn lint:ds

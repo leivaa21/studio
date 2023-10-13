@@ -27,7 +27,7 @@ RUN yarn install
 # || #### Auth-dev ##### ||
 FROM base as auth-dev
 
-RUN yarn turbo run build --filter="@studio/api-auth"
+RUN yarn turbo run build --filter="@studio/auth"
 CMD yarn auth
 
 # || #### Courses-dev ##### ||
@@ -45,5 +45,5 @@ CMD yarn web
 # || #### Desing-system-dev ##### ||
 FROM base as desing-system-dev
 
-RUN yarn turbo run build --filter="@studio/storybook"
+RUN yarn turbo run build --filter="@studio/desing-system"
 CMD yarn ds

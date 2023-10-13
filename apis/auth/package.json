@@ -1,5 +1,5 @@
 {
-  "name": "@studio/api-auth",
+  "name": "@studio/auth",
   "version": "0.0.1-alpha",
   "private": true,
   "license": "MIT",

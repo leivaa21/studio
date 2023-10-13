@@ -22,7 +22,7 @@ jobs:
       - name: Install & Make dependencies
         run: |
           yarn install
-          yarn turbo run build --filter="@studio/api-auth"
+          yarn turbo run build --filter="@studio/auth"
 
       - name: Build auth
         run: yarn b:auth
@@ -89,8 +89,8 @@ jobs:
       - name: Check linter web
         run: yarn lint:web
 
-  StorybookQA:
-    if: contains( github.event.pull_request.labels.*.name, 'Storybook')
+  DesingSystemQA:
+    if: contains( github.event.pull_request.labels.*.name, 'Desing-System')
     runs-on: ubuntu-latest
 
     steps:
@@ -109,10 +109,10 @@ jobs:
       - name: Install & Make dependencies
         run: |
           yarn install
-          yarn turbo run build --filter="@studio/storybook"
+          yarn turbo run build --filter="@studio/desing-system"
 
-      - name: Build storybook
+      - name: Build Design System
         run: yarn b:ds
 
-      - name: Check linter storybook
+      - name: Check linter Design System
         run: yarn lint:ds
