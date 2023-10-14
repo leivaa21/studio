@@ -1,7 +1,6 @@
 import { Injectable } from '@studio/dependency-injection';
 import { DomainEventClass } from '../../../shared/domain/DomainEvent';
 import { EventHandler } from '../../../shared/application/EventHandler';
-import { InMemoryAsyncEventBus } from '../../../shared/infrastructure/EventBus/InMemoryAsyncEventBus';
 import { EventBus } from '../../../shared/domain/EventBus';
 import { MongoCourseSubscriptionRepository } from '../../infrastructure/persistance/mongo/MongoCourseSubscriptionRepository';
 import { CourseSubscriptionRepository } from '../../domain/CourseSubscriptionRepository';
@@ -11,12 +10,13 @@ import { CourseSubscriptionFinder } from '../services/CourseSubscriptionFinder';
 import { LessonFinder } from '../../../lessons/application/services/LessonFinder';
 import { LessonRepository } from '../../../lessons/domain/LessonRepository';
 import { MongoLessonRepository } from '../../../lessons/infrastructure/persistance/mongo/MongoLessonRepository';
+import { RabbitMQEventBus } from '../../../shared/infrastructure/EventBus/RabbitMQEventBus';
 
 @Injectable({
   dependencies: [
     MongoCourseSubscriptionRepository,
     MongoLessonRepository,
-    InMemoryAsyncEventBus,
+    RabbitMQEventBus,
   ],
 })
 export class CheckIfCourseWasCompletedOnLessonCompletedHandler extends EventHandler<LessonWasCompletedOnCourseSubscriptionEvent> {

@@ -7,9 +7,9 @@ import { LessonRepository } from '../../domain/LessonRepository';
 import { LessonFinder } from '../services/LessonFinder';
 import { MongoLessonRepository } from '../../infrastructure/persistance/mongo/MongoLessonRepository';
 import { MongoCourseRepository } from '../../../courses/infrastructure/persistance/mongo/MongoCourseRepository';
-import { InMemoryAsyncEventBus } from '../../../shared/infrastructure/EventBus/InMemoryAsyncEventBus';
 import { AuthorId } from '../../../courses/domain/AuthorId';
 import { LessonId } from '../../domain/LessonId';
+import { RabbitMQEventBus } from '../../../shared/infrastructure/EventBus/RabbitMQEventBus';
 
 export class DeleteLessonCommand {
   public readonly authorId: string;
@@ -25,7 +25,7 @@ export class DeleteLessonCommand {
   dependencies: [
     MongoLessonRepository,
     MongoCourseRepository,
-    InMemoryAsyncEventBus,
+    RabbitMQEventBus,
   ],
 })
 export class DeleteLesson extends CommandHandler<DeleteLessonCommand> {

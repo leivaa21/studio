@@ -8,10 +8,10 @@ import { LessonRepository } from '../../domain/LessonRepository';
 import { LessonTitle } from '../../domain/LessonTitle';
 import { MongoLessonRepository } from '../../infrastructure/persistance/mongo/MongoLessonRepository';
 import { MongoCourseRepository } from '../../../courses/infrastructure/persistance/mongo/MongoCourseRepository';
-import { InMemoryAsyncEventBus } from '../../../shared/infrastructure/EventBus/InMemoryAsyncEventBus';
 import { LessonId } from '../../domain/LessonId';
 import { LessonFinder } from '../services/LessonFinder';
 import { LessonContent } from '../../domain/LessonContent';
+import { RabbitMQEventBus } from '../../../shared/infrastructure/EventBus/RabbitMQEventBus';
 
 export class UpdateLessonCommand {
   public readonly authorId: string;
@@ -36,7 +36,7 @@ export class UpdateLessonCommand {
   dependencies: [
     MongoLessonRepository,
     MongoCourseRepository,
-    InMemoryAsyncEventBus,
+    RabbitMQEventBus,
   ],
 })
 export class UpdateLesson extends CommandHandler<UpdateLessonCommand> {

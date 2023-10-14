@@ -9,13 +9,13 @@ import {
 } from 'routing-controllers';
 import { Injectable } from '@studio/dependency-injection';
 import { EventBus } from '../../../contexts/shared/domain/EventBus';
-import { InMemoryAsyncEventBus } from '../../../contexts/shared/infrastructure/EventBus/InMemoryAsyncEventBus';
+import { RabbitMQEventBus } from '../../../contexts/shared/infrastructure/EventBus/RabbitMQEventBus';
 import { EventSended } from '@studio/commons';
 import { JwtMiddleware } from '../../middlewares/others/JwtMiddleware';
 import { ExternalEventsMap } from '../../mapping/external-events';
 
 @Injectable({
-  dependencies: [InMemoryAsyncEventBus],
+  dependencies: [RabbitMQEventBus],
 })
 @JsonController('/internal/event')
 export class InternalEventsController {

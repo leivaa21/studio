@@ -1,7 +1,6 @@
 import { Injectable } from '@studio/dependency-injection';
 import { DomainEventClass } from '../../../shared/domain/DomainEvent';
 import { EventHandler } from '../../../shared/application/EventHandler';
-import { InMemoryAsyncEventBus } from '../../../shared/infrastructure/EventBus/InMemoryAsyncEventBus';
 import { EventBus } from '../../../shared/domain/EventBus';
 import { UserWasDeletedEvent } from '../../domain/events/UserWasDeleted';
 import { CourseRepository } from '../../../courses/domain/CourseRepository';
@@ -18,6 +17,7 @@ import { MongoConsumerStatsRepository } from '../../../consumer-stats/infrastruc
 import { ConsumerStatsRepository } from '../../../consumer-stats/domain/ConsumerStatsRepository';
 import { MongoCourseStatsRepository } from '../../../course-stats/infrastructure/persistance/mongo/MongoCourseStatsRepository';
 import { CourseStatsRepository } from '../../../course-stats/domain/CourseStatsRepository';
+import { RabbitMQEventBus } from '../../../shared/infrastructure/EventBus/RabbitMQEventBus';
 
 @Injectable({
   dependencies: [
@@ -27,7 +27,7 @@ import { CourseStatsRepository } from '../../../course-stats/domain/CourseStatsR
     MongoAuthorStatsRepository,
     MongoConsumerStatsRepository,
     MongoCourseStatsRepository,
-    InMemoryAsyncEventBus,
+    RabbitMQEventBus,
   ],
 })
 export class DeleteUserContentOnUserDeletedHandler extends EventHandler<UserWasDeletedEvent> {

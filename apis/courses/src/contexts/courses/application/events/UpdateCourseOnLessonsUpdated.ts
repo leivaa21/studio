@@ -10,8 +10,8 @@ import { LessonContentWasUpdatedEvent } from '../../../lessons/domain/events/Les
 import { LessonWasRenamedEvent } from '../../../lessons/domain/events/LessonWasRenamed';
 import { LessonWasReorderedEvent } from '../../../lessons/domain/events/LessonWasReordered';
 import { EventHandler } from '../../../shared/application/EventHandler';
-import { InMemoryAsyncEventBus } from '../../../shared/infrastructure/EventBus/InMemoryAsyncEventBus';
 import { EventBus } from '../../../shared/domain/EventBus';
+import { RabbitMQEventBus } from '../../../shared/infrastructure/EventBus/RabbitMQEventBus';
 
 export type UpdateCourseOnLessonsUpdatedHandlerSubscribedEvents =
   | LessonWasCreatedEvent
@@ -21,7 +21,7 @@ export type UpdateCourseOnLessonsUpdatedHandlerSubscribedEvents =
   | LessonWasReorderedEvent;
 
 @Injectable({
-  dependencies: [MongoCourseRepository, InMemoryAsyncEventBus],
+  dependencies: [MongoCourseRepository, RabbitMQEventBus],
 })
 export class UpdateCourseOnLessonsUpdatedHandler extends EventHandler<UpdateCourseOnLessonsUpdatedHandlerSubscribedEvents> {
   private readonly courseFinder: CourseFinder;

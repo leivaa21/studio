@@ -4,12 +4,12 @@ import { AuthorId } from '../../domain/AuthorId';
 import { CourseRepository } from '../../domain/CourseRepository';
 import { Injectable } from '@studio/dependency-injection';
 import { MongoCourseRepository } from '../../infrastructure/persistance/mongo/MongoCourseRepository';
-import { InMemoryAsyncEventBus } from '../../../shared/infrastructure/EventBus/InMemoryAsyncEventBus';
 import { CourseId } from '../../domain/CourseId';
 import { CourseFinder } from '../services/CourseFinder';
 import { Course } from '../../domain/Course';
 import { CourseNotFoundError } from '../../domain/errors/CourseNotFoundError';
 import { CourseDescription } from '../../domain/CourseDescription';
+import { RabbitMQEventBus } from '../../../shared/infrastructure/EventBus/RabbitMQEventBus';
 
 export class UpdateCourseDescriptionCommand {
   public readonly authorId: string;
@@ -27,7 +27,7 @@ export class UpdateCourseDescriptionCommand {
 }
 
 @Injectable({
-  dependencies: [MongoCourseRepository, InMemoryAsyncEventBus],
+  dependencies: [MongoCourseRepository, RabbitMQEventBus],
 })
 export class UpdateCourseDescription extends CommandHandler<UpdateCourseDescriptionCommand> {
   private readonly courseFinder: CourseFinder;

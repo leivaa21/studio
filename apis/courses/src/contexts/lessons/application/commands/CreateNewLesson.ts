@@ -10,10 +10,10 @@ import { LessonRepository } from '../../domain/LessonRepository';
 import { LessonTitle } from '../../domain/LessonTitle';
 import { MongoLessonRepository } from '../../infrastructure/persistance/mongo/MongoLessonRepository';
 import { MongoCourseRepository } from '../../../courses/infrastructure/persistance/mongo/MongoCourseRepository';
-import { InMemoryAsyncEventBus } from '../../../shared/infrastructure/EventBus/InMemoryAsyncEventBus';
 import { LessonFinder } from '../services/LessonFinder';
 import { LessonOrder } from '../../domain/LessonOrder';
 import { LessonContent } from '../../domain/LessonContent';
+import { RabbitMQEventBus } from '../../../shared/infrastructure/EventBus/RabbitMQEventBus';
 
 export class CreateNewLessonCommand {
   public readonly authorId: string;
@@ -38,7 +38,7 @@ export class CreateNewLessonCommand {
   dependencies: [
     MongoLessonRepository,
     MongoCourseRepository,
-    InMemoryAsyncEventBus,
+    RabbitMQEventBus,
   ],
 })
 export class CreateNewLesson extends CommandHandler<CreateNewLessonCommand> {

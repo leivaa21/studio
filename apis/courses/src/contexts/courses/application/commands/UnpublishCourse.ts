@@ -4,9 +4,9 @@ import { AuthorId } from '../../domain/AuthorId';
 import { CourseRepository } from '../../domain/CourseRepository';
 import { Injectable } from '@studio/dependency-injection';
 import { MongoCourseRepository } from '../../infrastructure/persistance/mongo/MongoCourseRepository';
-import { InMemoryAsyncEventBus } from '../../../shared/infrastructure/EventBus/InMemoryAsyncEventBus';
 import { CourseId } from '../../domain/CourseId';
 import { CourseFinder } from '../services/CourseFinder';
+import { RabbitMQEventBus } from '../../../shared/infrastructure/EventBus/RabbitMQEventBus';
 
 export class UnpublishCourseCommand {
   public readonly authorId: string;
@@ -18,7 +18,7 @@ export class UnpublishCourseCommand {
 }
 
 @Injectable({
-  dependencies: [MongoCourseRepository, InMemoryAsyncEventBus],
+  dependencies: [MongoCourseRepository, RabbitMQEventBus],
 })
 export class UnpublishCourse extends CommandHandler<UnpublishCourseCommand> {
   private readonly courseFinder: CourseFinder;

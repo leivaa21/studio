@@ -1,7 +1,6 @@
 import { CommandHandler } from '../../../shared/application/CommandHandler';
 import { EventBus } from '../../../shared/domain/EventBus';
 import { Injectable } from '@studio/dependency-injection';
-import { InMemoryAsyncEventBus } from '../../../shared/infrastructure/EventBus/InMemoryAsyncEventBus';
 import { CourseSubscriptionRepository } from '../../domain/CourseSubscriptionRepository';
 import { CourseSubscriptionFinder } from '../services/CourseSubscriptionFinder';
 import { UserId } from '../../domain/UserId';
@@ -10,6 +9,7 @@ import { LessonRepository } from '../../../lessons/domain/LessonRepository';
 import { LessonId } from '../../../lessons/domain/LessonId';
 import { LessonFinder } from '../../../lessons/application/services/LessonFinder';
 import { MongoLessonRepository } from '../../../lessons/infrastructure/persistance/mongo/MongoLessonRepository';
+import { RabbitMQEventBus } from '../../../shared/infrastructure/EventBus/RabbitMQEventBus';
 
 export class MarkLessonAsCompletedCommand {
   public readonly lessonId: string;
@@ -24,7 +24,7 @@ export class MarkLessonAsCompletedCommand {
   dependencies: [
     MongoCourseSubscriptionRepository,
     MongoLessonRepository,
-    InMemoryAsyncEventBus,
+    RabbitMQEventBus,
   ],
 })
 export class MarkLessonAsCompleted extends CommandHandler<MarkLessonAsCompletedCommand> {
