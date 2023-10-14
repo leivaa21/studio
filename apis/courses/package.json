@@ -20,6 +20,7 @@
     "@studio/api-utils": "workspace:packages/api-utils",
     "@studio/commons": "workspace:packages/commons",
     "@studio/dependency-injection": "workspace:packages/dependency-injection",
+    "amqplib": "^0.10.3",
     "class-transformer": "0.4.0",
     "class-validator": "^0.14.0",
     "express": "4.18.2",
@@ -34,6 +35,7 @@
   },
   "devDependencies": {
     "@faker-js/faker": "^7.6.0",
+    "@types/amqplib": "^0.10.2",
     "@types/body-parser": "^1.19.2",
     "@types/dotenv": "^8.2.0",
     "@types/express": "^4.17.14",
