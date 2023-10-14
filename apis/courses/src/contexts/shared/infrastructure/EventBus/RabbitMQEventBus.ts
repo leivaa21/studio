@@ -7,6 +7,7 @@ import { DomainEventSubscriber } from '../../domain/DomainEventSubscriber';
 import { EventBus } from '../../domain/EventBus';
 import { env } from '../../../../api/config/env';
 import { sleep } from '../../../../utils/sleep';
+import { error, info } from '@studio/api-utils';
 
 const RETRY_TIME = 3000;
 
@@ -47,14 +48,11 @@ export class RabbitMQEventBus implements EventBus {
         },
         { noAck: true }
       );
-      console.info('Connected EventBus to RabbitMQ');
+      info('Connected EventBus to RabbitMQ');
       this.channel = channel;
       this.queueName = queueName;
     } catch (err) {
-      console.error(
-        `Error connecting to rabbit, retrying on ${RETRY_TIME}ms\n`,
-        err
-      );
+      error(`Error connecting to rabbit, retrying on ${RETRY_TIME}ms\n ${err}`);
       await sleep(RETRY_TIME);
       this.intialize();
     }
