@@ -4,6 +4,9 @@ import { DomainEvent } from '../../domain/DomainEvent';
 import { DomainEventSubscriber } from '../../domain/DomainEventSubscriber';
 import { EventBus } from '../../domain/EventBus';
 
+/**
+ * @deprecated
+ */
 @Injectable()
 export class InMemoryAsyncEventBus extends EventEmitter implements EventBus {
   async publish(events: Array<DomainEvent>): Promise<void> {
