@@ -1,6 +1,5 @@
 import { Injectable } from '@studio/dependency-injection';
 import { QueryHandler } from '../../../shared/application/QueryHandler';
-import { MongoCourseSubscriptionRepository } from '../../infrastructure/persistance/mongo/MongoCourseSubscriptionRepository';
 import { CourseSubscriptionFinder } from '../services/CourseSubscriptionFinder';
 import { CourseSubscriptionRepository } from '../../domain/CourseSubscriptionRepository';
 import { UserId } from '../../domain/UserId';
@@ -15,7 +14,7 @@ export class GetUserCourseSubscriptionsQuery {
 }
 
 @Injectable({
-  dependencies: [MongoCourseSubscriptionRepository],
+  dependencies: [CourseSubscriptionRepository],
 })
 export class GetUserCourseSubscriptions
   implements

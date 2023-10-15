@@ -4,7 +4,6 @@ import { AuthorStats } from '../../domain/AuthorStats';
 import { AuthorStatsFinder } from '../services/AuthorStatsFinder';
 import { AuthorStatsRepository } from '../../domain/AuthorStatsRepository';
 import { AuthorId } from '../../../courses/domain/AuthorId';
-import { MongoAuthorStatsRepository } from '../../infrastructure/persistance/mongo/MongoAuthorStatsRepository';
 
 export class GetAuthorStatsQuery {
   public readonly authorId: string;
@@ -15,7 +14,7 @@ export class GetAuthorStatsQuery {
 }
 
 @Injectable({
-  dependencies: [MongoAuthorStatsRepository],
+  dependencies: [AuthorStatsRepository],
 })
 export class GetAuthorStats
   implements QueryHandler<GetAuthorStatsQuery, AuthorStats>

@@ -14,11 +14,10 @@ import { ChangeEmailRequest } from '@studio/commons';
 
 import { AuthUser } from '../../auth/authUser';
 import { CommandBus } from '../../../contexts/shared/domain/CommandBus';
-import { InMemoryCommandBus } from '../../../contexts/shared/infrastructure/CommandBus/InMemoryCommandBus';
 import { ChangeEmailCommand } from '../../../contexts/users/application/commands/ChangeEmail';
 
 @Injectable({
-  dependencies: [InMemoryCommandBus],
+  dependencies: [CommandBus],
 })
 @JsonController('/user/email')
 export class ChangeEmailController {

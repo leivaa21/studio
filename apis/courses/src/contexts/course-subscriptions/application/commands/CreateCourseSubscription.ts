@@ -1,7 +1,6 @@
 import { CommandHandler } from '../../../shared/application/CommandHandler';
 import { EventBus } from '../../../shared/domain/EventBus';
 import { Injectable } from '@studio/dependency-injection';
-import { MongoCourseRepository } from '../../../courses/infrastructure/persistance/mongo/MongoCourseRepository';
 import { CourseRepository } from '../../../courses/domain/CourseRepository';
 import { CourseFinder } from '../../../courses/application/services/CourseFinder';
 import { CourseSubscriptionRepository } from '../../domain/CourseSubscriptionRepository';
@@ -10,8 +9,6 @@ import { CourseId } from '../../../courses/domain/CourseId';
 import { UserId } from '../../domain/UserId';
 import { CourseSubscription } from '../../domain/CourseSubscription';
 import { InvalidCourseSubscriptionError } from '../../domain/errors/InvalidCourseSubscriptionError';
-import { MongoCourseSubscriptionRepository } from '../../infrastructure/persistance/mongo/MongoCourseSubscriptionRepository';
-import { RabbitMQEventBus } from '../../../shared/infrastructure/EventBus/RabbitMQEventBus';
 
 export class CreateCourseSubscriptionCommand {
   public readonly courseId: string;
@@ -23,11 +20,7 @@ export class CreateCourseSubscriptionCommand {
 }
 
 @Injectable({
-  dependencies: [
-    MongoCourseSubscriptionRepository,
-    MongoCourseRepository,
-    RabbitMQEventBus,
-  ],
+  dependencies: [CourseSubscriptionRepository, CourseRepository, EventBus],
 })
 export class CreateCourseSubscription extends CommandHandler<CreateCourseSubscriptionCommand> {
   private readonly courseSubscriptionFinder: CourseSubscriptionFinder;

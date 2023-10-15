@@ -2,14 +2,12 @@ import { Injectable } from '@studio/dependency-injection';
 import { DomainEventClass } from '../../../shared/domain/DomainEvent';
 import { EventHandler } from '../../../shared/application/EventHandler';
 import { EventBus } from '../../../shared/domain/EventBus';
-import { MongoCourseSubscriptionRepository } from '../../infrastructure/persistance/mongo/MongoCourseSubscriptionRepository';
 import { CourseSubscriptionRepository } from '../../domain/CourseSubscriptionRepository';
 import { CourseWasUnpublishedEvent } from '../../../courses/domain/events/CourseWasUnpublished';
 import { CourseId } from '../../../courses/domain/CourseId';
-import { RabbitMQEventBus } from '../../../shared/infrastructure/EventBus/RabbitMQEventBus';
 
 @Injectable({
-  dependencies: [MongoCourseSubscriptionRepository, RabbitMQEventBus],
+  dependencies: [CourseSubscriptionRepository, EventBus],
 })
 export class RemoveCourseSubscriptionsOnUnpublishedHandler extends EventHandler<CourseWasUnpublishedEvent> {
   public constructor(

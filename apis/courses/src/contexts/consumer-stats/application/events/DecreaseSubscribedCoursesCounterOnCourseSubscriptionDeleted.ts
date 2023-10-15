@@ -2,13 +2,12 @@ import { Injectable } from '@studio/dependency-injection';
 import { DomainEventClass } from '../../../shared/domain/DomainEvent';
 import { EventHandler } from '../../../shared/application/EventHandler';
 import { CourseSubscriptionWasDeletedEvent } from '../../../course-subscriptions/domain/events/CourseSubscriptionWasDeleted';
-import { MongoConsumerStatsRepository } from '../../infrastructure/persistance/mongo/MongoConsumerStatsRepository';
 import { ConsumerStatsRepository } from '../../domain/ConsumerStatsRepository';
 import { ConsumerStatsFinder } from '../services/ConsumerStatsFinder';
 import { UserId } from '../../../course-subscriptions/domain/UserId';
 
 @Injectable({
-  dependencies: [MongoConsumerStatsRepository],
+  dependencies: [ConsumerStatsRepository],
 })
 export class DecreaseSubscribedCoursesCounterOnCourseSubscriptionDeletedHandler extends EventHandler<CourseSubscriptionWasDeletedEvent> {
   private readonly consumerStatsFinder: ConsumerStatsFinder;

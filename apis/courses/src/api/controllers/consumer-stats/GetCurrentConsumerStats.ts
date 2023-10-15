@@ -11,13 +11,12 @@ import { StatusCode } from '@studio/api-utils';
 import { CurrentConsumerStatsResponse } from '@studio/commons';
 
 import { QueryBus } from '../../../contexts/shared/domain/QueryBus';
-import { InMemoryQueryBus } from '../../../contexts/shared/infrastructure/QueryBus/InMemoryQueryBus';
 import { User } from '../../auth/user';
 import { GetConsumerStatsQuery } from '../../../contexts/consumer-stats/application/queries/GetConsumerStats';
 import { ConsumerStats } from '../../../contexts/consumer-stats/domain/ConsumerStats';
 
 @Injectable({
-  dependencies: [InMemoryQueryBus],
+  dependencies: [QueryBus],
 })
 @JsonController('/consumer-stats')
 export class GetCurrentConsumerStatsController {

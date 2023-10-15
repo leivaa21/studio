@@ -1,6 +1,5 @@
 import { DependencyContainer } from '@studio/dependency-injection';
 import { CommandBus } from '../../../../contexts/shared/domain/CommandBus';
-import { InMemoryCommandBus } from '../../../../contexts/shared/infrastructure/CommandBus/InMemoryCommandBus';
 import {
   CreateCourseSubscription,
   CreateCourseSubscriptionCommand,
@@ -14,7 +13,7 @@ import {
   MarkLessonAsCompletedCommand,
 } from '../../../../contexts/course-subscriptions/application/commands/MarkLessonAsCompleted';
 
-const commandBus = DependencyContainer.get<CommandBus>(InMemoryCommandBus);
+const commandBus = DependencyContainer.get<CommandBus>(CommandBus);
 
 commandBus.subscribe(CreateCourseSubscriptionCommand, CreateCourseSubscription);
 commandBus.subscribe(DeleteCourseSubscriptionCommand, DeleteCourseSubscription);

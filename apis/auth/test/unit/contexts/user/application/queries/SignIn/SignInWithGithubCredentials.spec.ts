@@ -2,14 +2,14 @@ import { mock } from 'jest-mock-extended';
 
 import { InMemoryUserRepository } from '../../../../../../../src/contexts/users/infrastructure/persistance/InMemoryUserRepository';
 import { UserBuilder } from '../../../../../../helpers/builders/user/UserBuilder';
-import { InMemoryCommandBus } from '../../../../../../../src/contexts/shared/infrastructure/CommandBus/InMemoryCommandBus';
 import { UserRepository } from '../../../../../../../src/contexts/users/domain/UserRepository';
 import { NumberMother } from '../../../../../../helpers/object-mother/NumberMother';
 import { GithubId } from '../../../../../../../src/contexts/users/domain/GithubId';
 import { SignInWithGithubCredentialsHandler } from '../../../../../../../src/contexts/users/application/queries/SignIn/SignInWithGithubCredentials';
 import { RegisterNewUserGithubCredentialsCommand } from '../../../../../../../src/contexts/users/application/commands/RegisterNewUser/RegisterNewUserGithubCredentials';
+import { CommandBus } from '../../../../../../../src/contexts/shared/domain/CommandBus';
 
-const commandBus = mock<InMemoryCommandBus>();
+const commandBus = mock<CommandBus>();
 
 describe('Sign In User with Github Credentials', () => {
   it('Should validate a valid user', async () => {

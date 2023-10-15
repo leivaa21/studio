@@ -3,12 +3,11 @@ import { GetUserNicknameResponse } from '@studio/commons';
 import { Injectable } from '@studio/dependency-injection';
 import { JsonController, HttpCode, Get, Param } from 'routing-controllers';
 import { QueryBus } from '../../../contexts/shared/domain/QueryBus';
-import { InMemoryQueryBus } from '../../../contexts/shared/infrastructure/QueryBus/InMemoryQueryBus';
 import { GetUserByIdQuery } from '../../../contexts/users/application/queries/GetUser/GetUserById';
 import { User } from '../../../contexts/users/domain/User';
 
 @Injectable({
-  dependencies: [InMemoryQueryBus],
+  dependencies: [QueryBus],
 })
 @JsonController('/user/:id')
 export class GetUserNicknameController {

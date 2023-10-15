@@ -1,7 +1,6 @@
 import { DependencyContainer } from '@studio/dependency-injection';
 
 import { EventBus } from '../../../contexts/shared/domain/EventBus';
-import { RabbitMQEventBus } from '../../../contexts/shared/infrastructure/EventBus/RabbitMQEventBus';
 import { DomainEventSubscriber } from '../../../contexts/shared/domain/DomainEventSubscriber';
 import { DomainEventClass } from '../../../contexts/shared/domain/DomainEvent';
 
@@ -12,7 +11,7 @@ export const ExternalEventsMap: Map<string, DomainEventClass> = new Map([
   [UserWasDeletedEvent.EVENT_NAME, UserWasDeletedEvent],
 ]);
 
-const eventBus = DependencyContainer.get<EventBus>(RabbitMQEventBus);
+const eventBus = DependencyContainer.get<EventBus>(EventBus);
 
 const deleteUserContentOnUserDeletedHandler = DependencyContainer.get<
   DomainEventSubscriber<UserWasDeletedEvent>

@@ -3,7 +3,6 @@ import { DomainEventClass } from '../../../shared/domain/DomainEvent';
 import { CourseId } from '../../domain/CourseId';
 import { CourseRepository } from '../../domain/CourseRepository';
 import { CourseFinder } from '../../application/services/CourseFinder';
-import { MongoCourseRepository } from '../../infrastructure/persistance/mongo/MongoCourseRepository';
 import { LessonWasCreatedEvent } from '../../../lessons/domain/events/LessonWasCreated';
 import { LessonWasDeletedEvent } from '../../../lessons/domain/events/LessonWasDeleted';
 import { LessonContentWasUpdatedEvent } from '../../../lessons/domain/events/LessonContentWasUpdated';
@@ -11,7 +10,6 @@ import { LessonWasRenamedEvent } from '../../../lessons/domain/events/LessonWasR
 import { LessonWasReorderedEvent } from '../../../lessons/domain/events/LessonWasReordered';
 import { EventHandler } from '../../../shared/application/EventHandler';
 import { EventBus } from '../../../shared/domain/EventBus';
-import { RabbitMQEventBus } from '../../../shared/infrastructure/EventBus/RabbitMQEventBus';
 
 export type UpdateCourseOnLessonsUpdatedHandlerSubscribedEvents =
   | LessonWasCreatedEvent
@@ -21,7 +19,7 @@ export type UpdateCourseOnLessonsUpdatedHandlerSubscribedEvents =
   | LessonWasReorderedEvent;
 
 @Injectable({
-  dependencies: [MongoCourseRepository, RabbitMQEventBus],
+  dependencies: [CourseRepository, EventBus],
 })
 export class UpdateCourseOnLessonsUpdatedHandler extends EventHandler<UpdateCourseOnLessonsUpdatedHandlerSubscribedEvents> {
   private readonly courseFinder: CourseFinder;

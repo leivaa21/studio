@@ -1,11 +1,9 @@
 import { Injectable } from '@studio/dependency-injection';
 import { CommandHandler } from '../../../../shared/application/CommandHandler';
 import { EventBus } from '../../../../shared/domain/EventBus';
-import { InMemoryAsyncEventBus } from '../../../../shared/infrastructure/EventBus/InMemoryAsyncEventBus';
 import { User } from '../../../domain/User';
 import { UserNickname } from '../../../domain/UserNickname';
 import { UserRepository } from '../../../domain/UserRepository';
-import { MongoUserRepository } from '../../../infrastructure/persistance/mongo/MongoUserRepository';
 import { UserFinder } from '../../../domain/services/UserFinder';
 import { GithubId } from '../../../domain/GithubId';
 import { UserGithubCredentials } from '../../../domain/UserGithubCredentials';
@@ -20,7 +18,7 @@ export class RegisterNewUserGithubCredentialsCommand {
 }
 
 @Injectable({
-  dependencies: [MongoUserRepository, InMemoryAsyncEventBus],
+  dependencies: [UserRepository, EventBus],
 })
 export class RegisterNewUserGithubCredentials extends CommandHandler<RegisterNewUserGithubCredentialsCommand> {
   private readonly userFinder: UserFinder;

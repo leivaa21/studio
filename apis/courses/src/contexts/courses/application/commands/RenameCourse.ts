@@ -4,12 +4,10 @@ import { AuthorId } from '../../domain/AuthorId';
 import { CourseTitle } from '../../domain/CourseTitle';
 import { CourseRepository } from '../../domain/CourseRepository';
 import { Injectable } from '@studio/dependency-injection';
-import { MongoCourseRepository } from '../../infrastructure/persistance/mongo/MongoCourseRepository';
 import { CourseId } from '../../domain/CourseId';
 import { CourseFinder } from '../services/CourseFinder';
 import { Course } from '../../domain/Course';
 import { CourseNotFoundError } from '../../domain/errors/CourseNotFoundError';
-import { RabbitMQEventBus } from '../../../shared/infrastructure/EventBus/RabbitMQEventBus';
 
 export class RenameCourseCommand {
   public readonly authorId: string;
@@ -24,7 +22,7 @@ export class RenameCourseCommand {
 }
 
 @Injectable({
-  dependencies: [MongoCourseRepository, RabbitMQEventBus],
+  dependencies: [CourseRepository, EventBus],
 })
 export class RenameCourse extends CommandHandler<RenameCourseCommand> {
   private readonly courseFinder: CourseFinder;

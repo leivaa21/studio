@@ -2,22 +2,15 @@ import { Injectable } from '@studio/dependency-injection';
 import { DomainEventClass } from '../../../shared/domain/DomainEvent';
 import { EventHandler } from '../../../shared/application/EventHandler';
 import { EventBus } from '../../../shared/domain/EventBus';
-import { MongoCourseSubscriptionRepository } from '../../infrastructure/persistance/mongo/MongoCourseSubscriptionRepository';
 import { CourseSubscriptionRepository } from '../../domain/CourseSubscriptionRepository';
 import { LessonWasCompletedOnCourseSubscriptionEvent } from '../../domain/events/LessonWasCompletedOnCourseSubscription';
 import { CourseSubscriptionId } from '../../domain/CourseSubscriptionId';
 import { CourseSubscriptionFinder } from '../services/CourseSubscriptionFinder';
 import { LessonFinder } from '../../../lessons/application/services/LessonFinder';
 import { LessonRepository } from '../../../lessons/domain/LessonRepository';
-import { MongoLessonRepository } from '../../../lessons/infrastructure/persistance/mongo/MongoLessonRepository';
-import { RabbitMQEventBus } from '../../../shared/infrastructure/EventBus/RabbitMQEventBus';
 
 @Injectable({
-  dependencies: [
-    MongoCourseSubscriptionRepository,
-    MongoLessonRepository,
-    RabbitMQEventBus,
-  ],
+  dependencies: [CourseSubscriptionRepository, LessonRepository, EventBus],
 })
 export class CheckIfCourseWasCompletedOnLessonCompletedHandler extends EventHandler<LessonWasCompletedOnCourseSubscriptionEvent> {
   private readonly courseSubscriptionFinder: CourseSubscriptionFinder;

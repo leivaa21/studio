@@ -4,12 +4,9 @@ import { Injectable } from '@studio/dependency-injection';
 import { CourseSubscriptionRepository } from '../../domain/CourseSubscriptionRepository';
 import { CourseSubscriptionFinder } from '../services/CourseSubscriptionFinder';
 import { UserId } from '../../domain/UserId';
-import { MongoCourseSubscriptionRepository } from '../../infrastructure/persistance/mongo/MongoCourseSubscriptionRepository';
 import { LessonRepository } from '../../../lessons/domain/LessonRepository';
 import { LessonId } from '../../../lessons/domain/LessonId';
 import { LessonFinder } from '../../../lessons/application/services/LessonFinder';
-import { MongoLessonRepository } from '../../../lessons/infrastructure/persistance/mongo/MongoLessonRepository';
-import { RabbitMQEventBus } from '../../../shared/infrastructure/EventBus/RabbitMQEventBus';
 
 export class MarkLessonAsCompletedCommand {
   public readonly lessonId: string;
@@ -21,11 +18,7 @@ export class MarkLessonAsCompletedCommand {
 }
 
 @Injectable({
-  dependencies: [
-    MongoCourseSubscriptionRepository,
-    MongoLessonRepository,
-    RabbitMQEventBus,
-  ],
+  dependencies: [CourseSubscriptionRepository, LessonRepository, EventBus],
 })
 export class MarkLessonAsCompleted extends CommandHandler<MarkLessonAsCompletedCommand> {
   private readonly courseSubscriptionFinder: CourseSubscriptionFinder;

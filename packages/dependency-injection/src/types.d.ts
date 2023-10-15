@@ -11,3 +11,8 @@ type DependencyName = string;
 export type InjectableOptions = {
 	dependencies: Array<Constructor<any>>;
 };
+
+export type ImplementationInfo<T> = {
+	constructor: Constructor<T>;
+	implementation: T;
+};

@@ -3,7 +3,6 @@ import { QueryHandler } from '../../../shared/application/QueryHandler';
 import { Course } from '../../domain/Course';
 import { CourseRepository } from '../../domain/CourseRepository';
 import { CourseFinder } from '../services/CourseFinder';
-import { MongoCourseRepository } from '../../infrastructure/persistance/mongo/MongoCourseRepository';
 
 export class GetPublishedCoursesFilteredQuery {
   public readonly with?: {
@@ -22,7 +21,7 @@ export class GetPublishedCoursesFilteredQuery {
 }
 
 @Injectable({
-  dependencies: [MongoCourseRepository],
+  dependencies: [CourseRepository],
 })
 export class GetPublishedCoursesFiltered
   implements QueryHandler<GetPublishedCoursesFilteredQuery, Course[]>

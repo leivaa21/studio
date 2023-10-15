@@ -16,11 +16,10 @@ import { StringMother } from '../../helpers/object-mother/StringMother';
 
 import { app } from '../../../src/api/app';
 import { UserRepository } from '../../../src/contexts/users/domain/UserRepository';
-import { MongoUserRepository } from '../../../src/contexts/users/infrastructure/persistance/mongo/MongoUserRepository';
 import { UserNickname } from '../../../src/contexts/users/domain/UserNickname';
 
 let mongoContainer: StartedTestContainer;
-const repository = DependencyContainer.get<UserRepository>(MongoUserRepository);
+const repository = DependencyContainer.get<UserRepository>(UserRepository);
 const route = '/auth/signup/basic';
 
 beforeAll(async () => {

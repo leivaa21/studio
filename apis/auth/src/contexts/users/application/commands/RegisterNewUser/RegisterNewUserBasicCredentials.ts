@@ -1,7 +1,6 @@
 import { Injectable } from '@studio/dependency-injection';
 import { CommandHandler } from '../../../../shared/application/CommandHandler';
 import { EventBus } from '../../../../shared/domain/EventBus';
-import { InMemoryAsyncEventBus } from '../../../../shared/infrastructure/EventBus/InMemoryAsyncEventBus';
 import { InvalidUserError } from '../../../domain/errors/UserInvalid';
 import { UserFinder } from '../../../domain/services/UserFinder';
 import { User } from '../../../domain/User';
@@ -10,7 +9,6 @@ import { UserEmail } from '../../../domain/UserEmail';
 import { UserNickname } from '../../../domain/UserNickname';
 import { UserPassword } from '../../../domain/UserPassword';
 import { UserRepository } from '../../../domain/UserRepository';
-import { MongoUserRepository } from '../../../infrastructure/persistance/mongo/MongoUserRepository';
 
 export class RegisterNewUserBasicCredentialsCommand {
   public readonly nickname: string;
@@ -24,7 +22,7 @@ export class RegisterNewUserBasicCredentialsCommand {
 }
 
 @Injectable({
-  dependencies: [MongoUserRepository, InMemoryAsyncEventBus],
+  dependencies: [UserRepository, EventBus],
 })
 export class RegisterNewUserBasicCredentials extends CommandHandler<RegisterNewUserBasicCredentialsCommand> {
   private readonly userFinder: UserFinder;

@@ -7,14 +7,13 @@ import {
   QueryParam,
 } from 'routing-controllers';
 import { Injectable } from '@studio/dependency-injection';
-import { InMemoryQueryBus } from '../../../contexts/shared/infrastructure/QueryBus/InMemoryQueryBus';
 import { QueryBus } from '../../../contexts/shared/domain/QueryBus';
 import { Course } from '../../../contexts/courses/domain/Course';
 import { CourseInfoResponse } from '@studio/commons';
 import { GetPublishedCoursesFilteredQuery } from '../../../contexts/courses/application/queries/GetPublishedCoursesFiltered';
 
 @Injectable({
-  dependencies: [InMemoryQueryBus],
+  dependencies: [QueryBus],
 })
 @JsonController('/courses')
 export class GetPublishedCoursesPaginatedController {

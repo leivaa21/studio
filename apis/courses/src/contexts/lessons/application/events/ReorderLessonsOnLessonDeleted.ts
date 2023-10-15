@@ -3,14 +3,12 @@ import { DomainEventClass } from '../../../shared/domain/DomainEvent';
 import { LessonWasDeletedEvent } from '../../../lessons/domain/events/LessonWasDeleted';
 import { EventHandler } from '../../../shared/application/EventHandler';
 import { EventBus } from '../../../shared/domain/EventBus';
-import { MongoLessonRepository } from '../../infrastructure/persistance/mongo/MongoLessonRepository';
 import { LessonRepository } from '../../domain/LessonRepository';
 import { CourseId } from '../../../courses/domain/CourseId';
 import { LessonFinder } from '../services/LessonFinder';
-import { RabbitMQEventBus } from '../../../shared/infrastructure/EventBus/RabbitMQEventBus';
 
 @Injectable({
-  dependencies: [MongoLessonRepository, RabbitMQEventBus],
+  dependencies: [LessonRepository, EventBus],
 })
 export class ReorderLessonsOnLessonDeletedHandler extends EventHandler<LessonWasDeletedEvent> {
   private readonly lessonFinder: LessonFinder;

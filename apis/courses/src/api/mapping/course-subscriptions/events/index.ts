@@ -1,7 +1,6 @@
 import { DependencyContainer } from '@studio/dependency-injection';
 
 import { EventBus } from '../../../../contexts/shared/domain/EventBus';
-import { RabbitMQEventBus } from '../../../../contexts/shared/infrastructure/EventBus/RabbitMQEventBus';
 import { DomainEventSubscriber } from '../../../../contexts/shared/domain/DomainEventSubscriber';
 
 import { RemoveCourseSubscriptionsOnUnpublishedHandler } from '../../../../contexts/course-subscriptions/application/events/RemoveCourseSubscriptionsOnUnpublished';
@@ -15,7 +14,7 @@ import { UpdateCourseSubscriptionOnLessonContentUpdatedHandler } from '../../../
 import { LessonWasCreatedEvent } from '../../../../contexts/lessons/domain/events/LessonWasCreated';
 import { MarkCourseSubscriptionAsNonCompletedOnLessonCreatedHandler } from '../../../../contexts/course-subscriptions/application/events/MarkCourseSubscriptionAsNonCompletedOnLessonCreated';
 
-const eventBus = DependencyContainer.get<EventBus>(RabbitMQEventBus);
+const eventBus = DependencyContainer.get<EventBus>(EventBus);
 
 const markCourseSubscriptionAsNonCompletedOnLessonCreated =
   DependencyContainer.get<DomainEventSubscriber<LessonWasCreatedEvent>>(

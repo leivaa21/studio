@@ -1,6 +1,5 @@
 import { DependencyContainer } from '@studio/dependency-injection';
 import { QueryBus } from '../../../../contexts/shared/domain/QueryBus';
-import { InMemoryQueryBus } from '../../../../contexts/shared/infrastructure/QueryBus/InMemoryQueryBus';
 import {
   GetUserByEmailHandler,
   GetUserByEmailQuery,
@@ -21,7 +20,7 @@ import {
   SignInWithGithubCredentialsHandler,
   SignInWithGithubCredentialsQuery,
 } from '../../../../contexts/users/application/queries/SignIn/SignInWithGithubCredentials';
-const queryBus = DependencyContainer.get<QueryBus>(InMemoryQueryBus);
+const queryBus = DependencyContainer.get<QueryBus>(QueryBus);
 
 queryBus.subscribe(GetUserByEmailQuery, GetUserByEmailHandler);
 queryBus.subscribe(GetUserByIdQuery, GetUserByIdHandler);

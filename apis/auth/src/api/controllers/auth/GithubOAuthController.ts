@@ -8,14 +8,13 @@ import {
 } from 'routing-controllers';
 import { env } from '../../config/env';
 import { StatusCode, error } from '@studio/api-utils';
-import { InMemoryQueryBus } from '../../../contexts/shared/infrastructure/QueryBus/InMemoryQueryBus';
 import { QueryBus } from '../../../contexts/shared/domain/QueryBus';
 import { signJwt } from '../../auth/signJwt';
 import { User } from '../../../contexts/users/domain/User';
 import { SignInWithGithubCredentialsQuery } from '../../../contexts/users/application/queries/SignIn/SignInWithGithubCredentials';
 
 @Injectable({
-  dependencies: [InMemoryQueryBus],
+  dependencies: [QueryBus],
 })
 @JsonController('/auth/github')
 export class GithubOauthController {

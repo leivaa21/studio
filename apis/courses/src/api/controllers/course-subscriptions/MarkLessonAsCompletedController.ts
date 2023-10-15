@@ -11,12 +11,11 @@ import { StatusCode } from '@studio/api-utils';
 import { Injectable } from '@studio/dependency-injection';
 
 import { User } from '../../auth/user';
-import { InMemoryCommandBus } from '../../../contexts/shared/infrastructure/CommandBus/InMemoryCommandBus';
 import { CommandBus } from '../../../contexts/shared/domain/CommandBus';
 import { MarkLessonAsCompletedCommand } from '../../../contexts/course-subscriptions/application/commands/MarkLessonAsCompleted';
 
 @Injectable({
-  dependencies: [InMemoryCommandBus],
+  dependencies: [CommandBus],
 })
 @JsonController('/course-subscription')
 export class MarkLessonAsCompletedController {

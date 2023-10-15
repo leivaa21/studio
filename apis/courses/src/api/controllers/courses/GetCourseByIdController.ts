@@ -5,12 +5,11 @@ import { StatusCode } from '@studio/api-utils';
 import { CourseInfoResponse } from '@studio/commons';
 
 import { QueryBus } from '../../../contexts/shared/domain/QueryBus';
-import { InMemoryQueryBus } from '../../../contexts/shared/infrastructure/QueryBus/InMemoryQueryBus';
 import { GetCourseByIdQuery } from '../../../contexts/courses/application/queries/GetCourseById';
 import { Course } from '../../../contexts/courses/domain/Course';
 
 @Injectable({
-  dependencies: [InMemoryQueryBus],
+  dependencies: [QueryBus],
 })
 @JsonController('/course')
 export class GetCourseByIdController {

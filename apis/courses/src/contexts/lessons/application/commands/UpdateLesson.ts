@@ -6,12 +6,9 @@ import { CommandHandler } from '../../../shared/application/CommandHandler';
 import { EventBus } from '../../../shared/domain/EventBus';
 import { LessonRepository } from '../../domain/LessonRepository';
 import { LessonTitle } from '../../domain/LessonTitle';
-import { MongoLessonRepository } from '../../infrastructure/persistance/mongo/MongoLessonRepository';
-import { MongoCourseRepository } from '../../../courses/infrastructure/persistance/mongo/MongoCourseRepository';
 import { LessonId } from '../../domain/LessonId';
 import { LessonFinder } from '../services/LessonFinder';
 import { LessonContent } from '../../domain/LessonContent';
-import { RabbitMQEventBus } from '../../../shared/infrastructure/EventBus/RabbitMQEventBus';
 
 export class UpdateLessonCommand {
   public readonly authorId: string;
@@ -33,11 +30,7 @@ export class UpdateLessonCommand {
 }
 
 @Injectable({
-  dependencies: [
-    MongoLessonRepository,
-    MongoCourseRepository,
-    RabbitMQEventBus,
-  ],
+  dependencies: [LessonRepository, CourseRepository, EventBus],
 })
 export class UpdateLesson extends CommandHandler<UpdateLessonCommand> {
   private readonly lessonFinder: LessonFinder;

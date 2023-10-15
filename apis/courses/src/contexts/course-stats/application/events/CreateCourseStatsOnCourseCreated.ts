@@ -2,13 +2,12 @@ import { Injectable } from '@studio/dependency-injection';
 import { DomainEventClass } from '../../../shared/domain/DomainEvent';
 import { EventHandler } from '../../../shared/application/EventHandler';
 import { CourseId } from '../../../courses/domain/CourseId';
-import { MongoCourseStatsRepository } from '../../infrastructure/persistance/mongo/MongoCourseStatsRepository';
 import { CourseStatsRepository } from '../../domain/CourseStatsRepository';
 import { CourseWasCreatedEvent } from '../../../courses/domain/events/CourseWasCreated';
 import { CourseStats } from '../../domain/CourseStats';
 
 @Injectable({
-  dependencies: [MongoCourseStatsRepository],
+  dependencies: [CourseStatsRepository],
 })
 export class CreateCourseStatsOnCourseCreatedHandler extends EventHandler<CourseWasCreatedEvent> {
   public constructor(

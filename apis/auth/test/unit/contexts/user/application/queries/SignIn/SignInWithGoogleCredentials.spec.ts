@@ -6,13 +6,13 @@ import { InvalidCredentialsError } from '../../../../../../../src/contexts/users
 import { StringMother } from '../../../../../../helpers/object-mother/StringMother';
 import { GoogleId } from '../../../../../../../src/contexts/users/domain/GoogleId';
 import { SignInWithGoogleCredentialsHandler } from '../../../../../../../src/contexts/users/application/queries/SignIn/SignInWithGoogleCredentials';
-import { InMemoryCommandBus } from '../../../../../../../src/contexts/shared/infrastructure/CommandBus/InMemoryCommandBus';
 import { UserRepository } from '../../../../../../../src/contexts/users/domain/UserRepository';
 import { RegisterNewUserGoogleCredentialsCommand } from '../../../../../../../src/contexts/users/application/commands/RegisterNewUser/RegisterNewUserGoogleCredentials';
 import { EmailMother } from '../../../../../../helpers/object-mother/UserEmailMother';
 import { UserEmail } from '../../../../../../../src/contexts/users/domain/UserEmail';
+import { CommandBus } from '../../../../../../../src/contexts/shared/domain/CommandBus';
 
-const commandBus = mock<InMemoryCommandBus>();
+const commandBus = mock<CommandBus>();
 
 describe('Sign In User with Google Credentials', () => {
   it('Should validate a valid user', async () => {

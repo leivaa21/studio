@@ -2,14 +2,13 @@ import { Injectable } from '@studio/dependency-injection';
 import { DomainEventClass } from '../../../shared/domain/DomainEvent';
 import { EventHandler } from '../../../shared/application/EventHandler';
 import { ConsumerStatsRepository } from '../../domain/ConsumerStatsRepository';
-import { MongoConsumerStatsRepository } from '../../infrastructure/persistance/mongo/MongoConsumerStatsRepository';
 import { ConsumerStatsFinder } from '../services/ConsumerStatsFinder';
 import { CourseSubscriptionWasCreatedEvent } from '../../../course-subscriptions/domain/events/CourseSubscriptionWasCreated';
 import { UserId } from '../../../course-subscriptions/domain/UserId';
 import { ConsumerStats } from '../../domain/ConsumerStats';
 
 @Injectable({
-  dependencies: [MongoConsumerStatsRepository],
+  dependencies: [ConsumerStatsRepository],
 })
 export class IncreaseSubscribedCoursesCounterOnCourseSubscriptionCreatedHandler extends EventHandler<CourseSubscriptionWasCreatedEvent> {
   private readonly consumerStatsFinder: ConsumerStatsFinder;

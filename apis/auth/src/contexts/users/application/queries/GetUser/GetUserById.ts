@@ -4,7 +4,6 @@ import { UserFinder } from '../../../domain/services/UserFinder';
 import { User } from '../../../domain/User';
 import { UserId } from '../../../domain/UserId';
 import { UserRepository } from '../../../domain/UserRepository';
-import { MongoUserRepository } from '../../../infrastructure/persistance/mongo/MongoUserRepository';
 
 export class GetUserByIdQuery {
   public readonly id: string;
@@ -14,7 +13,7 @@ export class GetUserByIdQuery {
 }
 
 @Injectable({
-  dependencies: [MongoUserRepository],
+  dependencies: [UserRepository],
 })
 export class GetUserByIdHandler
   implements QueryHandler<GetUserByIdQuery, User>

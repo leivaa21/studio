@@ -1,7 +1,6 @@
 import { DependencyContainer } from '@studio/dependency-injection';
 
 import { EventBus } from '../../../../contexts/shared/domain/EventBus';
-import { RabbitMQEventBus } from '../../../../contexts/shared/infrastructure/EventBus/RabbitMQEventBus';
 import { DomainEventSubscriber } from '../../../../contexts/shared/domain/DomainEventSubscriber';
 
 import { CourseSubscriptionWasCreatedEvent } from '../../../../contexts/course-subscriptions/domain/events/CourseSubscriptionWasCreated';
@@ -13,7 +12,7 @@ import { IncreaseCompletedCoursesCounterOnCourseSubscriptionCompletedHandler } f
 import { CourseSubscriptionWasUncompletedEvent } from '../../../../contexts/course-subscriptions/domain/events/CourseSubscriptionWasUncompleted';
 import { DecreaseCompletedCoursesCounterOnCourseSubscriptionUncompletedHandler } from '../../../../contexts/consumer-stats/application/events/DecreaseCompletedCoursesCounterOnCourseSubscriptionUncompleted';
 
-const eventBus = DependencyContainer.get<EventBus>(RabbitMQEventBus);
+const eventBus = DependencyContainer.get<EventBus>(EventBus);
 
 const increaseSubscribedCoursesCounterOnCourseSubscriptionCreated =
   DependencyContainer.get<

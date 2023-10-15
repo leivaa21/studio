@@ -6,10 +6,8 @@ import { CourseDescription } from '../../domain/CourseDescription';
 import { Course } from '../../domain/Course';
 import { CourseRepository } from '../../domain/CourseRepository';
 import { Injectable } from '@studio/dependency-injection';
-import { MongoCourseRepository } from '../../infrastructure/persistance/mongo/MongoCourseRepository';
 import { CourseTag } from '../../domain/CourseTag';
 import { CourseTags } from '../../domain/CourseTags';
-import { RabbitMQEventBus } from '../../../shared/infrastructure/EventBus/RabbitMQEventBus';
 
 export class CreateNewCourseCommand {
   public readonly authorId: string;
@@ -30,7 +28,7 @@ export class CreateNewCourseCommand {
 }
 
 @Injectable({
-  dependencies: [MongoCourseRepository, RabbitMQEventBus],
+  dependencies: [CourseRepository, EventBus],
 })
 export class CreateNewCourse extends CommandHandler<CreateNewCourseCommand> {
   constructor(

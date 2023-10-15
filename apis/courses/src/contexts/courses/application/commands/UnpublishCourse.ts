@@ -3,10 +3,8 @@ import { EventBus } from '../../../shared/domain/EventBus';
 import { AuthorId } from '../../domain/AuthorId';
 import { CourseRepository } from '../../domain/CourseRepository';
 import { Injectable } from '@studio/dependency-injection';
-import { MongoCourseRepository } from '../../infrastructure/persistance/mongo/MongoCourseRepository';
 import { CourseId } from '../../domain/CourseId';
 import { CourseFinder } from '../services/CourseFinder';
-import { RabbitMQEventBus } from '../../../shared/infrastructure/EventBus/RabbitMQEventBus';
 
 export class UnpublishCourseCommand {
   public readonly authorId: string;
@@ -18,7 +16,7 @@ export class UnpublishCourseCommand {
 }
 
 @Injectable({
-  dependencies: [MongoCourseRepository, RabbitMQEventBus],
+  dependencies: [CourseRepository, EventBus],
 })
 export class UnpublishCourse extends CommandHandler<UnpublishCourseCommand> {
   private readonly courseFinder: CourseFinder;

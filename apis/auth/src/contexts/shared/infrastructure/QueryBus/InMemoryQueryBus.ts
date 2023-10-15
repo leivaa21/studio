@@ -1,9 +1,8 @@
-import { DependencyContainer, Injectable } from '@studio/dependency-injection';
+import { DependencyContainer } from '@studio/dependency-injection';
 import { QueryHandler } from '../../application/QueryHandler';
 import { Constructor } from '../../domain/Constructor';
 import { QueryBus } from '../../domain/QueryBus';
 
-@Injectable()
 export class InMemoryQueryBus implements QueryBus {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   private _subscriptions: Map<string, QueryHandler<any, any>>;

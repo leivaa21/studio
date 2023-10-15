@@ -1,11 +1,9 @@
 import { Injectable } from '@studio/dependency-injection';
 import { QueryHandler } from '../../../../shared/application/QueryHandler';
 import { CommandBus } from '../../../../shared/domain/CommandBus';
-import { InMemoryCommandBus } from '../../../../shared/infrastructure/CommandBus/InMemoryCommandBus';
 import { UserFinder } from '../../../domain/services/UserFinder';
 import { User } from '../../../domain/User';
 import { UserRepository } from '../../../domain/UserRepository';
-import { MongoUserRepository } from '../../../infrastructure/persistance/mongo/MongoUserRepository';
 import { InvalidCredentialsError } from '../../../domain/errors/InvalidCredentials';
 import { GithubId } from '../../../domain/GithubId';
 import { UserNickname } from '../../../domain/UserNickname';
@@ -21,7 +19,7 @@ export class SignInWithGithubCredentialsQuery {
 }
 
 @Injectable({
-  dependencies: [InMemoryCommandBus, MongoUserRepository],
+  dependencies: [CommandBus, UserRepository],
 })
 export class SignInWithGithubCredentialsHandler
   implements QueryHandler<SignInWithGithubCredentialsQuery, User>

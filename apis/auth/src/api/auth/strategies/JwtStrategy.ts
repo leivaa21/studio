@@ -3,7 +3,6 @@ import { DependencyContainer } from '@studio/dependency-injection';
 import passport from 'passport';
 import { Strategy as JwtStrategy, StrategyOptions } from 'passport-jwt';
 import { QueryBus } from '../../../contexts/shared/domain/QueryBus';
-import { InMemoryQueryBus } from '../../../contexts/shared/infrastructure/QueryBus/InMemoryQueryBus';
 import { GetUserByIdQuery } from '../../../contexts/users/application/queries/GetUser/GetUserById';
 import { User } from '../../../contexts/users/domain/User';
 import { env } from '../../config/env';
@@ -15,7 +14,7 @@ const opt: StrategyOptions = {
 
 passport.use(
   new JwtStrategy(opt, async (jwtPayload, cb) => {
-    const queryBus = DependencyContainer.get<QueryBus>(InMemoryQueryBus);
+    const queryBus = DependencyContainer.get<QueryBus>(QueryBus);
 
     try {
       const user = await queryBus.dispatch<GetUserByIdQuery, User>(

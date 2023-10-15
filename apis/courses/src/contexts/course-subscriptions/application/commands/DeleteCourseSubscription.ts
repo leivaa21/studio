@@ -3,11 +3,9 @@ import { EventBus } from '../../../shared/domain/EventBus';
 import { Injectable } from '@studio/dependency-injection';
 import { CourseSubscriptionRepository } from '../../domain/CourseSubscriptionRepository';
 import { CourseSubscriptionFinder } from '../services/CourseSubscriptionFinder';
-import { MongoCourseSubscriptionRepository } from '../../infrastructure/persistance/mongo/MongoCourseSubscriptionRepository';
 import { CourseSubscriptionId } from '../../domain/CourseSubscriptionId';
 import { UserId } from '../../domain/UserId';
 import { CourseSubscriptionNotFoundError } from '../../domain/errors/CourseSubscriptionNotFoundError';
-import { RabbitMQEventBus } from '../../../shared/infrastructure/EventBus/RabbitMQEventBus';
 
 export class DeleteCourseSubscriptionCommand {
   public readonly id: string;
@@ -19,7 +17,7 @@ export class DeleteCourseSubscriptionCommand {
 }
 
 @Injectable({
-  dependencies: [MongoCourseSubscriptionRepository, RabbitMQEventBus],
+  dependencies: [CourseSubscriptionRepository, EventBus],
 })
 export class DeleteCourseSubscription extends CommandHandler<DeleteCourseSubscriptionCommand> {
   private readonly courseSubscriptionFinder: CourseSubscriptionFinder;

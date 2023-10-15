@@ -5,13 +5,11 @@ import { CourseSubscriptionWasCompletedEvent } from '../../../course-subscriptio
 import { CourseSubscriptionRepository } from '../../../course-subscriptions/domain/CourseSubscriptionRepository';
 import { CourseSubscriptionFinder } from '../../../course-subscriptions/application/services/CourseSubscriptionFinder';
 import { CourseSubscriptionId } from '../../../course-subscriptions/domain/CourseSubscriptionId';
-import { MongoCourseStatsRepository } from '../../infrastructure/persistance/mongo/MongoCourseStatsRepository';
 import { CourseStatsFinder } from '../services/CourseStatsFinder';
 import { CourseStatsRepository } from '../../domain/CourseStatsRepository';
-import { MongoCourseSubscriptionRepository } from '../../../course-subscriptions/infrastructure/persistance/mongo/MongoCourseSubscriptionRepository';
 
 @Injectable({
-  dependencies: [MongoCourseStatsRepository, MongoCourseSubscriptionRepository],
+  dependencies: [CourseStatsRepository, CourseSubscriptionRepository],
 })
 export class IncreaseTimesCompletedCounterOnCourseSubscriptionCompletedHandler extends EventHandler<CourseSubscriptionWasCompletedEvent> {
   private readonly courseStatsFinder: CourseStatsFinder;
