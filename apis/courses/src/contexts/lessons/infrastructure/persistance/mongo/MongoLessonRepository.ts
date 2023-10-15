@@ -1,4 +1,3 @@
-import { Injectable } from '@studio/dependency-injection';
 import { MongoRepository } from '../../../../shared/infrastructure/mongo/MongoRepository';
 import { LessonRepository } from '../../../domain/LessonRepository';
 import { LessonData } from './LessonData';
@@ -9,7 +8,6 @@ import { CourseId } from '../../../../courses/domain/CourseId';
 import { LessonId } from '../../../domain/LessonId';
 import { Nullable } from '../../../../shared/domain/Nullable';
 
-@Injectable({ dependencies: [LessonSchemaFactory] })
 export class MongoLessonRepository
   extends MongoRepository<LessonData, Lesson>
   implements LessonRepository
