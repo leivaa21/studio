@@ -7,7 +7,6 @@ import { EventBus } from '../../../shared/domain/EventBus';
 import { LessonRepository } from '../../domain/LessonRepository';
 import { LessonTitle } from '../../domain/LessonTitle';
 import { MongoLessonRepository } from '../../infrastructure/persistance/mongo/MongoLessonRepository';
-import { MongoCourseRepository } from '../../../courses/infrastructure/persistance/mongo/MongoCourseRepository';
 import { InMemoryAsyncEventBus } from '../../../shared/infrastructure/EventBus/InMemoryAsyncEventBus';
 import { LessonId } from '../../domain/LessonId';
 import { LessonFinder } from '../services/LessonFinder';
@@ -35,7 +34,7 @@ export class UpdateLessonCommand {
 @Injectable({
   dependencies: [
     MongoLessonRepository,
-    MongoCourseRepository,
+    CourseRepository,
     InMemoryAsyncEventBus,
   ],
 })

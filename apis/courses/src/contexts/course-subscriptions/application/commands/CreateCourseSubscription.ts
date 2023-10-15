@@ -2,7 +2,6 @@ import { CommandHandler } from '../../../shared/application/CommandHandler';
 import { EventBus } from '../../../shared/domain/EventBus';
 import { Injectable } from '@studio/dependency-injection';
 import { InMemoryAsyncEventBus } from '../../../shared/infrastructure/EventBus/InMemoryAsyncEventBus';
-import { MongoCourseRepository } from '../../../courses/infrastructure/persistance/mongo/MongoCourseRepository';
 import { CourseRepository } from '../../../courses/domain/CourseRepository';
 import { CourseFinder } from '../../../courses/application/services/CourseFinder';
 import { CourseSubscriptionRepository } from '../../domain/CourseSubscriptionRepository';
@@ -25,7 +24,7 @@ export class CreateCourseSubscriptionCommand {
 @Injectable({
   dependencies: [
     MongoCourseSubscriptionRepository,
-    MongoCourseRepository,
+    CourseRepository,
     InMemoryAsyncEventBus,
   ],
 })

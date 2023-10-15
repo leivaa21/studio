@@ -9,7 +9,6 @@ import { CourseSubscriptionRepository } from '../../../course-subscriptions/doma
 import { UserId } from '../../../course-subscriptions/domain/UserId';
 import { CourseFinder } from '../../../courses/application/services/CourseFinder';
 import { LessonRepository } from '../../../lessons/domain/LessonRepository';
-import { MongoCourseRepository } from '../../../courses/infrastructure/persistance/mongo/MongoCourseRepository';
 import { MongoLessonRepository } from '../../../lessons/infrastructure/persistance/mongo/MongoLessonRepository';
 import { MongoCourseSubscriptionRepository } from '../../../course-subscriptions/infrastructure/persistance/mongo/MongoCourseSubscriptionRepository';
 import { MongoAuthorStatsRepository } from '../../../author-stats/infrastructure/persistance/mongo/MongoAuthorStatsRepository';
@@ -21,7 +20,7 @@ import { CourseStatsRepository } from '../../../course-stats/domain/CourseStatsR
 
 @Injectable({
   dependencies: [
-    MongoCourseRepository,
+    CourseRepository,
     MongoLessonRepository,
     MongoCourseSubscriptionRepository,
     MongoAuthorStatsRepository,

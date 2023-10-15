@@ -6,7 +6,6 @@ import { CourseDescription } from '../../domain/CourseDescription';
 import { Course } from '../../domain/Course';
 import { CourseRepository } from '../../domain/CourseRepository';
 import { Injectable } from '@studio/dependency-injection';
-import { MongoCourseRepository } from '../../infrastructure/persistance/mongo/MongoCourseRepository';
 import { InMemoryAsyncEventBus } from '../../../shared/infrastructure/EventBus/InMemoryAsyncEventBus';
 import { CourseTag } from '../../domain/CourseTag';
 import { CourseTags } from '../../domain/CourseTags';
@@ -30,7 +29,7 @@ export class CreateNewCourseCommand {
 }
 
 @Injectable({
-  dependencies: [MongoCourseRepository, InMemoryAsyncEventBus],
+  dependencies: [CourseRepository, InMemoryAsyncEventBus],
 })
 export class CreateNewCourse extends CommandHandler<CreateNewCourseCommand> {
   constructor(

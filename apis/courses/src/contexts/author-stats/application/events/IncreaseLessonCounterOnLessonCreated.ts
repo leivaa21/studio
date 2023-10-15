@@ -7,11 +7,10 @@ import { AuthorStatsFinder } from '../services/AuthorStatsFinder';
 import { LessonWasCreatedEvent } from '../../../lessons/domain/events/LessonWasCreated';
 import { CourseId } from '../../../courses/domain/CourseId';
 import { CourseRepository } from '../../../courses/domain/CourseRepository';
-import { MongoCourseRepository } from '../../../courses/infrastructure/persistance/mongo/MongoCourseRepository';
 import { CourseFinder } from '../../../courses/application/services/CourseFinder';
 
 @Injectable({
-  dependencies: [MongoAuthorStatsRepository, MongoCourseRepository],
+  dependencies: [MongoAuthorStatsRepository, CourseRepository],
 })
 export class IncreaseLessonCounterOnLessonCreatedHandler extends EventHandler<LessonWasCreatedEvent> {
   private readonly authorStatsFinder: AuthorStatsFinder;

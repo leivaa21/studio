@@ -6,12 +6,11 @@ import { MongoAuthorStatsRepository } from '../../infrastructure/persistance/mon
 import { AuthorStatsFinder } from '../services/AuthorStatsFinder';
 import { CourseId } from '../../../courses/domain/CourseId';
 import { CourseRepository } from '../../../courses/domain/CourseRepository';
-import { MongoCourseRepository } from '../../../courses/infrastructure/persistance/mongo/MongoCourseRepository';
 import { CourseFinder } from '../../../courses/application/services/CourseFinder';
 import { CourseWasPublishedEvent } from '../../../courses/domain/events/CourseWasPublished';
 
 @Injectable({
-  dependencies: [MongoAuthorStatsRepository, MongoCourseRepository],
+  dependencies: [MongoAuthorStatsRepository, CourseRepository],
 })
 export class IncreaseCoursePublishedCounterOnCoursePublishedHandler extends EventHandler<CourseWasPublishedEvent> {
   private readonly authorStatsFinder: AuthorStatsFinder;

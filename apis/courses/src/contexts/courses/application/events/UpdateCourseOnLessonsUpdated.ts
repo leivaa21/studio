@@ -3,7 +3,6 @@ import { DomainEventClass } from '../../../shared/domain/DomainEvent';
 import { CourseId } from '../../domain/CourseId';
 import { CourseRepository } from '../../domain/CourseRepository';
 import { CourseFinder } from '../../application/services/CourseFinder';
-import { MongoCourseRepository } from '../../infrastructure/persistance/mongo/MongoCourseRepository';
 import { LessonWasCreatedEvent } from '../../../lessons/domain/events/LessonWasCreated';
 import { LessonWasDeletedEvent } from '../../../lessons/domain/events/LessonWasDeleted';
 import { LessonContentWasUpdatedEvent } from '../../../lessons/domain/events/LessonContentWasUpdated';
@@ -21,7 +20,7 @@ export type UpdateCourseOnLessonsUpdatedHandlerSubscribedEvents =
   | LessonWasReorderedEvent;
 
 @Injectable({
-  dependencies: [MongoCourseRepository, InMemoryAsyncEventBus],
+  dependencies: [CourseRepository, InMemoryAsyncEventBus],
 })
 export class UpdateCourseOnLessonsUpdatedHandler extends EventHandler<UpdateCourseOnLessonsUpdatedHandlerSubscribedEvents> {
   private readonly courseFinder: CourseFinder;
