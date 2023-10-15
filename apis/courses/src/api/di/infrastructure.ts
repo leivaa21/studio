@@ -18,6 +18,12 @@ import { ConsumerStatsRepository } from '../../contexts/consumer-stats/domain/Co
 import { AuthorStatsSchemaFactory } from '../../contexts/author-stats/infrastructure/persistance/mongo/AuthorStatsSchemaFactory';
 import { AuthorStatsRepository } from '../../contexts/author-stats/domain/AuthorStatsRepository';
 import { MongoAuthorStatsRepository } from '../../contexts/author-stats/infrastructure/persistance/mongo/MongoAuthorStatsRepository';
+import { CommandBus } from '../../contexts/shared/domain/CommandBus';
+import { InMemoryCommandBus } from '../../contexts/shared/infrastructure/CommandBus/InMemoryCommandBus';
+import { QueryBus } from '../../contexts/shared/domain/QueryBus';
+import { InMemoryQueryBus } from '../../contexts/shared/infrastructure/QueryBus/InMemoryQueryBus';
+import { EventBus } from '../../contexts/shared/domain/EventBus';
+import { InMemoryAsyncEventBus } from '../../contexts/shared/infrastructure/EventBus/InMemoryAsyncEventBus';
 
 const courseSchemaFactory = new CourseSchemaFactory();
 const criteriaConverter = new MongoCriteriaConverter();
@@ -64,5 +70,22 @@ const authorStatsSchemaFactory = new AuthorStatsSchemaFactory();
 
 DependencyContainer.registerImplementation({
   constructor: AuthorStatsRepository,
-  implements: new MongoAuthorStatsRepository(authorStatsSchemaFactory),
+  implementation: new MongoAuthorStatsRepository(authorStatsSchemaFactory),
+});
+
+// Buses
+
+DependencyContainer.registerImplementation({
+  constructor: CommandBus,
+  implementation: new InMemoryCommandBus(),
+});
+
+DependencyContainer.registerImplementation({
+  constructor: QueryBus,
+  implementation: new InMemoryQueryBus(),
+});
+
+DependencyContainer.registerImplementation({
+  constructor: EventBus,
+  implementation: new InMemoryAsyncEventBus(),
 });

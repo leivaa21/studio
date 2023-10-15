@@ -3,7 +3,6 @@ import { EventBus } from '../../../shared/domain/EventBus';
 import { AuthorId } from '../../domain/AuthorId';
 import { CourseRepository } from '../../domain/CourseRepository';
 import { Injectable } from '@studio/dependency-injection';
-import { InMemoryAsyncEventBus } from '../../../shared/infrastructure/EventBus/InMemoryAsyncEventBus';
 import { CourseId } from '../../domain/CourseId';
 import { CourseFinder } from '../services/CourseFinder';
 import { Course } from '../../domain/Course';
@@ -23,7 +22,7 @@ export class UpdateCourseTagsCommand {
 }
 
 @Injectable({
-  dependencies: [CourseRepository, InMemoryAsyncEventBus],
+  dependencies: [CourseRepository, EventBus],
 })
 export class UpdateCourseTags extends CommandHandler<UpdateCourseTagsCommand> {
   private readonly courseFinder: CourseFinder;

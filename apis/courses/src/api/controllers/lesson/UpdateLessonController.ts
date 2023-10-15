@@ -9,7 +9,6 @@ import {
   Param,
   Put,
 } from 'routing-controllers';
-import { InMemoryCommandBus } from '../../../contexts/shared/infrastructure/CommandBus/InMemoryCommandBus';
 import { CommandBus } from '../../../contexts/shared/domain/CommandBus';
 import { BadRequestError, StatusCode } from '@studio/api-utils';
 import { User } from '../../auth/user';
@@ -17,7 +16,7 @@ import { UpdateLessonCommand } from '../../../contexts/lessons/application/comma
 import { UpdateLessonRequest } from '@studio/commons';
 
 @Injectable({
-  dependencies: [InMemoryCommandBus],
+  dependencies: [CommandBus],
 })
 @JsonController('/lesson')
 export class UpdateLessonController {

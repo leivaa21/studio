@@ -6,7 +6,6 @@ import { CourseDescription } from '../../domain/CourseDescription';
 import { Course } from '../../domain/Course';
 import { CourseRepository } from '../../domain/CourseRepository';
 import { Injectable } from '@studio/dependency-injection';
-import { InMemoryAsyncEventBus } from '../../../shared/infrastructure/EventBus/InMemoryAsyncEventBus';
 import { CourseTag } from '../../domain/CourseTag';
 import { CourseTags } from '../../domain/CourseTags';
 
@@ -29,7 +28,7 @@ export class CreateNewCourseCommand {
 }
 
 @Injectable({
-  dependencies: [CourseRepository, InMemoryAsyncEventBus],
+  dependencies: [CourseRepository, EventBus],
 })
 export class CreateNewCourse extends CommandHandler<CreateNewCourseCommand> {
   constructor(

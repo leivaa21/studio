@@ -2,14 +2,13 @@ import { Injectable } from '@studio/dependency-injection';
 import { DomainEventClass } from '../../../shared/domain/DomainEvent';
 import { LessonWasDeletedEvent } from '../../../lessons/domain/events/LessonWasDeleted';
 import { EventHandler } from '../../../shared/application/EventHandler';
-import { InMemoryAsyncEventBus } from '../../../shared/infrastructure/EventBus/InMemoryAsyncEventBus';
 import { EventBus } from '../../../shared/domain/EventBus';
 import { LessonRepository } from '../../domain/LessonRepository';
 import { CourseId } from '../../../courses/domain/CourseId';
 import { LessonFinder } from '../services/LessonFinder';
 
 @Injectable({
-  dependencies: [LessonRepository, InMemoryAsyncEventBus],
+  dependencies: [LessonRepository, EventBus],
 })
 export class ReorderLessonsOnLessonDeletedHandler extends EventHandler<LessonWasDeletedEvent> {
   private readonly lessonFinder: LessonFinder;

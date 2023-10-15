@@ -11,14 +11,13 @@ import { Injectable } from '@studio/dependency-injection';
 import { StatusCode } from '@studio/api-utils';
 
 import { QueryBus } from '../../../contexts/shared/domain/QueryBus';
-import { InMemoryQueryBus } from '../../../contexts/shared/infrastructure/QueryBus/InMemoryQueryBus';
 import { User } from '../../auth/user';
 import { CourseSubscriptionInfoResponse } from '@studio/commons';
 import { GetCourseSubscriptionByUserAndCourseQuery } from '../../../contexts/course-subscriptions/application/queries/GetCourseSubscriptionByUserAndCourse';
 import { CourseSubscription } from '../../../contexts/course-subscriptions/domain/CourseSubscription';
 
 @Injectable({
-  dependencies: [InMemoryQueryBus],
+  dependencies: [QueryBus],
 })
 @JsonController('/course-subscription/by-course')
 export class GetCourseSubscriptionByUserAndCourseController {

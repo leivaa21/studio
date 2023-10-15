@@ -8,7 +8,6 @@ import {
   Param,
   Put,
 } from 'routing-controllers';
-import { InMemoryCommandBus } from '../../../contexts/shared/infrastructure/CommandBus/InMemoryCommandBus';
 import { CommandBus } from '../../../contexts/shared/domain/CommandBus';
 import { StatusCode } from '@studio/api-utils';
 import { User } from '../../auth/user';
@@ -16,7 +15,7 @@ import { ReorderLessonUpCommand } from '../../../contexts/lessons/application/co
 import { ReorderLessonDownCommand } from '../../../contexts/lessons/application/commands/ReorderLessonDown';
 
 @Injectable({
-  dependencies: [InMemoryCommandBus],
+  dependencies: [CommandBus],
 })
 @JsonController('/lesson/:id')
 export class ReorderLessonController {

@@ -5,7 +5,6 @@ import { CommandHandler } from '../../../shared/application/CommandHandler';
 import { EventBus } from '../../../shared/domain/EventBus';
 import { LessonRepository } from '../../domain/LessonRepository';
 import { LessonFinder } from '../services/LessonFinder';
-import { InMemoryAsyncEventBus } from '../../../shared/infrastructure/EventBus/InMemoryAsyncEventBus';
 import { AuthorId } from '../../../courses/domain/AuthorId';
 import { LessonId } from '../../domain/LessonId';
 import { Lesson } from '../../domain/Lesson';
@@ -24,7 +23,7 @@ export class ReorderLessonDownCommand {
 }
 
 @Injectable({
-  dependencies: [LessonRepository, CourseRepository, InMemoryAsyncEventBus],
+  dependencies: [LessonRepository, CourseRepository, EventBus],
 })
 export class ReorderLessonDown extends CommandHandler<ReorderLessonDownCommand> {
   private readonly courseFinder: CourseFinder;

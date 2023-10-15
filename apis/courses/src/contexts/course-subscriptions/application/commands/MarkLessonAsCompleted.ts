@@ -1,7 +1,6 @@
 import { CommandHandler } from '../../../shared/application/CommandHandler';
 import { EventBus } from '../../../shared/domain/EventBus';
 import { Injectable } from '@studio/dependency-injection';
-import { InMemoryAsyncEventBus } from '../../../shared/infrastructure/EventBus/InMemoryAsyncEventBus';
 import { CourseSubscriptionRepository } from '../../domain/CourseSubscriptionRepository';
 import { CourseSubscriptionFinder } from '../services/CourseSubscriptionFinder';
 import { UserId } from '../../domain/UserId';
@@ -19,11 +18,7 @@ export class MarkLessonAsCompletedCommand {
 }
 
 @Injectable({
-  dependencies: [
-    CourseSubscriptionRepository,
-    LessonRepository,
-    InMemoryAsyncEventBus,
-  ],
+  dependencies: [CourseSubscriptionRepository, LessonRepository, EventBus],
 })
 export class MarkLessonAsCompleted extends CommandHandler<MarkLessonAsCompletedCommand> {
   private readonly courseSubscriptionFinder: CourseSubscriptionFinder;

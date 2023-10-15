@@ -1,7 +1,6 @@
 import { Injectable } from '@studio/dependency-injection';
 import { DomainEventClass } from '../../../shared/domain/DomainEvent';
 import { EventHandler } from '../../../shared/application/EventHandler';
-import { InMemoryAsyncEventBus } from '../../../shared/infrastructure/EventBus/InMemoryAsyncEventBus';
 import { EventBus } from '../../../shared/domain/EventBus';
 import { CourseSubscriptionRepository } from '../../domain/CourseSubscriptionRepository';
 import { LessonWasCompletedOnCourseSubscriptionEvent } from '../../domain/events/LessonWasCompletedOnCourseSubscription';
@@ -11,11 +10,7 @@ import { LessonFinder } from '../../../lessons/application/services/LessonFinder
 import { LessonRepository } from '../../../lessons/domain/LessonRepository';
 
 @Injectable({
-  dependencies: [
-    CourseSubscriptionRepository,
-    LessonRepository,
-    InMemoryAsyncEventBus,
-  ],
+  dependencies: [CourseSubscriptionRepository, LessonRepository, EventBus],
 })
 export class CheckIfCourseWasCompletedOnLessonCompletedHandler extends EventHandler<LessonWasCompletedOnCourseSubscriptionEvent> {
   private readonly courseSubscriptionFinder: CourseSubscriptionFinder;

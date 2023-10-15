@@ -4,7 +4,6 @@ import { AuthorId } from '../../domain/AuthorId';
 import { CourseTitle } from '../../domain/CourseTitle';
 import { CourseRepository } from '../../domain/CourseRepository';
 import { Injectable } from '@studio/dependency-injection';
-import { InMemoryAsyncEventBus } from '../../../shared/infrastructure/EventBus/InMemoryAsyncEventBus';
 import { CourseId } from '../../domain/CourseId';
 import { CourseFinder } from '../services/CourseFinder';
 import { Course } from '../../domain/Course';
@@ -23,7 +22,7 @@ export class RenameCourseCommand {
 }
 
 @Injectable({
-  dependencies: [CourseRepository, InMemoryAsyncEventBus],
+  dependencies: [CourseRepository, EventBus],
 })
 export class RenameCourse extends CommandHandler<RenameCourseCommand> {
   private readonly courseFinder: CourseFinder;

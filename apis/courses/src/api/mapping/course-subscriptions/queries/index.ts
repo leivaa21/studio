@@ -4,7 +4,6 @@ import {
   CheckIfUserIsSubscribedToCourseQuery,
 } from '../../../../contexts/course-subscriptions/application/queries/CheckIfUserIsSubscribedToCourse';
 import { QueryBus } from '../../../../contexts/shared/domain/QueryBus';
-import { InMemoryQueryBus } from '../../../../contexts/shared/infrastructure/QueryBus/InMemoryQueryBus';
 import {
   GetUserCourseSubscriptions,
   GetUserCourseSubscriptionsQuery,
@@ -14,7 +13,7 @@ import {
   GetCourseSubscriptionByUserAndCourseQuery,
 } from '../../../../contexts/course-subscriptions/application/queries/GetCourseSubscriptionByUserAndCourse';
 
-const queryBus = DependencyContainer.get<QueryBus>(InMemoryQueryBus);
+const queryBus = DependencyContainer.get<QueryBus>(QueryBus);
 
 queryBus.subscribe(
   CheckIfUserIsSubscribedToCourseQuery,

@@ -9,7 +9,6 @@ import { LessonContentWasUpdatedEvent } from '../../../lessons/domain/events/Les
 import { LessonWasRenamedEvent } from '../../../lessons/domain/events/LessonWasRenamed';
 import { LessonWasReorderedEvent } from '../../../lessons/domain/events/LessonWasReordered';
 import { EventHandler } from '../../../shared/application/EventHandler';
-import { InMemoryAsyncEventBus } from '../../../shared/infrastructure/EventBus/InMemoryAsyncEventBus';
 import { EventBus } from '../../../shared/domain/EventBus';
 
 export type UpdateCourseOnLessonsUpdatedHandlerSubscribedEvents =
@@ -20,7 +19,7 @@ export type UpdateCourseOnLessonsUpdatedHandlerSubscribedEvents =
   | LessonWasReorderedEvent;
 
 @Injectable({
-  dependencies: [CourseRepository, InMemoryAsyncEventBus],
+  dependencies: [CourseRepository, EventBus],
 })
 export class UpdateCourseOnLessonsUpdatedHandler extends EventHandler<UpdateCourseOnLessonsUpdatedHandlerSubscribedEvents> {
   private readonly courseFinder: CourseFinder;

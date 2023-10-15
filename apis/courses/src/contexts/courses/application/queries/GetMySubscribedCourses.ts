@@ -3,7 +3,6 @@ import { QueryHandler } from '../../../shared/application/QueryHandler';
 import { Course } from '../../domain/Course';
 import { CourseRepository } from '../../domain/CourseRepository';
 import { CourseFinder } from '../services/CourseFinder';
-import { InMemoryQueryBus } from '../../../shared/infrastructure/QueryBus/InMemoryQueryBus';
 import { QueryBus } from '../../../shared/domain/QueryBus';
 import { GetUserCourseSubscriptionsQuery } from '../../../course-subscriptions/application/queries/GetUserCourseSubscriptions';
 import { CourseSubscription } from '../../../course-subscriptions/domain/CourseSubscription';
@@ -27,7 +26,7 @@ export class GetMySubscribedCoursesQuery {
 }
 
 @Injectable({
-  dependencies: [InMemoryQueryBus, CourseRepository],
+  dependencies: [QueryBus, CourseRepository],
 })
 export class GetMySubscribedCourses
   implements QueryHandler<GetMySubscribedCoursesQuery, Course[]>

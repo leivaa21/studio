@@ -12,12 +12,11 @@ import { Injectable } from '@studio/dependency-injection';
 import { CreateCourseSubscriptionRequest } from '@studio/commons';
 
 import { User } from '../../auth/user';
-import { InMemoryCommandBus } from '../../../contexts/shared/infrastructure/CommandBus/InMemoryCommandBus';
 import { CommandBus } from '../../../contexts/shared/domain/CommandBus';
 import { CreateCourseSubscriptionCommand } from '../../../contexts/course-subscriptions/application/commands/CreateCourseSubscription';
 
 @Injectable({
-  dependencies: [InMemoryCommandBus],
+  dependencies: [CommandBus],
 })
 @JsonController('/course-subscriptions')
 export class CreateCourseSubscriptionController {

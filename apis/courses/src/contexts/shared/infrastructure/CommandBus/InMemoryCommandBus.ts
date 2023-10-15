@@ -1,9 +1,8 @@
-import { DependencyContainer, Injectable } from '@studio/dependency-injection';
+import { DependencyContainer } from '@studio/dependency-injection';
 import { CommandHandler } from '../../application/CommandHandler';
 import { CommandBus } from '../../domain/CommandBus';
 import { Constructor } from '../../domain/Constructor';
 
-@Injectable()
 export class InMemoryCommandBus implements CommandBus {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   private _subscriptions: Map<string, CommandHandler<any>>;

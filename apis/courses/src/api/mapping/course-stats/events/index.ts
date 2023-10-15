@@ -1,6 +1,5 @@
 import { DependencyContainer } from '@studio/dependency-injection';
 import { EventBus } from '../../../../contexts/shared/domain/EventBus';
-import { InMemoryAsyncEventBus } from '../../../../contexts/shared/infrastructure/EventBus/InMemoryAsyncEventBus';
 import { DomainEventSubscriber } from '../../../../contexts/shared/domain/DomainEventSubscriber';
 import { CourseSubscriptionWasCreatedEvent } from '../../../../contexts/course-subscriptions/domain/events/CourseSubscriptionWasCreated';
 import { CourseSubscriptionWasDeletedEvent } from '../../../../contexts/course-subscriptions/domain/events/CourseSubscriptionWasDeleted';
@@ -13,7 +12,7 @@ import { DecreaseTimesCompletedCounterOnCourseSubscriptionUncompletedHandler } f
 import { CourseWasCreatedEvent } from '../../../../contexts/courses/domain/events/CourseWasCreated';
 import { CreateCourseStatsOnCourseCreatedHandler } from '../../../../contexts/course-stats/application/events/CreateCourseStatsOnCourseCreated';
 
-const eventBus = DependencyContainer.get<EventBus>(InMemoryAsyncEventBus);
+const eventBus = DependencyContainer.get<EventBus>(EventBus);
 
 const createCourseStatsOnCourseCreated = DependencyContainer.get<
   DomainEventSubscriber<CourseWasCreatedEvent>

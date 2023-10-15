@@ -1,6 +1,5 @@
 import { DependencyContainer } from '@studio/dependency-injection';
 import { CommandBus } from '../../../../contexts/shared/domain/CommandBus';
-import { InMemoryCommandBus } from '../../../../contexts/shared/infrastructure/CommandBus/InMemoryCommandBus';
 import {
   CreateNewLesson,
   CreateNewLessonCommand,
@@ -22,7 +21,7 @@ import {
   ReorderLessonDownCommand,
 } from '../../../../contexts/lessons/application/commands/ReorderLessonDown';
 
-const commandBus = DependencyContainer.get<CommandBus>(InMemoryCommandBus);
+const commandBus = DependencyContainer.get<CommandBus>(CommandBus);
 
 commandBus.subscribe(CreateNewLessonCommand, CreateNewLesson);
 commandBus.subscribe(UpdateLessonCommand, UpdateLesson);

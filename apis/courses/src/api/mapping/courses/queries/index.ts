@@ -1,6 +1,5 @@
 import { DependencyContainer } from '@studio/dependency-injection';
 import { QueryBus } from '../../../../contexts/shared/domain/QueryBus';
-import { InMemoryQueryBus } from '../../../../contexts/shared/infrastructure/QueryBus/InMemoryQueryBus';
 import {
   GetMyCoursesFiltered,
   GetMyCoursesFilteredQuery,
@@ -18,7 +17,7 @@ import {
   GetMySubscribedCoursesQuery,
 } from '../../../../contexts/courses/application/queries/GetMySubscribedCourses';
 
-const queryBus = DependencyContainer.get<QueryBus>(InMemoryQueryBus);
+const queryBus = DependencyContainer.get<QueryBus>(QueryBus);
 
 queryBus.subscribe(GetMyCoursesFilteredQuery, GetMyCoursesFiltered);
 queryBus.subscribe(GetCourseByIdQuery, GetCourseById);

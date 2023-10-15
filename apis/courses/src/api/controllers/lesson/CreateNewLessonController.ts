@@ -9,13 +9,12 @@ import {
   Post,
 } from 'routing-controllers';
 import { Injectable } from '@studio/dependency-injection';
-import { InMemoryCommandBus } from '../../../contexts/shared/infrastructure/CommandBus/InMemoryCommandBus';
 import { CommandBus } from '../../../contexts/shared/domain/CommandBus';
 import { User } from '../../auth/user';
 import { CreateNewLessonCommand } from '../../../contexts/lessons/application/commands/CreateNewLesson';
 
 @Injectable({
-  dependencies: [InMemoryCommandBus],
+  dependencies: [CommandBus],
 })
 @JsonController('/lessons')
 export class CreateNewLessonController {
