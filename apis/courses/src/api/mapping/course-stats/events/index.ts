@@ -1,8 +1,6 @@
 import { DependencyContainer } from '@studio/dependency-injection';
-
 import { EventBus } from '../../../../contexts/shared/domain/EventBus';
 import { DomainEventSubscriber } from '../../../../contexts/shared/domain/DomainEventSubscriber';
-
 import { CourseSubscriptionWasCreatedEvent } from '../../../../contexts/course-subscriptions/domain/events/CourseSubscriptionWasCreated';
 import { CourseSubscriptionWasDeletedEvent } from '../../../../contexts/course-subscriptions/domain/events/CourseSubscriptionWasDeleted';
 import { CourseSubscriptionWasCompletedEvent } from '../../../../contexts/course-subscriptions/domain/events/CourseSubscriptionWasCompleted';
