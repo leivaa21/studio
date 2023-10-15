@@ -7,7 +7,7 @@ import { InMemoryCommandBus } from '../../contexts/shared/infrastructure/Command
 import { QueryBus } from '../../contexts/shared/domain/QueryBus';
 import { InMemoryQueryBus } from '../../contexts/shared/infrastructure/QueryBus/InMemoryQueryBus';
 import { EventBus } from '../../contexts/shared/domain/EventBus';
-import { InMemoryAsyncEventBus } from '../../contexts/shared/infrastructure/EventBus/InMemoryAsyncEventBus';
+import { RabbitMQEventBus } from '../../contexts/shared/infrastructure/EventBus/RabbitMQEventBus';
 
 const userSchemaFactory = new UserSchemaFactory();
 
@@ -28,5 +28,5 @@ DependencyContainer.registerImplementation({
 
 DependencyContainer.registerImplementation({
   constructor: EventBus,
-  implementation: new InMemoryAsyncEventBus(),
+  implementation: new RabbitMQEventBus(),
 });

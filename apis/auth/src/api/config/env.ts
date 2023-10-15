@@ -10,6 +10,12 @@ function getEnvVariableOrThrow(varName: string): string {
   return variable;
 }
 
+function getEnvVariableOrDefault<T>(varName: string, defaultValue: T): T {
+  const variable = process.env[varName] as T;
+
+  return variable || defaultValue;
+}
+
 export const env = {
   auth: {
     port: getEnvVariableOrThrow('PORT'),
@@ -21,6 +27,14 @@ export const env = {
   },
   courses: {
     url: getEnvVariableOrThrow('COURSES_URL'),
+  },
+  rabbit: {
+    host: getEnvVariableOrDefault<string>('RABBIT_HOST', 'localhost'),
+    port: getEnvVariableOrDefault<number>('RABBIT_PORT', 5672),
+    event_queue: getEnvVariableOrDefault<string>(
+      'RABBIT_EVENT_QUEUE',
+      'event-bus'
+    ),
   },
   internal: {
     secret: getEnvVariableOrThrow('INTERNAL_SECRET'),
