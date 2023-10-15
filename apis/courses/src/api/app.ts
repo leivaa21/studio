@@ -1,4 +1,6 @@
 import 'reflect-metadata';
+import './di';
+
 import { DependencyContainer } from '@studio/dependency-injection';
 import { createExpressServer, useContainer } from 'routing-controllers';
 import { authorizationChecker } from './auth/authorizationChecker';

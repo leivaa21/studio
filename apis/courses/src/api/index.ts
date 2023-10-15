@@ -1,5 +1,3 @@
-import './di';
-
 import { info } from '@studio/api-utils';
 
 import { app } from './app';
