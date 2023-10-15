@@ -2,7 +2,6 @@ import { Injectable } from '@studio/dependency-injection';
 import { DomainEventClass } from '../../../shared/domain/DomainEvent';
 import { EventHandler } from '../../../shared/application/EventHandler';
 import { AuthorStatsRepository } from '../../domain/AuthorStatsRepository';
-import { MongoAuthorStatsRepository } from '../../infrastructure/persistance/mongo/MongoAuthorStatsRepository';
 import { AuthorStatsFinder } from '../services/AuthorStatsFinder';
 import { CourseSubscriptionWasCreatedEvent } from '../../../course-subscriptions/domain/events/CourseSubscriptionWasCreated';
 import { CourseFinder } from '../../../courses/application/services/CourseFinder';
@@ -10,7 +9,7 @@ import { CourseRepository } from '../../../courses/domain/CourseRepository';
 import { CourseId } from '../../../courses/domain/CourseId';
 
 @Injectable({
-  dependencies: [MongoAuthorStatsRepository, CourseRepository],
+  dependencies: [AuthorStatsRepository, CourseRepository],
 })
 export class IncreaseCourseSubscriptionsCounterOnCourseSubscriptionCreatedHandler extends EventHandler<CourseSubscriptionWasCreatedEvent> {
   private readonly authorStatsFinder: AuthorStatsFinder;

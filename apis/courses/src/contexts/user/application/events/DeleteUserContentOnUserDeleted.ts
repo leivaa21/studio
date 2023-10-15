@@ -9,7 +9,6 @@ import { CourseSubscriptionRepository } from '../../../course-subscriptions/doma
 import { UserId } from '../../../course-subscriptions/domain/UserId';
 import { CourseFinder } from '../../../courses/application/services/CourseFinder';
 import { LessonRepository } from '../../../lessons/domain/LessonRepository';
-import { MongoAuthorStatsRepository } from '../../../author-stats/infrastructure/persistance/mongo/MongoAuthorStatsRepository';
 import { AuthorStatsRepository } from '../../../author-stats/domain/AuthorStatsRepository';
 import { ConsumerStatsRepository } from '../../../consumer-stats/domain/ConsumerStatsRepository';
 import { CourseStatsRepository } from '../../../course-stats/domain/CourseStatsRepository';
@@ -19,7 +18,7 @@ import { CourseStatsRepository } from '../../../course-stats/domain/CourseStatsR
     CourseRepository,
     LessonRepository,
     CourseSubscriptionRepository,
-    MongoAuthorStatsRepository,
+    AuthorStatsRepository,
     ConsumerStatsRepository,
     CourseStatsRepository,
     InMemoryAsyncEventBus,

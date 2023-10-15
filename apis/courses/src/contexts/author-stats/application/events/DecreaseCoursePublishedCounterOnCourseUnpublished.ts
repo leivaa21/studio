@@ -2,7 +2,6 @@ import { Injectable } from '@studio/dependency-injection';
 import { DomainEventClass } from '../../../shared/domain/DomainEvent';
 import { EventHandler } from '../../../shared/application/EventHandler';
 import { AuthorStatsRepository } from '../../domain/AuthorStatsRepository';
-import { MongoAuthorStatsRepository } from '../../infrastructure/persistance/mongo/MongoAuthorStatsRepository';
 import { AuthorStatsFinder } from '../services/AuthorStatsFinder';
 import { CourseId } from '../../../courses/domain/CourseId';
 import { CourseRepository } from '../../../courses/domain/CourseRepository';
@@ -11,7 +10,7 @@ import { CourseWasUnpublishedEvent } from '../../../courses/domain/events/Course
 import { ApiError, ErrorCodes } from '@studio/commons';
 
 @Injectable({
-  dependencies: [MongoAuthorStatsRepository, CourseRepository],
+  dependencies: [AuthorStatsRepository, CourseRepository],
 })
 export class DecreaseCoursePublishedCounterOnCourseUnpublishedHandler extends EventHandler<CourseWasUnpublishedEvent> {
   private readonly authorStatsFinder: AuthorStatsFinder;

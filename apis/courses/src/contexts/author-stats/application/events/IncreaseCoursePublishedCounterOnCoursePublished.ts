@@ -2,7 +2,6 @@ import { Injectable } from '@studio/dependency-injection';
 import { DomainEventClass } from '../../../shared/domain/DomainEvent';
 import { EventHandler } from '../../../shared/application/EventHandler';
 import { AuthorStatsRepository } from '../../domain/AuthorStatsRepository';
-import { MongoAuthorStatsRepository } from '../../infrastructure/persistance/mongo/MongoAuthorStatsRepository';
 import { AuthorStatsFinder } from '../services/AuthorStatsFinder';
 import { CourseId } from '../../../courses/domain/CourseId';
 import { CourseRepository } from '../../../courses/domain/CourseRepository';
@@ -10,7 +9,7 @@ import { CourseFinder } from '../../../courses/application/services/CourseFinder
 import { CourseWasPublishedEvent } from '../../../courses/domain/events/CourseWasPublished';
 
 @Injectable({
-  dependencies: [MongoAuthorStatsRepository, CourseRepository],
+  dependencies: [AuthorStatsRepository, CourseRepository],
 })
 export class IncreaseCoursePublishedCounterOnCoursePublishedHandler extends EventHandler<CourseWasPublishedEvent> {
   private readonly authorStatsFinder: AuthorStatsFinder;
