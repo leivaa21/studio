@@ -3,7 +3,6 @@ import { QueryHandler } from '../../../shared/application/QueryHandler';
 import { ConsumerStats } from '../../domain/ConsumerStats';
 import { ConsumerStatsFinder } from '../services/ConsumerStatsFinder';
 import { ConsumerStatsRepository } from '../../domain/ConsumerStatsRepository';
-import { MongoConsumerStatsRepository } from '../../infrastructure/persistance/mongo/MongoConsumerStatsRepository';
 import { UserId } from '../../../course-subscriptions/domain/UserId';
 
 export class GetConsumerStatsQuery {
@@ -15,7 +14,7 @@ export class GetConsumerStatsQuery {
 }
 
 @Injectable({
-  dependencies: [MongoConsumerStatsRepository],
+  dependencies: [ConsumerStatsRepository],
 })
 export class GetConsumerStats
   implements QueryHandler<GetConsumerStatsQuery, ConsumerStats>

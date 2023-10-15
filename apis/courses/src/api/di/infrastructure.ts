@@ -12,6 +12,9 @@ import { MongoCourseSubscriptionRepository } from '../../contexts/course-subscri
 import { CourseStatsRepository } from '../../contexts/course-stats/domain/CourseStatsRepository';
 import { MongoCourseStatsRepository } from '../../contexts/course-stats/infrastructure/persistance/mongo/MongoCourseStatsRepository';
 import { CourseStatsSchemaFactory } from '../../contexts/course-stats/infrastructure/persistance/mongo/CourseStatsSchemaFactory';
+import { ConsumerStatsSchemaFactory } from '../../contexts/consumer-stats/infrastructure/persistance/mongo/ConsumerStatsSchemaFactory';
+import { MongoConsumerStatsRepository } from '../../contexts/consumer-stats/infrastructure/persistance/mongo/MongoConsumerStatsRepository';
+import { ConsumerStatsRepository } from '../../contexts/consumer-stats/domain/ConsumerStatsRepository';
 
 const courseSchemaFactory = new CourseSchemaFactory();
 const criteriaConverter = new MongoCriteriaConverter();
@@ -45,4 +48,11 @@ const courseStatsSchemaFactory = new CourseStatsSchemaFactory();
 DependencyContainer.registerImplementation({
   constructor: CourseStatsRepository,
   implementation: new MongoCourseStatsRepository(courseStatsSchemaFactory),
+});
+
+const consumerStatsSchemaFactory = new ConsumerStatsSchemaFactory();
+
+DependencyContainer.registerImplementation({
+  constructor: ConsumerStatsRepository,
+  implementation: new MongoConsumerStatsRepository(consumerStatsSchemaFactory),
 });

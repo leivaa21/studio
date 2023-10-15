@@ -1,4 +1,3 @@
-import { Injectable } from '@studio/dependency-injection';
 import { MongoRepository } from '../../../../shared/infrastructure/mongo/MongoRepository';
 import { ConsumerStatsSchemaFactory } from './ConsumerStatsSchemaFactory';
 import { ConsumerStatsData } from './ConsumerStatsData';
@@ -8,7 +7,6 @@ import { ConsumerStats } from '../../../domain/ConsumerStats';
 import { ConsumerStatsRepository } from '../../../domain/ConsumerStatsRepository';
 import { UserId } from '../../../../course-subscriptions/domain/UserId';
 
-@Injectable({ dependencies: [ConsumerStatsSchemaFactory] })
 export class MongoConsumerStatsRepository
   extends MongoRepository<ConsumerStatsData, ConsumerStats>
   implements ConsumerStatsRepository
