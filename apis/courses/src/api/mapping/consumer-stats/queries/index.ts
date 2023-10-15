@@ -1,11 +1,10 @@
 import { DependencyContainer } from '@studio/dependency-injection';
 import { QueryBus } from '../../../../contexts/shared/domain/QueryBus';
-import { InMemoryQueryBus } from '../../../../contexts/shared/infrastructure/QueryBus/InMemoryQueryBus';
 import {
   GetConsumerStats,
   GetConsumerStatsQuery,
 } from '../../../../contexts/consumer-stats/application/queries/GetConsumerStats';
 
-const queryBus = DependencyContainer.get<QueryBus>(InMemoryQueryBus);
+const queryBus = DependencyContainer.get<QueryBus>(QueryBus);
 
 queryBus.subscribe(GetConsumerStatsQuery, GetConsumerStats);

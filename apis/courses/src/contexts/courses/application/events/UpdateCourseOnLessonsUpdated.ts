@@ -3,14 +3,12 @@ import { DomainEventClass } from '../../../shared/domain/DomainEvent';
 import { CourseId } from '../../domain/CourseId';
 import { CourseRepository } from '../../domain/CourseRepository';
 import { CourseFinder } from '../../application/services/CourseFinder';
-import { MongoCourseRepository } from '../../infrastructure/persistance/mongo/MongoCourseRepository';
 import { LessonWasCreatedEvent } from '../../../lessons/domain/events/LessonWasCreated';
 import { LessonWasDeletedEvent } from '../../../lessons/domain/events/LessonWasDeleted';
 import { LessonContentWasUpdatedEvent } from '../../../lessons/domain/events/LessonContentWasUpdated';
 import { LessonWasRenamedEvent } from '../../../lessons/domain/events/LessonWasRenamed';
 import { LessonWasReorderedEvent } from '../../../lessons/domain/events/LessonWasReordered';
 import { EventHandler } from '../../../shared/application/EventHandler';
-import { InMemoryAsyncEventBus } from '../../../shared/infrastructure/EventBus/InMemoryAsyncEventBus';
 import { EventBus } from '../../../shared/domain/EventBus';
 
 export type UpdateCourseOnLessonsUpdatedHandlerSubscribedEvents =
@@ -21,7 +19,7 @@ export type UpdateCourseOnLessonsUpdatedHandlerSubscribedEvents =
   | LessonWasReorderedEvent;
 
 @Injectable({
-  dependencies: [MongoCourseRepository, InMemoryAsyncEventBus],
+  dependencies: [CourseRepository, EventBus],
 })
 export class UpdateCourseOnLessonsUpdatedHandler extends EventHandler<UpdateCourseOnLessonsUpdatedHandlerSubscribedEvents> {
   private readonly courseFinder: CourseFinder;

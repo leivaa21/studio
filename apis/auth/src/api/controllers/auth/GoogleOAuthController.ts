@@ -8,7 +8,6 @@ import {
   QueryParam,
 } from 'routing-controllers';
 import { QueryBus } from '../../../contexts/shared/domain/QueryBus';
-import { InMemoryQueryBus } from '../../../contexts/shared/infrastructure/QueryBus/InMemoryQueryBus';
 import { SignInWithGoogleCredentialsQuery } from '../../../contexts/users/application/queries/SignIn/SignInWithGoogleCredentials';
 import { User } from '../../../contexts/users/domain/User';
 import { signJwt } from '../../auth/signJwt';
@@ -17,7 +16,7 @@ import { env } from '../../config/env';
 const redirect_uri = `${env.web.api_url}/auth/google`;
 
 @Injectable({
-  dependencies: [InMemoryQueryBus],
+  dependencies: [QueryBus],
 })
 @JsonController('/auth/google')
 export class GoogleOAuthController {

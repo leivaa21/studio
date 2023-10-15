@@ -3,13 +3,12 @@ import { DomainEventClass } from '../../../shared/domain/DomainEvent';
 import { EventHandler } from '../../../shared/application/EventHandler';
 import { CourseWasCreatedEvent } from '../../../courses/domain/events/CourseWasCreated';
 import { AuthorStatsRepository } from '../../domain/AuthorStatsRepository';
-import { MongoAuthorStatsRepository } from '../../infrastructure/persistance/mongo/MongoAuthorStatsRepository';
 import { AuthorId } from '../../../courses/domain/AuthorId';
 import { AuthorStatsFinder } from '../services/AuthorStatsFinder';
 import { AuthorStats } from '../../domain/AuthorStats';
 
 @Injectable({
-  dependencies: [MongoAuthorStatsRepository],
+  dependencies: [AuthorStatsRepository],
 })
 export class IncreaseCourseCounterOnCourseCreatedHandler extends EventHandler<CourseWasCreatedEvent> {
   private readonly authorStatsFinder: AuthorStatsFinder;

@@ -11,10 +11,9 @@ import {
 import { AuthUser } from '../../auth/authUser';
 import { CommandBus } from '../../../contexts/shared/domain/CommandBus';
 import { DeleteUserCommand } from '../../../contexts/users/application/commands/DeleteUser';
-import { InMemoryCommandBus } from '../../../contexts/shared/infrastructure/CommandBus/InMemoryCommandBus';
 
 @Injectable({
-  dependencies: [InMemoryCommandBus],
+  dependencies: [CommandBus],
 })
 @JsonController('/delete-account')
 export class DeleteUserController {

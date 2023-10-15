@@ -1,16 +1,14 @@
 import { Injectable } from '@studio/dependency-injection';
 import { DomainEventClass } from '../../../shared/domain/DomainEvent';
 import { EventHandler } from '../../../shared/application/EventHandler';
-import { InMemoryAsyncEventBus } from '../../../shared/infrastructure/EventBus/InMemoryAsyncEventBus';
 import { EventBus } from '../../../shared/domain/EventBus';
-import { MongoCourseSubscriptionRepository } from '../../infrastructure/persistance/mongo/MongoCourseSubscriptionRepository';
 import { CourseSubscriptionRepository } from '../../domain/CourseSubscriptionRepository';
 import { CourseSubscriptionFinder } from '../services/CourseSubscriptionFinder';
 import { CourseId } from '../../../courses/domain/CourseId';
 import { LessonWasCreatedEvent } from '../../../lessons/domain/events/LessonWasCreated';
 
 @Injectable({
-  dependencies: [MongoCourseSubscriptionRepository, InMemoryAsyncEventBus],
+  dependencies: [CourseSubscriptionRepository, EventBus],
 })
 export class MarkCourseSubscriptionAsNonCompletedOnLessonCreatedHandler extends EventHandler<LessonWasCreatedEvent> {
   private readonly courseSubscriptionFinder: CourseSubscriptionFinder;

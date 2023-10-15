@@ -10,14 +10,13 @@ import {
 } from 'routing-controllers';
 import { Injectable } from '@studio/dependency-injection';
 import { User } from '../../auth/user';
-import { InMemoryQueryBus } from '../../../contexts/shared/infrastructure/QueryBus/InMemoryQueryBus';
 import { QueryBus } from '../../../contexts/shared/domain/QueryBus';
 import { GetMyCoursesFilteredQuery } from '../../../contexts/courses/application/queries/GetMyCoursesFiltered';
 import { Course } from '../../../contexts/courses/domain/Course';
 import { CourseInfoResponse } from '@studio/commons';
 
 @Injectable({
-  dependencies: [InMemoryQueryBus],
+  dependencies: [QueryBus],
 })
 @JsonController('/courses/authored')
 export class GetMyCoursesFilteredController {

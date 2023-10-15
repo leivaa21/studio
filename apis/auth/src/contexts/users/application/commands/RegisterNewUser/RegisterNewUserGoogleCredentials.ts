@@ -1,14 +1,12 @@
 import { Injectable } from '@studio/dependency-injection';
 import { CommandHandler } from '../../../../shared/application/CommandHandler';
 import { EventBus } from '../../../../shared/domain/EventBus';
-import { InMemoryAsyncEventBus } from '../../../../shared/infrastructure/EventBus/InMemoryAsyncEventBus';
 import { GoogleId } from '../../../domain/GoogleId';
 import { User } from '../../../domain/User';
 import { UserEmail } from '../../../domain/UserEmail';
 import { UserGoogleCredentials } from '../../../domain/UserGoogleCredentials';
 import { UserNickname } from '../../../domain/UserNickname';
 import { UserRepository } from '../../../domain/UserRepository';
-import { MongoUserRepository } from '../../../infrastructure/persistance/mongo/MongoUserRepository';
 import { UserFinder } from '../../../domain/services/UserFinder';
 
 export class RegisterNewUserGoogleCredentialsCommand {
@@ -21,7 +19,7 @@ export class RegisterNewUserGoogleCredentialsCommand {
 }
 
 @Injectable({
-  dependencies: [MongoUserRepository, InMemoryAsyncEventBus],
+  dependencies: [UserRepository, EventBus],
 })
 export class RegisterNewUserGoogleCredentials extends CommandHandler<RegisterNewUserGoogleCredentialsCommand> {
   private readonly userFinder: UserFinder;

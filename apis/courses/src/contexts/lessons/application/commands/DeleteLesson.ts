@@ -5,9 +5,6 @@ import { CommandHandler } from '../../../shared/application/CommandHandler';
 import { EventBus } from '../../../shared/domain/EventBus';
 import { LessonRepository } from '../../domain/LessonRepository';
 import { LessonFinder } from '../services/LessonFinder';
-import { MongoLessonRepository } from '../../infrastructure/persistance/mongo/MongoLessonRepository';
-import { MongoCourseRepository } from '../../../courses/infrastructure/persistance/mongo/MongoCourseRepository';
-import { InMemoryAsyncEventBus } from '../../../shared/infrastructure/EventBus/InMemoryAsyncEventBus';
 import { AuthorId } from '../../../courses/domain/AuthorId';
 import { LessonId } from '../../domain/LessonId';
 
@@ -22,11 +19,7 @@ export class DeleteLessonCommand {
 }
 
 @Injectable({
-  dependencies: [
-    MongoLessonRepository,
-    MongoCourseRepository,
-    InMemoryAsyncEventBus,
-  ],
+  dependencies: [LessonRepository, CourseRepository, EventBus],
 })
 export class DeleteLesson extends CommandHandler<DeleteLessonCommand> {
   private readonly lessonFinder: LessonFinder;

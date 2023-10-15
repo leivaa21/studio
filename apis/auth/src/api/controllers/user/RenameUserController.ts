@@ -14,11 +14,10 @@ import { RenameUserRequest } from '@studio/commons';
 
 import { AuthUser } from '../../auth/authUser';
 import { CommandBus } from '../../../contexts/shared/domain/CommandBus';
-import { InMemoryCommandBus } from '../../../contexts/shared/infrastructure/CommandBus/InMemoryCommandBus';
 import { RenameUserCommand } from '../../../contexts/users/application/commands/RenameUser';
 
 @Injectable({
-  dependencies: [InMemoryCommandBus],
+  dependencies: [CommandBus],
 })
 @JsonController('/user/nickname')
 export class RenameUserController {

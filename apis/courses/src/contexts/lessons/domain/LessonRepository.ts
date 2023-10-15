@@ -3,11 +3,11 @@ import { Nullable } from '../../shared/domain/Nullable';
 import { Lesson } from './Lesson';
 import { LessonId } from './LessonId';
 
-export interface LessonRepository {
-  create(lesson: Lesson): Promise<void>;
-  findByCourseId(courseId: CourseId): Promise<Lesson[]>;
-  findById(lessonId: LessonId): Promise<Nullable<Lesson>>;
-  update(lesson: Lesson): Promise<void>;
-  deleteById(lessonId: LessonId): Promise<void>;
-  deleteByCourse(courseId: CourseId): Promise<void>;
+export abstract class LessonRepository {
+  abstract create(lesson: Lesson): Promise<void>;
+  abstract findByCourseId(courseId: CourseId): Promise<Lesson[]>;
+  abstract findById(lessonId: LessonId): Promise<Nullable<Lesson>>;
+  abstract update(lesson: Lesson): Promise<void>;
+  abstract deleteById(lessonId: LessonId): Promise<void>;
+  abstract deleteByCourse(courseId: CourseId): Promise<void>;
 }

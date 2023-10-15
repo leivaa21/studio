@@ -1,6 +1,5 @@
 import { DependencyContainer } from '@studio/dependency-injection';
 import { EventBus } from '../../../../contexts/shared/domain/EventBus';
-import { InMemoryAsyncEventBus } from '../../../../contexts/shared/infrastructure/EventBus/InMemoryAsyncEventBus';
 import { DomainEventSubscriber } from '../../../../contexts/shared/domain/DomainEventSubscriber';
 import { RemoveCourseSubscriptionsOnUnpublishedHandler } from '../../../../contexts/course-subscriptions/application/events/RemoveCourseSubscriptionsOnUnpublished';
 import { CourseWasUnpublishedEvent } from '../../../../contexts/courses/domain/events/CourseWasUnpublished';
@@ -13,7 +12,7 @@ import { UpdateCourseSubscriptionOnLessonContentUpdatedHandler } from '../../../
 import { LessonWasCreatedEvent } from '../../../../contexts/lessons/domain/events/LessonWasCreated';
 import { MarkCourseSubscriptionAsNonCompletedOnLessonCreatedHandler } from '../../../../contexts/course-subscriptions/application/events/MarkCourseSubscriptionAsNonCompletedOnLessonCreated';
 
-const eventBus = DependencyContainer.get<EventBus>(InMemoryAsyncEventBus);
+const eventBus = DependencyContainer.get<EventBus>(EventBus);
 
 const markCourseSubscriptionAsNonCompletedOnLessonCreated =
   DependencyContainer.get<DomainEventSubscriber<LessonWasCreatedEvent>>(

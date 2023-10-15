@@ -9,14 +9,13 @@ import {
   Param,
   Put,
 } from 'routing-controllers';
-import { InMemoryCommandBus } from '../../../contexts/shared/infrastructure/CommandBus/InMemoryCommandBus';
 import { CommandBus } from '../../../contexts/shared/domain/CommandBus';
 import { BadRequestError, StatusCode } from '@studio/api-utils';
 import { User } from '../../auth/user';
 import { RenameCourseCommand } from '../../../contexts/courses/application/commands/RenameCourse';
 
 @Injectable({
-  dependencies: [InMemoryCommandBus],
+  dependencies: [CommandBus],
 })
 @JsonController('/course')
 export class RenameCourseController {

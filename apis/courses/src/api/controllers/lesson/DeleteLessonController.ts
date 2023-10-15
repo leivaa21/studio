@@ -8,14 +8,13 @@ import {
   OnUndefined,
   Param,
 } from 'routing-controllers';
-import { InMemoryCommandBus } from '../../../contexts/shared/infrastructure/CommandBus/InMemoryCommandBus';
 import { CommandBus } from '../../../contexts/shared/domain/CommandBus';
 import { StatusCode } from '@studio/api-utils';
 import { User } from '../../auth/user';
 import { DeleteLessonCommand } from '../../../contexts/lessons/application/commands/DeleteLesson';
 
 @Injectable({
-  dependencies: [InMemoryCommandBus],
+  dependencies: [CommandBus],
 })
 @JsonController('/lesson')
 export class DeleteLessonController {

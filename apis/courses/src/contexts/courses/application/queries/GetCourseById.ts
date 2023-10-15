@@ -3,7 +3,6 @@ import { QueryHandler } from '../../../shared/application/QueryHandler';
 import { Course } from '../../domain/Course';
 import { CourseRepository } from '../../domain/CourseRepository';
 import { CourseFinder } from '../services/CourseFinder';
-import { MongoCourseRepository } from '../../infrastructure/persistance/mongo/MongoCourseRepository';
 import { CourseId } from '../../domain/CourseId';
 
 export class GetCourseByIdQuery {
@@ -15,7 +14,7 @@ export class GetCourseByIdQuery {
 }
 
 @Injectable({
-  dependencies: [MongoCourseRepository],
+  dependencies: [CourseRepository],
 })
 export class GetCourseById implements QueryHandler<GetCourseByIdQuery, Course> {
   private readonly courseFinder: CourseFinder;

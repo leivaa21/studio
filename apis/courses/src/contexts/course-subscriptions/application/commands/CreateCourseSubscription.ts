@@ -1,8 +1,6 @@
 import { CommandHandler } from '../../../shared/application/CommandHandler';
 import { EventBus } from '../../../shared/domain/EventBus';
 import { Injectable } from '@studio/dependency-injection';
-import { InMemoryAsyncEventBus } from '../../../shared/infrastructure/EventBus/InMemoryAsyncEventBus';
-import { MongoCourseRepository } from '../../../courses/infrastructure/persistance/mongo/MongoCourseRepository';
 import { CourseRepository } from '../../../courses/domain/CourseRepository';
 import { CourseFinder } from '../../../courses/application/services/CourseFinder';
 import { CourseSubscriptionRepository } from '../../domain/CourseSubscriptionRepository';
@@ -11,7 +9,6 @@ import { CourseId } from '../../../courses/domain/CourseId';
 import { UserId } from '../../domain/UserId';
 import { CourseSubscription } from '../../domain/CourseSubscription';
 import { InvalidCourseSubscriptionError } from '../../domain/errors/InvalidCourseSubscriptionError';
-import { MongoCourseSubscriptionRepository } from '../../infrastructure/persistance/mongo/MongoCourseSubscriptionRepository';
 
 export class CreateCourseSubscriptionCommand {
   public readonly courseId: string;
@@ -23,11 +20,7 @@ export class CreateCourseSubscriptionCommand {
 }
 
 @Injectable({
-  dependencies: [
-    MongoCourseSubscriptionRepository,
-    MongoCourseRepository,
-    InMemoryAsyncEventBus,
-  ],
+  dependencies: [CourseSubscriptionRepository, CourseRepository, EventBus],
 })
 export class CreateCourseSubscription extends CommandHandler<CreateCourseSubscriptionCommand> {
   private readonly courseSubscriptionFinder: CourseSubscriptionFinder;

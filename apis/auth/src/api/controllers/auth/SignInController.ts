@@ -3,13 +3,12 @@ import { Body, HttpCode, JsonController, Post } from 'routing-controllers';
 import { SignInRequest } from '@studio/commons';
 import { Injectable } from '@studio/dependency-injection';
 import { QueryBus } from '../../../contexts/shared/domain/QueryBus';
-import { InMemoryQueryBus } from '../../../contexts/shared/infrastructure/QueryBus/InMemoryQueryBus';
 import { SignInWithBasicCredentialsQuery } from '../../../contexts/users/application/queries/SignIn/SignInWithBasicCredentials';
 import { User } from '../../../contexts/users/domain/User';
 import { signJwt } from '../../auth/signJwt';
 
 @Injectable({
-  dependencies: [InMemoryQueryBus],
+  dependencies: [QueryBus],
 })
 @JsonController('/auth/signin')
 export class SignInController {

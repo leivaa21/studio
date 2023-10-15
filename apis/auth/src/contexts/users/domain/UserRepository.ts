@@ -6,13 +6,13 @@ import { UserEmail } from './UserEmail';
 import { UserId } from './UserId';
 import { UserNickname } from './UserNickname';
 
-export interface UserRepository {
-  create(user: User): Promise<void>;
-  findById(id: UserId): Promise<Nullable<User>>;
-  findByEmail(email: UserEmail): Promise<Nullable<User>>;
-  findByGoogleId(googleId: GoogleId): Promise<Nullable<User>>;
-  findByGithubId(githubId: GithubId): Promise<Nullable<User>>;
-  findByNickname(nickname: UserNickname): Promise<Nullable<User>>;
-  update(user: User): Promise<void>;
-  delete(user: User): Promise<void>;
+export abstract class UserRepository {
+  abstract create(user: User): Promise<void>;
+  abstract findById(id: UserId): Promise<Nullable<User>>;
+  abstract findByEmail(email: UserEmail): Promise<Nullable<User>>;
+  abstract findByGoogleId(googleId: GoogleId): Promise<Nullable<User>>;
+  abstract findByGithubId(githubId: GithubId): Promise<Nullable<User>>;
+  abstract findByNickname(nickname: UserNickname): Promise<Nullable<User>>;
+  abstract update(user: User): Promise<void>;
+  abstract delete(user: User): Promise<void>;
 }

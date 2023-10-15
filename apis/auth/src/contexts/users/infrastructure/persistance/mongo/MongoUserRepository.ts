@@ -1,4 +1,3 @@
-import { Injectable } from '@studio/dependency-injection';
 import { Nullable } from '../../../../shared/domain/Nullable';
 import { MongoRepository } from '../../../../shared/infrastructure/mongo/MongoRepository';
 import { GoogleId } from '../../../domain/GoogleId';
@@ -9,10 +8,8 @@ import { UserNickname } from '../../../domain/UserNickname';
 import { UserRepository } from '../../../domain/UserRepository';
 import { UserData } from './UserData';
 import { UserModel } from './UserSchema';
-import { UserSchemaFactory } from './UserSchemaFactory';
 import { GithubId } from '../../../domain/GithubId';
 
-@Injectable({ dependencies: [UserSchemaFactory] })
 export class MongoUserRepository
   extends MongoRepository<UserData, User>
   implements UserRepository

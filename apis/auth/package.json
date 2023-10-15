@@ -10,9 +10,11 @@
     "prod": "yarn build && yarn start",
     "lint": "eslint './src/**' && prettier .",
     "lint:fix": "eslint './src/**' --fix && prettier --write .",
-    "test": "jest .",
-    "test:coverage": "jest --coverage",
-    "test:e2e": "jest test/e2e"
+    "test:unit": "jest ./test/unit -c test/unit/jest.config.js",
+    "test:integration": "jest ./test/integration",
+    "test:e2e": "jest ./test/e2e",
+    "test:coverage": "jest ./test/unit -c test/unit/jest.config.js --coverage",
+    "test": "yarn test:unit && yarn test:integration && yarn test:e2e"
   },
   "dependencies": {
     "@studio/api-utils": "workspace:packages/api-utils",

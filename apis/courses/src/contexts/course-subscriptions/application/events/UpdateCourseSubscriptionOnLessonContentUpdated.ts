@@ -1,9 +1,7 @@
 import { Injectable } from '@studio/dependency-injection';
 import { DomainEventClass } from '../../../shared/domain/DomainEvent';
 import { EventHandler } from '../../../shared/application/EventHandler';
-import { InMemoryAsyncEventBus } from '../../../shared/infrastructure/EventBus/InMemoryAsyncEventBus';
 import { EventBus } from '../../../shared/domain/EventBus';
-import { MongoCourseSubscriptionRepository } from '../../infrastructure/persistance/mongo/MongoCourseSubscriptionRepository';
 import { CourseSubscriptionRepository } from '../../domain/CourseSubscriptionRepository';
 import { CourseSubscriptionFinder } from '../services/CourseSubscriptionFinder';
 import { CourseId } from '../../../courses/domain/CourseId';
@@ -11,7 +9,7 @@ import { LessonContentWasUpdatedEvent } from '../../../lessons/domain/events/Les
 import { LessonId } from '../../../lessons/domain/LessonId';
 
 @Injectable({
-  dependencies: [MongoCourseSubscriptionRepository, InMemoryAsyncEventBus],
+  dependencies: [CourseSubscriptionRepository, EventBus],
 })
 export class UpdateCourseSubscriptionOnLessonContentUpdatedHandler extends EventHandler<LessonContentWasUpdatedEvent> {
   private readonly courseSubscriptionFinder: CourseSubscriptionFinder;

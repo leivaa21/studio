@@ -1,13 +1,11 @@
 import { Injectable } from '@studio/dependency-injection';
 import { QueryHandler } from '../../../../shared/application/QueryHandler';
 import { CommandBus } from '../../../../shared/domain/CommandBus';
-import { InMemoryCommandBus } from '../../../../shared/infrastructure/CommandBus/InMemoryCommandBus';
 import { GoogleId } from '../../../domain/GoogleId';
 import { UserFinder } from '../../../domain/services/UserFinder';
 import { User } from '../../../domain/User';
 import { UserEmail } from '../../../domain/UserEmail';
 import { UserRepository } from '../../../domain/UserRepository';
-import { MongoUserRepository } from '../../../infrastructure/persistance/mongo/MongoUserRepository';
 import { RegisterNewUserGoogleCredentialsCommand } from '../../commands/RegisterNewUser/RegisterNewUserGoogleCredentials';
 import { InvalidCredentialsError } from '../../../domain/errors/InvalidCredentials';
 
@@ -21,7 +19,7 @@ export class SignInWithGoogleCredentialsQuery {
 }
 
 @Injectable({
-  dependencies: [InMemoryCommandBus, MongoUserRepository],
+  dependencies: [CommandBus, UserRepository],
 })
 export class SignInWithGoogleCredentialsHandler
   implements QueryHandler<SignInWithGoogleCredentialsQuery, User>

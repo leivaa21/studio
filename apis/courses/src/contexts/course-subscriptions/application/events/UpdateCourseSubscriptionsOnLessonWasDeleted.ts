@@ -1,9 +1,7 @@
 import { Injectable } from '@studio/dependency-injection';
 import { DomainEventClass } from '../../../shared/domain/DomainEvent';
 import { EventHandler } from '../../../shared/application/EventHandler';
-import { InMemoryAsyncEventBus } from '../../../shared/infrastructure/EventBus/InMemoryAsyncEventBus';
 import { EventBus } from '../../../shared/domain/EventBus';
-import { MongoCourseSubscriptionRepository } from '../../infrastructure/persistance/mongo/MongoCourseSubscriptionRepository';
 import { CourseSubscriptionRepository } from '../../domain/CourseSubscriptionRepository';
 import { CourseSubscriptionFinder } from '../services/CourseSubscriptionFinder';
 import { LessonId } from '../../../lessons/domain/LessonId';
@@ -11,15 +9,10 @@ import { LessonWasDeletedEvent } from '../../../lessons/domain/events/LessonWasD
 import { CourseId } from '../../../courses/domain/CourseId';
 import { CourseSubscription } from '../../domain/CourseSubscription';
 import { LessonFinder } from '../../../lessons/application/services/LessonFinder';
-import { MongoLessonRepository } from '../../../lessons/infrastructure/persistance/mongo/MongoLessonRepository';
 import { LessonRepository } from '../../../lessons/domain/LessonRepository';
 
 @Injectable({
-  dependencies: [
-    MongoCourseSubscriptionRepository,
-    MongoLessonRepository,
-    InMemoryAsyncEventBus,
-  ],
+  dependencies: [CourseSubscriptionRepository, LessonRepository, EventBus],
 })
 export class UpdateCourseSubscriptionsOnLessonWasDeletedHandler extends EventHandler<LessonWasDeletedEvent> {
   private readonly courseSubscriptionFinder: CourseSubscriptionFinder;

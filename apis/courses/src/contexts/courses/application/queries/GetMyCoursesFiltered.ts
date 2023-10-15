@@ -4,7 +4,6 @@ import { AuthorId } from '../../domain/AuthorId';
 import { Course } from '../../domain/Course';
 import { CourseRepository } from '../../domain/CourseRepository';
 import { CourseFinder } from '../services/CourseFinder';
-import { MongoCourseRepository } from '../../infrastructure/persistance/mongo/MongoCourseRepository';
 
 export class GetMyCoursesFilteredQuery {
   public readonly authorId: string;
@@ -25,7 +24,7 @@ export class GetMyCoursesFilteredQuery {
 }
 
 @Injectable({
-  dependencies: [MongoCourseRepository],
+  dependencies: [CourseRepository],
 })
 export class GetMyCoursesFiltered
   implements QueryHandler<GetMyCoursesFilteredQuery, Course[]>

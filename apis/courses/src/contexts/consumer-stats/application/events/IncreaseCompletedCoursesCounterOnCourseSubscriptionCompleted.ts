@@ -2,19 +2,14 @@ import { Injectable } from '@studio/dependency-injection';
 import { DomainEventClass } from '../../../shared/domain/DomainEvent';
 import { EventHandler } from '../../../shared/application/EventHandler';
 import { ConsumerStatsRepository } from '../../domain/ConsumerStatsRepository';
-import { MongoConsumerStatsRepository } from '../../infrastructure/persistance/mongo/MongoConsumerStatsRepository';
 import { ConsumerStatsFinder } from '../services/ConsumerStatsFinder';
 import { CourseSubscriptionWasCompletedEvent } from '../../../course-subscriptions/domain/events/CourseSubscriptionWasCompleted';
 import { CourseSubscriptionRepository } from '../../../course-subscriptions/domain/CourseSubscriptionRepository';
 import { CourseSubscriptionFinder } from '../../../course-subscriptions/application/services/CourseSubscriptionFinder';
 import { CourseSubscriptionId } from '../../../course-subscriptions/domain/CourseSubscriptionId';
-import { MongoCourseSubscriptionRepository } from '../../../course-subscriptions/infrastructure/persistance/mongo/MongoCourseSubscriptionRepository';
 
 @Injectable({
-  dependencies: [
-    MongoConsumerStatsRepository,
-    MongoCourseSubscriptionRepository,
-  ],
+  dependencies: [ConsumerStatsRepository, CourseSubscriptionRepository],
 })
 export class IncreaseCompletedCoursesCounterOnCourseSubscriptionCompletedHandler extends EventHandler<CourseSubscriptionWasCompletedEvent> {
   private readonly consumerStatsFinder: ConsumerStatsFinder;

@@ -1,9 +1,7 @@
 import { Injectable } from '@studio/dependency-injection';
 import { CommandHandler } from '../../../shared/application/CommandHandler';
 import { EventBus } from '../../../shared/domain/EventBus';
-import { InMemoryAsyncEventBus } from '../../../shared/infrastructure/EventBus/InMemoryAsyncEventBus';
 import { UserRepository } from '../../domain/UserRepository';
-import { MongoUserRepository } from '../../infrastructure/persistance/mongo/MongoUserRepository';
 import { UserFinder } from '../../domain/services/UserFinder';
 import { UserId } from '../../domain/UserId';
 import { UserNickname } from '../../domain/UserNickname';
@@ -19,7 +17,7 @@ export class RenameUserCommand {
 }
 
 @Injectable({
-  dependencies: [MongoUserRepository, InMemoryAsyncEventBus],
+  dependencies: [UserRepository, EventBus],
 })
 export class RenameUser extends CommandHandler<RenameUserCommand> {
   private readonly userFinder: UserFinder;
