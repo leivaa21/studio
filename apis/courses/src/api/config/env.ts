@@ -14,6 +14,7 @@ export const env = {
   courses: {
     port: getEnvVariableOrDefault<number>('PORT', 5002),
     url: getEnvVariableOrDefault<string>('URL', 'http://localhost'),
+    mode: getEnvVariableOrDefault<string>('NODE_ENV', 'dev'),
   },
   mongo: {
     host: getEnvVariableOrDefault<string>('MONGO_HOST', 'localhost'),
@@ -21,6 +22,14 @@ export const env = {
     db: getEnvVariableOrDefault<string>('MONGO_DATABASE', 'studio-courses'),
     user: getEnvVariableOrUndefined<string>('MONGO_USER'),
     pass: getEnvVariableOrUndefined<string>('MONGO_PASS'),
+  },
+  rabbit: {
+    host: getEnvVariableOrDefault<string>('RABBIT_HOST', 'localhost'),
+    port: getEnvVariableOrDefault<number>('RABBIT_PORT', 5672),
+    event_queue: getEnvVariableOrDefault<string>(
+      'RABBIT_EVENT_QUEUE',
+      'event-bus'
+    ),
   },
   jwt: {
     secret: getEnvVariableOrDefault<string>('JWT_SECRET', 'jwt-secret'),

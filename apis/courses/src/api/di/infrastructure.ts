@@ -23,6 +23,8 @@ import { InMemoryCommandBus } from '../../contexts/shared/infrastructure/Command
 import { QueryBus } from '../../contexts/shared/domain/QueryBus';
 import { InMemoryQueryBus } from '../../contexts/shared/infrastructure/QueryBus/InMemoryQueryBus';
 import { EventBus } from '../../contexts/shared/domain/EventBus';
+import { RabbitMQEventBus } from '../../contexts/shared/infrastructure/EventBus/RabbitMQEventBus';
+import { env } from '../config/env';
 import { InMemoryAsyncEventBus } from '../../contexts/shared/infrastructure/EventBus/InMemoryAsyncEventBus';
 
 const courseSchemaFactory = new CourseSchemaFactory();
@@ -85,7 +87,15 @@ DependencyContainer.registerImplementation({
   implementation: new InMemoryQueryBus(),
 });
 
-DependencyContainer.registerImplementation({
-  constructor: EventBus,
-  implementation: new InMemoryAsyncEventBus(),
-});
+if (env.courses.mode === 'test') {
+  // Using InMemory event bus on tests enviroments
+  DependencyContainer.registerImplementation({
+    constructor: EventBus,
+    implementation: new InMemoryAsyncEventBus(),
+  });
+} else {
+  DependencyContainer.registerImplementation({
+    constructor: EventBus,
+    implementation: new RabbitMQEventBus(),
+  });
+}
