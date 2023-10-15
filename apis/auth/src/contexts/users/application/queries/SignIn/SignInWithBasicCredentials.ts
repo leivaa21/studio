@@ -5,7 +5,6 @@ import { UserFinder } from '../../../domain/services/UserFinder';
 import { User } from '../../../domain/User';
 import { UserEmail } from '../../../domain/UserEmail';
 import { UserRepository } from '../../../domain/UserRepository';
-import { MongoUserRepository } from '../../../infrastructure/persistance/mongo/MongoUserRepository';
 
 export class SignInWithBasicCredentialsQuery {
   public readonly email: string;
@@ -17,7 +16,7 @@ export class SignInWithBasicCredentialsQuery {
 }
 
 @Injectable({
-  dependencies: [MongoUserRepository],
+  dependencies: [UserRepository],
 })
 export class SignInWithBasicCredentialsHandler
   implements QueryHandler<SignInWithBasicCredentialsQuery, User>

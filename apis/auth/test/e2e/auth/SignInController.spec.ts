@@ -12,12 +12,11 @@ import { generateValidPassword } from '../../helpers/lib/generateValidPassword';
 
 import { app } from '../../../src/api/app';
 import { UserRepository } from '../../../src/contexts/users/domain/UserRepository';
-import { MongoUserRepository } from '../../../src/contexts/users/infrastructure/persistance/mongo/MongoUserRepository';
 import { UserBuilder } from '../../helpers/builders/user/UserBuilder';
 import { EmailMother } from '../../helpers/object-mother/UserEmailMother';
 
 let mongoContainer: StartedTestContainer;
-const repository = DependencyContainer.get<UserRepository>(MongoUserRepository);
+const repository = DependencyContainer.get<UserRepository>(UserRepository);
 const route = '/auth/signin/basic';
 
 beforeAll(async () => {

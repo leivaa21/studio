@@ -4,7 +4,6 @@ import { UserFinder } from '../../../domain/services/UserFinder';
 import { User } from '../../../domain/User';
 import { UserEmail } from '../../../domain/UserEmail';
 import { UserRepository } from '../../../domain/UserRepository';
-import { MongoUserRepository } from '../../../infrastructure/persistance/mongo/MongoUserRepository';
 
 export class GetUserByEmailQuery {
   public readonly email: string;
@@ -14,7 +13,7 @@ export class GetUserByEmailQuery {
 }
 
 @Injectable({
-  dependencies: [MongoUserRepository],
+  dependencies: [UserRepository],
 })
 export class GetUserByEmailHandler
   implements QueryHandler<GetUserByEmailQuery, User>

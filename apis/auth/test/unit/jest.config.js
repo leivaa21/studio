@@ -8,6 +8,7 @@ const options = {
   testEnvironment: 'node',
   silent: true,
   collectCoverage: false,
+  setupFilesAfterEnv: ['./setup.ts'],
 };
 // eslint-disable-next-line no-undef
 module.exports = options;

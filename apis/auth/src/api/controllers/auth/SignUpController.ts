@@ -5,15 +5,13 @@ import { BadRequestError } from '@studio/api-utils';
 
 import { JsonController, HttpCode, Post, Body } from 'routing-controllers';
 import { CommandBus } from '../../../contexts/shared/domain/CommandBus';
-import { InMemoryCommandBus } from '../../../contexts/shared/infrastructure/CommandBus/InMemoryCommandBus';
 import { RegisterNewUserBasicCredentialsCommand } from '../../../contexts/users/application/commands/RegisterNewUser/RegisterNewUserBasicCredentials';
 import { QueryBus } from '../../../contexts/shared/domain/QueryBus';
-import { InMemoryQueryBus } from '../../../contexts/shared/infrastructure/QueryBus/InMemoryQueryBus';
 import { GetUserByEmailQuery } from '../../../contexts/users/application/queries/GetUser/GetUserByEmail';
 import { User } from '../../../contexts/users/domain/User';
 import { signJwt } from '../../auth/signJwt';
 @Injectable({
-  dependencies: [InMemoryCommandBus, InMemoryQueryBus],
+  dependencies: [CommandBus, QueryBus],
 })
 @JsonController('/auth/signup')
 export class SingUpController {

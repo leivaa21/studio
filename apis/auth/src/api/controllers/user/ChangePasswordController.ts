@@ -14,11 +14,10 @@ import { ChangePasswordRequest } from '@studio/commons';
 
 import { AuthUser } from '../../auth/authUser';
 import { CommandBus } from '../../../contexts/shared/domain/CommandBus';
-import { InMemoryCommandBus } from '../../../contexts/shared/infrastructure/CommandBus/InMemoryCommandBus';
 import { ChangePasswordCommand } from '../../../contexts/users/application/commands/ChangePassword';
 
 @Injectable({
-  dependencies: [InMemoryCommandBus],
+  dependencies: [CommandBus],
 })
 @JsonController('/user/password')
 export class ChangePasswordController {

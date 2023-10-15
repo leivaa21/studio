@@ -1,9 +1,7 @@
 import { Injectable } from '@studio/dependency-injection';
 import { CommandHandler } from '../../../shared/application/CommandHandler';
 import { EventBus } from '../../../shared/domain/EventBus';
-import { InMemoryAsyncEventBus } from '../../../shared/infrastructure/EventBus/InMemoryAsyncEventBus';
 import { UserRepository } from '../../domain/UserRepository';
-import { MongoUserRepository } from '../../infrastructure/persistance/mongo/MongoUserRepository';
 import { UserFinder } from '../../domain/services/UserFinder';
 import { UserId } from '../../domain/UserId';
 import { UserEmail } from '../../domain/UserEmail';
@@ -19,7 +17,7 @@ export class ChangeEmailCommand {
 }
 
 @Injectable({
-  dependencies: [MongoUserRepository, InMemoryAsyncEventBus],
+  dependencies: [UserRepository, EventBus],
 })
 export class ChangeEmail extends CommandHandler<ChangeEmailCommand> {
   private readonly userFinder: UserFinder;

@@ -1,6 +1,5 @@
 import { DependencyContainer } from '@studio/dependency-injection';
 import { CommandBus } from '../../../../contexts/shared/domain/CommandBus';
-import { InMemoryCommandBus } from '../../../../contexts/shared/infrastructure/CommandBus/InMemoryCommandBus';
 import {
   RegisterNewUserBasicCredentialsCommand,
   RegisterNewUserBasicCredentials,
@@ -30,7 +29,7 @@ import {
   DeleteUserCommand,
 } from '../../../../contexts/users/application/commands/DeleteUser';
 
-const commandBus = DependencyContainer.get<CommandBus>(InMemoryCommandBus);
+const commandBus = DependencyContainer.get<CommandBus>(CommandBus);
 
 commandBus.subscribe(
   RegisterNewUserBasicCredentialsCommand,

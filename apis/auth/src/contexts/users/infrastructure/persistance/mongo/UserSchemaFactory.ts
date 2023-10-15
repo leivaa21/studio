@@ -1,4 +1,3 @@
-import { Injectable } from '@studio/dependency-injection';
 import { EntitySchemaFactory } from '../../../../shared/infrastructure/mongo/EntitySchemaFactory';
 import { PossibleUserCredentialsAsPrimitives } from '../../../domain/PossibleUserCredentials';
 import { User } from '../../../domain/User';
@@ -9,7 +8,6 @@ import {
   UserData,
 } from './UserData';
 
-@Injectable()
 export class UserSchemaFactory implements EntitySchemaFactory<UserData, User> {
   createSchemaFromEntity(user: User): UserData {
     const { id: _id, credentials, ...rest } = user.toPrimitives();
