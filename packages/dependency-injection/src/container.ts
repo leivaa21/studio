@@ -20,6 +20,7 @@ class NotRegisteredException extends Error {
 }
 
 class Container {
+	private disabled = false;
 	private readonly dependencies = new Map<DependencyName, any>();
 	private static instance?: Container = undefined;
 
@@ -33,6 +34,8 @@ class Container {
 	}
 
 	register(dependency: DependencyInfo) {
+		if (this.disabled) return;
+
 		const dependencyName = dependency.class.name;
 		const isAlreadyRegistered = this.dependencies.has(dependencyName);
 
@@ -50,6 +53,8 @@ class Container {
 	}
 
 	registerImplementation<T>(dependency: ImplementationInfo<T>) {
+		if (this.disabled) return;
+
 		const dependencyName = dependency.constructor.name;
 		const isAlreadyRegistered = this.dependencies.has(dependencyName);
 
@@ -68,6 +73,10 @@ class Container {
 		const instance = this.dependencies.get(dependencyName);
 
 		return instance;
+	}
+
+	disable() {
+		this.disabled = true;
 	}
 }
 
