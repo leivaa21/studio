@@ -1,4 +1,9 @@
-import { Constructor, DependencyInfo, DependencyName } from './types';
+import {
+	Constructor,
+	DependencyInfo,
+	DependencyName,
+	ImplementationInfo,
+} from './types';
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
 class DuplicatedDependencyException extends Error {
@@ -42,6 +47,16 @@ class Container {
 			dependencyName,
 			new dependency.class(...subDependencies)
 		);
+	}
+
+	registerImplementation<T>(dependency: ImplementationInfo<T>) {
+		const dependencyName = dependency.constructor.name;
+		const isAlreadyRegistered = this.dependencies.has(dependencyName);
+
+		if (isAlreadyRegistered)
+			throw new DuplicatedDependencyException(dependencyName);
+
+		this.dependencies.set(dependencyName, dependency.implementation);
 	}
 
 	get<T>(dependency: Constructor<T>): T {
