@@ -1,5 +1,4 @@
 import { Injectable } from '@studio/dependency-injection';
-import { MongoLessonRepository } from '../../infrastructure/persistance/mongo/MongoLessonRepository';
 import { QueryHandler } from '../../../shared/application/QueryHandler';
 import { Lesson } from '../../domain/Lesson';
 import { LessonRepository } from '../../domain/LessonRepository';
@@ -15,7 +14,7 @@ export class GetLessonByIdQuery {
 }
 
 @Injectable({
-  dependencies: [MongoLessonRepository],
+  dependencies: [LessonRepository],
 })
 export class GetLessonById implements QueryHandler<GetLessonByIdQuery, Lesson> {
   private readonly lessonFinder: LessonFinder;

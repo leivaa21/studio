@@ -4,13 +4,12 @@ import { LessonWasDeletedEvent } from '../../../lessons/domain/events/LessonWasD
 import { EventHandler } from '../../../shared/application/EventHandler';
 import { InMemoryAsyncEventBus } from '../../../shared/infrastructure/EventBus/InMemoryAsyncEventBus';
 import { EventBus } from '../../../shared/domain/EventBus';
-import { MongoLessonRepository } from '../../infrastructure/persistance/mongo/MongoLessonRepository';
 import { LessonRepository } from '../../domain/LessonRepository';
 import { CourseId } from '../../../courses/domain/CourseId';
 import { LessonFinder } from '../services/LessonFinder';
 
 @Injectable({
-  dependencies: [MongoLessonRepository, InMemoryAsyncEventBus],
+  dependencies: [LessonRepository, InMemoryAsyncEventBus],
 })
 export class ReorderLessonsOnLessonDeletedHandler extends EventHandler<LessonWasDeletedEvent> {
   private readonly lessonFinder: LessonFinder;

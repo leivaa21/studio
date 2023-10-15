@@ -11,13 +11,12 @@ import { LessonWasDeletedEvent } from '../../../lessons/domain/events/LessonWasD
 import { CourseId } from '../../../courses/domain/CourseId';
 import { CourseSubscription } from '../../domain/CourseSubscription';
 import { LessonFinder } from '../../../lessons/application/services/LessonFinder';
-import { MongoLessonRepository } from '../../../lessons/infrastructure/persistance/mongo/MongoLessonRepository';
 import { LessonRepository } from '../../../lessons/domain/LessonRepository';
 
 @Injectable({
   dependencies: [
     MongoCourseSubscriptionRepository,
-    MongoLessonRepository,
+    LessonRepository,
     InMemoryAsyncEventBus,
   ],
 })

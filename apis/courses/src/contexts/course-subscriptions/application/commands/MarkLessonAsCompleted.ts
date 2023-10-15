@@ -9,7 +9,6 @@ import { MongoCourseSubscriptionRepository } from '../../infrastructure/persista
 import { LessonRepository } from '../../../lessons/domain/LessonRepository';
 import { LessonId } from '../../../lessons/domain/LessonId';
 import { LessonFinder } from '../../../lessons/application/services/LessonFinder';
-import { MongoLessonRepository } from '../../../lessons/infrastructure/persistance/mongo/MongoLessonRepository';
 
 export class MarkLessonAsCompletedCommand {
   public readonly lessonId: string;
@@ -23,7 +22,7 @@ export class MarkLessonAsCompletedCommand {
 @Injectable({
   dependencies: [
     MongoCourseSubscriptionRepository,
-    MongoLessonRepository,
+    LessonRepository,
     InMemoryAsyncEventBus,
   ],
 })

@@ -8,7 +8,6 @@ import { EventBus } from '../../../shared/domain/EventBus';
 import { Lesson } from '../../domain/Lesson';
 import { LessonRepository } from '../../domain/LessonRepository';
 import { LessonTitle } from '../../domain/LessonTitle';
-import { MongoLessonRepository } from '../../infrastructure/persistance/mongo/MongoLessonRepository';
 import { InMemoryAsyncEventBus } from '../../../shared/infrastructure/EventBus/InMemoryAsyncEventBus';
 import { LessonFinder } from '../services/LessonFinder';
 import { LessonOrder } from '../../domain/LessonOrder';
@@ -34,11 +33,7 @@ export class CreateNewLessonCommand {
 }
 
 @Injectable({
-  dependencies: [
-    MongoLessonRepository,
-    CourseRepository,
-    InMemoryAsyncEventBus,
-  ],
+  dependencies: [LessonRepository, CourseRepository, InMemoryAsyncEventBus],
 })
 export class CreateNewLesson extends CommandHandler<CreateNewLessonCommand> {
   private readonly courseFinder: CourseFinder;

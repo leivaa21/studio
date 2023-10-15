@@ -5,7 +5,6 @@ import { CommandHandler } from '../../../shared/application/CommandHandler';
 import { EventBus } from '../../../shared/domain/EventBus';
 import { LessonRepository } from '../../domain/LessonRepository';
 import { LessonFinder } from '../services/LessonFinder';
-import { MongoLessonRepository } from '../../infrastructure/persistance/mongo/MongoLessonRepository';
 import { InMemoryAsyncEventBus } from '../../../shared/infrastructure/EventBus/InMemoryAsyncEventBus';
 import { AuthorId } from '../../../courses/domain/AuthorId';
 import { LessonId } from '../../domain/LessonId';
@@ -25,11 +24,7 @@ export class ReorderLessonUpCommand {
 }
 
 @Injectable({
-  dependencies: [
-    MongoLessonRepository,
-    CourseRepository,
-    InMemoryAsyncEventBus,
-  ],
+  dependencies: [LessonRepository, CourseRepository, InMemoryAsyncEventBus],
 })
 export class ReorderLessonUp extends CommandHandler<ReorderLessonUpCommand> {
   private readonly courseFinder: CourseFinder;
