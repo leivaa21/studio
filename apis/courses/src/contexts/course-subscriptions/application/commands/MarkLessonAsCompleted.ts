@@ -5,7 +5,6 @@ import { InMemoryAsyncEventBus } from '../../../shared/infrastructure/EventBus/I
 import { CourseSubscriptionRepository } from '../../domain/CourseSubscriptionRepository';
 import { CourseSubscriptionFinder } from '../services/CourseSubscriptionFinder';
 import { UserId } from '../../domain/UserId';
-import { MongoCourseSubscriptionRepository } from '../../infrastructure/persistance/mongo/MongoCourseSubscriptionRepository';
 import { LessonRepository } from '../../../lessons/domain/LessonRepository';
 import { LessonId } from '../../../lessons/domain/LessonId';
 import { LessonFinder } from '../../../lessons/application/services/LessonFinder';
@@ -21,7 +20,7 @@ export class MarkLessonAsCompletedCommand {
 
 @Injectable({
   dependencies: [
-    MongoCourseSubscriptionRepository,
+    CourseSubscriptionRepository,
     LessonRepository,
     InMemoryAsyncEventBus,
   ],

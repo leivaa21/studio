@@ -8,10 +8,9 @@ import { CourseSubscriptionId } from '../../../course-subscriptions/domain/Cours
 import { MongoCourseStatsRepository } from '../../infrastructure/persistance/mongo/MongoCourseStatsRepository';
 import { CourseStatsFinder } from '../services/CourseStatsFinder';
 import { CourseStatsRepository } from '../../domain/CourseStatsRepository';
-import { MongoCourseSubscriptionRepository } from '../../../course-subscriptions/infrastructure/persistance/mongo/MongoCourseSubscriptionRepository';
 
 @Injectable({
-  dependencies: [MongoCourseStatsRepository, MongoCourseSubscriptionRepository],
+  dependencies: [MongoCourseStatsRepository, CourseSubscriptionRepository],
 })
 export class IncreaseTimesCompletedCounterOnCourseSubscriptionCompletedHandler extends EventHandler<CourseSubscriptionWasCompletedEvent> {
   private readonly courseStatsFinder: CourseStatsFinder;

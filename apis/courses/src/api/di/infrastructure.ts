@@ -6,6 +6,9 @@ import { MongoCriteriaConverter } from '../../contexts/shared/infrastructure/mon
 import { LessonRepository } from '../../contexts/lessons/domain/LessonRepository';
 import { MongoLessonRepository } from '../../contexts/lessons/infrastructure/persistance/mongo/MongoLessonRepository';
 import { LessonSchemaFactory } from '../../contexts/lessons/infrastructure/persistance/mongo/LessonSchemaFactory';
+import { CourseSubscriptionSchemaFactory } from '../../contexts/course-subscriptions/infrastructure/persistance/mongo/CourseSubscriptionSchemaFactory';
+import { CourseSubscriptionRepository } from '../../contexts/course-subscriptions/domain/CourseSubscriptionRepository';
+import { MongoCourseSubscriptionRepository } from '../../contexts/course-subscriptions/infrastructure/persistance/mongo/MongoCourseSubscriptionRepository';
 
 const courseSchemaFactory = new CourseSchemaFactory();
 const criteriaConverter = new MongoCriteriaConverter();
@@ -23,4 +26,13 @@ const lessonSchemaFactory = new LessonSchemaFactory();
 DependencyContainer.registerImplementation({
   constructor: LessonRepository,
   implementation: new MongoLessonRepository(lessonSchemaFactory),
+});
+
+const courseSubscriptionSchemaFactory = new CourseSubscriptionSchemaFactory();
+
+DependencyContainer.registerImplementation({
+  constructor: CourseSubscriptionRepository,
+  implementation: new MongoCourseSubscriptionRepository(
+    courseSubscriptionSchemaFactory
+  ),
 });

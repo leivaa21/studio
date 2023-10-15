@@ -8,13 +8,9 @@ import { CourseSubscriptionWasCompletedEvent } from '../../../course-subscriptio
 import { CourseSubscriptionRepository } from '../../../course-subscriptions/domain/CourseSubscriptionRepository';
 import { CourseSubscriptionFinder } from '../../../course-subscriptions/application/services/CourseSubscriptionFinder';
 import { CourseSubscriptionId } from '../../../course-subscriptions/domain/CourseSubscriptionId';
-import { MongoCourseSubscriptionRepository } from '../../../course-subscriptions/infrastructure/persistance/mongo/MongoCourseSubscriptionRepository';
 
 @Injectable({
-  dependencies: [
-    MongoConsumerStatsRepository,
-    MongoCourseSubscriptionRepository,
-  ],
+  dependencies: [MongoConsumerStatsRepository, CourseSubscriptionRepository],
 })
 export class IncreaseCompletedCoursesCounterOnCourseSubscriptionCompletedHandler extends EventHandler<CourseSubscriptionWasCompletedEvent> {
   private readonly consumerStatsFinder: ConsumerStatsFinder;

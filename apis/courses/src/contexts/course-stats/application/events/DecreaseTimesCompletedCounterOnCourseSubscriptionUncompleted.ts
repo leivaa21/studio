@@ -4,12 +4,11 @@ import { EventHandler } from '../../../shared/application/EventHandler';
 import { MongoCourseStatsRepository } from '../../infrastructure/persistance/mongo/MongoCourseStatsRepository';
 import { CourseStatsFinder } from '../services/CourseStatsFinder';
 import { CourseStatsRepository } from '../../domain/CourseStatsRepository';
-import { MongoCourseSubscriptionRepository } from '../../../course-subscriptions/infrastructure/persistance/mongo/MongoCourseSubscriptionRepository';
 import { CourseSubscriptionWasUncompletedEvent } from '../../../course-subscriptions/domain/events/CourseSubscriptionWasUncompleted';
 import { CourseId } from '../../../courses/domain/CourseId';
 
 @Injectable({
-  dependencies: [MongoCourseStatsRepository, MongoCourseSubscriptionRepository],
+  dependencies: [MongoCourseStatsRepository],
 })
 export class DecreaseTimesCompletedCounterOnCourseSubscriptionUncompletedHandler extends EventHandler<CourseSubscriptionWasUncompletedEvent> {
   private readonly courseStatsFinder: CourseStatsFinder;

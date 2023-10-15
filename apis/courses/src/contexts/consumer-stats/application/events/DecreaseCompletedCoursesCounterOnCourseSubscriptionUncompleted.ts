@@ -8,13 +8,9 @@ import { CourseSubscriptionRepository } from '../../../course-subscriptions/doma
 import { CourseSubscriptionFinder } from '../../../course-subscriptions/application/services/CourseSubscriptionFinder';
 import { CourseSubscriptionId } from '../../../course-subscriptions/domain/CourseSubscriptionId';
 import { CourseSubscriptionWasUncompletedEvent } from '../../../course-subscriptions/domain/events/CourseSubscriptionWasUncompleted';
-import { MongoCourseSubscriptionRepository } from '../../../course-subscriptions/infrastructure/persistance/mongo/MongoCourseSubscriptionRepository';
 
 @Injectable({
-  dependencies: [
-    MongoConsumerStatsRepository,
-    MongoCourseSubscriptionRepository,
-  ],
+  dependencies: [MongoConsumerStatsRepository, CourseSubscriptionRepository],
 })
 export class DecreaseCompletedCoursesCounterOnCourseSubscriptionUncompletedHandler extends EventHandler<CourseSubscriptionWasUncompletedEvent> {
   private readonly consumerStatsFinder: ConsumerStatsFinder;

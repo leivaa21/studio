@@ -9,7 +9,6 @@ import { CourseSubscriptionRepository } from '../../../course-subscriptions/doma
 import { UserId } from '../../../course-subscriptions/domain/UserId';
 import { CourseFinder } from '../../../courses/application/services/CourseFinder';
 import { LessonRepository } from '../../../lessons/domain/LessonRepository';
-import { MongoCourseSubscriptionRepository } from '../../../course-subscriptions/infrastructure/persistance/mongo/MongoCourseSubscriptionRepository';
 import { MongoAuthorStatsRepository } from '../../../author-stats/infrastructure/persistance/mongo/MongoAuthorStatsRepository';
 import { AuthorStatsRepository } from '../../../author-stats/domain/AuthorStatsRepository';
 import { MongoConsumerStatsRepository } from '../../../consumer-stats/infrastructure/persistance/mongo/MongoConsumerStatsRepository';
@@ -21,7 +20,7 @@ import { CourseStatsRepository } from '../../../course-stats/domain/CourseStatsR
   dependencies: [
     CourseRepository,
     LessonRepository,
-    MongoCourseSubscriptionRepository,
+    CourseSubscriptionRepository,
     MongoAuthorStatsRepository,
     MongoConsumerStatsRepository,
     MongoCourseStatsRepository,
