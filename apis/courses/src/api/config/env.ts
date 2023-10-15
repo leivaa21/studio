@@ -14,6 +14,7 @@ export const env = {
   courses: {
     port: getEnvVariableOrDefault<number>('PORT', 5002),
     url: getEnvVariableOrDefault<string>('URL', 'http://localhost'),
+    mode: getEnvVariableOrDefault<string>('NODE_ENV', 'dev'),
   },
   mongo: {
     host: getEnvVariableOrDefault<string>('MONGO_HOST', 'localhost'),

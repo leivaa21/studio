@@ -10,10 +10,10 @@
     "prod": "yarn build && yarn start",
     "lint": "eslint './src/**' && prettier .",
     "lint:fix": "eslint './src/**' --fix && prettier --write .",
-    "test:unit": "jest ./test/unit -c test/unit/jest.config.js",
-    "test:integration": "jest ./test/integration",
-    "test:e2e": "jest ./test/e2e",
-    "test:coverage": "jest ./test/unit -c test/unit/jest.config.js --coverage",
+    "test:unit": "NODE_ENV=test jest ./test/unit -c test/unit/jest.config.js",
+    "test:integration": "NODE_ENV=test jest ./test/integration",
+    "test:e2e": "NODE_ENV=test jest ./test/e2e",
+    "test:coverage": "NODE_ENV=test jest ./test/unit -c test/unit/jest.config.js --coverage",
     "test": "yarn test:unit && yarn test:integration && yarn test:e2e"
   },
   "dependencies": {
