@@ -1,7 +1,5 @@
 import amqp, { Channel, Message } from 'amqplib';
 
-import { Injectable } from '@studio/dependency-injection';
-
 import { DomainEvent } from '../../domain/DomainEvent';
 import { DomainEventSubscriber } from '../../domain/DomainEventSubscriber';
 import { EventBus } from '../../domain/EventBus';
@@ -11,7 +9,6 @@ import { error, info } from '@studio/api-utils';
 
 const RETRY_TIME = 3000;
 
-@Injectable()
 export class RabbitMQEventBus implements EventBus {
   public readonly subscriptions: Map<
     string,
