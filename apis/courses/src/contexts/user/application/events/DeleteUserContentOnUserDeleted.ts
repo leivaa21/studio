@@ -13,7 +13,6 @@ import { MongoAuthorStatsRepository } from '../../../author-stats/infrastructure
 import { AuthorStatsRepository } from '../../../author-stats/domain/AuthorStatsRepository';
 import { MongoConsumerStatsRepository } from '../../../consumer-stats/infrastructure/persistance/mongo/MongoConsumerStatsRepository';
 import { ConsumerStatsRepository } from '../../../consumer-stats/domain/ConsumerStatsRepository';
-import { MongoCourseStatsRepository } from '../../../course-stats/infrastructure/persistance/mongo/MongoCourseStatsRepository';
 import { CourseStatsRepository } from '../../../course-stats/domain/CourseStatsRepository';
 
 @Injectable({
@@ -23,7 +22,7 @@ import { CourseStatsRepository } from '../../../course-stats/domain/CourseStatsR
     CourseSubscriptionRepository,
     MongoAuthorStatsRepository,
     MongoConsumerStatsRepository,
-    MongoCourseStatsRepository,
+    CourseStatsRepository,
     InMemoryAsyncEventBus,
   ],
 })

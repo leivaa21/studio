@@ -1,6 +1,5 @@
 import { Injectable } from '@studio/dependency-injection';
 import { QueryHandler } from '../../../shared/application/QueryHandler';
-import { MongoCourseStatsRepository } from '../../infrastructure/persistance/mongo/MongoCourseStatsRepository';
 import { CourseStatsFinder } from '../services/CourseStatsFinder';
 import { CourseStats } from '../../domain/CourseStats';
 import { CourseId } from '../../../courses/domain/CourseId';
@@ -15,7 +14,7 @@ export class GetCourseStatsQuery {
 }
 
 @Injectable({
-  dependencies: [MongoCourseStatsRepository],
+  dependencies: [CourseStatsRepository],
 })
 export class GetCourseStats
   implements QueryHandler<GetCourseStatsQuery, CourseStats>
