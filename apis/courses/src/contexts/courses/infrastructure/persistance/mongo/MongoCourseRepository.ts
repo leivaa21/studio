@@ -1,4 +1,3 @@
-import { Injectable } from '@studio/dependency-injection';
 import { MongoRepository } from '../../../../shared/infrastructure/mongo/MongoRepository';
 import { CourseRepository } from '../../../domain/CourseRepository';
 import { Course } from '../../../domain/Course';
@@ -11,7 +10,6 @@ import { Nullable } from '../../../../shared/domain/Nullable';
 import { CourseId } from '../../../domain/CourseId';
 import { AuthorId } from '../../../domain/AuthorId';
 
-@Injectable({ dependencies: [CourseSchemaFactory, MongoCriteriaConverter] })
 export class MongoCourseRepository
   extends MongoRepository<CourseData, Course>
   implements CourseRepository
