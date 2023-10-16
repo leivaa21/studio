@@ -1,7 +1,4 @@
-import {
-  BaseDomainEventArgs,
-  DomainEvent,
-} from '../../../shared/domain/DomainEvent';
+import { BaseDomainEventArgs, DomainEvent } from '@studio/events';
 
 type LessonWasCompletedOnCourseSubscriptionEventArgs = BaseDomainEventArgs & {
   attributes: { lessonId: string };
