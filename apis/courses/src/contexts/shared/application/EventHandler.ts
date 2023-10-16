@@ -1,7 +1,10 @@
-import { DomainEventSubscriber } from '@studio/events';
+import {
+  DomainEventSubscriber,
+  DomainEvent,
+  DomainEventClass,
+} from '@studio/events';
 
 import { AggregateRoot } from '../domain/AggregateRoot';
-import { DomainEvent, DomainEventClass } from '../domain/DomainEvent';
 import { EventBus } from '../domain/EventBus';
 
 export abstract class EventHandler<Event extends DomainEvent>
