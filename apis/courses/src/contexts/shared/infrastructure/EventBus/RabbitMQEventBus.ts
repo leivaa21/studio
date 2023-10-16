@@ -16,7 +16,7 @@ export class RabbitMQEventBus implements EventBus {
   > = new Map<string, Array<DomainEventSubscriber<DomainEvent>>>();
 
   private channel?: Channel;
-  private queueName?: string;
+  private queues?: string[];
 
   constructor() {
     this.intialize();
@@ -27,17 +27,19 @@ export class RabbitMQEventBus implements EventBus {
       const connection = await amqp.connect(
         `amqp://${env.rabbit.host}:${env.rabbit.port}`
       );
-      const queueName = env.rabbit.event_queue;
+      const mainQueue = env.rabbit.courses_queue;
+      const otherQueues = [env.rabbit.auth_queue];
       const channel = await connection.createChannel();
-      channel.assertQueue(queueName, { durable: true });
+      channel.assertQueue(mainQueue, { durable: true });
       channel.consume(
-        queueName,
+        mainQueue,
         (msg: Message | null) => {
           if (msg) {
             const event = JSON.parse(msg.content.toString());
             if (!event.eventName) return;
             const handlers = this.subscriptions.get(event.eventName);
             if (!handlers) return;
+
             handlers.forEach((handler) => {
               void handler.on(event);
             });
@@ -47,7 +49,7 @@ export class RabbitMQEventBus implements EventBus {
       );
       info('Connected EventBus to RabbitMQ');
       this.channel = channel;
-      this.queueName = queueName;
+      this.queues = [mainQueue, ...otherQueues];
     } catch (err) {
       error(`Error connecting to rabbit, retrying on ${RETRY_TIME}ms\n ${err}`);
       await sleep(RETRY_TIME);
@@ -58,8 +60,11 @@ export class RabbitMQEventBus implements EventBus {
   async publish(events: Array<DomainEvent>): Promise<void> {
     events.map((event) => {
       const eventAsString = JSON.stringify(event);
-      if (!this.channel || !this.queueName) return;
-      this.channel.sendToQueue(this.queueName, Buffer.from(eventAsString));
+      if (!this.queues) return;
+      this.queues.forEach((queue) => {
+        if (!this.channel) return;
+        this.channel.sendToQueue(queue, Buffer.from(eventAsString));
+      });
     });
   }
   addSubscribers(subscribers: Array<DomainEventSubscriber<DomainEvent>>): void {

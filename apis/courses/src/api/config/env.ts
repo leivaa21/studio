@@ -26,9 +26,13 @@ export const env = {
   rabbit: {
     host: getEnvVariableOrDefault<string>('RABBIT_HOST', 'localhost'),
     port: getEnvVariableOrDefault<number>('RABBIT_PORT', 5672),
-    event_queue: getEnvVariableOrDefault<string>(
-      'RABBIT_EVENT_QUEUE',
-      'event-bus'
+    auth_queue: getEnvVariableOrDefault<string>(
+      'RABBIT_AUTH_QUEUE',
+      'auth-queue'
+    ),
+    courses_queue: getEnvVariableOrDefault<string>(
+      'RABBIT_COURSES_QUEUE',
+      'courses-queue'
     ),
   },
   jwt: {

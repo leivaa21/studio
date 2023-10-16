@@ -42,6 +42,7 @@ export class DeleteUserContentOnUserDeletedHandler extends EventHandler<UserWasD
     return [UserWasDeletedEvent];
   }
   async on(domainEvent: UserWasDeletedEvent): Promise<void> {
+    console.log('LOL');
     const userId = UserId.of(domainEvent.aggregateId);
 
     const coursesToDelete = await this.courseFinder.findByAuthor(userId);
