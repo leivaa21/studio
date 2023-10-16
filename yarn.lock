@@ -4822,6 +4822,7 @@ __metadata:
     "@studio/api-utils": "workspace:packages/api-utils"
     "@studio/commons": "workspace:packages/commons"
     "@studio/dependency-injection": "workspace:packages/dependency-injection"
+    "@studio/events": "workspace:packages/events"
     "@types/amqplib": ^0.10.2
     "@types/bcrypt": ^5.0.0
     "@types/body-parser": ^1.19.2
