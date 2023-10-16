@@ -4885,6 +4885,7 @@ __metadata:
     "@studio/api-utils": "workspace:packages/api-utils"
     "@studio/commons": "workspace:packages/commons"
     "@studio/dependency-injection": "workspace:packages/dependency-injection"
+    "@studio/events": "workspace:packages/events"
     "@types/amqplib": ^0.10.2
     "@types/body-parser": ^1.19.2
     "@types/dotenv": ^8.2.0
@@ -4977,6 +4978,19 @@ __metadata:
     sass-loader: ^13.2.0
     style-loader: ^3.3.1
     typescript: 4.9.3
+  languageName: unknown
+  linkType: soft
+
+"@studio/events@workspace:packages/events":
+  version: 0.0.0-use.local
+  resolution: "@studio/events@workspace:packages/events"
+  dependencies:
+    "@studio/commons": "workspace:packages/commons"
+    "@types/node": ^18.11.9
+    rimraf: ^4.4.1
+    typescript: ^4.9.3
+    uuid: ^9.0.1
+    uuid-validate: ^0.0.3
   languageName: unknown
   linkType: soft
 
@@ -22270,6 +22284,15 @@ __metadata:
   bin:
     uuid: dist/bin/uuid
   checksum: 8dd2c83c43ddc7e1c71e36b60aea40030a6505139af6bee0f382ebcd1a56f6cd3028f7f06ffb07f8cf6ced320b76aea275284b224b002b289f89fe89c389b028
+  languageName: node
+  linkType: hard
+
+"uuid@npm:^9.0.1":
+  version: 9.0.1
+  resolution: "uuid@npm:9.0.1"
+  bin:
+    uuid: dist/bin/uuid
+  checksum: 39931f6da74e307f51c0fb463dc2462807531dc80760a9bff1e35af4316131b4fc3203d16da60ae33f07fdca5b56f3f1dd662da0c99fea9aaeab2004780cc5f4
   languageName: node
   linkType: hard
 

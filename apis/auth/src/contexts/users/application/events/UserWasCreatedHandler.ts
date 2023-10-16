@@ -1,7 +1,6 @@
 import { info } from '@studio/api-utils';
 import { Injectable } from '@studio/dependency-injection';
-import { DomainEventClass } from '../../../shared/domain/DomainEvent';
-import { DomainEventSubscriber } from '../../../shared/domain/DomainEventSubscriber';
+import { DomainEventClass, DomainEventSubscriber } from '@studio/events';
 import { UserWasCreatedEvent } from '../../domain/events/UserWasCreated';
 
 @Injectable()

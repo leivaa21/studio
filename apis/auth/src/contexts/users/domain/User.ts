@@ -1,3 +1,5 @@
+import { UserWasDeletedEvent } from '@studio/events';
+
 import { AggregateRoot } from '../../shared/domain/AggregateRoot';
 import { Nullable } from '../../shared/domain/Nullable';
 import { InvalidCredentialsError } from './errors/InvalidCredentials';
@@ -5,7 +7,6 @@ import { UnableToChangeEmail } from './errors/UnableToChangeEmail';
 import { UnableToChangePassword } from './errors/UnableToChangePassword';
 import { InvalidUserError } from './errors/UserInvalid';
 import { UserWasCreatedEvent } from './events/UserWasCreated';
-import { UserWasDeletedEvent } from './events/UserWasDeleted';
 import { GithubId } from './GithubId';
 import { GoogleId } from './GoogleId';
 import {
