@@ -1,7 +1,6 @@
 import { Injectable } from '@studio/dependency-injection';
-import { UserWasDeletedEvent } from '@studio/events';
+import { UserWasDeletedEvent, DomainEventClass } from '@studio/events';
 
-import { DomainEventClass } from '../../../shared/domain/DomainEvent';
 import { EventHandler } from '../../../shared/application/EventHandler';
 import { EventBus } from '../../../shared/domain/EventBus';
 import { CourseRepository } from '../../../courses/domain/CourseRepository';

@@ -1,7 +1,10 @@
 import { DependencyContainer } from '@studio/dependency-injection';
-import { UserWasDeletedEvent, DomainEventSubscriber } from '@studio/events';
+import {
+  UserWasDeletedEvent,
+  DomainEventSubscriber,
+  DomainEventClass,
+} from '@studio/events';
 
-import { DomainEventClass } from '../../../contexts/shared/domain/DomainEvent';
 import { EventBus } from '../../../contexts/shared/domain/EventBus';
 import { DeleteUserContentOnUserDeletedHandler } from '../../../contexts/user/application/events/DeleteUserContentOnUserDeleted';
 

@@ -1,5 +1,6 @@
 import { Injectable } from '@studio/dependency-injection';
-import { DomainEventClass } from '../../../shared/domain/DomainEvent';
+import { DomainEventClass } from '@studio/events';
+
 import { CourseId } from '../../domain/CourseId';
 import { CourseRepository } from '../../domain/CourseRepository';
 import { CourseFinder } from '../../application/services/CourseFinder';
