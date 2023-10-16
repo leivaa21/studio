@@ -1,6 +1,6 @@
 import EventEmitter from 'events';
-import { DomainEvent } from '../../domain/DomainEvent';
-import { DomainEventSubscriber } from '../../domain/DomainEventSubscriber';
+import { DomainEventSubscriber, DomainEvent } from '@studio/events';
+
 import { EventBus } from '../../domain/EventBus';
 
 /**

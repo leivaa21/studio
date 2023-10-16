@@ -1,7 +1,6 @@
 import amqp, { Channel, Message } from 'amqplib';
+import { DomainEventSubscriber, DomainEvent } from '@studio/events';
 
-import { DomainEvent } from '../../domain/DomainEvent';
-import { DomainEventSubscriber } from '../../domain/DomainEventSubscriber';
 import { EventBus } from '../../domain/EventBus';
 import { env } from '../../../../api/config/env';
 import { sleep } from '../../../../utils/sleep';

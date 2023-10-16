@@ -1,7 +1,4 @@
-import {
-  BaseDomainEventArgs,
-  DomainEvent,
-} from '../../../shared/domain/DomainEvent';
+import { BaseDomainEventArgs, DomainEvent } from '@studio/events';
 
 type UserWasDeletedEventArgs = BaseDomainEventArgs;
 export class UserWasDeletedEvent extends DomainEvent {

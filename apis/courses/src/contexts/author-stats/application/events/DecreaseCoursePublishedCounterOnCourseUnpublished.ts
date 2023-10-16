@@ -1,5 +1,7 @@
 import { Injectable } from '@studio/dependency-injection';
-import { DomainEventClass } from '../../../shared/domain/DomainEvent';
+import { ApiError, ErrorCodes } from '@studio/commons';
+import { DomainEventClass } from '@studio/events';
+
 import { EventHandler } from '../../../shared/application/EventHandler';
 import { AuthorStatsRepository } from '../../domain/AuthorStatsRepository';
 import { AuthorStatsFinder } from '../services/AuthorStatsFinder';
@@ -7,7 +9,6 @@ import { CourseId } from '../../../courses/domain/CourseId';
 import { CourseRepository } from '../../../courses/domain/CourseRepository';
 import { CourseFinder } from '../../../courses/application/services/CourseFinder';
 import { CourseWasUnpublishedEvent } from '../../../courses/domain/events/CourseWasUnpublished';
-import { ApiError, ErrorCodes } from '@studio/commons';
 
 @Injectable({
   dependencies: [AuthorStatsRepository, CourseRepository],

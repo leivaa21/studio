@@ -20,6 +20,7 @@
     "@studio/api-utils": "workspace:packages/api-utils",
     "@studio/commons": "workspace:packages/commons",
     "@studio/dependency-injection": "workspace:packages/dependency-injection",
+    "@studio/events": "workspace:packages/events",
     "amqplib": "^0.10.3",
     "class-transformer": "0.4.0",
     "class-validator": "^0.14.0",

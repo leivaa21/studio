@@ -1,6 +1,7 @@
 import { DependencyContainer } from '@studio/dependency-injection';
+import { DomainEventSubscriber } from '@studio/events';
+
 import { EventBus } from '../../../../contexts/shared/domain/EventBus';
-import { DomainEventSubscriber } from '../../../../contexts/shared/domain/DomainEventSubscriber';
 import { RemoveCourseSubscriptionsOnUnpublishedHandler } from '../../../../contexts/course-subscriptions/application/events/RemoveCourseSubscriptionsOnUnpublished';
 import { CourseWasUnpublishedEvent } from '../../../../contexts/courses/domain/events/CourseWasUnpublished';
 import { LessonWasCompletedOnCourseSubscriptionEvent } from '../../../../contexts/course-subscriptions/domain/events/LessonWasCompletedOnCourseSubscription';

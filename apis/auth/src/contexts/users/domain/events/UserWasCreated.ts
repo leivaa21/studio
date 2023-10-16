@@ -1,7 +1,4 @@
-import {
-  BaseDomainEventArgs,
-  DomainEvent,
-} from '../../../shared/domain/DomainEvent';
+import { BaseDomainEventArgs, DomainEvent } from '@studio/events';
 import { PossibleUserCredentialsType } from '../PossibleUserCredentials';
 
 type UserWasCreatedEventArgs = BaseDomainEventArgs & {

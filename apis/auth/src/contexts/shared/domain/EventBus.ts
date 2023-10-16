@@ -1,5 +1,4 @@
-import { DomainEvent } from './DomainEvent';
-import { DomainEventSubscriber } from './DomainEventSubscriber';
+import { DomainEvent, DomainEventSubscriber } from '@studio/events';
 
 export abstract class EventBus {
   abstract publish(event: Array<DomainEvent>): Promise<void>;

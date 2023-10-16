@@ -1,5 +1,6 @@
 import { DependencyContainer } from '@studio/dependency-injection';
-import { DomainEventSubscriber } from '../../../../contexts/shared/domain/DomainEventSubscriber';
+import { DomainEventSubscriber } from '@studio/events';
+
 import { EventBus } from '../../../../contexts/shared/domain/EventBus';
 import { UserWasCreatedHandler } from '../../../../contexts/users/application/events/UserWasCreatedHandler';
 import { UserWasCreatedEvent } from '../../../../contexts/users/domain/events/UserWasCreated';

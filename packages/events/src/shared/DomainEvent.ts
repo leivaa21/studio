@@ -1,4 +1,4 @@
-import { UUID } from './valueObjects/UUID';
+import { UUID } from "./UUID";
 
 export interface BaseDomainEventArgs {
   aggregateId: string;

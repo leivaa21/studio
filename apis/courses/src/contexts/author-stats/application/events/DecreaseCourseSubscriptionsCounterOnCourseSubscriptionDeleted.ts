@@ -1,5 +1,6 @@
 import { Injectable } from '@studio/dependency-injection';
-import { DomainEventClass } from '../../../shared/domain/DomainEvent';
+import { DomainEventClass } from '@studio/events';
+
 import { EventHandler } from '../../../shared/application/EventHandler';
 import { AuthorStatsRepository } from '../../domain/AuthorStatsRepository';
 import { AuthorStatsFinder } from '../services/AuthorStatsFinder';
