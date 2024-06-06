@@ -10,11 +10,17 @@
     "prod": "yarn build && yarn start",
     "lint": "eslint './src/**' && prettier .",
     "lint:fix": "eslint './src/**' --fix && prettier --write .",
-    "test:unit": "jest ./test/unit -c test/unit/jest.config.js",
-    "test:integration": "jest ./test/integration",
-    "test:e2e": "jest ./test/e2e",
-    "test:coverage": "jest ./test/unit -c test/unit/jest.config.js --coverage",
+    "test:unit": "jest ./test/unit -c unit-jest.config.js",
+    "test:integration": "jest ./test/integration -c jest.config.js",
+    "test:e2e": "jest ./test/e2e -c jest.config.js",
+    "test:coverage": "jest ./test/unit -c unit-jest.config.js --coverage --no-cache -all",
     "test": "yarn test:unit && yarn test:integration && yarn test:e2e"
+  },
+  "jest": {
+    "roots": [
+      "src",
+      "test"
+    ]
   },
   "dependencies": {
     "@studio/api-utils": "workspace:packages/api-utils",
@@ -56,7 +62,7 @@
     "eslint": "^8.33.0",
     "eslint-config-prettier": "^8.6.0",
     "eslint-plugin-prettier": "^4.2.1",
-    "jest": "^29.4.3",
+    "jest": "^29.7.0",
     "jest-mock-extended": "^3.0.5",
     "prettier": "^2.8.3",
     "rimraf": "^5.0.0",

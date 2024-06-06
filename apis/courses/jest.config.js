@@ -7,7 +7,7 @@ const options = {
   testMatch: ['**/*.spec.ts'],
   testEnvironment: 'node',
   silent: true,
-  collectCoverage: false,
+  collectCoverage: true,
 };
 // eslint-disable-next-line no-undef
 module.exports = options;
